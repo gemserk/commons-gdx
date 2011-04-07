@@ -1,0 +1,14 @@
+./target
+.classpath
+.project
+.settings
+
+commons-gdx-core/target
+commons-gdx-core/.classpath
+commons-gdx-core/.project
+commons-gdx-core/.settings
+
+commons-gdx-artemis/target
+commons-gdx-artemis/.classpath
+commons-gdx-artemis/.project
+commons-gdx-artemis/.settings
