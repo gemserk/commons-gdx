@@ -1,0 +1,47 @@
+package com.gemserk.commons.artemis.entities;
+
+import com.artemis.Entity;
+import com.artemis.World;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.components.TextComponent;
+import com.gemserk.commons.values.FloatValue;
+import com.gemserk.componentsengine.properties.AbstractProperty;
+import com.gemserk.componentsengine.properties.Property;
+import com.gemserk.componentsengine.properties.SimpleProperty;
+
+public class EntityFactory {
+
+	private final World world;
+	
+	public EntityFactory(World world) {
+		this.world = world;
+	}
+
+	public Entity fpsEntity(Property<BitmapFont> font) {
+		Entity entity = world.createEntity();
+		
+		Vector2 position = new Vector2(10, Gdx.graphics.getHeight() - 20);
+		Vector2 value = new Vector2(0.5f, 0.5f);
+		
+		entity.addComponent(new TextComponent( //
+				new AbstractProperty<String>() {
+					@Override
+					public String get() {
+						return "FPS: " + Gdx.graphics.getFramesPerSecond();
+					}
+				}, //
+				font, //
+				new SimpleProperty<Color>(new Color(1f, 1f, 1f, 1f)) //
+		));
+		
+		entity.addComponent(new SpatialComponent(new SimpleProperty<Vector2>(position), new SimpleProperty<Vector2>(value), new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		
+		entity.refresh();
+		return entity;
+	}
+
+}
