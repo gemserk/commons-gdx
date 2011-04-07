@@ -12,4 +12,17 @@
 	<packaging>jar</packaging>
 	<name>Common Gdx - Artemis module</name>
 	<description>Common utitilites to be used with libgdx</description>
+
+	<properties>
+		<artemis.version>0.0.1-GEMSERK-SNAPSHOT</artemis.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.gamadu.artemis</groupId>
+			<artifactId>artemis</artifactId>
+			<version>${artemis.version}</version>
+		</dependency>
+	</dependencies>
+
 </project>

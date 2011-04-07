@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.gemserk.commons.gdx</groupId>
@@ -11,4 +12,23 @@
 	<packaging>jar</packaging>
 	<name>Common Gdx - Core module</name>
 	<description>Common utitilites to be used with libgdx</description>
+
+	<properties>
+		<libgdxversion>0.91-SNAPSHOT</libgdxversion>
+		<animation4j.version>0.0.10</animation4j.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.badlogic.gdx</groupId>
+			<artifactId>gdx</artifactId>
+			<version>${libgdxversion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gemserk.animation4j</groupId>
+			<artifactId>animation4j-core</artifactId>
+			<version>${animation4j.version}</version>
+		</dependency>
+	</dependencies>
+
 </project>
