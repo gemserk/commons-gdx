@@ -73,8 +73,11 @@ public class SplashScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		int centerX = Gdx.graphics.getWidth() / 2;
-		int centerY = Gdx.graphics.getHeight() / 2;
+		int width = Gdx.graphics.getWidth();
+		int height = Gdx.graphics.getHeight();
+		
+		int centerX = width / 2;
+		int centerY = height / 2;
 
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
@@ -83,7 +86,7 @@ public class SplashScreen extends ScreenAdapter {
 		Texture logo = sprite.getTexture();
 		
 		float aspect = (float) logo.getWidth() / (float) logo.getHeight();
-		float newWidth = Gdx.graphics.getWidth() - 50;
+		float newWidth = width - (width / 5); // - 20%
 		float newHeight = newWidth / aspect;
 
 		sprite.setColor(color);
