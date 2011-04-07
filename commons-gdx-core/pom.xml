@@ -16,6 +16,7 @@
 	<properties>
 		<libgdxversion>0.91-SNAPSHOT</libgdxversion>
 		<animation4j.version>0.0.10</animation4j.version>
+		<componentsengine.version>0.0.9-SNAPSHOT</componentsengine.version>
 	</properties>
 
 	<dependencies>
@@ -28,6 +29,11 @@
 			<groupId>com.gemserk.animation4j</groupId>
 			<artifactId>animation4j-core</artifactId>
 			<version>${animation4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gemserk.componentsengine</groupId>
+			<artifactId>core</artifactId>
+			<version>${componentsengine.version}</version>
 		</dependency>
 	</dependencies>
 
