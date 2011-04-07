@@ -23,6 +23,11 @@
 			<artifactId>artemis</artifactId>
 			<version>${artemis.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.gemserk.commons.gdx</groupId>
+			<artifactId>commons-gdx-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 </project>
