@@ -5,6 +5,7 @@ import java.util.Comparator;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -25,9 +26,18 @@ public class SpriteRendererSystem extends EntitySystem {
 
 	private SpriteBatch spriteBatch;
 
+	private final OrthographicCamera camera;
+	
 	@SuppressWarnings("unchecked")
 	public SpriteRendererSystem() {
 		super(SpriteComponent.class);
+		this.camera = null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public SpriteRendererSystem(OrthographicCamera camera) {
+		super(SpriteComponent.class);
+		this.camera = camera;
 	}
 
 	Array<Entity> orderedByLayerEntities = new Array<Entity>();
@@ -44,6 +54,9 @@ public class SpriteRendererSystem extends EntitySystem {
 
 		orderedByLayerEntities.sort(layerComparator);
 
+		if (camera != null)
+			spriteBatch.setProjectionMatrix(camera.combined);
+		
 		spriteBatch.begin();
 		
 		for (int i = 0; i < orderedByLayerEntities.size; i++) {

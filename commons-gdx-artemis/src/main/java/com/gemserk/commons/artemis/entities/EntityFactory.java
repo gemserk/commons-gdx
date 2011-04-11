@@ -21,11 +21,8 @@ public class EntityFactory {
 		this.world = world;
 	}
 
-	public Entity fpsEntity(Property<BitmapFont> font) {
+	public Entity fpsEntity(Property<Vector2> scale, Property<BitmapFont> font, SimpleProperty<Vector2> position) {
 		Entity entity = world.createEntity();
-		
-		Vector2 position = new Vector2(10, Gdx.graphics.getHeight() - 20);
-		Vector2 value = new Vector2(0.5f, 0.5f);
 		
 		entity.addComponent(new TextComponent( //
 				new AbstractProperty<String>() {
@@ -38,9 +35,9 @@ public class EntityFactory {
 				new SimpleProperty<Color>(new Color(1f, 1f, 1f, 1f)) //
 		));
 		
-		entity.addComponent(new SpatialComponent(new SimpleProperty<Vector2>(position), new SimpleProperty<Vector2>(value), new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		
+		entity.addComponent(new SpatialComponent(position, scale, new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.refresh();
+		
 		return entity;
 	}
 
