@@ -17,6 +17,14 @@ public class SpatialComponent extends Component {
 		return position.get();
 	}
 	
+	public Property<Vector2> getPositionProperty() {
+		return position;
+	}
+	
+	public Property<FloatValue> getAngleProperty() {
+		return angle;
+	}
+	
 	public Vector2 getSize() {
 		return size.get();
 	}
