@@ -15,7 +15,15 @@ import com.gemserk.componentsengine.properties.SimpleProperty;
 
 public class EntityFactory {
 
-	private final World world;
+	private World world;
+	
+	public void setWorld(World world) {
+		this.world = world;
+	}
+	
+	public EntityFactory() {
+		
+	}
 	
 	public EntityFactory(World world) {
 		this.world = world;
