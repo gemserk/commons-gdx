@@ -12,6 +12,10 @@ public class ChildComponent extends Component {
 	public Entity getParent() {
 		return parent.get();
 	}
+	
+	public void setParent(Entity parent) {
+		this.parent.set(parent);
+	}
 
 	public ChildComponent(Property<Entity> owner) {
 		this.parent = owner;

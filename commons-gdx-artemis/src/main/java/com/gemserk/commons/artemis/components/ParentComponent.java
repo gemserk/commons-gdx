@@ -19,6 +19,10 @@ public class ParentComponent extends Component {
 		children.get().add(child);
 	}
 	
+	public void addChildren(ArrayList<Entity> children) {
+		this.children.get().addAll(children);
+	}
+	
 	public ParentComponent(Property<ArrayList<Entity>> children) {
 		this.children = children;
 	}
@@ -30,5 +34,7 @@ public class ParentComponent extends Component {
 	public ParentComponent() {
 		this(new ArrayList<Entity>());
 	}
+
+
 
 }

@@ -48,6 +48,7 @@ public class Layer {
 			Entity entity = orderedByLayerEntities.get(i);
 			SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
 			Sprite sprite = spriteComponent.getSprite();
+			sprite.setColor(spriteComponent.getColor());
 			sprite.draw(spriteBatch);
 		}
 		spriteBatch.end();
