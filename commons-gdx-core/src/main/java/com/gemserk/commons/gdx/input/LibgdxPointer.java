@@ -1,8 +1,8 @@
 package com.gemserk.commons.gdx.input;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.gdx.Camera;
 
 public class LibgdxPointer {
 
@@ -20,9 +20,7 @@ public class LibgdxPointer {
 
 	public int index;
 
-	private OrthographicCamera camera;
-
-	private Vector2CameraConverter vector2CameraConverter;
+	private Camera camera;
 
 	public Vector2 getPressedPosition() {
 		return pressedPosition;
@@ -40,10 +38,9 @@ public class LibgdxPointer {
 		this(index, null);
 	}
 
-	public LibgdxPointer(int index, OrthographicCamera camera) {
+	public LibgdxPointer(int index, Camera camera) {
 		this.index = index;
 		this.camera = camera;
-		vector2CameraConverter = new Vector2CameraConverter(camera);
 	}
 
 	public void update() {
@@ -55,7 +52,9 @@ public class LibgdxPointer {
 				wasPressed = true;
 
 				if (camera != null) {
-					pressedPosition = vector2CameraConverter.getVector2(Gdx.input.getX(index), Gdx.input.getY(index), pressedPosition);
+					pressedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
+					camera.unproject(pressedPosition);
+					// pressedPosition = vector2CameraConverter.getVector2(Gdx.input.getX(index), Gdx.input.getY(index), pressedPosition);
 				} else {
 					pressedPosition.set(Gdx.input.getX(index), Gdx.graphics.getHeight() - Gdx.input.getY(index));
 				}
@@ -64,8 +63,11 @@ public class LibgdxPointer {
 				wasPressed = false;
 			}
 
-			if (camera != null)
-				position = vector2CameraConverter.getVector2(Gdx.input.getX(index), Gdx.input.getY(index), position);
+			if (camera != null) {
+				position.set(Gdx.input.getX(index), Gdx.input.getY(index));
+				camera.unproject(position);
+				// position = vector2CameraConverter.getVector2(Gdx.input.getX(index), Gdx.input.getY(index), position);
+			}
 			else
 				position.set(Gdx.input.getX(index), Gdx.graphics.getHeight() - Gdx.input.getY(index));
 
@@ -78,7 +80,9 @@ public class LibgdxPointer {
 				wasReleased = true;
 
 				if (camera != null) {
-					releasedPosition = vector2CameraConverter.getVector2(Gdx.input.getX(index), Gdx.input.getY(index), releasedPosition);
+					releasedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
+					camera.unproject(releasedPosition);
+					// releasedPosition = vector2CameraConverter.getVector2(Gdx.input.getX(index), Gdx.input.getY(index), releasedPosition);
 				} else {
 					releasedPosition.set(Gdx.input.getX(index), Gdx.graphics.getHeight() - Gdx.input.getY(index));
 				}
