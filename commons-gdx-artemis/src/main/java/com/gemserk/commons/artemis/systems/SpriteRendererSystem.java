@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.CameraTransformImpl;
+import com.gemserk.commons.gdx.Libgdx2dCamera;
 
 public class SpriteRendererSystem extends EntitySystem {
 
@@ -26,7 +27,7 @@ public class SpriteRendererSystem extends EntitySystem {
 
 	private SpriteBatch spriteBatch;
 
-	private final CameraTransformImpl cameraTransformImpl;
+	private final Libgdx2dCamera cameraTransformImpl;
 
 	@SuppressWarnings("unchecked")
 	public SpriteRendererSystem() {
@@ -35,7 +36,7 @@ public class SpriteRendererSystem extends EntitySystem {
 	}
 
 	@SuppressWarnings("unchecked")
-	public SpriteRendererSystem(CameraTransformImpl cameraTransformImpl) {
+	public SpriteRendererSystem(Libgdx2dCamera cameraTransformImpl) {
 		super(SpriteComponent.class);
 		this.cameraTransformImpl = cameraTransformImpl;
 	}

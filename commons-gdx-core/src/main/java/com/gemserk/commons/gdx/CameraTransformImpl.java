@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-public class CameraTransformImpl {
+public class CameraTransformImpl implements Libgdx2dCamera {
 
 	private final OrthographicCamera internalCamera;
 
@@ -34,14 +34,17 @@ public class CameraTransformImpl {
 		this.internalCamera = internalCamera;
 	}
 
+	@Override
 	public void move(float x, float y) {
 		translation.add(x, y, 0f);
 	}
 
+	@Override
 	public void zoom(float s) {
 		scaleMatrix.setToScaling(s, s, 1f);
 	}
 	
+	@Override
 	public void rotate(float angle) {
 		rotation += angle;
 		rotationMatrix.setToRotation(axis, rotation);
@@ -51,10 +54,7 @@ public class CameraTransformImpl {
 	
 	// TODO: calculate time spent on unproject, optimize by caching the invertedtransform and transform.
 	
-	/**
-	 * Converts view port coordinates to world coordinates based on this camera transformations.
-	 * @param position The Vector2 to be converted.
-	 */
+	@Override
 	public void unproject(Vector2 position) {
 		
 		tmp.set(position.x, position.y, 0f);
@@ -75,6 +75,7 @@ public class CameraTransformImpl {
 		
 	}
 
+	@Override
 	public void apply(SpriteBatch spriteBatch) {
 
 		transform.idt();

@@ -2,7 +2,7 @@ package com.gemserk.commons.gdx.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.gemserk.commons.gdx.CameraTransformImpl;
+import com.gemserk.commons.gdx.Libgdx2dCamera;
 
 public class LibgdxPointer {
 
@@ -20,7 +20,7 @@ public class LibgdxPointer {
 
 	public int index;
 
-	private CameraTransformImpl cameraTransformImpl;
+	private Libgdx2dCamera cameraTransformImpl;
 
 	public Vector2 getPressedPosition() {
 		return pressedPosition;
@@ -38,7 +38,7 @@ public class LibgdxPointer {
 		this(index, null);
 	}
 
-	public LibgdxPointer(int index, CameraTransformImpl cameraTransformImpl) {
+	public LibgdxPointer(int index, Libgdx2dCamera cameraTransformImpl) {
 		this.index = index;
 		this.cameraTransformImpl = cameraTransformImpl;
 	}
