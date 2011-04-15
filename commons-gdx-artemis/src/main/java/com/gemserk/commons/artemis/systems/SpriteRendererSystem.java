@@ -5,11 +5,11 @@ import java.util.Comparator;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.SpriteComponent;
+import com.gemserk.commons.gdx.Camera;
 
 public class SpriteRendererSystem extends EntitySystem {
 
@@ -26,16 +26,16 @@ public class SpriteRendererSystem extends EntitySystem {
 
 	private SpriteBatch spriteBatch;
 
-	private final OrthographicCamera camera;
-	
+	private final Camera camera;
+
 	@SuppressWarnings("unchecked")
 	public SpriteRendererSystem() {
 		super(SpriteComponent.class);
-		this.camera = null;
+		this.camera = new Camera();
 	}
 
 	@SuppressWarnings("unchecked")
-	public SpriteRendererSystem(OrthographicCamera camera) {
+	public SpriteRendererSystem(Camera camera) {
 		super(SpriteComponent.class);
 		this.camera = camera;
 	}
@@ -44,7 +44,7 @@ public class SpriteRendererSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-		
+
 		orderedByLayerEntities.clear();
 
 		for (int i = 0; i < entities.size(); i++) {
@@ -54,18 +54,25 @@ public class SpriteRendererSystem extends EntitySystem {
 
 		orderedByLayerEntities.sort(layerComparator);
 
-		if (camera != null)
-			spriteBatch.setProjectionMatrix(camera.combined);
-		
+		camera.apply(spriteBatch);
+
+		// if (camera != null)
+		// spriteBatch.setProjectionMatrix(camera.combined);
+		//
+		// Matrix4 transform = new Matrix4();
+		// transform.scl(new Vector3(2f, 2f, 1f));
+		// transform.trn(1f, 1f, 0f);
+		// spriteBatch.setTransformMatrix(transform);
+
 		spriteBatch.begin();
-		
+
 		for (int i = 0; i < orderedByLayerEntities.size; i++) {
 			Entity entity = orderedByLayerEntities.get(i);
 			SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
 			Sprite sprite = spriteComponent.getSprite();
 			sprite.draw(spriteBatch);
 		}
-		
+
 		spriteBatch.end();
 
 	}
