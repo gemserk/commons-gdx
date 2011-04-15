@@ -27,6 +27,8 @@ public class Layer {
 	
 	public boolean belongs(Entity entity) {
 		SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
+		if (spriteComponent == null)
+			return false;
 		return spriteComponent.getLayer() >= minLayer && spriteComponent.getLayer() < maxLayer;
 	}
 	
