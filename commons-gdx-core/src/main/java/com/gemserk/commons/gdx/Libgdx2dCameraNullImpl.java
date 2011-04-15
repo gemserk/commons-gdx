@@ -1,0 +1,35 @@
+package com.gemserk.commons.gdx;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+
+public class Libgdx2dCameraNullImpl implements Libgdx2dCamera {
+
+	@Override
+	public void move(float x, float y) {
+		
+	}
+
+	@Override
+	public void zoom(float s) {
+		
+	}
+
+	@Override
+	public void rotate(float angle) {
+		
+	}
+
+	@Override
+	public void unproject(Vector2 position) {
+		position.y = Gdx.graphics.getHeight() - position.y;
+	}
+
+	@Override
+	public void apply(SpriteBatch spriteBatch) {
+		
+	}
+
+
+}

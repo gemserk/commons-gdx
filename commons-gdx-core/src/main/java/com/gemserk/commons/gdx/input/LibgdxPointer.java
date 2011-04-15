@@ -3,6 +3,7 @@ package com.gemserk.commons.gdx.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.Libgdx2dCamera;
+import com.gemserk.commons.gdx.Libgdx2dCameraNullImpl;
 
 public class LibgdxPointer {
 
@@ -29,13 +30,13 @@ public class LibgdxPointer {
 	public Vector2 getReleasedPosition() {
 		return releasedPosition;
 	}
-	
+
 	public Vector2 getPosition() {
 		return position;
 	}
 
 	public LibgdxPointer(int index) {
-		this(index, null);
+		this(index, new Libgdx2dCameraNullImpl());
 	}
 
 	public LibgdxPointer(int index, Libgdx2dCamera cameraTransformImpl) {
@@ -51,23 +52,15 @@ public class LibgdxPointer {
 				touched = true;
 				wasPressed = true;
 
-				if (cameraTransformImpl != null) {
-					pressedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
-					cameraTransformImpl.unproject(pressedPosition);
-				} else {
-					pressedPosition.set(Gdx.input.getX(index), Gdx.graphics.getHeight() - Gdx.input.getY(index));
-				}
+				pressedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
+				cameraTransformImpl.unproject(pressedPosition);
 
 			} else {
 				wasPressed = false;
 			}
 
-			if (cameraTransformImpl != null) {
-				position.set(Gdx.input.getX(index), Gdx.input.getY(index));
-				cameraTransformImpl.unproject(position);
-			}
-			else
-				position.set(Gdx.input.getX(index), Gdx.graphics.getHeight() - Gdx.input.getY(index));
+			position.set(Gdx.input.getX(index), Gdx.input.getY(index));
+			cameraTransformImpl.unproject(position);
 
 		}
 
@@ -77,12 +70,8 @@ public class LibgdxPointer {
 				touched = false;
 				wasReleased = true;
 
-				if (cameraTransformImpl != null) {
-					releasedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
-					cameraTransformImpl.unproject(releasedPosition);
-				} else {
-					releasedPosition.set(Gdx.input.getX(index), Gdx.graphics.getHeight() - Gdx.input.getY(index));
-				}
+				releasedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
+				cameraTransformImpl.unproject(releasedPosition);
 
 			} else {
 				wasReleased = false;
