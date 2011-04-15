@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.SpriteComponent;
-import com.gemserk.commons.gdx.Camera;
+import com.gemserk.commons.gdx.CameraTransformImpl;
 
 public class SpriteRendererSystem extends EntitySystem {
 
@@ -26,18 +26,18 @@ public class SpriteRendererSystem extends EntitySystem {
 
 	private SpriteBatch spriteBatch;
 
-	private final Camera camera;
+	private final CameraTransformImpl cameraTransformImpl;
 
 	@SuppressWarnings("unchecked")
 	public SpriteRendererSystem() {
 		super(SpriteComponent.class);
-		this.camera = new Camera();
+		this.cameraTransformImpl = new CameraTransformImpl();
 	}
 
 	@SuppressWarnings("unchecked")
-	public SpriteRendererSystem(Camera camera) {
+	public SpriteRendererSystem(CameraTransformImpl cameraTransformImpl) {
 		super(SpriteComponent.class);
-		this.camera = camera;
+		this.cameraTransformImpl = cameraTransformImpl;
 	}
 
 	Array<Entity> orderedByLayerEntities = new Array<Entity>();
@@ -54,7 +54,7 @@ public class SpriteRendererSystem extends EntitySystem {
 
 		orderedByLayerEntities.sort(layerComparator);
 
-		camera.apply(spriteBatch);
+		cameraTransformImpl.apply(spriteBatch);
 
 		// if (camera != null)
 		// spriteBatch.setProjectionMatrix(camera.combined);
