@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.SpriteComponent;
-import com.gemserk.commons.gdx.CameraTransformImpl;
+import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.Libgdx2dCamera;
 
 public class SpriteRendererSystem extends EntitySystem {
@@ -32,7 +32,7 @@ public class SpriteRendererSystem extends EntitySystem {
 	@SuppressWarnings("unchecked")
 	public SpriteRendererSystem() {
 		super(SpriteComponent.class);
-		this.cameraTransformImpl = new CameraTransformImpl();
+		this.cameraTransformImpl = new Libgdx2dCameraTransformImpl();
 	}
 
 	@SuppressWarnings("unchecked")

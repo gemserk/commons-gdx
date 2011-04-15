@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-public class CameraTransformImpl implements Libgdx2dCamera {
+public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	private final OrthographicCamera internalCamera;
 
@@ -26,11 +26,11 @@ public class CameraTransformImpl implements Libgdx2dCamera {
 	
 	// TODO: define center of the camera!
 	
-	public CameraTransformImpl() {
+	public Libgdx2dCameraTransformImpl() {
 		this(null);
 	}
 
-	public CameraTransformImpl(OrthographicCamera internalCamera) {
+	public Libgdx2dCameraTransformImpl(OrthographicCamera internalCamera) {
 		this.internalCamera = internalCamera;
 	}
 
