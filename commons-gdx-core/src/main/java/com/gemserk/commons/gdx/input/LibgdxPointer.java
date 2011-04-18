@@ -35,10 +35,6 @@ public class LibgdxPointer {
 		return position;
 	}
 	
-	public Libgdx2dCamera getCamera() {
-		return camera;
-	}
-
 	public LibgdxPointer(int index) {
 		this(index, new Libgdx2dCameraNullImpl());
 	}
