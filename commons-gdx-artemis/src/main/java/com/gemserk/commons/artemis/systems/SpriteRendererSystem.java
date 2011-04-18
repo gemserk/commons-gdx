@@ -22,12 +22,15 @@ public class SpriteRendererSystem extends EntitySystem {
 	@SuppressWarnings("unchecked")
 	public SpriteRendererSystem(Libgdx2dCamera camera) {
 		super(SpriteComponent.class);
-		
-		// TODO: move outside
-		layers = new ArrayList<Layer>();
-		layers.add(new Layer(-1000, -5, new Libgdx2dCameraTransformImpl()));
-		layers.add(new Layer(-5, 10, camera));
-		layers.add(new Layer(10, 1000, new Libgdx2dCameraTransformImpl()));
+		// default layers
+		this.layers = new ArrayList<Layer>();
+		layers.add(new Layer(-1000, 1000, camera));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public SpriteRendererSystem(Libgdx2dCamera camera, ArrayList<Layer> layers) {
+		super(SpriteComponent.class);
+		this.layers = layers;
 	}
 
 	Array<Entity> orderedByLayerEntities = new Array<Entity>();
