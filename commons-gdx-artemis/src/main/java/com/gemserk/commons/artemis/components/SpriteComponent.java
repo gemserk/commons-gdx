@@ -39,7 +39,7 @@ public class SpriteComponent extends Component {
 	}
 	
 	public SpriteComponent(Property<Sprite> sprite, Property<IntValue> layer, Property<Vector2> center) {
-		this(sprite, layer, center, PropertyBuilder.property(Color.WHITE));
+		this(sprite, layer, center, PropertyBuilder.property(new Color(1f,1f,1f,1f)));
 	}
 	
 	public SpriteComponent(Property<Sprite> sprite, Property<IntValue> layer, Property<Vector2> center, Property<Color> color) {

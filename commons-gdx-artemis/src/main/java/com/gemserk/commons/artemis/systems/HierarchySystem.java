@@ -48,10 +48,20 @@ public class HierarchySystem extends EntitySystem {
 	// }
 
 	@Override
-	protected void removed(Entity e) {
+	protected void removed(Entity entity) {
 
-		ParentComponent parentComponent = e.getComponent(ParentComponent.class);
+		ParentComponent parentComponent = entity.getComponent(ParentComponent.class);
+		
+		// if for some reason the entity parent component was removed before this method was called
+		if (parentComponent == null)
+			return;
+		
+		entity.removeComponent(parentComponent);
+		
 		ArrayList<Entity> children = parentComponent.getChildren();
+
+		// send the component to the components heaven, so it could be reused
+		
 		for (int i = 0; i < children.size(); i++) {
 			Entity child = children.get(i);
 			world.deleteEntity(child);
