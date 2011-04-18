@@ -18,6 +18,7 @@ public class AliveSystem extends EntitySystem {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity entity = entities.get(i);
 			AliveComponent aliveComponent = entity.getComponent(AliveComponent.class);
+			// ESPLOTó
 			int aliveTime = aliveComponent.getAliveTime() - world.getDelta();
 			aliveComponent.setAliveTime(aliveTime);
 			if (aliveTime <= 0) 
@@ -27,7 +28,11 @@ public class AliveSystem extends EntitySystem {
 	}
 	
 	@Override
-	protected void removed(Entity e) {
+	protected void removed(Entity entity) {
+		
+		AliveComponent aliveComponent = entity.getComponent(AliveComponent.class);
+		if (aliveComponent != null)
+			entity.removeComponent(aliveComponent);
 		
 	}
 

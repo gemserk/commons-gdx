@@ -21,7 +21,7 @@ public class LibgdxPointer {
 
 	public int index;
 
-	private Libgdx2dCamera cameraTransformImpl;
+	private Libgdx2dCamera camera;
 
 	public Vector2 getPressedPosition() {
 		return pressedPosition;
@@ -34,14 +34,18 @@ public class LibgdxPointer {
 	public Vector2 getPosition() {
 		return position;
 	}
+	
+	public Libgdx2dCamera getCamera() {
+		return camera;
+	}
 
 	public LibgdxPointer(int index) {
 		this(index, new Libgdx2dCameraNullImpl());
 	}
 
-	public LibgdxPointer(int index, Libgdx2dCamera cameraTransformImpl) {
+	public LibgdxPointer(int index, Libgdx2dCamera camera) {
 		this.index = index;
-		this.cameraTransformImpl = cameraTransformImpl;
+		this.camera = camera;
 	}
 
 	public void update() {
@@ -53,14 +57,14 @@ public class LibgdxPointer {
 				wasPressed = true;
 
 				pressedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
-				cameraTransformImpl.unproject(pressedPosition);
+				camera.unproject(pressedPosition);
 
 			} else {
 				wasPressed = false;
 			}
 
 			position.set(Gdx.input.getX(index), Gdx.input.getY(index));
-			cameraTransformImpl.unproject(position);
+			camera.unproject(position);
 
 		}
 
@@ -71,7 +75,7 @@ public class LibgdxPointer {
 				wasReleased = true;
 
 				releasedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
-				cameraTransformImpl.unproject(releasedPosition);
+				camera.unproject(releasedPosition);
 
 			} else {
 				wasReleased = false;
