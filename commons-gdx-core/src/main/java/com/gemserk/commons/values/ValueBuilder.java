@@ -9,5 +9,9 @@ public class ValueBuilder {
 	public static IntValue intValue(int i) {
 		return new IntValue(i);
 	}
+	
+	public static BooleanValue booleanValue(boolean b) {
+		return new BooleanValue(b);
+	}
 
 }

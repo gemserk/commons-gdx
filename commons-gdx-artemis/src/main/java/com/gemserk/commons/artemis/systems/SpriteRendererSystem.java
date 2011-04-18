@@ -26,7 +26,8 @@ public class SpriteRendererSystem extends EntitySystem {
 		// TODO: move outside
 		layers = new ArrayList<Layer>();
 		layers.add(new Layer(-1000, -5, new Libgdx2dCameraTransformImpl()));
-		layers.add(new Layer(-5, 1000, camera));
+		layers.add(new Layer(-5, 10, camera));
+		layers.add(new Layer(10, 1000, new Libgdx2dCameraTransformImpl()));
 	}
 
 	Array<Entity> orderedByLayerEntities = new Array<Entity>();
