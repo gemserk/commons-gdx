@@ -9,7 +9,7 @@ import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 
 public class SpriteUpdateSystem extends EntitySystem {
-
+	
 	@SuppressWarnings("unchecked")
 	public SpriteUpdateSystem() {
 		super(SpatialComponent.class, SpriteComponent.class);

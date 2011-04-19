@@ -43,4 +43,8 @@ public class SpatialComponent extends Component {
 		this.angle = angle;
 	}
 
+	public void setPosition(Vector2 position) {
+		this.position.set(position);
+	}
+
 }
