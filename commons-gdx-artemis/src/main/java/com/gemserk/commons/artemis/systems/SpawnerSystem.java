@@ -31,9 +31,8 @@ public class SpawnerSystem extends EntitySystem {
 			
 			EntityTemplate entityTemplate = spawnerComponent.getEntityTemplate();
 			
-			if (spawnTimer.update(world.getDelta())) { 
+			if (spawnTimer.update(world.getDelta()))  
 				entityTemplate.build();
-			}
 			
 			if (!spawnTimer.isRunning()) {
 				int spawnTime = random.nextInt(spawnerComponent.getMaxTime() - spawnerComponent.getMinTime()) + spawnerComponent.getMinTime();
