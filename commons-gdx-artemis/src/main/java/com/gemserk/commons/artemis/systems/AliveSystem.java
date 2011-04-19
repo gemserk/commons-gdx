@@ -19,6 +19,12 @@ public class AliveSystem extends EntitySystem {
 			Entity entity = entities.get(i);
 			AliveComponent aliveComponent = entity.getComponent(AliveComponent.class);
 			// ESPLOTó
+			
+			if (aliveComponent == null) {
+				System.out.println("should never happen");
+				continue;
+			}
+			
 			int aliveTime = aliveComponent.getAliveTime() - world.getDelta();
 			aliveComponent.setAliveTime(aliveTime);
 			if (aliveTime <= 0) 

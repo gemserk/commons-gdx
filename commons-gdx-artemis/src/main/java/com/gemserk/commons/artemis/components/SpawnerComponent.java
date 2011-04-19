@@ -3,7 +3,9 @@ package com.gemserk.commons.artemis.components;
 import com.artemis.Component;
 import com.gemserk.commons.artemis.entities.EntityTemplate;
 import com.gemserk.commons.values.IntValue;
+import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.properties.Property;
+import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.timers.Timer;
 
 public class SpawnerComponent extends Component {
@@ -43,4 +45,9 @@ public class SpawnerComponent extends Component {
 		this.entityTemplate = entityTemplate;
 	}
 
+	
+	public SpawnerComponent(Timer spawnTimer, int minTime, int maxTime, EntityTemplate entityTemplate) {
+		this(PropertyBuilder.property(spawnTimer), PropertyBuilder.property(ValueBuilder.intValue(minTime)), 
+				PropertyBuilder.property(ValueBuilder.intValue(maxTime)), PropertyBuilder.property(entityTemplate));
+	}
 }
