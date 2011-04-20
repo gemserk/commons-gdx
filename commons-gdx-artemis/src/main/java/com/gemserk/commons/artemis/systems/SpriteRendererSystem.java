@@ -23,26 +23,26 @@ public class SpriteRendererSystem extends EntitySystem {
 	public SpriteRendererSystem(Libgdx2dCamera camera) {
 		super(SpriteComponent.class);
 		// default layers
-		this.layers = new ArrayList<Layer>();
-		layers.add(new Layer(-1000, 1000, camera));
+		this.renderLayers = new ArrayList<RenderLayer>();
+		renderLayers.add(new RenderLayer(-1000, 1000, camera));
 	}
 	
 	@SuppressWarnings("unchecked")
-	public SpriteRendererSystem(Libgdx2dCamera camera, ArrayList<Layer> layers) {
+	public SpriteRendererSystem(Libgdx2dCamera camera, ArrayList<RenderLayer> renderLayers) {
 		super(SpriteComponent.class);
-		this.layers = layers;
+		this.renderLayers = renderLayers;
 	}
 
 	Array<Entity> orderedByLayerEntities = new Array<Entity>();
 	
-	ArrayList<Layer> layers;
+	ArrayList<RenderLayer> renderLayers;
 	
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		
-		for (int i = 0; i < layers.size(); i++) {
-			Layer layer = layers.get(i);
-			layer.draw(spriteBatch);
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayer = renderLayers.get(i);
+			renderLayer.draw(spriteBatch);
 		}
 
 	}
@@ -51,10 +51,10 @@ public class SpriteRendererSystem extends EntitySystem {
 	protected void added(Entity entity) {
 		// order the entity in the Layer, probably the same inside the layer
 		
-		for (int i = 0; i < layers.size(); i++) {
-			Layer layer = layers.get(i);
-			if (layer.belongs(entity)) {
-				layer.add(entity);
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayer = renderLayers.get(i);
+			if (renderLayer.belongs(entity)) {
+				renderLayer.add(entity);
 				return;
 			}
 		}
@@ -65,10 +65,10 @@ public class SpriteRendererSystem extends EntitySystem {
 	protected void removed(Entity entity) {
 		// remove the order
 		
-		for (int i = 0; i < layers.size(); i++) {
-			Layer layer = layers.get(i);
-			if (layer.belongs(entity)) {
-				layer.remove(entity);
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayer = renderLayers.get(i);
+			if (renderLayer.belongs(entity)) {
+				renderLayer.remove(entity);
 				return;
 			}
 		}

@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.Libgdx2dCamera;
 
-public class Layer {
+public class RenderLayer {
 	
 	private static final SpriteComponentComparator spriteComponentComparator = new SpriteComponentComparator();
 	
@@ -19,7 +19,7 @@ public class Layer {
 
 	private final int maxLayer;
 	
-	public Layer(int minLayer, int maxLayer, Libgdx2dCamera camera) {
+	public RenderLayer(int minLayer, int maxLayer, Libgdx2dCamera camera) {
 		this.minLayer = minLayer;
 		this.maxLayer = maxLayer;
 		this.camera = camera;
