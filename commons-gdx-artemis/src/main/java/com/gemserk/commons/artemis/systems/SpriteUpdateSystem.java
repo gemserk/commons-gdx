@@ -5,6 +5,7 @@ import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.artemis.EntityDebugger;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 
@@ -23,6 +24,17 @@ public class SpriteUpdateSystem extends EntitySystem {
 
 			SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 			SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
+			
+			if (spatialComponent == null) {
+				EntityDebugger.debug("spatial component missing in drawable entity", entity);
+				continue;
+			}
+			
+			if (spriteComponent == null) {
+				EntityDebugger.debug("sprite component missing in drawable entity", entity);
+				continue;
+			}
+			
 
 			Vector2 position = spatialComponent.getPosition();
 			Vector2 size = spatialComponent.getSize();
