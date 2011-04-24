@@ -31,5 +31,10 @@ public class Libgdx2dCameraNullImpl implements Libgdx2dCamera {
 		
 	}
 
+	@Override
+	public void center(float x, float y) {
+		
+	}
+
 
 }

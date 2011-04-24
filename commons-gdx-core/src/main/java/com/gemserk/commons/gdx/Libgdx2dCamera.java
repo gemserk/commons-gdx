@@ -6,9 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 public interface Libgdx2dCamera {
 
 	/**
-	 * Moves the camera the specified coordinates.
+	 * Moves the camera to the specified coordinates.
 	 */
 	void move(float x, float y);
+	
+	/**
+	 * Centers the camera in the specified coordinates.
+	 */
+	void center(float x, float y);
 
 	/**
 	 * Zooms the camera the specified scale factor.

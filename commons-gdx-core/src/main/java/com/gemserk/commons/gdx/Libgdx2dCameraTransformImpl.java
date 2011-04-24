@@ -17,8 +17,12 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	private final Matrix4 scaleMatrix = new Matrix4();
 	
 	private final Matrix4 rotationMatrix = new Matrix4();
+	
+	private final Matrix4 translationMatrix = new Matrix4();
 
-	Vector3 translation = new Vector3(0f, 0f, 0f);
+	// Vector3 translation = new Vector3(0f, 0f, 0f);
+	
+	Vector2 center = new Vector2();
 	
 	Vector3 axis = new Vector3(0f, 0f, 1f);
 	
@@ -36,7 +40,12 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	@Override
 	public void move(float x, float y) {
-		translation.add(x, y, 0f);
+		translationMatrix.setToTranslation(-x, -y, 0f);
+	}
+	
+	@Override
+	public void center(float x, float y) {
+		center.set(x, y);
 	}
 
 	@Override
@@ -63,9 +72,14 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 			internalCamera.unproject(tmp);
 		
 		invertedTransform.idt();
+		
+		// invertedTransform.trn(center.x, center.y, 0f);
+		
 		invertedTransform.mul(scaleMatrix);
 		invertedTransform.mul(rotationMatrix);
-		invertedTransform.trn(translation);
+		invertedTransform.mul(translationMatrix);
+		
+		invertedTransform.trn(center.x, center.y, 0f);
 		
 		invertedTransform.inv();
 		
@@ -79,14 +93,20 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	public void apply(SpriteBatch spriteBatch) {
 
 		transform.idt();
+
 		transform.mul(scaleMatrix);
 		transform.mul(rotationMatrix);
-		transform.trn(translation);
+		transform.mul(translationMatrix);
+		
+		transform.trn(center.x, center.y, 0f);
+		
+		// System.out.println(transform);
 		
 		if (internalCamera != null)
 			spriteBatch.setProjectionMatrix(internalCamera.combined);
 
 		spriteBatch.setTransformMatrix(transform);
 	}
+
 
 }
