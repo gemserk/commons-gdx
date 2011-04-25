@@ -26,4 +26,12 @@ public class MathUtils2 {
 
 	}
 	
+	public static float truncate(float a, float min, float max) {
+		if (a < min)
+			a = min;
+		if (a > max)
+			a = max;
+		return a;
+	}
+	
 }
