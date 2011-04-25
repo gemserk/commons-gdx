@@ -20,15 +20,11 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	
 	private final Matrix4 translationMatrix = new Matrix4();
 
-	// Vector3 translation = new Vector3(0f, 0f, 0f);
-	
 	Vector2 center = new Vector2();
 	
 	Vector3 axis = new Vector3(0f, 0f, 1f);
 	
 	float rotation = 0f;
-	
-	// TODO: define center of the camera!
 	
 	public Libgdx2dCameraTransformImpl() {
 		this(null);

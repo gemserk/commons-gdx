@@ -21,6 +21,10 @@ public class LibgdxResourceBuilder {
 	public FileHandle internal(String file) {
 		return Gdx.files.internal(file);
 	}
+	
+	public FileHandle absolute(String file) {
+		return Gdx.files.absolute(file);
+	}
 
 	public void texture(String id, String file) {
 		texture(id, internal(file));
