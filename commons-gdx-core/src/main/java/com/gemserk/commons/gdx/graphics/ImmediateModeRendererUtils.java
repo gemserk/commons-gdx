@@ -10,6 +10,14 @@ public class ImmediateModeRendererUtils {
 	private static final ImmediateModeRenderer renderer = new ImmediateModeRenderer();
 
 	private static final Vector2 tmp = new Vector2();
+	
+	private static final Vector2 angleTmp = new Vector2(1,0);
+	
+	public static void drawSolidCircle(Vector2 center, float radius, float angle, Color color) {
+		angleTmp.set(1,0);
+		angleTmp.rotate(angle);
+		drawSolidCircle(center, radius, angleTmp, color);
+	}
 
 	public static void drawSolidCircle(Vector2 center, float radius, Vector2 axis, Color color) {
 
