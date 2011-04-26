@@ -1,6 +1,5 @@
 package com.gemserk.commons.gdx;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -23,7 +22,7 @@ public class Libgdx2dCameraNullImpl implements Libgdx2dCamera {
 
 	@Override
 	public void unproject(Vector2 position) {
-		position.y = Gdx.graphics.getHeight() - position.y;
+
 	}
 
 	@Override

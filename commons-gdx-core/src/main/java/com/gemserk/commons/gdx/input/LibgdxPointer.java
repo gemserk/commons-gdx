@@ -34,7 +34,7 @@ public class LibgdxPointer {
 	public Vector2 getPosition() {
 		return position;
 	}
-	
+
 	public LibgdxPointer(int index) {
 		this(index, new Libgdx2dCameraNullImpl());
 	}
@@ -52,14 +52,13 @@ public class LibgdxPointer {
 				touched = true;
 				wasPressed = true;
 
-				pressedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
+				pressedPosition.set(getX(), getY());
 				camera.unproject(pressedPosition);
 
-			} else {
+			} else 
 				wasPressed = false;
-			}
 
-			position.set(Gdx.input.getX(index), Gdx.input.getY(index));
+			position.set(getX(), getY());
 			camera.unproject(position);
 
 		}
@@ -70,14 +69,21 @@ public class LibgdxPointer {
 				touched = false;
 				wasReleased = true;
 
-				releasedPosition.set(Gdx.input.getX(index), Gdx.input.getY(index));
+				releasedPosition.set(getX(), getY());
 				camera.unproject(releasedPosition);
 
-			} else {
+			} else 
 				wasReleased = false;
-			}
 
 		}
+	}
+
+	private int getY() {
+		return Gdx.graphics.getHeight() - Gdx.input.getY(index);
+	}
+
+	private int getX() {
+		return Gdx.input.getX(index);
 	}
 
 }
