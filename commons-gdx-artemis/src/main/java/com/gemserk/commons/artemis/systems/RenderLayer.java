@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.SpriteComponent;
-import com.gemserk.commons.gdx.Libgdx2dCamera;
+import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 
 public class RenderLayer {
 	

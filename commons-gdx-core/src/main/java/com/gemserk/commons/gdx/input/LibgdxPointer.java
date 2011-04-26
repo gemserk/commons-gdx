@@ -2,8 +2,8 @@ package com.gemserk.commons.gdx.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.gemserk.commons.gdx.Libgdx2dCamera;
-import com.gemserk.commons.gdx.Libgdx2dCameraNullImpl;
+import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
+import com.gemserk.commons.gdx.camera.Libgdx2dCameraNullImpl;
 
 public class LibgdxPointer {
 

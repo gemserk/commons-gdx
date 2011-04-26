@@ -1,7 +1,7 @@
 package com.gemserk.commons.gdx.box2d;
 
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
+import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
 public class Box2DCustomDebugRenderer extends Box2DDebugRenderer {
 	

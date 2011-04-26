@@ -1,4 +1,4 @@
-package com.gemserk.commons.gdx;
+package com.gemserk.commons.gdx.camera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
