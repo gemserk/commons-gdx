@@ -1,5 +1,7 @@
 package com.gemserk.commons.gdx;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -47,31 +49,40 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	@Override
 	public void unproject(Vector2 position) {
+		calculateTransform(invertedTransform);
 
-		invertedTransform.idt();
-		invertedTransform.mul(scaleMatrix);
-		invertedTransform.mul(rotationMatrix);
-		invertedTransform.mul(translationMatrix);
-		invertedTransform.trn(center.x, center.y, 0f);
 		invertedTransform.inv();
 
 		tmp.set(position.x, position.y, 0f);
 		tmp.mul(invertedTransform);
 
 		position.set(tmp.x, tmp.y);
-
 	}
 
 	@Override
 	public void apply(SpriteBatch spriteBatch) {
-
-		transform.idt();
-		transform.mul(scaleMatrix);
-		transform.mul(rotationMatrix);
-		transform.mul(translationMatrix);
-		transform.trn(center.x, center.y, 0f);
-
+		calculateTransform(transform);
 		spriteBatch.setTransformMatrix(transform);
+	}
+
+	public void push() {
+		GL10 gl = Gdx.gl10;
+		gl.glPushMatrix();
+		calculateTransform(transform);
+		gl.glMultMatrixf(transform.val, 0);
+	}
+
+	public void pop() {
+		GL10 gl = Gdx.gl10;
+		gl.glPopMatrix();
+	}
+
+	private void calculateTransform(Matrix4 m) {
+		m.idt();
+		m.mul(scaleMatrix);
+		m.mul(rotationMatrix);
+		m.mul(translationMatrix);
+		m.trn(center.x, center.y, 0f);
 	}
 
 }
