@@ -10,17 +10,21 @@ public class ImmediateModeRendererUtils {
 	private static final ImmediateModeRenderer renderer = new ImmediateModeRenderer();
 
 	private static final Vector2 tmp = new Vector2();
-	
-	private static final Vector2 angleTmp = new Vector2(1,0);
-	
-	public static void drawSolidCircle(Vector2 center, float radius, float angle, Color color) {
-		angleTmp.set(1,0);
-		angleTmp.rotate(angle);
+
+	private static final Vector2 angleTmp = new Vector2(1, 0);
+
+	public static void drawSolidCircle(Vector2 center, float radius, float axisAngle, Color color) {
+		angleTmp.set(1, 0);
+		angleTmp.rotate(axisAngle);
 		drawSolidCircle(center, radius, angleTmp, color);
 	}
 
 	public static void drawSolidCircle(Vector2 center, float radius, Vector2 axis, Color color) {
+		drawSolidCircle(center, radius, color);
+		drawLine(center.x, center.y, center.x + axis.x * radius, center.y + axis.y * radius, color);
+	}
 
+	public static void drawSolidCircle(Vector2 center, float radius, Color color) {
 		renderer.begin(GL10.GL_LINE_LOOP);
 		{
 			float angle = 0;
@@ -32,16 +36,21 @@ public class ImmediateModeRendererUtils {
 			}
 		}
 		renderer.end();
+	}
 
+	public static void drawLine(Vector2 p0, Vector2 p1, Color color) {
+		drawLine(p0.x, p0.y, p1.x, p1.y, color);
+	}
+
+	public static void drawLine(float x0, float y0, float x1, float y1, Color color) {
 		renderer.begin(GL10.GL_LINES);
 		{
 			renderer.color(color.r, color.g, color.b, color.a);
-			renderer.vertex(center.x, center.y, 0);
+			renderer.vertex(x0, y0, 0);
 			renderer.color(color.r, color.g, color.b, color.a);
-			renderer.vertex(center.x + axis.x * radius, center.y + axis.y * radius, 0);
+			renderer.vertex(x1, y1, 0);
 		}
 		renderer.end();
-		
 	}
 
 }
