@@ -28,7 +28,7 @@ public class SpriteRendererSystem extends EntitySystem {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public SpriteRendererSystem(Libgdx2dCamera camera, ArrayList<RenderLayer> renderLayers) {
+	public SpriteRendererSystem(ArrayList<RenderLayer> renderLayers) {
 		super(SpriteComponent.class);
 		this.renderLayers = renderLayers;
 	}

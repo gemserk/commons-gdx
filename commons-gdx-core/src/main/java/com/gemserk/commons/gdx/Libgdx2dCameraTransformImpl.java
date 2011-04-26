@@ -20,7 +20,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	private final Matrix4 translationMatrix = new Matrix4();
 
 	private final Vector2 center = new Vector2();
-	
+
 	private final Vector3 tmp = new Vector3();
 
 	@Override
@@ -48,18 +48,14 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	@Override
 	public void unproject(Vector2 position) {
 
-		tmp.set(position.x, position.y, 0f);
-
 		invertedTransform.idt();
-
 		invertedTransform.mul(scaleMatrix);
 		invertedTransform.mul(rotationMatrix);
 		invertedTransform.mul(translationMatrix);
-
 		invertedTransform.trn(center.x, center.y, 0f);
-
 		invertedTransform.inv();
 
+		tmp.set(position.x, position.y, 0f);
 		tmp.mul(invertedTransform);
 
 		position.set(tmp.x, tmp.y);
@@ -70,11 +66,9 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	public void apply(SpriteBatch spriteBatch) {
 
 		transform.idt();
-
 		transform.mul(scaleMatrix);
 		transform.mul(rotationMatrix);
 		transform.mul(translationMatrix);
-
 		transform.trn(center.x, center.y, 0f);
 
 		spriteBatch.setTransformMatrix(transform);
