@@ -46,6 +46,9 @@ public class LibgdxPointer {
 
 	public void update() {
 
+		position.set(getX(), getY());
+		camera.unproject(position);
+
 		if (Gdx.input.isTouched(index)) {
 
 			if (!touched) {
@@ -57,10 +60,6 @@ public class LibgdxPointer {
 
 			} else 
 				wasPressed = false;
-
-			position.set(getX(), getY());
-			camera.unproject(position);
-
 		}
 
 		if (!Gdx.input.isTouched(index)) {
