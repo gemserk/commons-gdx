@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
-	// private final OrthographicCamera internalCamera;
+	private static final Vector3 rotationAxis = new Vector3(0f, 0f, 1f);
 
 	private final Matrix4 transform = new Matrix4();
 
@@ -19,19 +19,9 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	private final Matrix4 translationMatrix = new Matrix4();
 
-	Vector2 center = new Vector2();
-
-	Vector3 axis = new Vector3(0f, 0f, 1f);
-
-	float rotation = 0f;
-
-	public Libgdx2dCameraTransformImpl() {
-		// this(null);
-	}
-
-	// public Libgdx2dCameraTransformImpl(OrthographicCamera internalCamera) {
-	// this.internalCamera = internalCamera;
-	// }
+	private final Vector2 center = new Vector2();
+	
+	private final Vector3 tmp = new Vector3();
 
 	@Override
 	public void move(float x, float y) {
@@ -50,11 +40,8 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	@Override
 	public void rotate(float angle) {
-		rotation += angle;
-		rotationMatrix.setToRotation(axis, rotation);
+		rotationMatrix.setToRotation(rotationAxis, angle);
 	}
-
-	Vector3 tmp = new Vector3();
 
 	// TODO: calculate time spent on unproject, optimize by caching the invertedtransform and transform.
 
@@ -63,12 +50,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 		tmp.set(position.x, position.y, 0f);
 
-		// if (internalCamera != null)
-		// internalCamera.unproject(tmp);
-
 		invertedTransform.idt();
-
-		// invertedTransform.trn(center.x, center.y, 0f);
 
 		invertedTransform.mul(scaleMatrix);
 		invertedTransform.mul(rotationMatrix);
@@ -94,11 +76,6 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		transform.mul(translationMatrix);
 
 		transform.trn(center.x, center.y, 0f);
-
-		// System.out.println(transform);
-
-		// if (internalCamera != null)
-		// spriteBatch.setProjectionMatrix(internalCamera.combined);
 
 		spriteBatch.setTransformMatrix(transform);
 	}
