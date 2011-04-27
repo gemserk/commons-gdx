@@ -53,4 +53,21 @@ public class ImmediateModeRendererUtils {
 		renderer.end();
 	}
 
+	public static void drawRectangle(float x0, float y0, float x1, float y1, Color color) {
+		renderer.begin(GL10.GL_LINE_LOOP);
+		{
+			renderer.color(color.r, color.g, color.b, color.a);
+			renderer.vertex(x0, y0, 0f);
+
+			renderer.color(color.r, color.g, color.b, color.a);
+			renderer.vertex(x0, y1, 0f);
+
+			renderer.color(color.r, color.g, color.b, color.a);
+			renderer.vertex(x1, y1, 0f);
+
+			renderer.color(color.r, color.g, color.b, color.a);
+			renderer.vertex(x1, y0, 0f);
+		}
+		renderer.end();
+	}
 }
