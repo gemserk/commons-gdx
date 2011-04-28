@@ -69,6 +69,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		GL10 gl = Gdx.gl10;
 		gl.glPushMatrix();
 		calculateTransform(transform);
+		gl.glLoadIdentity();
 		gl.glMultMatrixf(transform.val, 0);
 	}
 
