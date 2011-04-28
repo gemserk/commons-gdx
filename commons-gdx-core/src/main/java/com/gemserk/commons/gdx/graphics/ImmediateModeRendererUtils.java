@@ -54,11 +54,19 @@ public class ImmediateModeRendererUtils {
 	}
 	
 	public static void drawHorizontalAxis(float y, Color color) {
-		drawLine(-10000, y, 10000, y, color);
+		drawHorizontalAxis(y, 10000, color);
 	}
 
 	public static void drawVerticalAxis(float x, Color color) {
-		drawLine(x, -10000, x, 10000, color);
+		drawVerticalAxis(x, 10000, color);
+	}
+	
+	public static void drawHorizontalAxis(float y, float length, Color color) {
+		drawLine(-length, y, length, y, color);
+	}
+
+	public static void drawVerticalAxis(float x, float length, Color color) {
+		drawLine(x, -length, x, length, color);
 	}
 
 	public static void drawRectangle(float x0, float y0, float x1, float y1, Color color) {
