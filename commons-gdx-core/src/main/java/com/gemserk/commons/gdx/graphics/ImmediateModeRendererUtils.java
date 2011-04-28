@@ -52,6 +52,14 @@ public class ImmediateModeRendererUtils {
 		}
 		renderer.end();
 	}
+	
+	public static void drawHorizontalAxis(float y, Color color) {
+		drawLine(-10000, y, 10000, y, color);
+	}
+
+	public static void drawVerticalAxis(float x, Color color) {
+		drawLine(x, -10000, x, 10000, color);
+	}
 
 	public static void drawRectangle(float x0, float y0, float x1, float y1, Color color) {
 		renderer.begin(GL10.GL_LINE_LOOP);
