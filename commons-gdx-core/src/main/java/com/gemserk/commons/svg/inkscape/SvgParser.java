@@ -25,6 +25,7 @@ public class SvgParser {
 		{
 			add(new SvgInkscapeGroupProcessor());
 			add(new SvgInkscapeImageProcessor());
+			add(new SvgInkscapePathProcessor());
 		}
 	};
 	
