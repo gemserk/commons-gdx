@@ -37,6 +37,7 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 	protected SvgInkscapePath getSvgPath(Element element) {
 
 		String id = element.getAttribute("id");
+		String label = SvgInkscapeUtils.getLabel(element);
 		String d = element.getAttribute("d");
 
 		StringTokenizer tokens = new StringTokenizer(d, ", ");
@@ -89,7 +90,7 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 		SvgInkscapePathImpl svgPath = new SvgInkscapePathImpl();
 		svgPath.setId(id);
 		svgPath.setPoints(points);
-
+		svgPath.setLabel(label);
 		return svgPath;
 	}
 
