@@ -84,7 +84,7 @@ public class SvgParser {
 		svgDocument.setWidth(width);
 		svgDocument.setHeight(height);
 
-		handle(svgDocument);
+		handle(svgDocument, root);
 
 		loadChildren(root);
 
@@ -115,10 +115,10 @@ public class SvgParser {
 		}
 	}
 
-	public void handle(SvgElement svgElement) {
+	public void handle(SvgElement svgElement, Element element) {
 		for (int i = 0; i < handlers.size(); i++) {
 			SvgElementHandler handler = handlers.get(i);
-			handler.handle(this, svgElement);
+			handler.handle(this, svgElement, element);
 		}
 	}
 	

@@ -16,7 +16,7 @@ public class SvgInkscapeGroupProcessor implements SvgElementProcessor {
 		svgGroup.setGroupMode(groupMode);
 		svgGroup.setLabel(label);
 		
-		svgParser.handle(svgGroup);
+		svgParser.handle(svgGroup, element);
 	}
 
 	@Override

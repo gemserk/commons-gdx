@@ -31,7 +31,7 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 	@Override
 	public void process(SvgParser svgParser, Element element) {
 		SvgInkscapePath svgImage = getSvgPath(element);
-		svgParser.handle(svgImage);
+		svgParser.handle(svgImage, element);
 	}
 
 	protected SvgInkscapePath getSvgPath(Element element) {
