@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.values.IntValue;
+import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.PropertyBuilder;
 
@@ -47,6 +48,13 @@ public class SpriteComponent extends Component {
 		this.layer = layer;
 		this.center = center;
 		this.color = color;
+	}
+	
+	public SpriteComponent(Sprite sprite, int layer, Vector2 center, Color color) {
+		this(PropertyBuilder.property(sprite), 
+				PropertyBuilder.property(ValueBuilder.intValue(layer)), 
+				PropertyBuilder.vector2(center), 
+				PropertyBuilder.property(color));
 	}
 
 }
