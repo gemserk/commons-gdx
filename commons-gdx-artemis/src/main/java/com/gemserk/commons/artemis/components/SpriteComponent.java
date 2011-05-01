@@ -57,4 +57,8 @@ public class SpriteComponent extends Component {
 				PropertyBuilder.property(color));
 	}
 
+	public void setSprite(Sprite sprite) {
+		this.sprite.set(sprite);
+	}
+
 }

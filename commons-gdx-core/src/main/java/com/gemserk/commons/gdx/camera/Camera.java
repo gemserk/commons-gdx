@@ -27,7 +27,7 @@ public class Camera {
 	public void setZoom(float zoom) {
 		this.zoom = zoom;
 	}
-
+	
 	public void setAngle(float angle) {
 		this.angle = angle;
 	}
