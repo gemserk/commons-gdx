@@ -13,8 +13,12 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 
 	private static enum Command {
 
-		None, RelativeMoveTo, AbsoluteMoveTo,
-		// RelativeLineTo, AbsoluteLineTo, Etc...
+		None, 
+		AbsoluteMoveTo, 
+		RelativeMoveTo, 
+		AbsoluteLineTo,
+		RelativeLineTo, 
+		ClosePath,
 
 	}
 
@@ -23,6 +27,10 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 		{
 			put("m", Command.RelativeMoveTo);
 			put("M", Command.AbsoluteMoveTo);
+			put("l", Command.RelativeLineTo);
+			put("L", Command.AbsoluteLineTo);
+			put("z", Command.ClosePath);
+			put("Z", Command.ClosePath);
 		}
 	};
 
@@ -60,8 +68,7 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 			if (currentCommand == Command.None)
 				continue;
 
-			if (currentCommand == Command.RelativeMoveTo) {
-
+			if (currentCommand == Command.RelativeMoveTo || currentCommand == Command.RelativeLineTo) {
 				float x = Float.parseFloat(token);
 				float y = Float.parseFloat(tokens.nextToken());
 
@@ -73,12 +80,11 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 				pointList.add(newPoint);
 
 				relativePoint = new Vector2f(newPoint);
-
-			} else if (currentCommand == Command.AbsoluteMoveTo) {
+			} else if (currentCommand == Command.AbsoluteMoveTo || currentCommand == Command.AbsoluteLineTo) {
 				float x = Float.parseFloat(token);
 				float y = Float.parseFloat(tokens.nextToken());
 				pointList.add(new Vector2f(x, y));
-			}
+			} 
 			
 			// other commands?
 
