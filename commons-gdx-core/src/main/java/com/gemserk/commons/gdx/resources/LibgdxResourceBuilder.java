@@ -13,6 +13,12 @@ import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 public class LibgdxResourceBuilder {
 
 	ResourceManager<String> resourceManager;
+	
+	private boolean cacheWhenLoad = false;
+	
+	public void setCacheWhenLoad(boolean cacheWhenLoad) {
+		this.cacheWhenLoad = cacheWhenLoad;
+	}
 
 	public LibgdxResourceBuilder(ResourceManager<String> resourceManager) {
 		this.resourceManager = resourceManager;
@@ -32,6 +38,8 @@ public class LibgdxResourceBuilder {
 
 	public void texture(String id, FileHandle fileHandle) {
 		resourceManager.add(id, new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(fileHandle))));
+		if (cacheWhenLoad)
+			resourceManager.get(id).get();
 	}
 
 	public void sound(String id, String file) {
@@ -40,6 +48,8 @@ public class LibgdxResourceBuilder {
 
 	public void sound(String id, FileHandle fileHandle) {
 		resourceManager.add(id, new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(fileHandle))));
+		if (cacheWhenLoad)
+			resourceManager.get(id).get();
 	}
 
 }
