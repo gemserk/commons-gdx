@@ -33,11 +33,15 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void texture(String id, String file) {
-		texture(id, internal(file));
+		texture(id, internal(file), true);
+	}
+	
+	public void texture(String id, String file, boolean linearFilter) {
+		texture(id, internal(file), linearFilter);
 	}
 
-	public void texture(String id, FileHandle fileHandle) {
-		resourceManager.add(id, new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(fileHandle))));
+	public void texture(String id, FileHandle fileHandle, boolean linearFilter) {
+		resourceManager.add(id, new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(fileHandle, linearFilter))));
 		if (cacheWhenLoad)
 			resourceManager.get(id).get();
 	}

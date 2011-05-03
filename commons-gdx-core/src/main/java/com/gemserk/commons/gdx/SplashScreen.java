@@ -92,7 +92,7 @@ public class SplashScreen extends ScreenAdapter {
 		sprite.setColor(color);
 		sprite.setPosition(centerX - newWidth / 2, centerY - newHeight / 2);
 		sprite.setSize(newWidth, newHeight);
-
+		
 		sprite.draw(spriteBatch);
 
 		spriteBatch.end();
