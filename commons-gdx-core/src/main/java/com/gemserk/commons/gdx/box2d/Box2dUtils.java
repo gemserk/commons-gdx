@@ -8,7 +8,7 @@ public class Box2dUtils {
 		return initArray(new Vector2[count]);
 	}
 
-	static Vector2[] initArray(Vector2[] array) {
+	public static Vector2[] initArray(Vector2[] array) {
 		for (int i = 0; i < array.length; i++) 
 			array[i] = new Vector2();
 		return array;
