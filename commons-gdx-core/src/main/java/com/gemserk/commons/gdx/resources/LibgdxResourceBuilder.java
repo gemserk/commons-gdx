@@ -111,7 +111,7 @@ public class LibgdxResourceBuilder {
 				}
 
 				FrameAnimationImpl frameAnimation = new FrameAnimationImpl(time, newTimes);
-				frameAnimation.setLoop(true);
+				frameAnimation.setLoop(loop);
 
 				return new Animation(frames, frameAnimation);
 			}
