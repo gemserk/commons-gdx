@@ -18,16 +18,32 @@ public class FrameAnimationImpl implements FrameAnimation {
 
 	private boolean loop;
 
-	public FrameAnimationImpl(int f0, int... framesTimes) {
-		this(false, f0, framesTimes);
+	public void setLoop(boolean loop) {
+		this.loop = loop;
 	}
 
-	public FrameAnimationImpl(boolean loop, int f0, int... framesTimes) {
-		// this.framesTimes = framesTimes;
+	public FrameAnimationImpl(int f0, int... framesTimes) {
+		this.currentFrame = 0;
+		this.currentTime = 0;
+		this.loop = false;
+		set(f0, framesTimes);
+	}
+
+	// public FrameAnimationImpl(boolean loop, int f0, int... framesTimes) {
+	// // this.framesTimes = framesTimes;
+	// this.currentFrame = 0;
+	// this.currentTime = 0;
+	// this.loop = loop;
+	// set(f0, framesTimes);
+	// }
+
+	public FrameAnimationImpl(boolean loop, int... framesTimes) {
+		// we could use the pattern 1+
+		assert (framesTimes.length > 0);
 		this.currentFrame = 0;
 		this.currentTime = 0;
 		this.loop = loop;
-		set(f0, framesTimes);
+		set(framesTimes);
 	}
 
 	private void set(int f0, int... frames) {
@@ -35,6 +51,12 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.framesTimes[0] = f0;
 		for (int i = 1; i < frames.length + 1; i++)
 			this.framesTimes[i] = frames[i - 1];
+	}
+
+	private void set(int... frames) {
+		this.framesTimes = new int[frames.length];
+		for (int i = 0; i < frames.length; i++)
+			this.framesTimes[i] = frames[i];
 	}
 
 	// public FrameAnimationImpl(int frameTime, int frameCount) {

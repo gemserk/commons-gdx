@@ -10,7 +10,6 @@ public class FrameAnimationImplTest {
 	@Test
 	public void test() {
 		
-		
 		FrameAnimationImpl frameAnimationImpl = new FrameAnimationImpl(false, 150, 1000);
 		
 		assertThat(frameAnimationImpl.getCurrentFrame(), IsEqual.equalTo(0));
@@ -27,7 +26,6 @@ public class FrameAnimationImplTest {
 	
 	@Test
 	public void test2() {
-		
 		
 		FrameAnimationImpl frameAnimationImpl = new FrameAnimationImpl(true, 150, 1000);
 		
