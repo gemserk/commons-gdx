@@ -2,9 +2,7 @@ package com.gemserk.animation4j;
 
 
 /**
- * An implementation of an animation without graphics.
- * 
- * @author acoppes
+ * An implementation of the state of an animation based on frames (without knowing nothing about graphics).
  */
 public class FrameAnimationImpl implements FrameAnimation {
 
