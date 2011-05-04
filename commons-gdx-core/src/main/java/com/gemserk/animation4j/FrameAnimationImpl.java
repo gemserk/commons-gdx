@@ -29,26 +29,26 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.loop = loop;
 		set(f0, framesTimes);
 	}
-	
-	private void set(int f0, int... frames) { 
+
+	private void set(int f0, int... frames) {
 		this.framesTimes = new int[frames.length + 1];
 		this.framesTimes[0] = f0;
-		for (int i = 1; i < frames.length; i++) 
-			this.framesTimes[i] = frames[i-1];
+		for (int i = 1; i < frames.length + 1; i++)
+			this.framesTimes[i] = frames[i - 1];
 	}
 
-	public FrameAnimationImpl(int frameTime, int frameCount) {
-		this(frameTime, frameCount, false);
-	}
+	// public FrameAnimationImpl(int frameTime, int frameCount) {
+	// this(frameTime, frameCount, false);
+	// }
 
-	public FrameAnimationImpl(int frameTime, int frameCount, boolean loop) {
-		framesTimes = new int[frameCount];
-		for (int i = 0; i < framesTimes.length; i++) 
-			framesTimes[i] = frameTime;
-		this.currentFrame = 0;
-		this.currentTime = 0;
-		this.loop = loop;
-	}
+	// public FrameAnimationImpl(int frameTime, int frameCount, boolean loop) {
+	// framesTimes = new int[frameCount];
+	// for (int i = 0; i < framesTimes.length; i++)
+	// framesTimes[i] = frameTime;
+	// this.currentFrame = 0;
+	// this.currentTime = 0;
+	// this.loop = loop;
+	// }
 
 	public int getFramesCount() {
 		return framesTimes.length;
@@ -73,7 +73,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 	public void update(int delta) {
 		currentTime += delta;
 		int currentFrameTime = getCurrentFrameTime();
-		if (currentTime > currentFrameTime) {
+		if (currentTime >= currentFrameTime) {
 			nextFrame();
 			currentTime -= currentFrameTime;
 		}
