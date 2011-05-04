@@ -1,12 +1,14 @@
 package com.gemserk.animation4j;
 
-
 /**
  * An implementation of the state of an animation based on frames (without knowing nothing about graphics).
  */
 public class FrameAnimationImpl implements FrameAnimation {
 
-	private final int[] framesTimes;
+	/**
+	 * Represents each frame time
+	 */
+	private int[] framesTimes;
 
 	private int currentFrame;
 
@@ -16,15 +18,23 @@ public class FrameAnimationImpl implements FrameAnimation {
 
 	private boolean loop;
 
-	public FrameAnimationImpl(int[] framesTimes) {
-		this(framesTimes, false);
+	public FrameAnimationImpl(int f0, int... framesTimes) {
+		this(false, f0, framesTimes);
 	}
-	
-	public FrameAnimationImpl(int[] framesTimes, boolean loop) {
-		this.framesTimes = framesTimes;
+
+	public FrameAnimationImpl(boolean loop, int f0, int... framesTimes) {
+		// this.framesTimes = framesTimes;
 		this.currentFrame = 0;
 		this.currentTime = 0;
 		this.loop = loop;
+		set(f0, framesTimes);
+	}
+	
+	private void set(int f0, int... frames) { 
+		this.framesTimes = new int[frames.length + 1];
+		this.framesTimes[0] = f0;
+		for (int i = 1; i < frames.length; i++) 
+			this.framesTimes[i] = frames[i-1];
 	}
 
 	public FrameAnimationImpl(int frameTime, int frameCount) {
@@ -33,9 +43,8 @@ public class FrameAnimationImpl implements FrameAnimation {
 
 	public FrameAnimationImpl(int frameTime, int frameCount, boolean loop) {
 		framesTimes = new int[frameCount];
-		for (int i = 0; i < framesTimes.length; i++) {
+		for (int i = 0; i < framesTimes.length; i++) 
 			framesTimes[i] = frameTime;
-		}
 		this.currentFrame = 0;
 		this.currentTime = 0;
 		this.loop = loop;
@@ -45,7 +54,9 @@ public class FrameAnimationImpl implements FrameAnimation {
 		return framesTimes.length;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gemserk.games.taken.FrameAnimation#getCurrentFrame()
 	 */
 	@Override
@@ -53,7 +64,9 @@ public class FrameAnimationImpl implements FrameAnimation {
 		return currentFrame;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gemserk.games.taken.FrameAnimation#update(int)
 	 */
 	@Override
