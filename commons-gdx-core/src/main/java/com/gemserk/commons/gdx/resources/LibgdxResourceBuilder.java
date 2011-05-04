@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
+import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
+import com.gemserk.resources.dataloaders.DataLoader;
 import com.gemserk.resources.resourceloaders.CachedResourceLoader;
 import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
@@ -54,6 +57,32 @@ public class LibgdxResourceBuilder {
 		resourceManager.add(id, new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(fileHandle))));
 		if (cacheWhenLoad)
 			resourceManager.get(id).get();
+	}
+
+	/**
+	 * registers a new sprite resource builder returning a new sprite each time it is called.
+	 */
+	public void sprite(String id, String textureId) {
+		final Resource<Texture> texture = resourceManager.get(textureId);
+		resourceManager.add(id, new ResourceLoaderImpl<Sprite>(new DataLoader<Sprite>() {
+			@Override
+			public Sprite load() {
+				return new Sprite(texture.get());
+			}
+		}));
+	}
+
+	/**
+	 * registers a new sprite resource builder returning a new sprite each time it is called.
+	 */
+	public void sprite(String id, String textureId, final int x, final int y, final int width, final int height) {
+		final Resource<Texture> texture = resourceManager.get(textureId);
+		resourceManager.add(id, new ResourceLoaderImpl<Sprite>(new DataLoader<Sprite>() {
+			@Override
+			public Sprite load() {
+				return new Sprite(texture.get(), x, y, width, height);
+			}
+		}));
 	}
 
 }
