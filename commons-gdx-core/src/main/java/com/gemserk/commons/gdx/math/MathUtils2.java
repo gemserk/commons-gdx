@@ -9,17 +9,24 @@ public class MathUtils2 {
 	 * Returns true if the point is inside the rectangle, false otherwise
 	 */
 	public static boolean inside(Rectangle r, Vector2 p) {
+		return inside(r, p.x, p.y);
+	}
+	
+	/**
+	 * Returns true whenever x,y is inside the rectangle, false otherwise
+	 */
+	public static boolean inside(Rectangle r, float x, float y) {
 
-		if (p.x < r.x)
+		if (x < r.x)
 			return false;
 
-		if (p.y < r.y)
+		if (y < r.y)
 			return false;
 
-		if (p.x > r.x + r.width)
+		if (x > r.x + r.width)
 			return false;
 
-		if (p.y > r.y + r.height)
+		if (y > r.y + r.height)
 			return false;
 
 		return true;
