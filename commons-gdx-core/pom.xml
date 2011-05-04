@@ -55,12 +55,21 @@
 					<artifactId>commons-io</artifactId>
 					<groupId>commons-io</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>resourcesmanager-core</artifactId>
+					<groupId>com.gemserk.resources</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>java3d</groupId>
 			<artifactId>vecmath</artifactId>
 			<version>1.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gemserk.resources</groupId>
+			<artifactId>resourcesmanager-core</artifactId>
+			<version>0.0.11-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
