@@ -1,12 +1,15 @@
 package com.gemserk.commons.gdx.resources;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
+import com.gemserk.commons.gdx.resources.dataloaders.DisposableDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
 import com.gemserk.resources.Resource;
@@ -64,11 +67,11 @@ public class LibgdxResourceBuilder {
 	/**
 	 * registers a new sprite resource builder returning a new sprite each time it is called.
 	 */
-	public void sprite(String id, String textureId) {
-		final Resource<Texture> texture = resourceManager.get(textureId);
+	public void sprite(String id, final String textureId) {
 		resourceManager.add(id, new ResourceLoaderImpl<Sprite>(new DataLoader<Sprite>() {
 			@Override
 			public Sprite load() {
+				Resource<Texture> texture = resourceManager.get(textureId);
 				return new Sprite(texture.get());
 			}
 		}));
@@ -77,23 +80,23 @@ public class LibgdxResourceBuilder {
 	/**
 	 * registers a new sprite resource builder returning a new sprite each time it is called.
 	 */
-	public void sprite(String id, String textureId, final int x, final int y, final int width, final int height) {
-		final Resource<Texture> texture = resourceManager.get(textureId);
+	public void sprite(String id, final String textureId, final int x, final int y, final int width, final int height) {
 		resourceManager.add(id, new ResourceLoaderImpl<Sprite>(new DataLoader<Sprite>() {
 			@Override
 			public Sprite load() {
+				Resource<Texture> texture = resourceManager.get(textureId);
 				return new Sprite(texture.get(), x, y, width, height);
 			}
 		}));
 	}
 
-	public void animation(String id, String spriteSheetId, final int x, final int y, final int w, final int h, final int framesCount, //
+	public void animation(String id, final String spriteSheetId, final int x, final int y, final int w, final int h, final int framesCount, //
 			final boolean loop, final int time, final int... times) {
-		final Texture spriteSheet = resourceManager.getResourceValue(spriteSheetId);
 		resourceManager.add(id, new ResourceLoaderImpl<Animation>(new DataLoader<Animation>() {
 
 			@Override
 			public Animation load() {
+				Texture spriteSheet = resourceManager.getResourceValue(spriteSheetId);
 				Sprite[] frames = new Sprite[framesCount];
 				for (int i = 0; i < frames.length; i++) {
 					frames[i] = new Sprite(spriteSheet, x + i * w, y, w, h);
@@ -117,6 +120,37 @@ public class LibgdxResourceBuilder {
 			}
 
 		}));
+	}
+	
+	public void font(String id, final String imageFile, final String fontFile) {
+
+		resourceManager.add(id, new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new DisposableDataLoader<BitmapFont>(internal(imageFile)) {
+
+			@Override
+			public BitmapFont load() {
+				Texture texture = new Texture(internal(imageFile));
+//				texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+				return new BitmapFont(internal(fontFile), new Sprite(texture), false);
+			}
+
+		})));
+
+	}
+	
+	public void music(String id, String file) {
+		resourceManager.add(id, new CachedResourceLoader<Music>(new ResourceLoaderImpl<Music>(new DisposableDataLoader<Music>(internal(file)) {
+			@Override
+			public Music load() {
+				return Gdx.audio.newMusic(fileHandle);
+			}
+
+			@Override
+			public void dispose(Music t) {
+				if (t.isPlaying())
+					t.stop();
+				super.dispose(t);
+			}
+		})));
 	}
 
 	// / TESTING STUFF
