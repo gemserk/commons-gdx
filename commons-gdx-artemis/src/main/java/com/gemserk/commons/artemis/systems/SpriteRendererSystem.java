@@ -6,7 +6,6 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
@@ -14,6 +13,8 @@ import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 public class SpriteRendererSystem extends EntitySystem {
 	
 	private SpriteBatch spriteBatch;
+
+	private ArrayList<RenderLayer> renderLayers;
 
 	public SpriteRendererSystem() {
 		this(new Libgdx2dCameraTransformImpl());
@@ -33,10 +34,6 @@ public class SpriteRendererSystem extends EntitySystem {
 		this.renderLayers = renderLayers;
 	}
 
-	Array<Entity> orderedByLayerEntities = new Array<Entity>();
-	
-	ArrayList<RenderLayer> renderLayers;
-	
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		

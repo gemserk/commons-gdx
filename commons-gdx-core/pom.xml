@@ -16,7 +16,7 @@
 	<properties>
 		<libgdxversion>0.91-SNAPSHOT</libgdxversion>
 		<animation4j.version>0.0.10</animation4j.version>
-		<componentsengine.version>0.0.9-SNAPSHOT</componentsengine.version>
+		<componentsengine.version>0.0.10-SNAPSHOT</componentsengine.version>
 	</properties>
 
 	<dependencies>
@@ -32,7 +32,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.gemserk.componentsengine</groupId>
-			<artifactId>core</artifactId>
+			<artifactId>componentsengine-core</artifactId>
 			<version>${componentsengine.version}</version>
 			<exclusions>
 				<exclusion>
