@@ -30,30 +30,51 @@ public class SvgInkscapeUtils {
 		return element.getAttributeNS(INKSCAPE, "groupmode");
 	}
 
+	/**
+	 * Process the transform attribute of an Element and applies the specified transforms to a new matrix based on http://www.w3.org/TR/SVG/coords.html#TransformAttribute.
+	 * 
+	 * @param element
+	 *            The SVG element which contains the transform attribute.
+	 * @param m
+	 *            The matrix to be modified.
+	 * @return The new matrix with the transforms applied.
+	 */
+	public static Matrix3f getTransform(Element element) {
+		Matrix3f m = new Matrix3f();
+		m.setIdentity();
+		return getTransform(element, m);
+	}
+
+	/**
+	 * Process the transform attribute of an Element and applies the specified transforms to the specified matrix based on http://www.w3.org/TR/SVG/coords.html#TransformAttribute. If matrix is null then a new matrix is returned.
+	 * 
+	 * @param element
+	 *            The SVG element which contains the transform attribute.
+	 * @param m
+	 *            The matrix to be modified.
+	 * @return The modified matrix.
+	 */
 	public static Matrix3f getTransform(Element element, Matrix3f m) {
 
-		m.setIdentity();
+		String transforms = element.getAttribute("transform");
 
-		String type = element.getAttribute("transform");
-
-		if (type == null)
+		if (transforms == null)
 			return m;
 
-		if (type.startsWith("scale")) {
-			type = type.substring(0, type.length() - 1);
-			type = type.substring("scale(".length());
-			StringTokenizer tokens = new StringTokenizer(type, ", ");
+		if (transforms.startsWith("scale")) {
+			transforms = transforms.substring(0, transforms.length() - 1);
+			transforms = transforms.substring("scale(".length());
+			StringTokenizer tokens = new StringTokenizer(transforms, ", ");
 			float sx = Float.parseFloat(tokens.nextToken());
 			float sy = Float.parseFloat(tokens.nextToken());
 			m.setM00(sx);
 			m.setM11(sy);
-			// m.setToScaling(sx, sy, 1f);
-		} else if (type.startsWith("matrix")) {
+		} else if (transforms.startsWith("matrix")) {
 
-			type = type.substring(0, type.length() - 1);
-			type = type.substring("matrix(".length());
+			transforms = transforms.substring(0, transforms.length() - 1);
+			transforms = transforms.substring("matrix(".length());
 
-			StringTokenizer tokens = new StringTokenizer(type, ", ");
+			StringTokenizer tokens = new StringTokenizer(transforms, ", ");
 
 			float[] tr = new float[6];
 

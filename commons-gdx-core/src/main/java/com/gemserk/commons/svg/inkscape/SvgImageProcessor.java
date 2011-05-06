@@ -21,7 +21,9 @@ public class SvgImageProcessor implements SvgElementProcessor {
 		float height = Float.parseFloat(element.getAttribute("height"));
 
 		Matrix3f transform = new Matrix3f();
+		transform.setIdentity();
 
+		// should be processed before by the TransformProcessor?
 		SvgInkscapeUtils.getTransform(element, transform);
 
 		SvgImageImpl svgImage = new SvgImageImpl();
