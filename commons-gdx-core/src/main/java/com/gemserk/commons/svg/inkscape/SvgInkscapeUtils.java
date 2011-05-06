@@ -61,20 +61,41 @@ public class SvgInkscapeUtils {
 		if (transforms == null)
 			return m;
 
-		if (transforms.startsWith("scale")) {
-			transforms = transforms.substring(0, transforms.length() - 1);
-			transforms = transforms.substring("scale(".length());
-			StringTokenizer tokens = new StringTokenizer(transforms, ", ");
+		return parseTransformAttribute(transforms, m);
+	}
+
+	/**
+	 * Parses a SVG Element transform attribute and applies each transform to the specified matrix.
+	 * 
+	 * @param transformAttribute
+	 *            The SVG Element transform attribute.
+	 * @param m
+	 *            The matrix to be modified.
+	 * @return The matrix with all transforms applied.
+	 */
+	public static Matrix3f parseTransformAttribute(String transformAttribute, Matrix3f m) {
+		
+		transformAttribute = transformAttribute.replace(" ", "");
+		
+		if (transformAttribute.startsWith("scale")) {
+			transformAttribute = transformAttribute.substring(0, transformAttribute.length() - 1);
+			transformAttribute = transformAttribute.substring("scale(".length());
+			StringTokenizer tokens = new StringTokenizer(transformAttribute, ", ");
+			
 			float sx = Float.parseFloat(tokens.nextToken());
-			float sy = Float.parseFloat(tokens.nextToken());
+			float sy = sx;
+			
+			if (tokens.hasMoreTokens())
+				sy = Float.parseFloat(tokens.nextToken());
+			
 			m.setM00(sx);
 			m.setM11(sy);
-		} else if (transforms.startsWith("matrix")) {
+		} else if (transformAttribute.startsWith("matrix")) {
 
-			transforms = transforms.substring(0, transforms.length() - 1);
-			transforms = transforms.substring("matrix(".length());
+			transformAttribute = transformAttribute.substring(0, transformAttribute.length() - 1);
+			transformAttribute = transformAttribute.substring("matrix(".length());
 
-			StringTokenizer tokens = new StringTokenizer(transforms, ", ");
+			StringTokenizer tokens = new StringTokenizer(transformAttribute, ", ");
 
 			float[] tr = new float[6];
 
@@ -90,9 +111,7 @@ public class SvgInkscapeUtils {
 
 			m.setM02(tr[4]);
 			m.setM12(tr[5]);
-
 		}
-
 		return m;
 	}
 
