@@ -1,5 +1,7 @@
 package com.gemserk.commons.gdx.resources;
 
+import org.w3c.dom.Document;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -12,6 +14,7 @@ import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.gdx.resources.dataloaders.DisposableDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
+import com.gemserk.commons.svg.inkscape.DocumentParser;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.dataloaders.DataLoader;
@@ -149,6 +152,15 @@ public class LibgdxResourceBuilder {
 				if (t.isPlaying())
 					t.stop();
 				super.dispose(t);
+			}
+		})));
+	}
+	
+	public void xmlDocument(String id, final String file) {
+		resourceManager.add(id, new CachedResourceLoader<Document>(new ResourceLoaderImpl<Document>(new DataLoader<Document>() {
+			@Override
+			public Document load() {
+				return new DocumentParser().parse(internal(file).read());
 			}
 		})));
 	}
