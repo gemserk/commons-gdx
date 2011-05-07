@@ -3,7 +3,7 @@ package com.gemserk.commons.gdx;
 import com.badlogic.gdx.Screen;
 
 public class ScreenAdapter implements Screen {
-
+	
 	/**
 	 * Don't override if you want to use internalUpdate or internalRender separated methods.
 	 */
