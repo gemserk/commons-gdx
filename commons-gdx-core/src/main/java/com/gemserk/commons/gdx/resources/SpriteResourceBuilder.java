@@ -47,5 +47,10 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 	public Sprite build() {
 		return new Sprite(texture, x, y, width, height);
 	}
+
+	@Override
+	public boolean isCached() {
+		return false;
+	}
 	
 }

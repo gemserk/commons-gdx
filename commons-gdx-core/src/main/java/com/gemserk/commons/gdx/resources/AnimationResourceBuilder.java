@@ -63,4 +63,9 @@ public class AnimationResourceBuilder implements ResourceBuilder<Animation> {
 		return new Animation(frames, new FrameAnimationImpl(loop, times));
 	}
 
+	@Override
+	public boolean isCached() {
+		return false;
+	}
+
 }

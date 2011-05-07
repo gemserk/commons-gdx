@@ -19,6 +19,7 @@ import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.dataloaders.DataLoader;
 import com.gemserk.resources.resourceloaders.CachedResourceLoader;
+import com.gemserk.resources.resourceloaders.ResourceLoader;
 import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
 public class LibgdxResourceBuilder {
@@ -124,7 +125,7 @@ public class LibgdxResourceBuilder {
 
 		}));
 	}
-	
+
 	public void font(String id, final String imageFile, final String fontFile) {
 
 		resourceManager.add(id, new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new DisposableDataLoader<BitmapFont>(internal(imageFile)) {
@@ -132,14 +133,14 @@ public class LibgdxResourceBuilder {
 			@Override
 			public BitmapFont load() {
 				Texture texture = new Texture(internal(imageFile));
-//				texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+				// texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 				return new BitmapFont(internal(fontFile), new Sprite(texture), false);
 			}
 
 		})));
 
 	}
-	
+
 	public void music(String id, String file) {
 		resourceManager.add(id, new CachedResourceLoader<Music>(new ResourceLoaderImpl<Music>(new DisposableDataLoader<Music>(internal(file)) {
 			@Override
@@ -155,7 +156,7 @@ public class LibgdxResourceBuilder {
 			}
 		})));
 	}
-	
+
 	public void xmlDocument(String id, final String file) {
 		resourceManager.add(id, new CachedResourceLoader<Document>(new ResourceLoaderImpl<Document>(new DataLoader<Document>() {
 			@Override
@@ -169,12 +170,18 @@ public class LibgdxResourceBuilder {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void resource(String id, final ResourceBuilder resourceBuilder) {
-		resourceManager.add(id, new ResourceLoaderImpl(new DataLoader() {
+
+		ResourceLoader resourceLoader = new ResourceLoaderImpl(new DataLoader() {
 			@Override
 			public Object load() {
 				return resourceBuilder.build();
 			}
-		}));
+		});
+
+		if (resourceBuilder.isCached())
+			resourceLoader = new CachedResourceLoader(resourceLoader);
+
+		resourceManager.add(id, resourceLoader);
 	}
 
 	public SpriteResourceBuilder sprite2(String textureId) {
@@ -184,6 +191,42 @@ public class LibgdxResourceBuilder {
 
 	public AnimationResourceBuilder animation2(String textureId) {
 		return new AnimationResourceBuilder(resourceManager, textureId);
+	}
+
+	public XmlDocumentDeclaration xmlDocument(String file) {
+		return new XmlDocumentDeclaration(file);
+	}
+
+	public static class XmlDocumentDeclaration implements ResourceBuilder<Document> {
+
+		private final String file;
+
+		private boolean cached = false;
+
+		// if it is internal resource....
+		// public XmlDocumentDeclaration internal() {
+		// return this;
+		// }
+
+		public XmlDocumentDeclaration cached() {
+			this.cached = true;
+			return this;
+		}
+
+		public XmlDocumentDeclaration(String file) {
+			this.file = file;
+		}
+
+		@Override
+		public Document build() {
+			return new DocumentParser().parse(Gdx.files.internal(file).read());
+		}
+
+		@Override
+		public boolean isCached() {
+			return cached;
+		}
+
 	}
 
 }
