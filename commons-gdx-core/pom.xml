@@ -17,6 +17,7 @@
 		<libgdxversion>0.91-SNAPSHOT</libgdxversion>
 		<animation4j.version>0.0.10</animation4j.version>
 		<componentsengine.version>0.0.10-SNAPSHOT</componentsengine.version>
+		<resourcesmanager.version>0.0.12-SNAPSHOT</resourcesmanager.version>
 	</properties>
 
 	<dependencies>
@@ -69,7 +70,7 @@
 		<dependency>
 			<groupId>com.gemserk.resources</groupId>
 			<artifactId>resourcesmanager-core</artifactId>
-			<version>0.0.11-SNAPSHOT</version>
+			<version>${resourcesmanager.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
