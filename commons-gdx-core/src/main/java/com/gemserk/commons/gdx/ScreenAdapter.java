@@ -9,8 +9,8 @@ public class ScreenAdapter implements Screen {
 	 */
 	@Override
 	public void render(float delta) {
-		internalRender(delta);
 		internalUpdate(delta);
+		internalRender(delta);
 	}
 
 	public void internalRender(float delta) {
