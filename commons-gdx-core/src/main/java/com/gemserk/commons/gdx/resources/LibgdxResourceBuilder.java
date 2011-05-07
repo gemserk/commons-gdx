@@ -170,9 +170,8 @@ public class LibgdxResourceBuilder {
 		return new SpriteResourceBuilder(texture);
 	}
 
-	public AnimationResourceBuilder animation2(String textureId, int x, int y, int frameWidth, int frameHeight, int framesCount) {
-		Texture spriteSheet = resourceManager.getResourceValue(textureId);
-		return new AnimationResourceBuilder(spriteSheet, x, y, frameWidth, frameHeight, framesCount);
+	public AnimationResourceBuilder animation2(String textureId) {
+		return new AnimationResourceBuilder(resourceManager, textureId);
 	}
 
 }

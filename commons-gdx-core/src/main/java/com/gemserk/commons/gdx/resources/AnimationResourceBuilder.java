@@ -1,77 +1,66 @@
 package com.gemserk.commons.gdx.resources;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
+import com.gemserk.resources.ResourceManager;
 
 public class AnimationResourceBuilder implements ResourceBuilder<Animation> {
 
-	private int x;
-
-	private int y;
-
-	private int width;
-
-	private int height;
-
-	private int framesCount;
-
-	private Texture spriteSheet;
-
+	private final ResourceManager<String> resourceManager;
+	
+	private final String spriteSheetId;
+	
+	private class Frame {
+		
+		int x, y, w, h;
+		
+		int time;
+		
+		public Frame(int x, int y, int w, int h, int time) {
+			this.x = x;
+			this.y = y;
+			this.w = w;
+			this.h = h;
+			this.time = time;
+		}
+		
+	}
+	
+	private ArrayList<Frame> frames; 
+	
 	private boolean loop = false;
-
-	private int[] times;
 
 	public AnimationResourceBuilder loop(boolean loop) {
 		this.loop = loop;
 		return this;
 	}
 
-	public AnimationResourceBuilder times(int... times) {
-		int lastTime = 0;
-		for (int i = 0; i < this.times.length; i++) {
-			if (i < times.length) {
-				this.times[i] = times[i];
-				lastTime = times[i];
-			} else {
-				this.times[i] = lastTime;
-			}
-		}
+	public AnimationResourceBuilder frame(int x, int y, int w, int h, int time) {
+		frames.add(new Frame(x, y, w, h, time));
 		return this;
 	}
-
-	public AnimationResourceBuilder(Texture spriteSheet, int x, int y, int frameWidth, int frameHeight, int framesCount) {
-		this.spriteSheet = spriteSheet;
-		this.x = x;
-		this.y = y;
-		this.width = frameWidth;
-		this.height = frameHeight;
-		this.framesCount = framesCount;
-		this.times = new int[framesCount];
+	
+	public AnimationResourceBuilder(ResourceManager<String> resourceManager, String spriteSheetId) {
+		this.resourceManager = resourceManager;
+		this.spriteSheetId = spriteSheetId;
+		this.frames = new ArrayList<Frame>();
 	}
 
 	@Override
 	public Animation build() {
-
-		Sprite[] frames = new Sprite[framesCount];
-		for (int i = 0; i < frames.length; i++) {
-			frames[i] = new Sprite(spriteSheet, x + i * width, y, width, height);
+		Texture spriteSheet = resourceManager.getResourceValue(spriteSheetId);
+		Sprite[] frames = new Sprite[this.frames.size()];
+		int[] times = new int[this.frames.size()];
+		for (int i = 0; i < frames.length; i++) { 
+			Frame frame = this.frames.get(i);
+			frames[i] = new Sprite(spriteSheet, frame.x, frame.y, frame.w, frame.h);
+			times[i] = frame.time;
 		}
-
-		// int[] newTimes = new int[framesCount - 1];
-		// int lastTime = time;
-		//
-		// for (int i = 0; i < framesCount - 1; i++) {
-		// if (i < times.length) {
-		// newTimes[i] = times[i];
-		// lastTime = times[i];
-		// } else
-		// newTimes[i] = lastTime;
-		// }
-
 		return new Animation(frames, new FrameAnimationImpl(loop, times));
-
 	}
 
 }
