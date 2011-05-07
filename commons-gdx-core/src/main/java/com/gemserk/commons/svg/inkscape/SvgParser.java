@@ -1,68 +1,37 @@
 package com.gemserk.commons.svg.inkscape;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 public class SvgParser {
 
-	ArrayList<SvgElementHandler> handlers = new ArrayList<SvgElementHandler>();
+	private ArrayList<SvgElementHandler> handlers = new ArrayList<SvgElementHandler>();
 
 	@SuppressWarnings("serial")
-	ArrayList<SvgElementProcessor> processors = new ArrayList<SvgElementProcessor>() {
+	private ArrayList<SvgElementProcessor> processors = new ArrayList<SvgElementProcessor>() {
 		{
 			add(new SvgInkscapeGroupProcessor());
 			add(new SvgInkscapeImageProcessor());
 			add(new SvgInkscapePathProcessor());
 		}
 	};
-	
+
 	private Boolean processChildren;
-
-	public SvgParser() {
-
-	}
 
 	public void addHandler(SvgElementHandler handler) {
 		handlers.add(handler);
 	}
 
-	public void parse(InputStream svg) {
-
-		try {
-			internalParse(svg);
-		} catch (Exception e) {
-			throw new RuntimeException("Failed to parse SVG file", e);
-		}
-
-	}
-
-	private void internalParse(InputStream svg) throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setValidating(false);
-		factory.setNamespaceAware(true);
-
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		builder.setEntityResolver(new EntityResolver() {
-			public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-				return new InputSource(new ByteArrayInputStream(new byte[0]));
-			}
-		});
-
-		Document doc = builder.parse(svg);
-		Element root = doc.getDocumentElement();
+	/**
+	 * Parses a SVG Document and provides a way to process custom logic when SVG Element are parsed.
+	 * 
+	 * @param document
+	 */
+	public void parse(Document document) {
+		Element root = document.getDocumentElement();
 
 		String widthString = root.getAttribute("width");
 		while (Character.isLetter(widthString.charAt(widthString.length() - 1))) {
@@ -87,7 +56,6 @@ public class SvgParser {
 		handle(svgDocument, root);
 
 		loadChildren(root);
-
 	}
 
 	void loadChildren(Element element) {
@@ -97,7 +65,7 @@ public class SvgParser {
 				processChildren = true;
 				Element childElement = (Element) list.item(i);
 				processElement(childElement);
-				
+
 				if (!processChildren)
 					continue;
 
@@ -121,8 +89,8 @@ public class SvgParser {
 			handler.handle(this, svgElement, element);
 		}
 	}
-	
-	public void processChildren(boolean process) { 
+
+	public void processChildren(boolean process) {
 		this.processChildren = process;
 	}
 
