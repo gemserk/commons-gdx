@@ -2,6 +2,7 @@ package com.gemserk.commons.gdx.resources;
 
 import org.w3c.dom.Document;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -200,14 +201,16 @@ public class LibgdxResourceBuilder {
 	public static class XmlDocumentDeclaration implements ResourceBuilder<Document> {
 
 		private final String file;
-
+		
 		private boolean cached = false;
+		
+		private FileType fileType = FileType.Internal;
 
-		// if it is internal resource....
-		// public XmlDocumentDeclaration internal() {
-		// return this;
-		// }
-
+		public XmlDocumentDeclaration fileType(FileType fileType) {
+			this.fileType = fileType;
+			return this;
+		}
+		
 		public XmlDocumentDeclaration cached() {
 			this.cached = true;
 			return this;
@@ -219,7 +222,7 @@ public class LibgdxResourceBuilder {
 
 		@Override
 		public Document build() {
-			return new DocumentParser().parse(Gdx.files.internal(file).read());
+			return new DocumentParser().parse(Gdx.files.getFileHandle(file, fileType).read());
 		}
 
 		@Override
