@@ -50,7 +50,8 @@ public class TextButton {
 		float w = bounds.width;
 		float h = bounds.height;
 
-		this.bounds = new Rectangle(x - w * 0.5f, y - h * 0.5f, w, h);
+		// not sure why the -h and not - h * 0.5f
+		this.bounds = new Rectangle(x - w * 0.5f, y - h, w, h);
 
 		color.set(notOverColor);
 	}
@@ -58,6 +59,7 @@ public class TextButton {
 	public void draw(SpriteBatch spriteBatch) {
 		font.setColor(color);
 		SpriteBatchUtils.drawCentered(spriteBatch, font, text, x, y);
+		// ImmediateModeRendererUtils.drawRectangle(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, Color.GREEN);
 	}
 
 	public boolean isPressed() {
