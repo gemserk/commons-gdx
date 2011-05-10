@@ -28,6 +28,13 @@
 		</developer>
 	</developers>
 
+	<scm>
+		<url>https://github.com/gemserk/commons-gdx</url>
+		<connection>scm:git://github.com/gemserk/commons-gdx.git</connection>
+		<developerConnection>scm:git:git@github.com:gemserk/commons-gdx.git</developerConnection>
+	</scm>
+
+
 	<distributionManagement>
 		<repository>
 			<id>gemserk.releases</id>
