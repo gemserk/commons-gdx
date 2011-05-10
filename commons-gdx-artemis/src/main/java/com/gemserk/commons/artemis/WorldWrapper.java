@@ -36,7 +36,6 @@ public class WorldWrapper {
 	public void update(int delta) {
 		world.loopStart();
 		world.setDelta(delta);
-
 		for (int i = 0; i < updateSystems.size(); i++) {
 			EntitySystem system = updateSystems.get(i);
 			system.process();
