@@ -6,7 +6,7 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.gemserk.commons.artemis.components.SpawnerComponent;
-import com.gemserk.commons.artemis.entities.EntityTemplate;
+import com.gemserk.commons.artemis.triggers.Trigger;
 import com.gemserk.componentsengine.timers.CountDownTimer;
 import com.gemserk.componentsengine.timers.Timer;
 
@@ -29,10 +29,10 @@ public class SpawnerSystem extends EntitySystem {
 
 			Timer spawnTimer = spawnerComponent.getSpawnTimer();
 			
-			EntityTemplate entityTemplate = spawnerComponent.getEntityTemplate();
+			Trigger trigger = spawnerComponent.getTrigger();
 			
 			if (spawnTimer.update(world.getDelta()))  
-				entityTemplate.trigger(null);
+				trigger.trigger(null);
 			
 			if (!spawnTimer.isRunning()) {
 				int spawnTime = random.nextInt(spawnerComponent.getMaxTime() - spawnerComponent.getMinTime()) + spawnerComponent.getMinTime();
