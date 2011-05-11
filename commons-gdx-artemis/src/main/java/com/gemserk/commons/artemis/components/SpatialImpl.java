@@ -59,4 +59,8 @@ public class SpatialImpl implements Spatial {
 		this.angle = angle;
 	}
 
+	public SpatialImpl(Spatial spatial) {
+		this(spatial.getX(), spatial.getY(), spatial.getWidth(), spatial.getHeight(), spatial.getAngle());
+	}
+
 }
