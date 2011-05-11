@@ -129,6 +129,8 @@ public class BodyBuilder {
 		this.position.set(x, y);
 		return this;
 	}
+	
+	// Could be making the reset after the body was built.
 
 	public Body build() {
 		Body body = world.createBody(bodyDef);
@@ -140,5 +142,6 @@ public class BodyBuilder {
 		body.setTransform(position, 0f);
 		return body;
 	}
+	
 
 }
