@@ -5,7 +5,7 @@ import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
 
@@ -31,14 +31,13 @@ public class TextRendererSystem extends EntitySystem {
 			BitmapFont font = textComponent.getFont();
 			String text = textComponent.getText();
 			
-			Vector2 position = spatialComponent.getPosition();
-			Vector2 size = spatialComponent.getSize();
-
+			Spatial spatial = spatialComponent.getSpatial();
+			
 			// TextBounds bounds = font.getBounds(text);
 
-			font.setScale(size.x, size.y);
+			font.setScale(spatial.getWidth(), spatial.getHeight());
 			font.setColor(textComponent.getColor());
-			font.draw(spriteBatch, text, position.x, position.y);
+			font.draw(spriteBatch, text, spatial.getX(), spatial.getY());
 
 		}
 		spriteBatch.end();

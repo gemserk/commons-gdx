@@ -13,7 +13,9 @@ public class MultipleImplementationsSameComponentWorkaroundTest {
 
 	public static interface Spatial {
 
-		void getPosition(float[] p);
+		float getX();
+		
+		float getY();
 
 		void setPosition(float x, float y);
 
@@ -44,16 +46,20 @@ public class MultipleImplementationsSameComponentWorkaroundTest {
 		private float y;
 
 		@Override
-		public void getPosition(float[] p) {
-			p[0] = x;
-			p[1] = y;
-			System.out.println("first implementation get");
-		}
-
-		@Override
 		public void setPosition(float x, float y) {
 			this.x = x;
 			this.y = y;
+		}
+
+		@Override
+		public float getX() {
+			System.out.println("firstimpl");
+			return x;
+		}
+
+		@Override
+		public float getY() {
+			return y;
 		}
 
 	}
@@ -63,22 +69,24 @@ public class MultipleImplementationsSameComponentWorkaroundTest {
 		private Vector2 position = new Vector2();
 
 		@Override
-		public void getPosition(float[] p) {
-			p[0] = position.x;
-			p[1] = position.y;
-			System.out.println("second implementation get");
+		public void setPosition(float x, float y) {
+			this.position.set(x, y);
 		}
 
 		@Override
-		public void setPosition(float x, float y) {
-			this.position.set(x, y);
+		public float getX() {
+			System.out.println("second impl");
+			return position.x;
+		}
+
+		@Override
+		public float getY() {
+			return position.y;
 		}
 
 	}
 
 	public static class SpatialSystem extends EntityProcessingSystem {
-
-		private float[] tmpPosition = new float[2];
 
 		public SpatialSystem() {
 			super(SpatialComponent.class);
@@ -88,8 +96,7 @@ public class MultipleImplementationsSameComponentWorkaroundTest {
 		protected void process(Entity e) {
 			SpatialComponent spatialComponent = e.getComponent(SpatialComponent.class);
 			Spatial spatial = spatialComponent.getSpatial();
-			spatial.getPosition(tmpPosition);
-			System.out.println("spatial system: " + tmpPosition[0]);
+			System.out.println("spatial system: " + spatial.getX());
 		}
 
 	}

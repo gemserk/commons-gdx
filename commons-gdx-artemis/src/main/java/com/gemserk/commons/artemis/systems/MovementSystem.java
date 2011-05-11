@@ -5,13 +5,14 @@ import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.MovementComponent;
+import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 
 public class MovementSystem extends EntitySystem {
 
-	Vector2 tmpPosition = new Vector2();
+	private final Vector2 tmpPosition = new Vector2();
 
-	Vector2 tmpVelocity = new Vector2();
+	private final Vector2 tmpVelocity = new Vector2();
 
 	@SuppressWarnings("unchecked")
 	public MovementSystem() {
@@ -27,7 +28,8 @@ public class MovementSystem extends EntitySystem {
 			SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 			MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
 
-			Vector2 position = spatialComponent.getPosition();
+			Spatial spatial = spatialComponent.getSpatial();
+			// Vector2 position = spatialComponent.getPosition();
 
 			Vector2 velocity = movementComponent.getVelocity();
 
@@ -35,12 +37,13 @@ public class MovementSystem extends EntitySystem {
 			float deltaF = ((float) delta) / 1000f;
 			
 			tmpVelocity.set(velocity).mul(deltaF);
-			tmpPosition.set(position).add(tmpVelocity);
+			tmpPosition.set(spatial.getX(), spatial.getY()).add(tmpVelocity);
 			
-			float newAngle = spatialComponent.getAngle() + deltaF * movementComponent.getAngularVelocity();
-			spatialComponent.setAngle(newAngle);
+			float newAngle = spatial.getAngle() + deltaF * movementComponent.getAngularVelocity();
+			spatial.setAngle(newAngle);
 			
-			position.set(tmpPosition);
+			spatial.setPosition(tmpPosition.x, tmpPosition.y);
+			// position.set(tmpPosition);
 			
 		}
 	}

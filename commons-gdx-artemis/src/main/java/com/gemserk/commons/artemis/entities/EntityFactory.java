@@ -6,11 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
-import com.gemserk.commons.values.FloatValue;
 import com.gemserk.componentsengine.properties.AbstractProperty;
-import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 
 public class EntityFactory {
@@ -29,7 +28,7 @@ public class EntityFactory {
 		this.world = world;
 	}
 
-	public Entity fpsEntity(Property<Vector2> scale, Property<BitmapFont> font, SimpleProperty<Vector2> position) {
+	public Entity fpsEntity(Vector2 scale, BitmapFont font, Spatial spatial) {
 		Entity entity = world.createEntity();
 		
 		entity.addComponent(new TextComponent( //
@@ -39,11 +38,12 @@ public class EntityFactory {
 						return "FPS: " + Gdx.graphics.getFramesPerSecond();
 					}
 				}, //
-				font, //
+				new SimpleProperty<BitmapFont>(font), //
 				new SimpleProperty<Color>(new Color(1f, 1f, 1f, 1f)) //
 		));
 		
-		entity.addComponent(new SpatialComponent(position, scale, new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		// position.x, position.y, scale, new SimpleProperty<FloatValue>(new FloatValue(0f)))
+		entity.addComponent(new SpatialComponent(spatial));
 		entity.refresh();
 		
 		return entity;

@@ -6,11 +6,12 @@ import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.EntityDebugger;
+import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 
 public class SpriteUpdateSystem extends EntitySystem {
-	
+
 	@SuppressWarnings("unchecked")
 	public SpriteUpdateSystem() {
 		super(SpatialComponent.class, SpriteComponent.class);
@@ -24,30 +25,31 @@ public class SpriteUpdateSystem extends EntitySystem {
 
 			SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 			SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
-			
+
 			if (spatialComponent == null) {
 				EntityDebugger.debug("spatial component missing in drawable entity", entity);
 				continue;
 			}
-			
+
 			if (spriteComponent == null) {
 				EntityDebugger.debug("sprite component missing in drawable entity", entity);
 				continue;
 			}
-			
 
-			Vector2 position = spatialComponent.getPosition();
-			Vector2 size = spatialComponent.getSize();
+			Spatial spatial = spatialComponent.getSpatial();
+
+			// Vector2 position = spatialComponent.getPosition();
+			// Vector2 size = spatialComponent.getSize();
 
 			Sprite sprite = spriteComponent.getSprite();
 			Vector2 center = spriteComponent.getCenter();
 
-			sprite.setRotation(spatialComponent.getAngle());
-			
-			sprite.setOrigin(size.x * center.x, size.y * center.y);
-			
-			sprite.setSize(size.x, size.y);
-			sprite.setPosition(position.x - sprite.getOriginX(), position.y - sprite.getOriginY());
+			sprite.setRotation(spatial.getAngle());
+
+			sprite.setOrigin(spatial.getWidth() * center.x, spatial.getHeight() * center.y);
+
+			sprite.setSize(spatial.getWidth(), spatial.getHeight());
+			sprite.setPosition(spatial.getX() - sprite.getOriginX(), spatial.getY() - sprite.getOriginY());
 
 		}
 	}
