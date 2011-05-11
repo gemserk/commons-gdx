@@ -38,6 +38,14 @@ public class TextButton {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+	
+	public void setOverColor(Color overColor) {
+		this.overColor = overColor;
+	}
+	
+	public void setNotOverColor(Color notOverColor) {
+		this.notOverColor = notOverColor;
+	}
 
 	public TextButton(BitmapFont font, String text, float x, float y) {
 		this.font = font;
@@ -81,10 +89,10 @@ public class TextButton {
 			boolean inside = MathUtils2.inside(bounds, libgdxPointer.getPosition());
 			
 			if (wasInside && !inside) 
-				Synchronizers.transition(color, Transitions.transitionBuilder(color).end(notOverColor).time(300).build());
+				Synchronizers.transition(color, Transitions.transitionBuilder(color).end(notOverColor).time(150).build());
 			
 			if (!wasInside && inside) 
-				Synchronizers.transition(color, Transitions.transitionBuilder(color).end(overColor).time(300).build());
+				Synchronizers.transition(color, Transitions.transitionBuilder(color).end(overColor).time(150).build());
 			
 			wasInside = inside;
 		}
@@ -92,12 +100,12 @@ public class TextButton {
 		if (libgdxPointer.wasPressed) {
 			pressed = MathUtils2.inside(bounds, libgdxPointer.getPressedPosition());
 			if (pressed)
-				Synchronizers.transition(color, Transitions.transitionBuilder(color).end(overColor).time(300).build());
+				Synchronizers.transition(color, Transitions.transitionBuilder(color).end(overColor).time(150).build());
 		}
 
 		if (libgdxPointer.wasReleased) {
 			released = MathUtils2.inside(bounds, libgdxPointer.getReleasedPosition());
-			Synchronizers.transition(color, Transitions.transitionBuilder(color).end(notOverColor).time(300).build());
+			Synchronizers.transition(color, Transitions.transitionBuilder(color).end(notOverColor).time(150).build());
 		}
 
 	}
