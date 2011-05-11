@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.WorldWrapper;
 
 public class MultipleImplementationsSameComponentTest {
-
+	
 	public static abstract class SpatialComponent extends Component {
 
 		public abstract void getPosition(float[] p);
