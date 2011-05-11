@@ -31,4 +31,21 @@ public class SpriteUtils {
 		return (int) height;
 	}
 
+	/**
+	 * Resizes the sprite to the specified width maintaining the aspect ration.
+	 */
+	public static void resize(Sprite sprite, float width) {
+		float aspect = (float) sprite.getHeight() / (float) sprite.getWidth();
+		float height = width * aspect;
+		sprite.setSize(width, height);
+	}
+
+	/**
+	 * Centers the sprite on the given position.
+	 */
+	public static void centerOn(Sprite sprite, float x, float y) {
+		sprite.setOrigin(sprite.getWidth() * 0.5f, sprite.getHeight() * 0.5f);
+		sprite.setPosition(x - sprite.getOriginX(), y - sprite.getOriginY());
+	}
+
 }
