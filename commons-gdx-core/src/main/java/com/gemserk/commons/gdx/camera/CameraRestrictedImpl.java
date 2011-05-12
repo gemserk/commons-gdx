@@ -17,18 +17,18 @@ public class CameraRestrictedImpl implements Camera {
 	private float zoom = 1f;
 
 	private float angle = 0f;
-	
+
 	public CameraRestrictedImpl() {
-		
+
 	}
-	
+
 	public CameraRestrictedImpl(float x, float y, float zoom, float angle) {
 		this.x = x;
 		this.y = y;
 		this.zoom = zoom;
 		this.angle = angle;
 	}
-	
+
 	public CameraRestrictedImpl(float x, float y, float zoom, float angle, float width, float height, Rectangle worldBounds) {
 		this.x = x;
 		this.y = y;
@@ -38,34 +38,35 @@ public class CameraRestrictedImpl implements Camera {
 		this.height = height;
 		setWorldBounds(worldBounds);
 	}
-	
+
 	public void setWorldBounds(Rectangle rectangle) {
 		this.worldBounds = new Rectangle(rectangle);
-		reposition();
+		recalculatePosition();
 	}
-	
+
 	public void setWorldBounds(float x1, float y1, float x2, float y2) {
 		this.worldBounds = new Rectangle(x1, y1, x2 - x1, y2 - y1);
-		reposition();
+		recalculatePosition();
 	}
 
 	public void setBounds(float width, float height) {
 		this.width = width;
 		this.height = height;
-		reposition();
+		recalculateZoom();
+		recalculatePosition();
 	}
 
 	@Override
 	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
-		reposition();
+		recalculatePosition();
 	}
 
-	private void reposition() {
+	private void recalculatePosition() {
 		if (worldBounds == null)
 			return;
-		
+
 		if (x + getRealWidth() * 0.5f > worldBounds.getX() + worldBounds.getWidth()) {
 			x = worldBounds.getX() + worldBounds.getWidth() - getRealWidth() * 0.5f;
 		}
@@ -104,7 +105,18 @@ public class CameraRestrictedImpl implements Camera {
 	@Override
 	public void setZoom(float zoom) {
 		this.zoom = zoom;
-		reposition();
+		recalculateZoom();
+		recalculatePosition();
+	}
+
+	private void recalculateZoom() {
+		if (worldBounds == null)
+			return;
+		if (getRealWidth() >= worldBounds.getWidth()) {
+			this.zoom = this.width * 2f / worldBounds.getWidth();
+		} else if (getRealHeight() >= worldBounds.getHeight()) {
+			this.zoom = this.height * 2f / worldBounds.getHeight();
+		}
 	}
 
 	@Override

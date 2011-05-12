@@ -64,4 +64,26 @@ public class CameraRestrictedImplTest {
 		assertThat(camera.getX(), IsEqual.equalTo(150f));
 		assertThat(camera.getY(), IsEqual.equalTo(270f));
 	}
+	
+	@Test
+	public void shouldNotZoomOutIfInternalBoundsAreGreaterThanWorldBounds() {
+		CameraRestrictedImpl camera = new CameraRestrictedImpl();
+		camera.setBounds(10, 10);
+		camera.setWorldBounds(-50f, -50f, 50f, 50f);
+		camera.setZoom(0.1f);
+		assertThat(camera.getZoom(), IsEqual.equalTo(0.2f));
+		camera.setZoom(0.01f);
+		assertThat(camera.getZoom(), IsEqual.equalTo(0.2f));
+	}
+	
+	@Test
+	public void shouldRecalculateZoomIfBoundsChanged() {
+		CameraRestrictedImpl camera = new CameraRestrictedImpl();
+		camera.setBounds(10, 10);
+		camera.setWorldBounds(-50f, -50f, 50f, 50f);
+		camera.setZoom(0.1f);
+		assertThat(camera.getZoom(), IsEqual.equalTo(0.2f));
+		camera.setBounds(20, 20);
+		assertThat(camera.getZoom(), IsEqual.equalTo(0.4f));
+	}
 }
