@@ -44,11 +44,11 @@ public class Contact {
 				continue;
 
 			c.setContact(body, contact.getWorldManifold().getNormal());
-			
+
 			// if the body in contact is the first one declared by the contact, then we have to invert the normal.
-			if (contact.getFixtureA().getBody() == body)
-				c.normal.mul(-1f);
-			
+			// if (contact.getFixtureA().getBody() == body)
+			// c.normal.mul(-1f);
+
 			return;
 		}
 	}
@@ -72,7 +72,7 @@ public class Contact {
 		}
 		return false;
 	}
-	
+
 	public boolean isInContact(int i) {
 		return contacts[i].inContact;
 	}
@@ -80,11 +80,11 @@ public class Contact {
 	public Vector2 getNormal() {
 		return contacts[0].normal;
 	}
-	
+
 	public Vector2 getNormal(int contact) {
 		return contacts[contact].normal;
 	}
-	
+
 	public int getContactCount() {
 		return contacts.length;
 	}
@@ -100,7 +100,7 @@ public class Contact {
 	public Body getBody() {
 		return getBody(0);
 	}
-	
+
 	public Body getBody(int i) {
 		return contacts[i].body;
 	}

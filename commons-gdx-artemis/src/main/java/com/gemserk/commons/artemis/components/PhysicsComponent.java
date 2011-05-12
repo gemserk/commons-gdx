@@ -11,8 +11,6 @@ public class PhysicsComponent extends Component {
 	
 	private Property<Contact> contact;
 	
-	private float size = 1f;
-	
 	public Body getBody() {
 		return body.get();
 	}
@@ -23,10 +21,6 @@ public class PhysicsComponent extends Component {
 	
 	public void setContact(Contact contact) {
 		this.contact.set(contact);
-	}
-	
-	public float getSize() {
-		return size;
 	}
 	
 	public PhysicsComponent(Body body) {
