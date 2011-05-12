@@ -10,12 +10,12 @@ public class SpatialComponent extends Component {
 		return spatial;
 	}
 
-	/**
-	 * Only if you want to modify internal implementation of spatial
-	 */
-	public void setSpatial(Spatial spatial) {
-		this.spatial = spatial;
-	}
+	// /**
+	// * Only if you want to modify internal implementation of spatial
+	// */
+	// public void setSpatial(Spatial spatial) {
+	// this.spatial = spatial;
+	// }
 
 	public SpatialComponent(Spatial spatial) {
 		this.spatial = spatial;

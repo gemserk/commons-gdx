@@ -11,7 +11,7 @@ public class MathUtils2 {
 	public static boolean inside(Rectangle r, Vector2 p) {
 		return inside(r, p.x, p.y);
 	}
-	
+
 	/**
 	 * Returns true whenever x,y is inside the rectangle, false otherwise
 	 */
@@ -32,7 +32,7 @@ public class MathUtils2 {
 		return true;
 
 	}
-	
+
 	public static float truncate(float a, float min, float max) {
 		if (a < min)
 			a = min;
@@ -40,5 +40,11 @@ public class MathUtils2 {
 			a = max;
 		return a;
 	}
-	
+
+	public static float distance(float x1, float y1, float x2, float y2) {
+		final float x_d = x2 - x1;
+		final float y_d = y2 - y1;
+		return (float) Math.sqrt(x_d * x_d + y_d * y_d);
+	}
+
 }

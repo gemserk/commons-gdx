@@ -65,5 +65,17 @@ public class SpatialPhysicsImpl implements Spatial {
 		this.w = w;
 		this.h = h;
 	}
+	
+	@Override
+	public void set(Spatial spatial) {
+		setPosition(spatial.getX(), spatial.getY());
+		setSize(spatial.getWidth(), spatial.getHeight());
+		setAngle(spatial.getAngle());
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		return body.getTransform().getPosition();
+	}
 
 }

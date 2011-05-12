@@ -1,27 +1,28 @@
 package com.gemserk.commons.artemis.components;
 
-public class SpatialImpl implements Spatial {
+import com.badlogic.gdx.math.Vector2;
 
-	private float x, y;
+public class SpatialImpl implements Spatial {
 
 	private float w, h;
 
 	private float angle;
 
+	private Vector2 position = new Vector2();
+
 	@Override
 	public float getX() {
-		return x;
+		return position.x;
 	}
 
 	@Override
 	public float getY() {
-		return y;
+		return position.y;
 	}
 
 	@Override
 	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
+		position.set(x,y);
 	}
 
 	@Override
@@ -52,8 +53,7 @@ public class SpatialImpl implements Spatial {
 
 	public SpatialImpl(float x, float y, float w, float h, float angle) {
 		super();
-		this.x = x;
-		this.y = y;
+		this.setPosition(x, y);
 		this.w = w;
 		this.h = h;
 		this.angle = angle;
@@ -61,6 +61,18 @@ public class SpatialImpl implements Spatial {
 
 	public SpatialImpl(Spatial spatial) {
 		this(spatial.getX(), spatial.getY(), spatial.getWidth(), spatial.getHeight(), spatial.getAngle());
+	}
+
+	@Override
+	public void set(Spatial spatial) {
+		setPosition(spatial.getX(), spatial.getY());
+		setSize(spatial.getWidth(), spatial.getHeight());
+		setAngle(spatial.getAngle());
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		return position;
 	}
 
 }
