@@ -6,13 +6,13 @@ public class CameraRestrictedImpl implements Camera {
 
 	private Rectangle worldBounds;
 
-	private float x;
+	private float x = 0f;
 
-	private float y;
+	private float y = 0f;
 
-	private float width;
+	private float width = 1f;
 
-	private float height;
+	private float height = 1f;
 
 	private float zoom = 1f;
 
@@ -42,11 +42,13 @@ public class CameraRestrictedImpl implements Camera {
 	public void setWorldBounds(Rectangle rectangle) {
 		this.worldBounds = new Rectangle(rectangle);
 		recalculatePosition();
+		recalculateZoom();
 	}
 
 	public void setWorldBounds(float x1, float y1, float x2, float y2) {
 		this.worldBounds = new Rectangle(x1, y1, x2 - x1, y2 - y1);
 		recalculatePosition();
+		recalculateZoom();
 	}
 
 	public void setBounds(float width, float height) {
@@ -112,10 +114,14 @@ public class CameraRestrictedImpl implements Camera {
 	private void recalculateZoom() {
 		if (worldBounds == null)
 			return;
-		if (getRealWidth() >= worldBounds.getWidth()) {
-			this.zoom = this.width * 2f / worldBounds.getWidth();
-		} else if (getRealHeight() >= worldBounds.getHeight()) {
-			this.zoom = this.height * 2f / worldBounds.getHeight();
+
+		float zoomedWidth = getRealWidth();
+		float zoomedHeight = getRealHeight();
+
+		if (zoomedWidth >= worldBounds.getWidth()) {
+			this.zoom = this.width / worldBounds.getWidth();
+		} else if (zoomedHeight >= worldBounds.getHeight()) {
+			this.zoom = this.height / worldBounds.getHeight();
 		}
 	}
 
