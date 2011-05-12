@@ -1,51 +1,19 @@
 package com.gemserk.commons.gdx.camera;
 
-public class Camera {
+public interface Camera {
 
-	private float x, y;
+	float getX();
 
-	private float zoom;
+	float getY();
 
-	private float angle;
+	float getZoom();
 
-	public Camera() {
-		this(0f, 0f, 1f, 0f);
-	}
+	float getAngle();
 
-	public Camera(float x, float y, float zoom, float angle) {
-		this.x = x;
-		this.y = y;
-		this.zoom = zoom;
-		this.angle = angle;
-	}
+	void setPosition(float x, float y);
 
-	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
-	}
+	void setZoom(float zoom);
 
-	public void setZoom(float zoom) {
-		this.zoom = zoom;
-	}
-	
-	public void setAngle(float angle) {
-		this.angle = angle;
-	}
-
-	public float getZoom() {
-		return zoom;
-	}
-
-	public float getAngle() {
-		return angle;
-	}
-
-	public float getX() {
-		return x;
-	}
-
-	public float getY() {
-		return y;
-	}
+	void setAngle(float angle);
 
 }
