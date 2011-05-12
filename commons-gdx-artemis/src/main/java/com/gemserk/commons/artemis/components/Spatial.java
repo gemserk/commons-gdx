@@ -17,7 +17,9 @@ public interface Spatial {
 	Vector2 getPosition();
 
 	void setPosition(float x, float y);
-
+	
+	// void setPosition(Vector2 position);
+	
 	float getAngle();
 
 	void setAngle(float angle);

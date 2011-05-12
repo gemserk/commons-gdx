@@ -11,24 +11,24 @@ import com.gemserk.commons.artemis.WorldWrapper;
 
 public class MultipleImplementationsSameComponentWorkaroundTest {
 
-	public static interface Spatial {
+	private static interface Spatial {
 
 		float getX();
-		
+
 		float getY();
 
 		void setPosition(float x, float y);
 
 	}
 
-	public static class SpatialComponent extends Component {
+	private static class SpatialComponent extends Component {
 
 		private Spatial spatial;
-		
+
 		public Spatial getSpatial() {
 			return spatial;
 		}
-		
+
 		public void setSpatial(Spatial spatial) {
 			this.spatial = spatial;
 		}
@@ -39,7 +39,7 @@ public class MultipleImplementationsSameComponentWorkaroundTest {
 
 	}
 
-	public static class SpatialFirstImpl implements Spatial {
+	private static class SpatialFirstImpl implements Spatial {
 
 		private float x;
 
@@ -64,7 +64,7 @@ public class MultipleImplementationsSameComponentWorkaroundTest {
 
 	}
 
-	public static class SpatialSecondImpl implements Spatial {
+	private static class SpatialSecondImpl implements Spatial {
 
 		private Vector2 position = new Vector2();
 
@@ -86,7 +86,7 @@ public class MultipleImplementationsSameComponentWorkaroundTest {
 
 	}
 
-	public static class SpatialSystem extends EntityProcessingSystem {
+	private static class SpatialSystem extends EntityProcessingSystem {
 
 		public SpatialSystem() {
 			super(SpatialComponent.class);
