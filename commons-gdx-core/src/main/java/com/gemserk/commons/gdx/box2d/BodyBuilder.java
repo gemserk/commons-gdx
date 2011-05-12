@@ -32,10 +32,10 @@ public class BodyBuilder {
 
 	public BodyBuilder(World world) {
 		this.world = world;
+		reset();
 	}
 
-	public BodyBuilder reset() {
-
+	private void reset() {
 		if (fixtureDef != null) {
 			if (fixtureDef.shape != null)
 				fixtureDef.shape.dispose();
@@ -46,7 +46,6 @@ public class BodyBuilder {
 		mass = 1f;
 		userData = null;
 		position.set(0f, 0f);
-		return this;
 	}
 
 	public BodyBuilder type(BodyType type) {
@@ -140,6 +139,7 @@ public class BodyBuilder {
 		body.setMassData(massData);
 		body.setUserData(userData);
 		body.setTransform(position, 0f);
+		reset();
 		return body;
 	}
 	
