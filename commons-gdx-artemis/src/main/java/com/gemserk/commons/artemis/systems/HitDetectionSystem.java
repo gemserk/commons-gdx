@@ -12,7 +12,7 @@ public class HitDetectionSystem extends EntityProcessingSystem implements Activa
 	private final ActivableSystem activableSystem = new ActivableSystemImpl();
 
 	public HitDetectionSystem() {
-		super(HitComponent.class, PhysicsComponent.class);
+		super(HitComponent.class);
 	}
 
 	@Override
@@ -33,22 +33,13 @@ public class HitDetectionSystem extends EntityProcessingSystem implements Activa
 		Contact contact = physicsComponent.getContact();
 		Trigger trigger = hitComponent.getTrigger();
 
-		for (int i = 0; i < contact.getContactCount(); i++) {
+		if (!contact.isInContact())
+			return;
 
-			if (!contact.isInContact(i))
-				continue;
+		if (trigger.isAlreadyTriggered())
+			return;
 
-			Entity otherEntity = contact.getEntity(i);
-			if (otherEntity == null)
-				continue;
-
-			if (trigger.isAlreadyTriggered())
-				return;
-
-			trigger.trigger(e);
-
-		}
-
+		trigger.trigger(e);
 	}
 
 }
