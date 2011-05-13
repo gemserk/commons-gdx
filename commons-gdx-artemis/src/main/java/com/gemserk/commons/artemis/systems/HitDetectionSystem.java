@@ -12,7 +12,7 @@ public class HitDetectionSystem extends EntityProcessingSystem implements Activa
 	private final ActivableSystem activableSystem = new ActivableSystemImpl();
 
 	public HitDetectionSystem() {
-		super(HitComponent.class);
+		super(HitComponent.class, PhysicsComponent.class);
 	}
 
 	@Override

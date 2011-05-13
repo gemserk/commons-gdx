@@ -1,54 +1,30 @@
 package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
-import com.artemis.EntitySystem;
-import com.artemis.utils.ImmutableBag;
+import com.artemis.EntityProcessingSystem;
 import com.gemserk.commons.artemis.components.AliveComponent;
 
-public class AliveSystem extends EntitySystem {
-	
-	@SuppressWarnings("unchecked")
+public class AliveSystem extends EntityProcessingSystem {
+
 	public AliveSystem() {
 		super(AliveComponent.class);
 	}
 
 	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
-		
-		for (int i = 0; i < entities.size(); i++) {
-			Entity entity = entities.get(i);
-			AliveComponent aliveComponent = entity.getComponent(AliveComponent.class);
-			// ESPLOTó
-			
-			if (aliveComponent == null) {
-				System.out.println("should never happen");
-				continue;
-			}
-			
-			int aliveTime = aliveComponent.getAliveTime() - world.getDelta();
-			aliveComponent.setAliveTime(aliveTime);
-			if (aliveTime <= 0) 
-				world.deleteEntity(entity);
-		}
-		
-	}
-	
-	@Override
-	protected void removed(Entity entity) {
-		
+	protected void process(Entity entity) {
 		AliveComponent aliveComponent = entity.getComponent(AliveComponent.class);
-		if (aliveComponent != null)
-			entity.removeComponent(aliveComponent);
-		
+		int aliveTime = aliveComponent.getAliveTime() - world.getDelta();
+		aliveComponent.setAliveTime(aliveTime);
+		if (aliveTime <= 0)
+			world.deleteEntity(entity);
 	}
 
-	@Override
-	public void initialize() {
+	// @Override
+	// protected void removed(Entity entity) {
+	// System.out.println("entity removed from AliveSystem");
+	// AliveComponent aliveComponent = entity.getComponent(AliveComponent.class);
+	// if (aliveComponent != null)
+	// entity.removeComponent(aliveComponent);
+	// }
 
-	}
-
-	@Override
-	protected boolean checkProcessing() {
-		return true;
-	}
 }

@@ -32,7 +32,7 @@ public class SpriteUtils {
 	}
 
 	/**
-	 * Resizes the sprite to the specified width maintaining the aspect ration.
+	 * Resizes the sprite to the specified width maintaining the aspect ratio.
 	 */
 	public static void resize(Sprite sprite, float width) {
 		float aspect = (float) sprite.getHeight() / (float) sprite.getWidth();
