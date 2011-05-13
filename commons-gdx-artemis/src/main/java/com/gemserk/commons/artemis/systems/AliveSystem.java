@@ -19,12 +19,4 @@ public class AliveSystem extends EntityProcessingSystem {
 			world.deleteEntity(entity);
 	}
 
-	// @Override
-	// protected void removed(Entity entity) {
-	// System.out.println("entity removed from AliveSystem");
-	// AliveComponent aliveComponent = entity.getComponent(AliveComponent.class);
-	// if (aliveComponent != null)
-	// entity.removeComponent(aliveComponent);
-	// }
-
 }

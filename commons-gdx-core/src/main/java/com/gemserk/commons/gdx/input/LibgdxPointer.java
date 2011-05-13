@@ -9,11 +9,11 @@ public class LibgdxPointer {
 
 	public boolean touched = false;
 
-	Vector2 pressedPosition = new Vector2();
+	protected Vector2 pressedPosition = new Vector2();
 
-	Vector2 releasedPosition = new Vector2();
+	protected Vector2 releasedPosition = new Vector2();
 
-	Vector2 position = new Vector2();
+	protected Vector2 position = new Vector2();
 
 	public boolean wasPressed = false;
 
