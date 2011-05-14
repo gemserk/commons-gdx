@@ -14,23 +14,35 @@ public class ImmediateModeRendererUtils {
 	private static final Vector2 angleTmp = new Vector2(1, 0);
 
 	public static void drawSolidCircle(Vector2 center, float radius, float axisAngle, Color color) {
+		drawSolidCircle(center.x, center.y, radius, axisAngle, color);
+	}
+	
+	public static void drawSolidCircle(float x, float y, float radius, float axisAngle, Color color) {
 		angleTmp.set(1, 0);
 		angleTmp.rotate(axisAngle);
-		drawSolidCircle(center, radius, angleTmp, color);
+		drawSolidCircle(x, y, radius, angleTmp, color);
 	}
 
 	public static void drawSolidCircle(Vector2 center, float radius, Vector2 axis, Color color) {
-		drawSolidCircle(center, radius, color);
-		drawLine(center.x, center.y, center.x + axis.x * radius, center.y + axis.y * radius, color);
+		drawSolidCircle(center.x, center.y, radius, axis, color);
+	}
+	
+	public static void drawSolidCircle(float x, float y, float radius, Vector2 axis, Color color) {
+		drawSolidCircle(x, y, radius, color);
+		drawLine(x, y, x + axis.x * radius, y + axis.y * radius, color);
 	}
 
 	public static void drawSolidCircle(Vector2 center, float radius, Color color) {
+		drawSolidCircle(center.x, center.y, radius, color);
+	}
+	
+	public static void drawSolidCircle(float x, float y, float radius, Color color) {
 		renderer.begin(GL10.GL_LINE_LOOP);
 		{
 			float angle = 0;
 			float angleInc = 2 * (float) Math.PI / 20;
 			for (int i = 0; i < 20; i++, angle += angleInc) {
-				tmp.set((float) Math.cos(angle) * radius + center.x, (float) Math.sin(angle) * radius + center.y);
+				tmp.set((float) Math.cos(angle) * radius + x, (float) Math.sin(angle) * radius + y);
 				renderer.color(color.r, color.g, color.b, color.a);
 				renderer.vertex(tmp.x, tmp.y, 0);
 			}
