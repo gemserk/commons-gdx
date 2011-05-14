@@ -17,12 +17,10 @@ public class PointerUpdateSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-		
 		for (int i = 0; i < pointers.size(); i++) {
 			LibgdxPointer pointer = pointers.get(i);
 			pointer.update();
 		}
-
 	}
 
 	@Override
