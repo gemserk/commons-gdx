@@ -3,6 +3,8 @@ package com.gemserk.commons.gdx.graphics;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class ImmediateModeRendererUtils {
@@ -13,10 +15,14 @@ public class ImmediateModeRendererUtils {
 
 	private static final Vector2 angleTmp = new Vector2(1, 0);
 
+	public static void drawSolidCircle(Circle circle, float angle, Color color) {
+		drawSolidCircle(circle.x, circle.y, circle.radius, angle, color);
+	}
+
 	public static void drawSolidCircle(Vector2 center, float radius, float axisAngle, Color color) {
 		drawSolidCircle(center.x, center.y, radius, axisAngle, color);
 	}
-	
+
 	public static void drawSolidCircle(float x, float y, float radius, float axisAngle, Color color) {
 		angleTmp.set(1, 0);
 		angleTmp.rotate(axisAngle);
@@ -26,7 +32,7 @@ public class ImmediateModeRendererUtils {
 	public static void drawSolidCircle(Vector2 center, float radius, Vector2 axis, Color color) {
 		drawSolidCircle(center.x, center.y, radius, axis, color);
 	}
-	
+
 	public static void drawSolidCircle(float x, float y, float radius, Vector2 axis, Color color) {
 		drawSolidCircle(x, y, radius, color);
 		drawLine(x, y, x + axis.x * radius, y + axis.y * radius, color);
@@ -35,7 +41,7 @@ public class ImmediateModeRendererUtils {
 	public static void drawSolidCircle(Vector2 center, float radius, Color color) {
 		drawSolidCircle(center.x, center.y, radius, color);
 	}
-	
+
 	public static void drawSolidCircle(float x, float y, float radius, Color color) {
 		renderer.begin(GL10.GL_LINE_LOOP);
 		{
@@ -64,7 +70,7 @@ public class ImmediateModeRendererUtils {
 		}
 		renderer.end();
 	}
-	
+
 	public static void drawHorizontalAxis(float y, Color color) {
 		drawHorizontalAxis(y, 10000, color);
 	}
@@ -72,13 +78,17 @@ public class ImmediateModeRendererUtils {
 	public static void drawVerticalAxis(float x, Color color) {
 		drawVerticalAxis(x, 10000, color);
 	}
-	
+
 	public static void drawHorizontalAxis(float y, float length, Color color) {
 		drawLine(-length, y, length, y, color);
 	}
 
 	public static void drawVerticalAxis(float x, float length, Color color) {
 		drawLine(x, -length, x, length, color);
+	}
+
+	public static void drawRectangle(Rectangle r, Color color) {
+		drawRectangle(r.x, r.y, r.x + r.getWidth(), r.y + r.getHeight(), color);
 	}
 
 	public static void drawRectangle(float x0, float y0, float x1, float y1, Color color) {
@@ -98,4 +108,5 @@ public class ImmediateModeRendererUtils {
 		}
 		renderer.end();
 	}
+
 }

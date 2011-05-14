@@ -23,12 +23,7 @@ public class LibgdxInputMappingBuilder<K> {
 	}
 
 	public void monitorPointerDown(K id, final int pointer) {
-		inputDevicesMonitor.button(id, new ButtonMonitor() {
-			@Override
-			protected boolean isDown() {
-				return input.isTouched(pointer);
-			}
-		});
+		inputDevicesMonitor.button(id, pointerDownButtonMonitor(input, pointer));
 	}
 
 	public void monitorPointerX(K id, final int pointer) {
@@ -88,6 +83,15 @@ public class LibgdxInputMappingBuilder<K> {
 			@Override
 			protected float newValue() {
 				return input.getY(pointer);
+			}
+		};
+	}
+	
+	public static ButtonMonitor pointerDownButtonMonitor(final Input input, final int pointer) {
+		return new ButtonMonitor() {
+			@Override
+			protected boolean isDown() {
+				return input.isTouched(pointer);
 			}
 		};
 	}
