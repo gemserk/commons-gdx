@@ -91,4 +91,18 @@ public class LibgdxInputMappingBuilder<K> {
 			}
 		};
 	}
+
+	public static ButtonMonitor anyPointerButtonMonitor(final Input input) {
+		final int maxPointers = 5;
+		return new ButtonMonitor() {
+			@Override
+			protected boolean isDown() {
+				for (int i = 0; i < maxPointers; i++) {
+					if (input.isTouched(i))
+						return true;
+				}
+				return false;
+			}
+		};
+	}
 }
