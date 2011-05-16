@@ -51,12 +51,10 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 			Entity entityA = (Entity) bodyA.getUserData();
 			Entity entityB = (Entity) bodyB.getUserData();
 
-			if (contact.isTouching())
-
-				if (entityA != null) {
-					PhysicsComponent physicsComponent = entityA.getComponent(PhysicsComponent.class);
-					physicsComponent.getContact().addContact(contact, bodyB);
-				}
+			if (entityA != null) {
+				PhysicsComponent physicsComponent = entityA.getComponent(PhysicsComponent.class);
+				physicsComponent.getContact().addContact(contact, bodyB);
+			}
 
 			if (entityB != null) {
 				PhysicsComponent physicsComponent = entityB.getComponent(PhysicsComponent.class);
@@ -99,11 +97,11 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		bodyAntiGravity.mul(body.getMass());
 
 		body.applyForce(bodyAntiGravity, body.getTransform().getPosition());
-		
+
 		LinearVelocityLimitComponent limitComponent = e.getComponent(LinearVelocityLimitComponent.class);
 		if (limitComponent == null)
 			return;
-		
+
 		Vector2 linearVelocity = body.getLinearVelocity();
 
 		float speed = linearVelocity.len();
