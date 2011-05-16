@@ -14,12 +14,7 @@ public class LibgdxInputMappingBuilder<K> {
 	}
 
 	public void monitorKey(K id, final int keyCode) {
-		inputDevicesMonitor.button(id, new ButtonMonitor() {
-			@Override
-			protected boolean isDown() {
-				return input.isKeyPressed(keyCode);
-			}
-		});
+		inputDevicesMonitor.button(id, keyButtonMonitor(input, keyCode));
 	}
 
 	public void monitorPointerDown(K id, final int pointer) {
@@ -58,6 +53,15 @@ public class LibgdxInputMappingBuilder<K> {
 
 	public static ButtonMonitor rightMouseButtonMonitor(final Input input) {
 		return mouseButtonMonitor(input, Input.Buttons.RIGHT);
+	}
+	
+	public static ButtonMonitor keyButtonMonitor(final Input input, final int keyCode) {
+		return new ButtonMonitor() {
+			@Override
+			protected boolean isDown() {
+				return input.isKeyPressed(keyCode);
+			}
+		};
 	}
 
 	public static ButtonMonitor mouseButtonMonitor(final Input input, final int button) {

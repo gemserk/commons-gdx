@@ -19,6 +19,7 @@ public class SpriteComponent extends Component {
 		return sprite;
 	}
 
+	// Used right now to set an animation frame, another option could be to implement a common interface which returns different sprite on getSprite().
 	public void setSprite(Sprite sprite) {
 		this.sprite.set(sprite);
 	}
@@ -41,11 +42,11 @@ public class SpriteComponent extends Component {
 		this.color = color;
 		this.center = center;
 	}
-	
+
 	public SpriteComponent(Sprite sprite, int layer, Color color) {
 		this(sprite, layer, new Vector2(0.5f, 0.5f), color);
 	}
-	
+
 	public SpriteComponent(Sprite sprite, int layer) {
 		this(sprite, layer, new Color(Color.WHITE));
 	}

@@ -9,9 +9,13 @@ public interface Trigger {
 	 */
 	boolean isAlreadyTriggered();
 
+	// TODO: isAlreadyTriggered could be changed to shouldBeTriggered() so Triggers implement whether they should be called or not based on some stuff, also use world and entity.
+
 	/**
 	 * Triggers the Trigger with its owner Entity.
 	 */
 	void trigger(Entity e);
+
+	// TODO: I would like to add extra stuff like the World and delta for example, so the Trigger could be really independent, like a Script.
 
 }
