@@ -55,7 +55,6 @@ public class SvgInkscapeUtils {
 	 * @return The modified matrix.
 	 */
 	public static Matrix3f getTransform(Element element, Matrix3f m) {
-
 		String transforms = element.getAttribute("transform");
 
 		if (transforms == null)
@@ -115,4 +114,8 @@ public class SvgInkscapeUtils {
 		return m;
 	}
 
+	public static boolean isFlipped(Matrix3f matrix) {
+		return matrix.getM00() != matrix.getM11();
+	}
+	
 }
