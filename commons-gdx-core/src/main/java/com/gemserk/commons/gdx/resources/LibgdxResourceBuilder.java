@@ -10,6 +10,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.gdx.resources.dataloaders.DisposableDataLoader;
@@ -59,14 +60,21 @@ public class LibgdxResourceBuilder {
 			resourceManager.get(id).get();
 	}
 
-	public void sound(String id, String file) {
-		sound(id, internal(file));
-	}
-
-	public void sound(String id, FileHandle fileHandle) {
-		resourceManager.add(id, new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(fileHandle))));
-		if (cacheWhenLoad)
-			resourceManager.get(id).get();
+	/**
+	 * Registers a texture atlas in resources manager.
+	 * 
+	 * @param id
+	 *            The id of the resource.
+	 * @param file
+	 *            The libgdx internal file path to create the texture atlas.
+	 */
+	public void textureAtlas(String id, String file) {
+		resourceManager.add(id, new CachedResourceLoader<TextureAtlas>(new ResourceLoaderImpl<TextureAtlas>(new DisposableDataLoader<TextureAtlas>(Gdx.files.internal(file)) {
+			@Override
+			public TextureAtlas load() {
+				return new TextureAtlas(fileHandle);
+			}
+		})));
 	}
 
 	/**
@@ -91,6 +99,24 @@ public class LibgdxResourceBuilder {
 			public Sprite load() {
 				Resource<Texture> texture = resourceManager.get(textureId);
 				return new Sprite(texture.get(), x, y, width, height);
+			}
+		}));
+	}
+
+	/**
+	 * Registers with id a new Sprite based on a TextureAtlas region with the same name.
+	 * 
+	 * @param id
+	 *            The identifier of the Resource to register, also the texture region name inside the TextureAtlas.
+	 * @param textureAtlasId
+	 *            the TextureAtlas resource identifier.
+	 */
+	public void spriteAtlas(final String id, final String textureAtlasId) {
+		resourceManager.add(id, new ResourceLoaderImpl<Sprite>(new DataLoader<Sprite>() {
+			@Override
+			public Sprite load() {
+				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
+				return new Sprite(textureAtlas.findRegion(id));
 			}
 		}));
 	}
@@ -128,7 +154,6 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void font(String id, final String imageFile, final String fontFile) {
-
 		resourceManager.add(id, new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new DisposableDataLoader<BitmapFont>(internal(imageFile)) {
 
 			@Override
@@ -139,7 +164,16 @@ public class LibgdxResourceBuilder {
 			}
 
 		})));
+	}
 
+	public void sound(String id, String file) {
+		sound(id, internal(file));
+	}
+
+	public void sound(String id, FileHandle fileHandle) {
+		resourceManager.add(id, new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(fileHandle))));
+		if (cacheWhenLoad)
+			resourceManager.get(id).get();
 	}
 
 	public void music(String id, String file) {
@@ -201,16 +235,16 @@ public class LibgdxResourceBuilder {
 	public static class XmlDocumentDeclaration implements ResourceBuilder<Document> {
 
 		private final String file;
-		
+
 		private boolean cached = false;
-		
+
 		private FileType fileType = FileType.Internal;
 
 		public XmlDocumentDeclaration fileType(FileType fileType) {
 			this.fileType = fileType;
 			return this;
 		}
-		
+
 		public XmlDocumentDeclaration cached() {
 			this.cached = true;
 			return this;
