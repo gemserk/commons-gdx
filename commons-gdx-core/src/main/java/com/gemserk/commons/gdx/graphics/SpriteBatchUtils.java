@@ -15,6 +15,13 @@ public class SpriteBatchUtils {
 		font.draw(spriteBatch, text, x - bounds.width * 0.5f, y + bounds.height * 0.5f);
 	}
 
+	/**
+	 * Draws a multi line text centered.
+	 */
+	public static void drawMultilineTextCentered(SpriteBatch spriteBatch, BitmapFont font, String text, float x, float y) {
+		TextBounds bounds = font.getMultiLineBounds(text);
+		font.drawMultiLine(spriteBatch, text, x - bounds.width * 0.5f, y + bounds.height * 0.5f);
+	}
 	
 	/**
 	 * Draws a Sprite centered.
