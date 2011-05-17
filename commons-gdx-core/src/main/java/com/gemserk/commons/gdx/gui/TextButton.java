@@ -36,15 +36,15 @@ public class TextButton {
 	private boolean wasInside;
 
 	public void setColor(Color color) {
-		this.color = color;
+		this.color.set(color);
 	}
 
 	public void setOverColor(Color overColor) {
-		this.overColor = overColor;
+		this.overColor.set(overColor);
 	}
 
 	public void setNotOverColor(Color notOverColor) {
-		this.notOverColor = notOverColor;
+		this.notOverColor.set(notOverColor);
 	}
 
 	public TextButton(BitmapFont font, String text, float x, float y) {

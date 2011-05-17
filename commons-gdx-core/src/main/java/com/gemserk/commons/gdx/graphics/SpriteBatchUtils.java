@@ -26,4 +26,11 @@ public class SpriteBatchUtils {
 		sprite.setRotation(angle);
 		sprite.draw(spriteBatch);
 	}
+	
+	/**
+	 * Draws a Sprite centered.
+	 */
+	public static void drawCentered(SpriteBatch spriteBatch, Sprite sprite, float x, float y, float angle) {
+		drawCentered(spriteBatch, sprite, x, y, sprite.getWidth(), sprite.getHeight(), angle);
+	}
 }

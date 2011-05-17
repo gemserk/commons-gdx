@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -153,16 +154,19 @@ public class LibgdxResourceBuilder {
 		}));
 	}
 
-	public void font(String id, final String imageFile, final String fontFile) {
-		resourceManager.add(id, new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new DisposableDataLoader<BitmapFont>(internal(imageFile)) {
+	public void font(String id, String imageFile, String fontFile) {
+		font(id, imageFile, fontFile, false);
+	}
 
+	public void font(String id, final String imageFile, final String fontFile, final boolean linearFilter) {
+		resourceManager.add(id, new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new DisposableDataLoader<BitmapFont>(internal(imageFile)) {
 			@Override
 			public BitmapFont load() {
 				Texture texture = new Texture(internal(imageFile));
-				// texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+				if (linearFilter)
+					texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 				return new BitmapFont(internal(fontFile), new Sprite(texture), false);
 			}
-
 		})));
 	}
 
