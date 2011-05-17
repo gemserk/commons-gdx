@@ -58,8 +58,7 @@ public class TextButton {
 		float w = bounds.width;
 		float h = bounds.height;
 
-		// not sure why the -h and not - h * 0.5f
-		this.bounds = new Rectangle(x - w * 0.5f, y - h, w, h);
+		this.bounds = new Rectangle(x - w * 0.5f, y - h * 0.5f, w, h);
 
 		color.set(notOverColor);
 	}
@@ -96,13 +95,13 @@ public class TextButton {
 
 		wasInside = inside;
 
-		if (libgdxPointer.wasPressed) 
+		if (libgdxPointer.wasPressed)
 			pressed = MathUtils2.inside(bounds, libgdxPointer.getPressedPosition());
 
 		if (libgdxPointer.wasReleased)
 			released = MathUtils2.inside(bounds, libgdxPointer.getReleasedPosition());
-		
-		// NOTE: for now the button could be released without never being pressed before 
+
+		// NOTE: for now the button could be released without never being pressed before
 
 	}
 
