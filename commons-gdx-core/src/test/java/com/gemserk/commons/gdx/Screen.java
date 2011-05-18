@@ -2,12 +2,6 @@ package com.gemserk.commons.gdx;
 
 public interface Screen {
 
-	boolean isInited();
-	
-	boolean isPaused();
-	
-	boolean isVisible();
-
 	void init();
 	
 	void dispose();

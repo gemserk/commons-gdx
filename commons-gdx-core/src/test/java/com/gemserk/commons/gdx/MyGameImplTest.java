@@ -12,17 +12,23 @@ import com.badlogic.gdx.Gdx;
 
 public class MyGameImplTest {
 
-	class MockScreen extends ScreenImpl {
-
-		public MockScreen(GameState gameState) {
-			super(gameState);
-		}
+	class MockScreen implements Screen {
 
 		boolean updateCalled = false;
 
 		boolean renderCalled = false;
 
 		boolean initCalled = false;
+
+		boolean disposeCalled = false;
+		
+		boolean resumeCalled = false;
+		
+		boolean pauseCalled = false;
+		
+		boolean showCalled = false;
+		
+		boolean hideCalled = false;
 
 		@Override
 		public void update(int delta) {
@@ -36,8 +42,38 @@ public class MyGameImplTest {
 
 		@Override
 		public void init() {
-			super.init();
 			initCalled = true;
+		}
+
+		@Override
+		public void dispose() {
+			disposeCalled = true;
+		}
+
+		@Override
+		public void show() {
+			showCalled = true;
+		}
+
+		@Override
+		public void hide() {
+			hideCalled = true;
+		}
+
+		@Override
+		public void pause() {
+			pauseCalled = true;
+		}
+
+		@Override
+		public void resume() {
+			resumeCalled = true;
+		}
+
+		@Override
+		public void resize(int width, int height) {
+			// TODO Auto-generated function stub
+			
 		}
 
 	}
@@ -129,23 +165,19 @@ public class MyGameImplTest {
 
 	@Test
 	public void shouldCallResumeAndShowOnNewScreen() {
-		MockScreen screen = new MockScreen(new MockGameState());
-		screen.paused = true;
-		screen.visible = false;
+		MockScreen screen = new MockScreen();
 
 		Game game = new Game();
 		game.setScreen(screen);
 
 		assertThat(game.getScreen(), IsSame.sameInstance((Screen) screen));
-		assertThat(screen.isPaused(), IsEqual.equalTo(false));
-		assertThat(screen.isVisible(), IsEqual.equalTo(true));
+		assertThat(screen.pauseCalled, IsEqual.equalTo(false));
+		assertThat(screen.showCalled, IsEqual.equalTo(true));
 	}
 
 	@Test
 	public void shouldInitScreenOnSetScreenIfNotInited() {
-		MockScreen screen = new MockScreen(new MockGameState());
-		screen.inited = false;
-		screen.initCalled = false;
+		MockScreen screen = new MockScreen();
 		Game game = new Game();
 		game.setScreen(screen);
 		assertThat(screen.initCalled, IsEqual.equalTo(true));
@@ -153,23 +185,19 @@ public class MyGameImplTest {
 
 	@Test
 	public void shouldCallPauseAndHideToPreviousScreen() {
-		MockScreen screen1 = new MockScreen(new MockGameState());
-		MockScreen screen2 = new MockScreen(new MockGameState());
-
-		screen1.paused = true;
-		screen1.visible = false;
-
-		screen2.paused = true;
-		screen2.visible = false;
+		MockScreen screen1 = new MockScreen();
+		MockScreen screen2 = new MockScreen();
 
 		Game game = new Game();
 		game.setScreen(screen1);
 		game.setScreen(screen2);
 
 		assertThat(game.getScreen(), IsSame.sameInstance((Screen) screen2));
-		assertThat(screen1.isPaused(), IsEqual.equalTo(true));
-		assertThat(screen1.isVisible(), IsEqual.equalTo(false));
-	}
+		assertThat(screen1.pauseCalled, IsEqual.equalTo(true));
+		assertThat(screen1.hideCalled, IsEqual.equalTo(true));
+		assertThat(screen2.resumeCalled, IsEqual.equalTo(true));
+		assertThat(screen2.showCalled, IsEqual.equalTo(true));
+}
 
 
 }

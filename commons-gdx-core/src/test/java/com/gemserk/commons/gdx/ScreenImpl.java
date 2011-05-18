@@ -10,26 +10,12 @@ public class ScreenImpl implements Screen {
 	
 	boolean inited = false;
 	
-	@Override
-	public boolean isInited() {
-		return inited;
-	}
-
-	public boolean isPaused() {
-		return paused;
-	}
-
-	public boolean isVisible() {
-		return visible;
-	}
-	
 	public ScreenImpl(GameState gameState) {
 		this.gameState = gameState;
 	}
 
 	@Override
 	public void init() {
-		// if already inited, do nothing
 		if (inited)
 			return;
 		inited = true;
@@ -89,7 +75,6 @@ public class ScreenImpl implements Screen {
 
 	@Override
 	public void dispose() {
-		// alreadyDisposed()
 		if (!inited)
 			return;
 		inited = false;
