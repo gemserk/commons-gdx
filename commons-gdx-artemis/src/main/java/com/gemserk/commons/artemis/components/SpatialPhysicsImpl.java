@@ -66,6 +66,11 @@ public class SpatialPhysicsImpl implements Spatial {
 		this.h = h;
 	}
 	
+	public SpatialPhysicsImpl(Body body, Spatial spatial) {
+		this.body = body;
+		set(spatial);
+	}
+	
 	@Override
 	public void set(Spatial spatial) {
 		setPosition(spatial.getX(), spatial.getY());
