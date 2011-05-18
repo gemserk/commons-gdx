@@ -1,15 +1,21 @@
 package com.gemserk.commons.gdx;
 
+/**
+ * Screen implementation with internal state to call the GameState methods in the correct way and only once when required.
+ * 
+ * @author acoppes
+ * 
+ */
 public class ScreenImpl implements Screen {
 
 	private final GameState gameState;
 
-	boolean paused = false;
-	
-	boolean visible = false;
-	
-	boolean inited = false;
-	
+	private boolean paused = true;
+
+	private boolean visible = false;
+
+	private boolean inited = false;
+
 	public ScreenImpl(GameState gameState) {
 		this.gameState = gameState;
 	}
