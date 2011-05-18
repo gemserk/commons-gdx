@@ -46,8 +46,8 @@ public class Contact {
 			c.setContact(body, contact.getWorldManifold().getNormal());
 
 			// if the body in contact is the first one declared by the contact, then we have to invert the normal.
-			// if (contact.getFixtureA().getBody() == body)
-			// c.normal.mul(-1f);
+			if (contact.getFixtureB().getBody() == body)
+				c.normal.mul(-1f);
 
 			return;
 		}
