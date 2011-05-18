@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 
 public class Game implements ApplicationListener {
 
-	private Screen screen;
+	protected Screen screen;
 
 	public Screen getScreen() {
 		return screen;
