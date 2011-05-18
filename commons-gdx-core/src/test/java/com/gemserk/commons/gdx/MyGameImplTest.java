@@ -12,91 +12,32 @@ import com.badlogic.gdx.Gdx;
 
 public class MyGameImplTest {
 
-	private class MockGame extends Game {
-		@Override
-		protected float getDelta() {
-			return 1f;
+	class MockScreen extends ScreenImpl {
+
+		public MockScreen(GameState gameState) {
+			super(gameState);
 		}
-	}
-
-	interface Screen extends com.badlogic.gdx.Screen {
-
-		void update(float delta);
-
-		boolean isPaused();
-
-		boolean isVisible();
-
-	}
-
-	class ScreenAdapter implements Screen {
-
-		boolean paused = false;
-
-		boolean visible = false;
-		
-		public boolean isPaused() {
-			return paused;
-		}
-
-		public boolean isVisible() {
-			return visible;
-		}
-
-		@Override
-		public void render(float delta) {
-			
-		}
-
-		@Override
-		public void update(float delta) {
-		}
-
-		@Override
-		public void resize(int width, int height) {
-		}
-
-		@Override
-		public void show() {
-			visible = true;
-		}
-
-		@Override
-		public void hide() {
-			visible = false;
-		}
-
-		@Override
-		public void pause() {
-			paused = true;
-		}
-
-		@Override
-		public void resume() {
-			paused = false;
-		}
-
-		@Override
-		public void dispose() {
-
-		}
-
-	}
-
-	class MockScreen extends ScreenAdapter {
 
 		boolean updateCalled = false;
 
 		boolean renderCalled = false;
 
+		boolean initCalled = false;
+
 		@Override
-		public void update(float delta) {
+		public void update(int delta) {
 			updateCalled = true;
 		}
 
 		@Override
-		public void render(float delta) {
+		public void render(int delta) {
 			renderCalled = true;
+		}
+
+		@Override
+		public void init() {
+			super.init();
+			initCalled = true;
 		}
 
 	}
@@ -137,14 +78,12 @@ public class MyGameImplTest {
 		public void render() {
 			if (screen == null)
 				return;
-			if (!screen.isPaused())
-				screen.update(getDelta());
-			if (screen.isVisible())
-				screen.render(getDelta());
+			screen.update(getDelta());
+			screen.render(getDelta());
 		}
 
-		protected float getDelta() {
-			return Gdx.graphics.getDeltaTime();
+		protected int getDelta() {
+			return (int) (Gdx.graphics.getDeltaTime() * 1000f);
 		}
 
 		@Override
@@ -163,8 +102,9 @@ public class MyGameImplTest {
 			}
 
 			this.screen = screen;
-			this.screen.resume();
-			this.screen.show();
+			screen.init();
+			screen.resume();
+			screen.show();
 		}
 
 		@Override
@@ -189,7 +129,7 @@ public class MyGameImplTest {
 
 	@Test
 	public void shouldCallResumeAndShowOnNewScreen() {
-		MockScreen screen = new MockScreen();
+		MockScreen screen = new MockScreen(new MockGameState());
 		screen.paused = true;
 		screen.visible = false;
 
@@ -202,9 +142,19 @@ public class MyGameImplTest {
 	}
 
 	@Test
+	public void shouldInitScreenOnSetScreenIfNotInited() {
+		MockScreen screen = new MockScreen(new MockGameState());
+		screen.inited = false;
+		screen.initCalled = false;
+		Game game = new Game();
+		game.setScreen(screen);
+		assertThat(screen.initCalled, IsEqual.equalTo(true));
+	}
+
+	@Test
 	public void shouldCallPauseAndHideToPreviousScreen() {
-		MockScreen screen1 = new MockScreen();
-		MockScreen screen2 = new MockScreen();
+		MockScreen screen1 = new MockScreen(new MockGameState());
+		MockScreen screen2 = new MockScreen(new MockGameState());
 
 		screen1.paused = true;
 		screen1.visible = false;
@@ -221,48 +171,5 @@ public class MyGameImplTest {
 		assertThat(screen1.isVisible(), IsEqual.equalTo(false));
 	}
 
-	@Test
-	public void shouldNotCallUpdateIfPaused() {
-		MockScreen screen = new MockScreen();
-		Game game = new MockGame();
-		game.setScreen(screen);
-		screen.paused = true;
-		screen.updateCalled = false;
-		game.render();
-		assertThat(screen.updateCalled, IsEqual.equalTo(false));
-	}
-
-	@Test
-	public void shouldCallUpdateIfNotPaused() {
-		MockScreen screen = new MockScreen();
-		Game game = new MockGame();
-		game.setScreen(screen);
-		screen.paused = false;
-		screen.updateCalled = false;
-		game.render();
-		assertThat(screen.updateCalled, IsEqual.equalTo(true));
-	}
-
-	@Test
-	public void shouldNotCallRenderIfNotVisible() {
-		MockScreen screen = new MockScreen();
-		Game game = new MockGame();
-		game.setScreen(screen);
-		screen.visible = false;
-		screen.renderCalled = false;
-		game.render();
-		assertThat(screen.renderCalled, IsEqual.equalTo(false));
-	}
-	
-	@Test
-	public void shouldCallRenderIfVisible() {
-		MockScreen screen = new MockScreen();
-		Game game = new MockGame();
-		game.setScreen(screen);
-		screen.visible = true;
-		screen.renderCalled = false;
-		game.render();
-		assertThat(screen.renderCalled, IsEqual.equalTo(true));
-	}
 
 }
