@@ -101,7 +101,7 @@ public class TextButton {
 		if (libgdxPointer.wasReleased)
 			released = MathUtils2.inside(bounds, libgdxPointer.getReleasedPosition());
 
-		// NOTE: for now the button could be released without never being pressed before
+		// NOTE: for now the button could be released while it was never pressed before
 
 	}
 

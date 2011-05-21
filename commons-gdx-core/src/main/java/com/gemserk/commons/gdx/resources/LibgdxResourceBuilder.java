@@ -26,6 +26,8 @@ import com.gemserk.resources.resourceloaders.ResourceLoader;
 import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
 public class LibgdxResourceBuilder {
+	
+	// TODO: Define folders for each type of resource?
 
 	ResourceManager<String> resourceManager;
 

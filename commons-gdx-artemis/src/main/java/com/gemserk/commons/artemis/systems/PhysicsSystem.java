@@ -86,31 +86,29 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		// synchronize sizes between spatial and physics components.
 
 		PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
-		AntiGravityComponent antiGravityComponent = e.getComponent(AntiGravityComponent.class);
-
-		if (antiGravityComponent == null)
-			return;
-
 		Body body = physicsComponent.getBody();
 
-		bodyAntiGravity.set(antiGravity);
-		bodyAntiGravity.mul(body.getMass());
+		AntiGravityComponent antiGravityComponent = e.getComponent(AntiGravityComponent.class);
+		if (antiGravityComponent != null) {
 
-		body.applyForce(bodyAntiGravity, body.getTransform().getPosition());
+			bodyAntiGravity.set(antiGravity);
+			bodyAntiGravity.mul(body.getMass());
+
+			body.applyForce(bodyAntiGravity, body.getTransform().getPosition());
+		}
 
 		LinearVelocityLimitComponent limitComponent = e.getComponent(LinearVelocityLimitComponent.class);
-		if (limitComponent == null)
-			return;
+		if (limitComponent != null) {
+			Vector2 linearVelocity = body.getLinearVelocity();
 
-		Vector2 linearVelocity = body.getLinearVelocity();
+			float speed = linearVelocity.len();
+			float maxSpeed = limitComponent.getLimit();
 
-		float speed = linearVelocity.len();
-		float maxSpeed = limitComponent.getLimit();
-
-		if (speed > maxSpeed) {
-			float factor = maxSpeed / speed;
-			linearVelocity.mul(factor);
-			body.setLinearVelocity(linearVelocity);
+			if (speed > maxSpeed) {
+				float factor = maxSpeed / speed;
+				linearVelocity.mul(factor);
+				body.setLinearVelocity(linearVelocity);
+			}
 		}
 
 	}
