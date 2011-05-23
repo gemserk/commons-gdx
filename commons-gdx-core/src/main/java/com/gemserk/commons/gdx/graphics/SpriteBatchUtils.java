@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SpriteBatchUtils {
-	
+
 	/**
 	 * Draws a text centered in the specified coordinates
 	 */
@@ -22,7 +22,7 @@ public class SpriteBatchUtils {
 		TextBounds bounds = font.getMultiLineBounds(text);
 		font.drawMultiLine(spriteBatch, text, x - bounds.width * 0.5f, y + bounds.height * 0.5f);
 	}
-	
+
 	/**
 	 * Draws a Sprite centered.
 	 */
@@ -33,11 +33,21 @@ public class SpriteBatchUtils {
 		sprite.setRotation(angle);
 		sprite.draw(spriteBatch);
 	}
-	
+
 	/**
 	 * Draws a Sprite centered.
 	 */
 	public static void drawCentered(SpriteBatch spriteBatch, Sprite sprite, float x, float y, float angle) {
 		drawCentered(spriteBatch, sprite, x, y, sprite.getWidth(), sprite.getHeight(), angle);
 	}
+
+	/**
+	 * If text width exceeds viewportWidth * limit, it returns the corresponding scale to make the textWidht be equal to viewportWidth * limit.
+	 */
+	public static float calculateScaleForText(float viewportWidth, float textWidth, float limit) {
+		if (textWidth < viewportWidth * limit)
+			return 1f;
+		return viewportWidth / textWidth * limit;
+	}
+
 }
