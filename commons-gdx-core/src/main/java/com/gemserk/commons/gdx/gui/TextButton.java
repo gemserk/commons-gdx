@@ -19,7 +19,7 @@ public class TextButton {
 
 	private String text;
 
-	private Rectangle bounds;
+	private final Rectangle bounds = new Rectangle();
 
 	private boolean pressed;
 
@@ -46,26 +46,31 @@ public class TextButton {
 	public void setNotOverColor(Color notOverColor) {
 		this.notOverColor.set(notOverColor);
 	}
+	
+	public void setText(String text) {
+		this.text = text;
+		calculateBounds(font, text, x, y);
+	}
 
 	public TextButton(BitmapFont font, String text, float x, float y) {
 		this.font = font;
 		this.text = text;
 		this.x = x;
 		this.y = y;
+		calculateBounds(font, text, x, y);
+		color.set(notOverColor);
+	}
 
-		TextBounds bounds = font.getBounds(text);
-
+	private void calculateBounds(BitmapFont font, String text, float x, float y) {
+		TextBounds bounds = font.getMultiLineBounds(text);
 		float w = bounds.width;
 		float h = bounds.height;
-
-		this.bounds = new Rectangle(x - w * 0.5f, y - h * 0.5f, w, h);
-
-		color.set(notOverColor);
+		this.bounds.set(x - w * 0.5f, y - h * 0.5f, w, h);
 	}
 
 	public void draw(SpriteBatch spriteBatch) {
 		font.setColor(color);
-		SpriteBatchUtils.drawCentered(spriteBatch, font, text, x, y);
+		SpriteBatchUtils.drawMultilineTextCentered(spriteBatch, font, text, x, y);
 		// ImmediateModeRendererUtils.drawRectangle(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, Color.GREEN);
 	}
 
