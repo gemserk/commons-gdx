@@ -1,5 +1,6 @@
 package com.gemserk.commons.gdx.gui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
@@ -14,7 +15,9 @@ public class Text {
 
 	private float cx, cy;
 
-	private boolean visible;
+	private boolean visible = true;
+	
+	private Color color = new Color(Color.WHITE);
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
@@ -26,6 +29,10 @@ public class Text {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+	
+	public void setColor(Color color) {
+		this.color.set(color);
 	}
 
 	/**
@@ -60,6 +67,7 @@ public class Text {
 	public void draw(SpriteBatch spriteBatch, BitmapFont font) {
 		if (!isVisible())
 			return;
+		font.setColor(color);
 		SpriteBatchUtils.drawMultilineText(spriteBatch, font, text, x, y, cx, cy);
 	}
 

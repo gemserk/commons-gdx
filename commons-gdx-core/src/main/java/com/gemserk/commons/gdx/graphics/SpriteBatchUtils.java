@@ -8,13 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class SpriteBatchUtils {
 
 	/**
-	 * Used to define how to center the text box over the (x,y) coordinates, not for internal text alignment, for that BitmapFont has HAlignment.
-	 */
-	public static enum Align {
-		Center, Left, Right
-	};
-
-	/**
 	 * Draws a text centered in the specified coordinates
 	 */
 	public static void drawCentered(SpriteBatch spriteBatch, BitmapFont font, String text, float x, float y) {
@@ -44,7 +37,7 @@ public class SpriteBatchUtils {
 	 */
 	public static void drawMultilineText(SpriteBatch spriteBatch, BitmapFont font, String text, float x, float y, float cx, float cy) {
 		TextBounds bounds = font.getMultiLineBounds(text);
-		font.drawMultiLine(spriteBatch, text, x + bounds.width * cx, y + bounds.height * cy);
+		font.drawMultiLine(spriteBatch, text, x - bounds.width * cx, y + bounds.height * cy);
 	}
 
 	/**
