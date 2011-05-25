@@ -19,20 +19,23 @@ public class Text {
 	
 	private Color color = new Color(Color.WHITE);
 
-	public void setVisible(boolean visible) {
+	public Text setVisible(boolean visible) {
 		this.visible = visible;
+		return this;
 	}
 
 	public boolean isVisible() {
 		return visible;
 	}
 
-	public void setText(String text) {
+	public Text setText(String text) {
 		this.text = text;
+		return this;
 	}
 	
-	public void setColor(Color color) {
+	public Text setColor(Color color) {
 		this.color.set(color);
+		return this;
 	}
 
 	/**
@@ -63,7 +66,7 @@ public class Text {
 		this.cx = cx;
 		this.cy = cy;
 	}
-
+	
 	public void draw(SpriteBatch spriteBatch, BitmapFont font) {
 		if (!isVisible())
 			return;
