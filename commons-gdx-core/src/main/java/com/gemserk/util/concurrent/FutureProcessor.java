@@ -13,8 +13,8 @@ public class FutureProcessor<T> {
 		this.future = future;
 	}
 
-	public FutureProcessor(FutureHandler<T> scoresRefreshHandler) {
-		this.futureHandler = scoresRefreshHandler;
+	public FutureProcessor(FutureHandler<T> futureHandler) {
+		this.futureHandler = futureHandler;
 	}
 
 	public void update() {
