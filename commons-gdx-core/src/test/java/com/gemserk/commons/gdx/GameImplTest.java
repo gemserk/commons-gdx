@@ -8,7 +8,7 @@ import org.hamcrest.core.IsSame;
 import org.junit.Test;
 
 
-public class MyGameImplTest {
+public class GameImplTest {
 
 	@Test
 	public void shouldStartWithNoScreen() {
