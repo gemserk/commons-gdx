@@ -2,7 +2,7 @@ package com.gemserk.commons.gdx.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.gemserk.animation4j.transitions.Transitions;
@@ -19,7 +19,7 @@ public class TextButton {
 
 	private String text;
 
-	private final Rectangle bounds = new Rectangle();
+	private Rectangle bounds = new Rectangle();
 
 	private boolean pressed;
 
@@ -35,6 +35,8 @@ public class TextButton {
 
 	private boolean wasInside;
 
+	private HAlignment alignment = HAlignment.LEFT;
+
 	public void setColor(Color color) {
 		this.color.set(color);
 	}
@@ -46,10 +48,11 @@ public class TextButton {
 	public void setNotOverColor(Color notOverColor) {
 		this.notOverColor.set(notOverColor);
 	}
-	
-	public void setText(String text) {
+
+	public TextButton setText(String text) {
 		this.text = text;
 		calculateBounds(font, text, x, y);
+		return this;
 	}
 
 	public TextButton(BitmapFont font, String text, float x, float y) {
@@ -62,15 +65,18 @@ public class TextButton {
 	}
 
 	private void calculateBounds(BitmapFont font, String text, float x, float y) {
-		TextBounds bounds = font.getMultiLineBounds(text);
-		float w = bounds.width;
-		float h = bounds.height;
-		this.bounds.set(x - w * 0.5f, y - h * 0.5f, w, h);
+		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y, alignment);
 	}
 
+	public TextButton setAlignment(HAlignment alignment) {
+		this.alignment = alignment;
+		calculateBounds(font, text, x, y);
+		return this;
+	}
+	
 	public void draw(SpriteBatch spriteBatch) {
 		font.setColor(color);
-		SpriteBatchUtils.drawMultilineTextCentered(spriteBatch, font, text, x, y);
+		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, 0.5f, 0.5f, alignment);
 		// ImmediateModeRendererUtils.drawRectangle(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, Color.GREEN);
 	}
 

@@ -1,9 +1,11 @@
 package com.gemserk.commons.gdx.graphics;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class SpriteBatchUtils {
 
@@ -36,8 +38,31 @@ public class SpriteBatchUtils {
 	 *            A value between 0 and 1 to center the text over the vertical axis.
 	 */
 	public static void drawMultilineText(SpriteBatch spriteBatch, BitmapFont font, String text, float x, float y, float cx, float cy) {
+		// TextBounds bounds = font.getMultiLineBounds(text);
+		// font.drawMultiLine(spriteBatch, text, x - bounds.width * cx, y + bounds.height * cy);
+		drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, HAlignment.LEFT);
+	}
+
+	public static void drawMultilineTextWithAlignment(SpriteBatch spriteBatch, BitmapFont font, String text, float x, float y, float cx, float cy, HAlignment alignment) {
 		TextBounds bounds = font.getMultiLineBounds(text);
-		font.drawMultiLine(spriteBatch, text, x - bounds.width * cx, y + bounds.height * cy);
+		float centerx = getCenterForAlignment(cx, alignment, bounds);
+		font.drawMultiLine(spriteBatch, text, x + centerx, y + bounds.height * cy, 0f, alignment);
+	}
+
+	private static float getCenterForAlignment(float cx, HAlignment alignment, TextBounds bounds) {
+		if (alignment == HAlignment.RIGHT)
+			return bounds.width * (1f - cx);
+		if (alignment == HAlignment.CENTER)
+			return bounds.width * (0.5f - cx);
+		return -bounds.width * cx;
+	}
+	
+	public static Rectangle getBounds(BitmapFont font, String text, float x, float y, HAlignment alignment) {
+		TextBounds bounds = font.getMultiLineBounds(text);
+		float w = bounds.width;
+		float h = bounds.height;
+		float cx = getCenterForAlignment(0.5f, alignment, bounds);
+		return new Rectangle(x + cx, y - h * 0.5f, w, h);
 	}
 
 	/**
