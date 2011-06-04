@@ -56,13 +56,16 @@ public class SpriteBatchUtils {
 			return bounds.width * (0.5f - cx);
 		return -bounds.width * cx;
 	}
-	
-	public static Rectangle getBounds(BitmapFont font, String text, float x, float y, HAlignment alignment) {
+
+	public static Rectangle getBounds(BitmapFont font, String text, float x, float y) {
+		return getBounds(font, text, x, y, 0f, 0f);
+	}
+
+	public static Rectangle getBounds(BitmapFont font, String text, float x, float y, float sx, float sy) {
 		TextBounds bounds = font.getMultiLineBounds(text);
 		float w = bounds.width;
 		float h = bounds.height;
-		float cx = getCenterForAlignment(0.5f, alignment, bounds);
-		return new Rectangle(x + cx, y - h * 0.5f, w, h);
+		return new Rectangle(x - sx - w * 0.5f, y - sy - h * 0.5f, w + 2 * sx, h + 2 * sy);
 	}
 
 	/**

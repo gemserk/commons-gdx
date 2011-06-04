@@ -51,7 +51,15 @@ public class TextButton {
 
 	public TextButton setText(String text) {
 		this.text = text;
-		calculateBounds(font, text, x, y);
+		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
+		return this;
+	}
+	
+	/**
+	 * Increment size of the bounds by the specified w,h
+	 */
+	public TextButton setBoundsOffset(float w, float h) {
+		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y, w, h);
 		return this;
 	}
 
@@ -60,17 +68,13 @@ public class TextButton {
 		this.text = text;
 		this.x = x;
 		this.y = y;
-		calculateBounds(font, text, x, y);
+		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
 		color.set(notOverColor);
-	}
-
-	private void calculateBounds(BitmapFont font, String text, float x, float y) {
-		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y, alignment);
 	}
 
 	public TextButton setAlignment(HAlignment alignment) {
 		this.alignment = alignment;
-		calculateBounds(font, text, x, y);
+		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
 		return this;
 	}
 	
