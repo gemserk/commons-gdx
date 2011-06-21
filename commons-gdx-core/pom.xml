@@ -47,9 +47,9 @@
 			<version>${componentsengine.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>java3d</groupId>
+			<groupId>com.gemserk.vecmath</groupId>
 			<artifactId>vecmath</artifactId>
-			<version>1.3.1</version>
+			<version>1.5.3-GEMSERK</version>
 		</dependency>
 		<dependency>
 			<groupId>com.gemserk.resources</groupId>

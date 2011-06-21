@@ -10,15 +10,44 @@ import com.gemserk.componentsengine.utils.timers.CountDownTimer;
 import com.gemserk.componentsengine.utils.timers.Timer;
 
 public class TransitionScreenTest {
+	
+	static class TransitionHandler {
+		
+		void onBegin() {}
+
+		void onEnd() {}
+
+	}
 
 	static interface InternalScreenTransition {
 
+		/**
+		 * Called when the transition begins.
+		 */
 		void begin();
 
+		/**
+		 * Called when the transition ends.
+		 */
 		void end();
+		
+		/**
+		 * Called before the screen.render() was called.
+		 * @param delta
+		 */
+		void preRender(int delta);
 
+		/**
+		 * Called after the screen.render() was called.
+		 * @param delta the delta time in ms
+		 */
+		void postRender(int delta);
+		
 		void update(int delta);
 
+		/**
+		 * Returns true if the transition ended, false otherwise.
+		 */
 		boolean isFinished();
 
 		Screen getScreen();
@@ -29,15 +58,34 @@ public class TransitionScreenTest {
 		
 		private final Screen screen;
 
+		private final TransitionHandler transitionHandler;
+
 		private Timer timer;
 
 		public Screen getScreen() {
 			return screen;
 		}
+		
+		protected TransitionHandler getTransitionHandler() {
+			return transitionHandler;
+		}
 
 		public InternalScreenTransitionImpl(Screen screen, int time) {
+			this(screen, time, new TransitionHandler());
+		}
+		
+		public InternalScreenTransitionImpl(Screen screen, int time, TransitionHandler transitionHandler) {
 			this.screen = screen;
+			this.transitionHandler = transitionHandler;
 			this.timer = new CountDownTimer(time, true);
+		}
+		
+		public void preRender(int delta) {
+			
+		}
+
+		public void postRender(int delta) {
+			
 		}
 
 		public void update(int delta) {
@@ -55,15 +103,21 @@ public class TransitionScreenTest {
 		public LeaveTransition(Screen screen, int time) {
 			super(screen, time);
 		}
+		
+		public LeaveTransition(Screen screen, int time, TransitionHandler transitionHandler) {
+			super(screen, time, transitionHandler);
+		}
 
 		public void begin() {
 			getScreen().init();
 			getScreen().show();
 			getScreen().pause();
+			getTransitionHandler().onBegin();
 		}
 
 		public void end() {
 			getScreen().hide();
+			getTransitionHandler().onEnd();
 		}
 
 	}
@@ -74,14 +128,20 @@ public class TransitionScreenTest {
 			super(screen, time);
 		}
 
+		public EnterTransition(Screen screen, int time, TransitionHandler transitionHandler) {
+			super(screen, time, transitionHandler);
+		}
+
 		public void begin() {
 			getScreen().init();
 			getScreen().show();
 			getScreen().pause();
+			getTransitionHandler().onBegin();
 		}
 
 		public void end() {
 			getScreen().resume();
+			getTransitionHandler().onEnd();
 		}
 
 	}
@@ -145,6 +205,40 @@ public class TransitionScreenTest {
 				leaveTransition.end();
 				enterTransition.begin();
 			}
+		}
+
+	}
+	
+	static class TransitionScreen extends ScreenImpl {
+
+		protected final ScreenTransition screenTransition;
+
+		public TransitionScreen(ScreenTransition screenTransition) {
+			super(new GameStateImpl());
+			this.screenTransition = screenTransition;
+		}
+
+		@Override
+		public void init() {
+			super.init();
+			screenTransition.start();
+		}
+
+		@Override
+		public void update(int delta) {
+			super.update(delta);
+			screenTransition.update(delta);
+		}
+
+		@Override
+		public void render(int delta) {
+			super.render(delta);
+			
+			InternalScreenTransition transition = screenTransition.getCurrentTransition();
+			
+			transition.preRender(delta);
+			screenTransition.getCurrentScreen().render(delta);
+			transition.postRender(delta);
 		}
 
 	}

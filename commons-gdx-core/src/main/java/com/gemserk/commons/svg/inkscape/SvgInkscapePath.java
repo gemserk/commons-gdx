@@ -1,6 +1,7 @@
 package com.gemserk.commons.svg.inkscape;
 
-import javax.vecmath.Vector2f;
+import com.gemserk.vecmath.Vector2f;
+
 
 public interface SvgInkscapePath extends SvgElement {
 

@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.vecmath.Vector2f;
-
 import org.w3c.dom.Element;
+
+import com.gemserk.vecmath.Vector2f;
 
 public class SvgInkscapePathProcessor implements SvgElementProcessor {
 

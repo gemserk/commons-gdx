@@ -1,6 +1,6 @@
 package com.gemserk.commons.svg.inkscape;
 
-import javax.vecmath.Matrix3f;
+import com.gemserk.vecmath.Matrix3f;
 
 public class SvgInkscapeImageImpl implements SvgInkscapeImage {
 

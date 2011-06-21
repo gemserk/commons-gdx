@@ -1,8 +1,8 @@
 package com.gemserk.commons.svg.inkscape;
 
-import javax.vecmath.Matrix3f;
-
 import org.w3c.dom.Element;
+
+import com.gemserk.vecmath.Matrix3f;
 
 
 public class SvgImageProcessor implements SvgElementProcessor {

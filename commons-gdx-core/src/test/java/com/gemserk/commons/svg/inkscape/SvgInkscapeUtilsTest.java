@@ -2,10 +2,10 @@ package com.gemserk.commons.svg.inkscape;
 
 import static org.junit.Assert.assertThat;
 
-import javax.vecmath.Matrix3f;
-
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
+
+import com.gemserk.vecmath.Matrix3f;
 
 public class SvgInkscapeUtilsTest {
 
