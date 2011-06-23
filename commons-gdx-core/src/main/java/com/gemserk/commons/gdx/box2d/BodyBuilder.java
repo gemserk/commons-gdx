@@ -30,6 +30,8 @@ public class BodyBuilder {
 
 	private final World world;
 
+	private float angle;
+
 	public BodyBuilder(World world) {
 		this.world = world;
 		reset();
@@ -44,6 +46,7 @@ public class BodyBuilder {
 		bodyDef = new BodyDef();
 		fixtureDef = new FixtureDef();
 		mass = 1f;
+		angle = 0f;
 		userData = null;
 		position.set(0f, 0f);
 	}
@@ -129,8 +132,11 @@ public class BodyBuilder {
 		return this;
 	}
 	
-	// Could be making the reset after the body was built.
-
+	public BodyBuilder angle(float angle) {
+		this.angle = angle;
+		return this;
+	}
+	
 	public Body build() {
 		Body body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef);
@@ -138,7 +144,7 @@ public class BodyBuilder {
 		massData.mass = mass;
 		body.setMassData(massData);
 		body.setUserData(userData);
-		body.setTransform(position, 0f);
+		body.setTransform(position, angle);
 		reset();
 		return body;
 	}

@@ -29,6 +29,22 @@ public class CameraRestrictedImpl implements Camera {
 		this.angle = angle;
 	}
 
+	/**
+	 * @param x
+	 *            the horizontal position of the camera
+	 * @param y
+	 *            the vertical position of the camera.
+	 * @param zoom
+	 *            the zoom of the camera.
+	 * @param angle
+	 *            the angle of the camera.
+	 * @param width
+	 *            the width of the view port of the camera, in viewport coordinates.
+	 * @param height
+	 *            the height of the view port of the camera, in viewport coordinates.
+	 * @param worldBounds
+	 *            the bounds of the restricted camera, in world coordinates.
+	 */
 	public CameraRestrictedImpl(float x, float y, float zoom, float angle, float width, float height, Rectangle worldBounds) {
 		this.x = x;
 		this.y = y;
