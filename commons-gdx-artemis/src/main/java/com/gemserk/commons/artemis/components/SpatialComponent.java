@@ -2,6 +2,7 @@ package com.gemserk.commons.artemis.components;
 
 import com.artemis.Component;
 import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.gdx.games.Spatial;
 
 public class SpatialComponent extends Component {
 

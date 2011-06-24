@@ -6,9 +6,9 @@ import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.EntityDebugger;
-import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
+import com.gemserk.commons.gdx.games.Spatial;
 
 public class SpriteUpdateSystem extends EntitySystem {
 

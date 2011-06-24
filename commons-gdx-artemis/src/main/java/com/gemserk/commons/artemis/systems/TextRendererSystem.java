@@ -5,9 +5,9 @@ import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
+import com.gemserk.commons.gdx.games.Spatial;
 
 public class TextRendererSystem extends EntitySystem {
 

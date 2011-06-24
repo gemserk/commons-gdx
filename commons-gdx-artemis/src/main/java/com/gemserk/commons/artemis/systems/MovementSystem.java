@@ -5,8 +5,8 @@ import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.MovementComponent;
-import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.gdx.games.Spatial;
 
 public class MovementSystem extends EntitySystem {
 

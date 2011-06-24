@@ -1,4 +1,4 @@
-package com.gemserk.commons.artemis.components;
+package com.gemserk.commons.gdx.games;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;

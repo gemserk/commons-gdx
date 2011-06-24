@@ -4,8 +4,8 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.gemserk.commons.artemis.components.AliveAreaComponent;
-import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
 public class AliveAreaSystem extends EntitySystem {
