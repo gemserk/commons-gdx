@@ -20,6 +20,9 @@ public interface Spatial {
 	
 	// void setPosition(Vector2 position);
 	
+	/**
+	 * Returns the angle of the spatial in degrees.
+	 */
 	float getAngle();
 
 	void setAngle(float angle);
