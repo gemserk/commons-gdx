@@ -2,6 +2,7 @@ package com.gemserk.commons.artemis.components;
 
 import com.artemis.Component;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.gemserk.commons.gdx.box2d.Contact;
 
 public class PhysicsComponent extends Component {
 

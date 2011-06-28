@@ -2,10 +2,10 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
-import com.gemserk.commons.artemis.components.Contact;
 import com.gemserk.commons.artemis.components.HitComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.triggers.Trigger;
+import com.gemserk.commons.gdx.box2d.Contact;
 
 public class HitDetectionSystem extends EntityProcessingSystem implements ActivableSystem {
 

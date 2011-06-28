@@ -132,7 +132,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		Body body = component.getBody();
 		body.setUserData(null);
 
-		com.gemserk.commons.artemis.components.Contact contact = component.getContact();
+		com.gemserk.commons.gdx.box2d.Contact contact = component.getContact();
 
 		// removes contact from the other entity
 		for (int i = 0; i < contact.getContactCount(); i++) {
