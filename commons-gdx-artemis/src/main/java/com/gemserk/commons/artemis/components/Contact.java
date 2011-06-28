@@ -1,6 +1,5 @@
 package com.gemserk.commons.artemis.components;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -89,12 +88,12 @@ public class Contact {
 		return contacts.length;
 	}
 
-	public Entity getEntity() {
-		return getEntity(0);
+	public Object getUserData() {
+		return getUserData(0);
 	}
 
-	public Entity getEntity(int i) {
-		return (Entity) contacts[i].body.getUserData();
+	public Object getUserData(int i) {
+		return contacts[i].body.getUserData();
 	}
 
 	public Body getBody() {
