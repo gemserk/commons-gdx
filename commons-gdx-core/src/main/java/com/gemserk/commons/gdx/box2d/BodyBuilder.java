@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -19,21 +20,100 @@ import com.badlogic.gdx.physics.box2d.World;
 public class BodyBuilder {
 
 	private BodyDef bodyDef;
-
 	private FixtureDef fixtureDef;
-
 	private float mass = 1f;
-
 	private Object userData = null;
-
 	private Vector2 position = new Vector2();
-
 	private final World world;
-
 	private float angle;
+	
+	public class FixtureBuilder {
+		
+		FixtureDef fixtureDef;
+		
+		Body body;
+		
+		void setBody(Body body) {
+			this.body = body;
+		}
+		
+		public FixtureBuilder() {
+			reset();
+		}
+		
+		public FixtureBuilder sensor() {
+			fixtureDef.isSensor = true;
+			return this;
+		}
+
+		public FixtureBuilder boxShape(float hx, float hy) {
+			PolygonShape shape = new PolygonShape();
+			shape.setAsBox(hx, hy);
+			fixtureDef.shape = shape;
+			return this;
+		}
+
+		public FixtureBuilder circleShape(float radius) {
+			Shape shape = new CircleShape();
+			shape.setRadius(radius);
+			fixtureDef.shape = shape;
+			return this;
+		}
+
+		public FixtureBuilder polygonShape(Vector2[] vertices) {
+			PolygonShape shape = new PolygonShape();
+			shape.set(vertices);
+			fixtureDef.shape = shape;
+			return this;
+		}
+		
+		public FixtureBuilder density(float density) {
+			fixtureDef.density = density;
+			return this;
+		}
+
+		public FixtureBuilder friction(float friction) {
+			fixtureDef.friction = friction;
+			return this;
+		}
+
+		public FixtureBuilder restitution(float restitution) {
+			fixtureDef.restitution = restitution;
+			return this;
+		}
+
+		public FixtureBuilder categoryBits(short categoryBits) {
+			fixtureDef.filter.categoryBits = categoryBits;
+			return this;
+		}
+
+		public FixtureBuilder maskBits(short maskBits) {
+			fixtureDef.filter.maskBits = maskBits;
+			return this;
+		}
+		
+		private void reset() {
+			fixtureDef = new FixtureDef();
+		}
+		
+		public Fixture build() {
+			Fixture fixture = body.createFixture(fixtureDef);
+			reset();
+			return fixture;
+		}
+		
+	}
+	
+	FixtureBuilder fixtureBuilder;
+		
+	public FixtureBuilder fixtureBuilder(Body body) {
+		fixtureBuilder.setBody(body);
+		return fixtureBuilder;
+	}
 
 	public BodyBuilder(World world) {
 		this.world = world;
+		this.fixtureBuilder = new FixtureBuilder();
 		reset();
 	}
 
