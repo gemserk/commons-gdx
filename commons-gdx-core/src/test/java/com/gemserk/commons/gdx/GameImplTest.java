@@ -7,7 +7,6 @@ import org.hamcrest.core.IsNull;
 import org.hamcrest.core.IsSame;
 import org.junit.Test;
 
-
 public class GameImplTest {
 
 	@Test
@@ -57,7 +56,29 @@ public class GameImplTest {
 		assertThat(screen1.hideCalled, IsEqual.equalTo(true));
 		assertThat(screen2.resumeCalled, IsEqual.equalTo(true));
 		assertThat(screen2.showCalled, IsEqual.equalTo(true));
-}
+	}
 
+	@Test
+	public void shouldTransitionFromOneScreenToAnother() {
+		MockScreen screenA = new MockScreen();
+		MockScreen screenB = new MockScreen();
+		
+		Game game = new Game();
+		game.setScreen(screenA);
+		
+		assertThat(screenA.initCalled, IsEqual.equalTo(true));
+		
+		game.setScreen(screenB, true);
+		
+		assertThat(screenA.pauseCalled, IsEqual.equalTo(true));
+		assertThat(screenA.hideCalled, IsEqual.equalTo(true));
+		assertThat(screenA.disposeCalled, IsEqual.equalTo(true));
+		
+		assertThat(screenB.initCalled, IsEqual.equalTo(true));
+		assertThat(screenB.showCalled, IsEqual.equalTo(true));
+		assertThat(screenB.resumeCalled, IsEqual.equalTo(true));
+		
+		assertThat(screenB, IsSame.sameInstance(game.getScreen()));
+	}
 
 }

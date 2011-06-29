@@ -51,12 +51,20 @@ public class Game implements ApplicationListener {
 	}
 
 	public void setScreen(Screen screen) {
+		setScreen(screen, false);
+	}
+	
+	public void setScreen(Screen screen, boolean shouldDispose) {
 		if (screen == null)
 			return;
 
-		if (this.screen != null) {
-			this.screen.pause();
-			this.screen.hide();
+		Screen currentScreen = getScreen();
+		
+		if (currentScreen != null) {
+			currentScreen.pause();
+			currentScreen.hide();
+			if (shouldDispose)
+				currentScreen.dispose();
 		}
 
 		this.screen = screen;
