@@ -18,12 +18,12 @@ public class GameTransitions {
 		/**
 		 * Called when the transition begins.
 		 */
-		void begin();
+		void init();
 
 		/**
 		 * Called when the transition ends.
 		 */
-		void end();
+		void dispose();
 
 		/**
 		 * Called before the screen.render() was called.
@@ -64,7 +64,7 @@ public class GameTransitions {
 		private boolean started;
 
 		@Override
-		public void begin() {
+		public void init() {
 			// timer.reset();
 			started = true;
 		}
@@ -121,15 +121,15 @@ public class GameTransitions {
 			super(screen, time, transitionHandler);
 		}
 
-		public void begin() {
-			super.begin();
+		public void init() {
+			super.init();
 			getScreen().init();
 			getScreen().show();
 			getScreen().pause();
 			getTransitionHandler().onBegin();
 		}
 
-		public void end() {
+		public void dispose() {
 			getScreen().hide();
 			getTransitionHandler().onEnd();
 		}
@@ -146,15 +146,15 @@ public class GameTransitions {
 			super(screen, time, transitionHandler);
 		}
 
-		public void begin() {
-			super.begin();
+		public void init() {
+			super.init();
 			getScreen().init();
 			getScreen().show();
 			getScreen().pause();
 			getTransitionHandler().onBegin();
 		}
 
-		public void end() {
+		public void dispose() {
 			getScreen().resume();
 			getTransitionHandler().onEnd();
 		}
@@ -192,7 +192,7 @@ public class GameTransitions {
 		}
 
 		public void start() {
-			leaveTransition.begin();
+			leaveTransition.init();
 		}
 
 		public void update(int delta) {
@@ -209,8 +209,8 @@ public class GameTransitions {
 			leaveTransition.update(delta);
 			if (leaveTransition.isFinished()) {
 				currentTransition = enterTransition;
-				leaveTransition.end();
-				enterTransition.begin();
+				leaveTransition.dispose();
+				enterTransition.init();
 			}
 		}
 
@@ -223,7 +223,7 @@ public class GameTransitions {
 
 			enterTransition.update(delta);
 			if (enterTransition.isFinished())
-				enterTransition.end();
+				enterTransition.dispose();
 		}
 
 	}
