@@ -37,16 +37,19 @@ public class TextButton {
 
 	private HAlignment alignment = HAlignment.LEFT;
 
-	public void setColor(Color color) {
+	public TextButton setColor(Color color) {
 		this.color.set(color);
+		return this;
 	}
 
-	public void setOverColor(Color overColor) {
+	public TextButton setOverColor(Color overColor) {
 		this.overColor.set(overColor);
+		return this;
 	}
 
-	public void setNotOverColor(Color notOverColor) {
+	public TextButton setNotOverColor(Color notOverColor) {
 		this.notOverColor.set(notOverColor);
+		return this;
 	}
 
 	public TextButton setText(String text) {
