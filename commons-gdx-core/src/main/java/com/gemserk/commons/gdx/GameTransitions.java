@@ -58,9 +58,15 @@ public class GameTransitions {
 		private final TransitionHandler transitionHandler;
 
 		private Timer timer;
-		
-		public Timer getTimer() {
-			return timer;
+
+		private boolean finished;
+
+		private boolean started;
+
+		@Override
+		public void begin() {
+			// timer.reset();
+			started = true;
 		}
 
 		public Screen getScreen() {
@@ -90,11 +96,17 @@ public class GameTransitions {
 		}
 
 		public void update(int delta) {
-			timer.update(delta);
+			if (!started)
+				return;
+			internalUpdate(delta);
+		}
+		
+		protected void internalUpdate(int delta) {
+			finished = timer.update(delta);
 		}
 
 		public boolean isFinished() {
-			return !timer.isRunning();
+			return finished;
 		}
 
 	}
@@ -110,6 +122,7 @@ public class GameTransitions {
 		}
 
 		public void begin() {
+			super.begin();
 			getScreen().init();
 			getScreen().show();
 			getScreen().pause();
@@ -134,6 +147,7 @@ public class GameTransitions {
 		}
 
 		public void begin() {
+			super.begin();
 			getScreen().init();
 			getScreen().show();
 			getScreen().pause();
@@ -170,7 +184,7 @@ public class GameTransitions {
 		public ScreenTransition(Screen start, Screen end, int timeStart, int timeEnd) {
 			this(new LeaveTransition(start, timeStart), new EnterTransition(end, timeEnd));
 		}
-		
+
 		public ScreenTransition(InternalScreenTransition leave, InternalScreenTransition enter) {
 			this.leaveTransition = leave;
 			this.enterTransition = enter;
@@ -184,20 +198,8 @@ public class GameTransitions {
 		public void update(int delta) {
 			if (isFinished())
 				return;
-			updateLeaveTransition(delta);
 			updateEnterTransition(delta);
-		}
-
-		private void updateEnterTransition(int delta) {
-			if (!leaveTransition.isFinished())
-				return;
-
-			if (enterTransition.isFinished())
-				return;
-
-			enterTransition.update(delta);
-			if (enterTransition.isFinished())
-				enterTransition.end();
+			updateLeaveTransition(delta);
 		}
 
 		private void updateLeaveTransition(int delta) {
@@ -210,6 +212,18 @@ public class GameTransitions {
 				leaveTransition.end();
 				enterTransition.begin();
 			}
+		}
+
+		private void updateEnterTransition(int delta) {
+			if (!leaveTransition.isFinished())
+				return;
+
+			if (enterTransition.isFinished())
+				return;
+
+			enterTransition.update(delta);
+			if (enterTransition.isFinished())
+				enterTransition.end();
 		}
 
 	}

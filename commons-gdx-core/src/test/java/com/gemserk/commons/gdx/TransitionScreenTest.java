@@ -47,6 +47,7 @@ public class TransitionScreenTest {
 
 		ScreenTransition screenTransition = new ScreenTransition(screenA, screenB, 200, 500);
 
+		screenTransition.start();
 		screenTransition.update(210);
 
 		assertThat(screenA.hideCalled, IsEqual.equalTo(true));
@@ -57,6 +58,26 @@ public class TransitionScreenTest {
 
 		assertThat(screenTransition.getCurrentScreen(), IsSame.sameInstance((Screen) screenB));
 		assertThat(screenTransition.isFinished(), IsEqual.equalTo(false));
+	}
+
+	@Test
+	public void shouldFinishWhenInternalFinish() {
+		MockScreen screenA = new MockScreen();
+		MockScreen screenB = new MockScreen();
+
+		ScreenTransition screenTransition = new ScreenTransition(screenA, screenB, 200, 500);
+
+		screenTransition.start();
+		screenTransition.update(201);
+		
+		assertThat(screenTransition.getCurrentScreen(), IsSame.sameInstance((Screen) screenB));
+		assertThat(screenTransition.isFinished(), IsEqual.equalTo(false));
+		
+		screenTransition.update(490);
+		assertThat(screenTransition.isFinished(), IsEqual.equalTo(false));
+		
+		screenTransition.update(11);
+		assertThat(screenTransition.isFinished(), IsEqual.equalTo(true));
 	}
 
 	/*
