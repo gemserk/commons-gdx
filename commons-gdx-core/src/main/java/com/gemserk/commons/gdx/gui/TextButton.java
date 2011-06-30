@@ -44,11 +44,15 @@ public class TextButton {
 
 	public TextButton setOverColor(Color overColor) {
 		this.overColor.set(overColor);
+		if (wasInside)
+			setColor(overColor);
 		return this;
 	}
 
 	public TextButton setNotOverColor(Color notOverColor) {
 		this.notOverColor.set(notOverColor);
+		if (!wasInside)
+			setColor(notOverColor);
 		return this;
 	}
 
