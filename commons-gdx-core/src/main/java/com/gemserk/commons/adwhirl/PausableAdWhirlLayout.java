@@ -22,7 +22,7 @@ public class PausableAdWhirlLayout extends AdWhirlLayout {
 	 */
 	public void onPause() {
 		paused = true;
-		Gdx.app.log("Pause", "adwhirl paused");
+		Gdx.app.log("AdWhirl SDK", "Ads request paused, should not be more requests until resume called");
 		this.onWindowVisibilityChanged(INVISIBLE);
 	}
 
@@ -31,7 +31,7 @@ public class PausableAdWhirlLayout extends AdWhirlLayout {
 	 */
 	public void onResume() {
 		paused = false;
-		Gdx.app.log("Pause", "adwhirl resumed");
+		Gdx.app.log("AdWhirl SDK", "Ads request resumed.");
 		this.onWindowVisibilityChanged(VISIBLE);
 	}
 
@@ -44,7 +44,6 @@ public class PausableAdWhirlLayout extends AdWhirlLayout {
 		visibility = (paused == true) ? INVISIBLE : VISIBLE;
 		setVisibility(visibility);
 		super.onWindowVisibilityChanged(visibility);
-		
-		Gdx.app.log("Pause", "adwhirl on window visibility changed");
+		Gdx.app.log("AdWhirl SDK", "window visibility changed: " + (visibility == INVISIBLE ? "invisible" : "visible"));
 	}
 }
