@@ -20,6 +20,10 @@ public class GuiControls {
 		float x,y;
 
 		Color overColor, notOverColor;
+
+		float w;
+
+		float h;
 		
 		TextButtonBuilder() {
 			reset();
@@ -38,6 +42,12 @@ public class GuiControls {
 		public TextButtonBuilder position(float x, float y) {
 			this.x = x;
 			this.y = y;
+			return this;
+		}
+		
+		public TextButtonBuilder boundsOffset(float w, float h) {
+			this.w = w;
+			this.h = h;
 			return this;
 		}
 
@@ -63,6 +73,7 @@ public class GuiControls {
 			TextButton textButton = new TextButton(font, text, x, y);
 			textButton.setNotOverColor(notOverColor);
 			textButton.setOverColor(overColor);
+			textButton.setBoundsOffset(w, h);
 			return textButton;
 		}
 		
