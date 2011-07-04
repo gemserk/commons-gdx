@@ -2,6 +2,7 @@ package com.gemserk.commons.gdx.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.gemserk.commons.gdx.gui.TextButton.ButtonHandler;
 
 public class GuiControls {
 	
@@ -24,6 +25,8 @@ public class GuiControls {
 		float w;
 
 		float h;
+
+		ButtonHandler buttonHandler = new ButtonHandler();
 		
 		TextButtonBuilder() {
 			reset();
@@ -65,6 +68,12 @@ public class GuiControls {
 			this.notOverColor = color;
 			return this;
 		}
+		
+		public TextButtonBuilder handler(ButtonHandler buttonHandler) {
+			this.buttonHandler = buttonHandler;
+			return this;
+		}
+		
 
 		@Override
 		public TextButton build() {
@@ -74,6 +83,7 @@ public class GuiControls {
 			textButton.setNotOverColor(notOverColor);
 			textButton.setOverColor(overColor);
 			textButton.setBoundsOffset(w, h);
+			textButton.setButtonHandler(buttonHandler);
 			return textButton;
 		}
 		
