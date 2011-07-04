@@ -12,6 +12,18 @@ import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
 public class TextButton {
+	
+	public static class ButtonHandler {
+		
+		public void onPressed(TextButton button) {
+			
+		}
+		
+		public void onReleased(TextButton button) {
+			
+		}
+		
+	}
 
 	private float x, y;
 
@@ -36,6 +48,8 @@ public class TextButton {
 	private boolean wasInside;
 
 	private HAlignment alignment = HAlignment.LEFT;
+	
+	private ButtonHandler buttonHandler = new ButtonHandler();
 
 	public TextButton setColor(Color color) {
 		this.color.set(color);
@@ -59,6 +73,11 @@ public class TextButton {
 	public TextButton setText(String text) {
 		this.text = text;
 		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
+		return this;
+	}
+	
+	public TextButton setButtonHandler(ButtonHandler buttonHandler) {
+		this.buttonHandler = buttonHandler;
 		return this;
 	}
 	
@@ -122,6 +141,12 @@ public class TextButton {
 
 		if (libgdxPointer.wasReleased)
 			released = MathUtils2.inside(bounds, libgdxPointer.getReleasedPosition());
+		
+		if (pressed)
+			buttonHandler.onPressed(this);
+		
+		if (released)
+			buttonHandler.onReleased(this);
 
 		// NOTE: for now the button could be released while it was never pressed before
 
