@@ -11,15 +11,15 @@ import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
-public class TextButton {
+public class TextButton implements Button {
 	
 	public static class ButtonHandler {
 		
-		public void onPressed(TextButton button) {
+		public void onPressed() {
 			
 		}
 		
-		public void onReleased(TextButton button) {
+		public void onReleased() {
 			
 		}
 		
@@ -143,10 +143,10 @@ public class TextButton {
 			released = MathUtils2.inside(bounds, libgdxPointer.getReleasedPosition());
 		
 		if (pressed)
-			buttonHandler.onPressed(this);
+			buttonHandler.onPressed();
 		
 		if (released)
-			buttonHandler.onReleased(this);
+			buttonHandler.onReleased();
 
 		// NOTE: for now the button could be released while it was never pressed before
 
