@@ -1,5 +1,6 @@
 package com.gemserk.commons.gdx.graphics;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
@@ -107,6 +108,24 @@ public class ImmediateModeRendererUtils {
 			renderer.vertex(x1, y0, 0f);
 		}
 		renderer.end();
+	}
+	
+	public static void drawPolygon (Vector2[] vertices, float x, float y, float angle, Color color) {
+		GL10 gl = Gdx.gl10;
+		gl.glPushMatrix();
+
+		gl.glTranslatef(x, y, 0f);
+		gl.glRotatef(angle, 0f, 0f, 1f);
+		
+		renderer.begin(GL10.GL_LINE_LOOP);
+		for (int i = 0; i < vertices.length; i++) {
+			Vector2 v = vertices[i];
+			renderer.color(color.r, color.g, color.b, color.a);
+			renderer.vertex(v.x, v.y, 0);
+		}
+		renderer.end();
+		
+		gl.glPopMatrix();
 	}
 
 }
