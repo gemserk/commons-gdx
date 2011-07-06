@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 
-public class Text {
+public class Text implements Control {
 
 	private float x;
 
@@ -18,6 +18,8 @@ public class Text {
 	private boolean visible = true;
 	
 	private Color color = new Color(Color.WHITE);
+	
+	private BitmapFont font;
 
 	public Text setVisible(boolean visible) {
 		this.visible = visible;
@@ -37,6 +39,19 @@ public class Text {
 		this.color.set(color);
 		return this;
 	}
+	
+	public void setColor(float r, float g, float b, float a) {
+		this.color.set(r, g, b, a);
+	}
+	
+	public void setFont(BitmapFont font) {
+		this.font = font;
+	}
+	
+	public void setPosition(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
 
 	/**
 	 * Used to center the text over (x,y) coordinates.
@@ -54,6 +69,14 @@ public class Text {
 	public String getText() {
 		return text;
 	}
+	
+	public Color getColor() {
+		return color;
+	}
+
+	public BitmapFont getFont() {
+		return font;
+	}
 
 	public Text(String text, float x, float y) {
 		this(text, x, y, 0.5f, 0.5f);
@@ -67,11 +90,27 @@ public class Text {
 		this.cy = cy;
 	}
 	
+	public Text(String text) {
+		this(text, 0f, 0f, 0.5f, 0.5f);
+	}
+	
 	public void draw(SpriteBatch spriteBatch, BitmapFont font) {
 		if (!isVisible())
 			return;
 		font.setColor(color);
 		SpriteBatchUtils.drawMultilineText(spriteBatch, font, text, x, y, cx, cy);
 	}
+
+	@Override
+	public void update() {
+		
+	}
+
+	@Override
+	public void draw(SpriteBatch spriteBatch) {
+		draw(spriteBatch, font);
+	}
+	
+	// style .get font(...)
 
 }

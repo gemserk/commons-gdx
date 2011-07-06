@@ -9,7 +9,7 @@ import com.gemserk.commons.gdx.gui.TextButton.ButtonHandler;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
-public class ImageButton implements Button {
+public class ImageButton implements Control {
 	
 	ButtonHandler buttonHandler;
 	Sprite sprite;

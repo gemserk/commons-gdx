@@ -129,10 +129,43 @@ public class GuiControls {
 		}
 
 	}
+	
+	public static class LabelBuilder implements Builder<Text> {
+		
+		Text text;
+
+		private LabelBuilder newText(String text) {
+			this.text = new Text(text);
+			return this;
+		}
+		
+		public LabelBuilder position(float x, float y) {
+			text.setPosition(x, y);
+			return this;
+		}
+		
+		public LabelBuilder font(BitmapFont font) {
+			text.setFont(font);
+			return this;
+		}
+		
+		public LabelBuilder color(float r, float g, float b, float a) {
+			text.setColor(r, g, b, a);
+			return this;
+		}
+		
+		@Override
+		public Text build() {
+			if (text.getFont() == null)
+				text.setFont(new BitmapFont());
+			return text;
+		}
+		
+	}
 
 	private static TextButtonBuilder textButtonBuilder = new TextButtonBuilder();
-	
 	private static ImageButtonBuilder imageButtonBuilder = new ImageButtonBuilder();
+	private static LabelBuilder labelBuilder = new LabelBuilder();
 
 	public static TextButtonBuilder textButton() {
 		return textButtonBuilder;
@@ -140,6 +173,10 @@ public class GuiControls {
 	
 	public static ImageButtonBuilder imageButton(Sprite sprite) {
 		return imageButtonBuilder.newButton(sprite);
+	}
+	
+	public static LabelBuilder label(String text) {
+		return labelBuilder.newText(text);
 	}
 
 

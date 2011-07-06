@@ -11,7 +11,7 @@ import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
-public class TextButton implements Button {
+public class TextButton implements Control {
 	
 	public static class ButtonHandler {
 		
