@@ -154,6 +154,11 @@ public class GuiControls {
 			return this;
 		}
 		
+		public LabelBuilder color(Color color) {
+			text.setColor(color);
+			return this;
+		}
+		
 		@Override
 		public Text build() {
 			if (text.getFont() == null)
