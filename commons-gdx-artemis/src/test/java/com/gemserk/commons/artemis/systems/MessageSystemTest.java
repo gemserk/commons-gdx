@@ -2,6 +2,8 @@ package com.gemserk.commons.artemis.systems;
 
 import java.util.ArrayList;
 
+import org.junit.Test;
+
 import com.artemis.Component;
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
@@ -115,6 +117,11 @@ public class MessageSystemTest {
 			messageQueue.messages.clear();
 		}
 
+	}
+	
+	@Test
+	public void test() {
+		
 	}
 
 }
