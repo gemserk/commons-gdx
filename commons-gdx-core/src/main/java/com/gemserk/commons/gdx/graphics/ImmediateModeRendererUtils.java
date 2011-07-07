@@ -111,7 +111,7 @@ public class ImmediateModeRendererUtils {
 	}
 	
 	public static void drawPolygon (Vector2[] vertices, float x, float y, float angle, Color color) {
-		GL10 gl = Gdx.gl10;
+		GL10 gl = Gdx.graphics.getGL10();
 		gl.glPushMatrix();
 
 		gl.glTranslatef(x, y, 0f);
@@ -122,6 +122,26 @@ public class ImmediateModeRendererUtils {
 			Vector2 v = vertices[i];
 			renderer.color(color.r, color.g, color.b, color.a);
 			renderer.vertex(v.x, v.y, 0);
+		}
+		renderer.end();
+		
+		gl.glPopMatrix();
+	}
+	
+	public static void render(Triangulator triangulator, float x, float y, float angle, Color color) {
+		GL10 gl = Gdx.graphics.getGL10();
+		
+		gl.glPushMatrix();
+		gl.glTranslatef(x, y, 0f);
+		gl.glRotatef(angle, 0f, 0f, 1f);
+		
+		renderer.begin(GL10.GL_TRIANGLES);
+		for (int i = 0; i < triangulator.getTriangleCount(); i++) {
+			for (int p = 0; p < 3; p++) {
+				float[] pt = triangulator.getTrianglePoint(i, p);
+				renderer.color(color.r, color.g, color.b, color.a);
+				renderer.vertex(pt[0], pt[1], 0f);
+			}
 		}
 		renderer.end();
 		
