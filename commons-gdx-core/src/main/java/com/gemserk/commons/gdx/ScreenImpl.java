@@ -29,6 +29,20 @@ public class ScreenImpl implements Screen {
 	}
 
 	@Override
+	public void dispose() {
+		if (!inited)
+			return;
+		inited = false;
+		gameState.dispose();
+	}
+
+	@Override
+	public void restart() {
+		dispose();
+		init();
+	}
+
+	@Override
 	public void render(int delta) {
 		if (!visible)
 			return;
@@ -77,14 +91,6 @@ public class ScreenImpl implements Screen {
 			return;
 		paused = false;
 		gameState.resume();
-	}
-
-	@Override
-	public void dispose() {
-		if (!inited)
-			return;
-		inited = false;
-		gameState.dispose();
 	}
 
 }

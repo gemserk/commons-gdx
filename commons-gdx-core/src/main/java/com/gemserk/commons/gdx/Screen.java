@@ -6,6 +6,8 @@ public interface Screen {
 	
 	void dispose();
 	
+	void restart();
+	
 	void show();
 	
 	void hide();

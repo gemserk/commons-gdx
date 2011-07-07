@@ -63,4 +63,10 @@ class MockScreen implements Screen {
 		// TODO Auto-generated function stub
 	}
 
+	@Override
+	public void restart() {
+		dispose();
+		init();
+	}
+
 }
