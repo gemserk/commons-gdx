@@ -144,6 +144,11 @@ public class GuiControls {
 			return this;
 		}
 		
+		public LabelBuilder center(float cx, float cy) {
+			text.setCenter(cx, cy);
+			return this;
+		}
+		
 		public LabelBuilder font(BitmapFont font) {
 			text.setFont(font);
 			return this;
