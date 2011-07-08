@@ -16,6 +16,10 @@ public class LibgdxInputMappingBuilder<K> {
 	public void monitorKey(K id, final int keyCode) {
 		inputDevicesMonitor.button(id, keyButtonMonitor(input, keyCode));
 	}
+	
+	public void monitorKeys(K id, final int... keyCodes) {
+		inputDevicesMonitor.button(id, keyButtonMonitor(input, keyCodes));
+	}
 
 	public void monitorPointerDown(K id, final int pointer) {
 		inputDevicesMonitor.button(id, pointerDownButtonMonitor(input, pointer));
@@ -60,6 +64,19 @@ public class LibgdxInputMappingBuilder<K> {
 			@Override
 			protected boolean isDown() {
 				return input.isKeyPressed(keyCode);
+			}
+		};
+	}
+	
+	public static ButtonMonitor keyButtonMonitor(final Input input, final int...keyCodes) {
+		return new ButtonMonitor() {
+			@Override
+			protected boolean isDown() {
+				for (int i = 0; i < keyCodes.length; i++) {
+					if (input.isKeyPressed(keyCodes[i]))
+						return true;
+				}
+				return false;
 			}
 		};
 	}
