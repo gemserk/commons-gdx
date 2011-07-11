@@ -173,66 +173,9 @@ public class BodyBuilder {
 			this.fixtureDefs.add(fixtureDefs[i]);
 		return this;
 	}
-	
-	public BodyBuilder sensor() {
-		getFixture().isSensor = true;
-		return this;
-	}
-
-	private FixtureDef getFixture() {
-		if (fixtureDefs.size() == 0)
-			fixtureDefs.add(new FixtureDef());
-		return fixtureDefs.get(0);
-	}
-
-	public BodyBuilder boxShape(float hx, float hy) {
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(hx, hy);
-		getFixture().shape = shape;
-		return this;
-	}
-
-	public BodyBuilder circleShape(float radius) {
-		Shape shape = new CircleShape();
-		shape.setRadius(radius);
-		getFixture().shape = shape;
-		return this;
-	}
-
-	public BodyBuilder polygonShape(Vector2[] vertices) {
-		PolygonShape shape = new PolygonShape();
-		shape.set(vertices);
-		getFixture().shape = shape;
-		return this;
-	}
 
 	public BodyBuilder mass(float mass) {
 		this.mass = mass;
-		return this;
-	}
-
-	public BodyBuilder density(float density) {
-		getFixture().density = density;
-		return this;
-	}
-
-	public BodyBuilder friction(float friction) {
-		getFixture().friction = friction;
-		return this;
-	}
-
-	public BodyBuilder restitution(float restitution) {
-		getFixture().restitution = restitution;
-		return this;
-	}
-
-	public BodyBuilder categoryBits(short categoryBits) {
-		getFixture().filter.categoryBits = categoryBits;
-		return this;
-	}
-
-	public BodyBuilder maskBits(short maskBits) {
-		getFixture().filter.maskBits = maskBits;
 		return this;
 	}
 
