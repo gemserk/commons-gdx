@@ -12,14 +12,14 @@ import com.gemserk.vecmath.Vector2f;
 public class SvgInkscapePathProcessor implements SvgElementProcessor {
 
 	private static enum Command {
-
 		None, 
 		AbsoluteMoveTo, 
 		RelativeMoveTo, 
-		AbsoluteLineTo,
+		AbsoluteLineTo, 
 		RelativeLineTo, 
+		AbsoluteElipticalArc, 
+		RelativeElipticalArc, 
 		ClosePath,
-
 	}
 
 	@SuppressWarnings("serial")
@@ -31,11 +31,13 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 			put("L", Command.AbsoluteLineTo);
 			put("z", Command.ClosePath);
 			put("Z", Command.ClosePath);
+			put("A", Command.AbsoluteElipticalArc);
+			put("a", Command.RelativeElipticalArc);
 		}
 	};
 
 	private Command currentCommand = Command.None;
-	
+
 	@Override
 	public void process(SvgParser svgParser, Element element) {
 		SvgInkscapePath svgImage = getSvgPath(element);
@@ -84,8 +86,19 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 				float x = Float.parseFloat(token);
 				float y = Float.parseFloat(tokens.nextToken());
 				pointList.add(new Vector2f(x, y));
-			} 
-			
+			} else if (currentCommand == Command.AbsoluteElipticalArc) {
+
+				float rx = Float.parseFloat(token);
+				float ry = Float.parseFloat(tokens.nextToken());
+				
+				// TODO: ...
+				
+				// (rx ry x-axis-rotation large-arc-flag sweep-flag x y)+
+				
+			} else if (currentCommand == Command.RelativeElipticalArc) {
+				
+			}
+
 			// other commands?
 
 		}
