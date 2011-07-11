@@ -34,12 +34,14 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 			if (entityA != null) {
 				PhysicsComponent physicsComponent = entityA.getComponent(PhysicsComponent.class);
-				physicsComponent.getContact().removeContact(bodyB);
+				if (physicsComponent != null)
+					physicsComponent.getContact().removeContact(bodyB);
 			}
 
 			if (entityB != null) {
 				PhysicsComponent physicsComponent = entityB.getComponent(PhysicsComponent.class);
-				physicsComponent.getContact().removeContact(bodyA);
+				if (physicsComponent != null)
+					physicsComponent.getContact().removeContact(bodyA);
 			}
 
 		}
@@ -55,24 +57,26 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 			if (entityA != null) {
 				PhysicsComponent physicsComponent = entityA.getComponent(PhysicsComponent.class);
-				physicsComponent.getContact().addContact(contact, bodyB);
+				if (physicsComponent != null)
+					physicsComponent.getContact().addContact(contact, bodyB);
 			}
 
 			if (entityB != null) {
 				PhysicsComponent physicsComponent = entityB.getComponent(PhysicsComponent.class);
-				physicsComponent.getContact().addContact(contact, bodyA);
+				if (physicsComponent != null)
+					physicsComponent.getContact().addContact(contact, bodyA);
 			}
 
 		}
 
 		@Override
 		public void preSolve(Contact contact, Manifold oldManifold) {
-			
+
 		}
 
 		@Override
 		public void postSolve(Contact contact, ContactImpulse impulse) {
-			
+
 		}
 
 	}

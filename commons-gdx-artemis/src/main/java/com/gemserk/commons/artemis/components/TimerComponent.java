@@ -1,6 +1,7 @@
 package com.gemserk.commons.artemis.components;
 
 import com.artemis.Component;
+import com.gemserk.commons.artemis.triggers.NullTrigger;
 import com.gemserk.commons.artemis.triggers.Trigger;
 
 public class TimerComponent extends Component {
@@ -41,4 +42,9 @@ public class TimerComponent extends Component {
 		this.trigger = trigger;
 	}
 
+	public TimerComponent(int time) {
+		this.time = time;
+		this.currentTime = time;
+		this.trigger = new NullTrigger();
+	}
 }
