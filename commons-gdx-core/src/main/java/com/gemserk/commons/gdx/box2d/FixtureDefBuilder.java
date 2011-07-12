@@ -7,13 +7,13 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 
 public class FixtureDefBuilder {
-	
+
 	FixtureDef fixtureDef;
-	
+
 	public FixtureDefBuilder() {
 		reset();
 	}
-	
+
 	public FixtureDefBuilder sensor() {
 		fixtureDef.isSensor = true;
 		return this;
@@ -39,7 +39,7 @@ public class FixtureDefBuilder {
 		fixtureDef.shape = shape;
 		return this;
 	}
-	
+
 	public FixtureDefBuilder density(float density) {
 		fixtureDef.density = density;
 		return this;
@@ -64,15 +64,15 @@ public class FixtureDefBuilder {
 		fixtureDef.filter.maskBits = maskBits;
 		return this;
 	}
-	
+
 	private void reset() {
 		fixtureDef = new FixtureDef();
 	}
-	
+
 	public FixtureDef build() {
 		FixtureDef fixtureDef = this.fixtureDef;
 		reset();
 		return fixtureDef;
 	}
-	
+
 }

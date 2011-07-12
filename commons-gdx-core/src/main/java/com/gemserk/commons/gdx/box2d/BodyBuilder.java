@@ -19,7 +19,6 @@ public class BodyBuilder {
 
 	private BodyDef bodyDef;
 	private ArrayList<FixtureDef> fixtureDefs;
-	private float mass = 1f;
 	private Object userData = null;
 	private Vector2 position = new Vector2();
 	private final World world;
@@ -27,13 +26,16 @@ public class BodyBuilder {
 
 	FixtureDefBuilder fixtureDefBuilder;
 
+	private MassData massData = new MassData();
+	private boolean massSet;
+
 	public BodyBuilder(World world) {
 		this.world = world;
 		this.fixtureDefBuilder = new FixtureDefBuilder();
 		this.fixtureDefs = new ArrayList<FixtureDef>();
 		reset();
 	}
-	
+
 	public FixtureDefBuilder fixtureDefBuilder() {
 		return fixtureDefBuilder;
 	}
@@ -49,10 +51,10 @@ public class BodyBuilder {
 
 		bodyDef = new BodyDef();
 		fixtureDefs.clear();
-		mass = 1f;
 		angle = 0f;
 		userData = null;
 		position.set(0f, 0f);
+		massSet = false;
 	}
 
 	public BodyBuilder type(BodyType type) {
@@ -74,20 +76,27 @@ public class BodyBuilder {
 		fixtureDefs.add(fixtureDef.build());
 		return this;
 	}
-	
+
 	public BodyBuilder fixture(FixtureDef fixtureDef) {
 		fixtureDefs.add(fixtureDef);
 		return this;
 	}
-	
+
 	public BodyBuilder fixtures(FixtureDef[] fixtureDefs) {
-		for (int i = 0; i < fixtureDefs.length; i++) 
+		for (int i = 0; i < fixtureDefs.length; i++)
 			this.fixtureDefs.add(fixtureDefs[i]);
 		return this;
 	}
 
 	public BodyBuilder mass(float mass) {
-		this.mass = mass;
+		this.massData.mass = mass;
+		this.massSet = true;
+		return this;
+	}
+	
+	public BodyBuilder inertia(float intertia) {
+		this.massData.I = intertia;
+		this.massSet = true;
 		return this;
 	}
 
@@ -114,11 +123,22 @@ public class BodyBuilder {
 			body.createFixture(fixtureDef);
 		}
 
-		MassData massData = body.getMassData();
-		massData.mass = mass;
-		body.setMassData(massData);
+		if (massSet) {
+			MassData bodyMassData = body.getMassData();
+			
+//			massData.center.set(position);
+			 massData.center.set(bodyMassData.center);
+			// massData.I = bodyMassData.I;
+			
+			body.setMassData(massData);
+		}
+		// MassData massData = body.getMassData();
+		// massData.mass = mass;
+		// massData.I = 1f;
+
 		body.setUserData(userData);
 		body.setTransform(position, angle);
+		
 		reset();
 		return body;
 	}
