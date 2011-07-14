@@ -35,5 +35,10 @@ public class Libgdx2dCameraNullImpl implements Libgdx2dCamera {
 		
 	}
 
+	@Override
+	public void project(Vector2 position) {
+		
+	}
+
 
 }

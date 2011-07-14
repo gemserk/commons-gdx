@@ -31,6 +31,12 @@ public interface Libgdx2dCamera {
 	 * @param position The Vector2 to be converted.
 	 */
 	void unproject(Vector2 position);
+	
+	/**
+	 * Converts world coordinates point to view port coordinates based on this camera transformations.
+	 * @param position The Vector2 to be converted.
+	 */
+	void project(Vector2 position);
 
 	/**
 	 * Applies the camera to the specified sprite batch

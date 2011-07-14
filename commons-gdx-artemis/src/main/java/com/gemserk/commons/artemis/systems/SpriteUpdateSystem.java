@@ -38,9 +38,6 @@ public class SpriteUpdateSystem extends EntitySystem {
 
 			Spatial spatial = spatialComponent.getSpatial();
 
-			// Vector2 position = spatialComponent.getPosition();
-			// Vector2 size = spatialComponent.getSize();
-
 			Sprite sprite = spriteComponent.getSprite();
 			Vector2 center = spriteComponent.getCenter();
 

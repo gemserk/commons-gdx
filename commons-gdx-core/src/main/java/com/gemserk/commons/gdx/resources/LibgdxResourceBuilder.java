@@ -10,6 +10,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.gemserk.animation4j.FrameAnimationImpl;
@@ -29,7 +31,7 @@ public class LibgdxResourceBuilder {
 	
 	// TODO: Define folders for each type of resource?
 
-	ResourceManager<String> resourceManager;
+	protected ResourceManager<String> resourceManager;
 
 	private boolean cacheWhenLoad = false;
 
@@ -205,6 +207,31 @@ public class LibgdxResourceBuilder {
 				return new DocumentParser().parse(internal(file).read());
 			}
 		})));
+	}
+	
+	public void particleEffect(String id, final String effectFile, final String imagesDir) {
+		resourceManager.add(id, new CachedResourceLoader<ParticleEffect>(new ResourceLoaderImpl<ParticleEffect>(new DataLoader<ParticleEffect>() {
+			@Override
+			public ParticleEffect load() {
+				ParticleEffect particleEffect = new ParticleEffect();
+				particleEffect.load(Gdx.files.internal(effectFile), Gdx.files.internal(imagesDir));
+				return particleEffect;
+			}
+			@Override
+			public void dispose(ParticleEffect t) {
+				t.dispose();
+			}
+		})));
+	}
+
+	public void particleEmitter(String id, final String particleEffectId, final String particleEmitterId) {
+		resourceManager.add(id, new ResourceLoaderImpl<ParticleEmitter>(new DataLoader<ParticleEmitter>() {
+			@Override
+			public ParticleEmitter load() {
+				ParticleEffect particleEffect = resourceManager.getResourceValue(particleEffectId);
+				return new ParticleEmitter(particleEffect.findEmitter(particleEmitterId));
+			}
+		}));
 	}
 
 	// / TESTING STUFF

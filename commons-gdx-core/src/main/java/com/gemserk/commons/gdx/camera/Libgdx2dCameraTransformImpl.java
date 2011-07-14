@@ -86,4 +86,14 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		m.trn(center.x, center.y, 0f);
 	}
 
+	@Override
+	public void project(Vector2 position) {
+		calculateTransform(transform);
+
+		tmp.set(position.x, position.y, 0f);
+		tmp.mul(transform);
+
+		position.set(tmp.x, tmp.y);
+	}
+
 }
