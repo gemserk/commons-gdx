@@ -1,14 +1,13 @@
 package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
-import com.artemis.EntitySystem;
-import com.artemis.utils.ImmutableBag;
+import com.artemis.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.gdx.games.Spatial;
 
-public class MovementSystem extends EntitySystem {
+public class MovementSystem extends EntityProcessingSystem {
 
 	private final Vector2 tmpPosition = new Vector2();
 
@@ -20,41 +19,24 @@ public class MovementSystem extends EntitySystem {
 	}
 
 	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
-		for (int i = 0; i < entities.size(); i++) {
+	protected void process(Entity e) {
+		SpatialComponent spatialComponent = e.getComponent(SpatialComponent.class);
+		MovementComponent movementComponent = e.getComponent(MovementComponent.class);
 
-			Entity entity = entities.get(i);
+		Spatial spatial = spatialComponent.getSpatial();
 
-			SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
-			MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
+		Vector2 velocity = movementComponent.getVelocity();
 
-			Spatial spatial = spatialComponent.getSpatial();
-			// Vector2 position = spatialComponent.getPosition();
+		int delta = world.getDelta();
+		float deltaF = ((float) delta) / 1000f;
 
-			Vector2 velocity = movementComponent.getVelocity();
+		tmpVelocity.set(velocity).mul(deltaF);
+		tmpPosition.set(spatial.getX(), spatial.getY()).add(tmpVelocity);
 
-			int delta = world.getDelta();
-			float deltaF = ((float) delta) / 1000f;
-			
-			tmpVelocity.set(velocity).mul(deltaF);
-			tmpPosition.set(spatial.getX(), spatial.getY()).add(tmpVelocity);
-			
-			float newAngle = spatial.getAngle() + deltaF * movementComponent.getAngularVelocity();
-			spatial.setAngle(newAngle);
-			
-			spatial.setPosition(tmpPosition.x, tmpPosition.y);
-			// position.set(tmpPosition);
-			
-		}
+		float newAngle = spatial.getAngle() + deltaF * movementComponent.getAngularVelocity();
+		spatial.setAngle(newAngle);
+
+		spatial.setPosition(tmpPosition.x, tmpPosition.y);
 	}
 
-	@Override
-	public void initialize() {
-
-	}
-
-	@Override
-	protected boolean checkProcessing() {
-		return true;
-	}
 }
