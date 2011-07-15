@@ -100,9 +100,10 @@ public class GameTransitions {
 				return;
 			internalUpdate(delta);
 		}
-		
+
 		protected void internalUpdate(int delta) {
 			finished = timer.update(delta);
+			getScreen().update(delta);
 		}
 
 		public boolean isFinished() {
@@ -125,11 +126,12 @@ public class GameTransitions {
 			super.init();
 			getScreen().init();
 			getScreen().show();
-			getScreen().pause();
+			// getScreen().pause();
 			getTransitionHandler().onBegin();
 		}
 
 		public void dispose() {
+			getScreen().pause();
 			getScreen().hide();
 			getTransitionHandler().onEnd();
 		}
@@ -150,12 +152,13 @@ public class GameTransitions {
 			super.init();
 			getScreen().init();
 			getScreen().show();
-			getScreen().pause();
+			getScreen().resume();
+			// getScreen().pause();
 			getTransitionHandler().onBegin();
 		}
 
 		public void dispose() {
-			getScreen().resume();
+			// getScreen().resume();
 			getTransitionHandler().onEnd();
 		}
 
@@ -247,6 +250,7 @@ public class GameTransitions {
 		public void update(int delta) {
 			super.update(delta);
 			screenTransition.update(delta);
+			// screenTransition.getCurrentScreen().update(delta);
 		}
 
 		@Override
