@@ -21,7 +21,7 @@ public class LibgdxPointer implements Pointer {
 	private Libgdx2dCamera camera;
 
 	private RealPointer pointer;
-	
+
 	public boolean wasPressed() {
 		return wasPressed;
 	}
@@ -30,7 +30,9 @@ public class LibgdxPointer implements Pointer {
 		return wasReleased;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gemserk.commons.gdx.input.Pointer#getPressedPosition()
 	 */
 	@Override
@@ -38,7 +40,9 @@ public class LibgdxPointer implements Pointer {
 		return pressedPosition;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gemserk.commons.gdx.input.Pointer#getReleasedPosition()
 	 */
 	@Override
@@ -46,7 +50,9 @@ public class LibgdxPointer implements Pointer {
 		return releasedPosition;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gemserk.commons.gdx.input.Pointer#getPosition()
 	 */
 	@Override
@@ -57,7 +63,7 @@ public class LibgdxPointer implements Pointer {
 	public LibgdxPointer(int index) {
 		this(index, new Libgdx2dCameraNullImpl());
 	}
-	
+
 	public LibgdxPointer(RealPointer pointer) {
 		this(pointer, new Libgdx2dCameraNullImpl());
 	}
@@ -71,41 +77,43 @@ public class LibgdxPointer implements Pointer {
 		this.pointer = pointer;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.gemserk.commons.gdx.input.Pointer#update()
 	 */
 	@Override
 	public void update() {
-
 		position.set(getX(), getY());
 		camera.unproject(position);
+		updatePressed();
+		updateReleased();
+	}
 
-		if (pointer.isDown()) {
+	private void updateReleased() {
+		if (pointer.isDown())
+			return;
+		wasPressed = false;
+		if (touched) {
+			touched = false;
+			wasReleased = true;
+			releasedPosition.set(getX(), getY());
+			camera.unproject(releasedPosition);
+		} else
+			wasReleased = false;
+	}
 
-			if (!touched) {
-				touched = true;
-				wasPressed = true;
-
-				pressedPosition.set(getX(), getY());
-				camera.unproject(pressedPosition);
-
-			} else 
-				wasPressed = false;
-		}
-
-		if (!pointer.isDown()) {
-
-			if (touched) {
-				touched = false;
-				wasReleased = true;
-
-				releasedPosition.set(getX(), getY());
-				camera.unproject(releasedPosition);
-
-			} else 
-				wasReleased = false;
-
-		}
+	private void updatePressed() {
+		if (!pointer.isDown())
+			return;
+		wasReleased = false;
+		if (!touched) {
+			touched = true;
+			wasPressed = true;
+			pressedPosition.set(getX(), getY());
+			camera.unproject(pressedPosition);
+		} else
+			wasPressed = false;
 	}
 
 	private int getY() {

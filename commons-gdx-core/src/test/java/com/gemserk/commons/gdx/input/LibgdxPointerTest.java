@@ -58,4 +58,29 @@ public class LibgdxPointerTest {
 		assertThat(libgdxPointer.wasReleased(), IsEqual.equalTo(false));
 	}
 	
+	@Test
+	public void shouldNotBePressedIfReleased() {
+		MockRealPointer pointer = new MockRealPointer();
+		LibgdxPointer libgdxPointer = new LibgdxPointer(pointer);
+		pointer.down = true;
+		libgdxPointer.update();
+		assertThat(libgdxPointer.wasPressed(), IsEqual.equalTo(true));
+		pointer.down = false;
+		libgdxPointer.update();
+		assertThat(libgdxPointer.wasPressed(), IsEqual.equalTo(false));
+	}
+	
+	@Test
+	public void shouldNotBeReleasedIfWasReleasedAndNowPressed() {
+		MockRealPointer pointer = new MockRealPointer();
+		LibgdxPointer libgdxPointer = new LibgdxPointer(pointer);
+		pointer.down = true;
+		libgdxPointer.update();
+		pointer.down = false;
+		libgdxPointer.update();
+		assertThat(libgdxPointer.wasReleased(), IsEqual.equalTo(true));
+		pointer.down = true;
+		libgdxPointer.update();
+		assertThat(libgdxPointer.wasReleased(), IsEqual.equalTo(false));
+	}
 }
