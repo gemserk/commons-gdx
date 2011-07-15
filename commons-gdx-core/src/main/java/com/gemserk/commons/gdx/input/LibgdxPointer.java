@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraNullImpl;
 
-public class LibgdxPointer {
+public class LibgdxPointer implements Pointer {
 
 	public boolean touched = false;
 
@@ -22,15 +22,35 @@ public class LibgdxPointer {
 	public int index;
 
 	private Libgdx2dCamera camera;
+	
+	public boolean wasPressed() {
+		return wasPressed;
+	}
 
+	public boolean wasReleased() {
+		return wasReleased;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.gemserk.commons.gdx.input.Pointer#getPressedPosition()
+	 */
+	@Override
 	public Vector2 getPressedPosition() {
 		return pressedPosition;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gemserk.commons.gdx.input.Pointer#getReleasedPosition()
+	 */
+	@Override
 	public Vector2 getReleasedPosition() {
 		return releasedPosition;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gemserk.commons.gdx.input.Pointer#getPosition()
+	 */
+	@Override
 	public Vector2 getPosition() {
 		return position;
 	}
@@ -44,6 +64,10 @@ public class LibgdxPointer {
 		this.camera = camera;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gemserk.commons.gdx.input.Pointer#update()
+	 */
+	@Override
 	public void update() {
 
 		position.set(getX(), getY());

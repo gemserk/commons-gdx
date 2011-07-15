@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
+import com.gemserk.commons.gdx.input.Pointer;
 
 public class PointerUpdateSystem extends EntitySystem {
 
@@ -18,7 +19,7 @@ public class PointerUpdateSystem extends EntitySystem {
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		for (int i = 0; i < pointers.size(); i++) {
-			LibgdxPointer pointer = pointers.get(i);
+			Pointer pointer = pointers.get(i);
 			pointer.update();
 		}
 	}

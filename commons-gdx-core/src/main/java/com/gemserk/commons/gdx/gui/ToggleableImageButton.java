@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
+import com.gemserk.commons.gdx.input.Pointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
 public class ToggleableImageButton {
@@ -26,7 +27,7 @@ public class ToggleableImageButton {
 	
 	Rectangle bounds;
 	
-	LibgdxPointer libgdxPointer = new LibgdxPointer(0);
+	Pointer pointer;
 	
 	ToggleHandler toggleHandler = new ToggleHandler();
 
@@ -56,13 +57,17 @@ public class ToggleableImageButton {
 		return this;
 	}
 	
+	public void setPointer(Pointer pointer) {
+		this.pointer = pointer;
+	}
+	
 	public ToggleableImageButton setToggleHandler(ToggleHandler toggleHandler) {
 		this.toggleHandler = toggleHandler;
 		return this;
 	}
 	
 	public ToggleableImageButton() {
-
+		pointer = new LibgdxPointer(0);
 	}
 	
 	private void toggle() {
@@ -79,14 +84,14 @@ public class ToggleableImageButton {
 	
 	public void udpate(int delta) {
 		
-		libgdxPointer.update();
+		pointer.update();
 		
-		if (!libgdxPointer.wasPressed)
+		if (!pointer.wasReleased())
 			return;
 		
-		Vector2 pressedPosition = libgdxPointer.getPressedPosition();
+		Vector2 p = pointer.getReleasedPosition();
 		
-		if (!MathUtils2.inside(bounds, pressedPosition.x - x, pressedPosition.y - y)) 
+		if (!MathUtils2.inside(bounds, p.x - x, p.y - y)) 
 			return;
 		
 		toggle();
