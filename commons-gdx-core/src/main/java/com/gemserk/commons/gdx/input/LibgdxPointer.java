@@ -1,6 +1,5 @@
 package com.gemserk.commons.gdx.input;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraNullImpl;
@@ -19,9 +18,9 @@ public class LibgdxPointer implements Pointer {
 
 	public boolean wasReleased = false;
 
-	public int index;
-
 	private Libgdx2dCamera camera;
+
+	private RealPointer pointer;
 	
 	public boolean wasPressed() {
 		return wasPressed;
@@ -58,10 +57,18 @@ public class LibgdxPointer implements Pointer {
 	public LibgdxPointer(int index) {
 		this(index, new Libgdx2dCameraNullImpl());
 	}
+	
+	public LibgdxPointer(RealPointer pointer) {
+		this(pointer, new Libgdx2dCameraNullImpl());
+	}
 
 	public LibgdxPointer(int index, Libgdx2dCamera camera) {
-		this.index = index;
+		this(new LibgdxRealPointer(index), camera);
+	}
+
+	public LibgdxPointer(RealPointer pointer, Libgdx2dCamera camera) {
 		this.camera = camera;
+		this.pointer = pointer;
 	}
 
 	/* (non-Javadoc)
@@ -73,7 +80,7 @@ public class LibgdxPointer implements Pointer {
 		position.set(getX(), getY());
 		camera.unproject(position);
 
-		if (Gdx.input.isTouched(index)) {
+		if (pointer.isDown()) {
 
 			if (!touched) {
 				touched = true;
@@ -86,7 +93,7 @@ public class LibgdxPointer implements Pointer {
 				wasPressed = false;
 		}
 
-		if (!Gdx.input.isTouched(index)) {
+		if (!pointer.isDown()) {
 
 			if (touched) {
 				touched = false;
@@ -102,11 +109,11 @@ public class LibgdxPointer implements Pointer {
 	}
 
 	private int getY() {
-		return Gdx.graphics.getHeight() - Gdx.input.getY(index);
+		return pointer.getY();
 	}
 
 	private int getX() {
-		return Gdx.input.getX(index);
+		return pointer.getX();
 	}
 
 }
