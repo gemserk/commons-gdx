@@ -184,21 +184,28 @@ public class ImmediateModeRendererUtils {
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, verticesBuffer);
 
-		gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
-		gl.glColorPointer(4, GL10.GL_FLOAT, 0, colorsBuffer);
+		if (colorsBuffer != null) {
+			gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
+			gl.glColorPointer(4, GL10.GL_FLOAT, 0, colorsBuffer);
+		}
 
-		gl.glEnable(GL10.GL_TEXTURE_2D);
-		gl.glClientActiveTexture(GL10.GL_TEXTURE0);
-		gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-		gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texCoordsBuffer);
+		if (texCoordsBuffer != null) {
+			gl.glEnable(GL10.GL_TEXTURE_2D);
+			gl.glClientActiveTexture(GL10.GL_TEXTURE0);
+			gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+			gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texCoordsBuffer);
+		}
 
 		gl.glDrawArrays(primitiveType, 0, verticesBuffer.limit());
 
-		gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
-		gl.glColorPointer(4, GL10.GL_FLOAT, 0, colorsBuffer);
+		if (colorsBuffer != null) {
+			gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
+		}
 
-		gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-		gl.glDisable(GL10.GL_TEXTURE_2D);
+		if (texCoordsBuffer != null) {
+			gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+			gl.glDisable(GL10.GL_TEXTURE_2D);
+		}
 	}
 
 	public static void draw(int primitiveType, Mesh2d mesh2d) {
@@ -215,6 +222,6 @@ public class ImmediateModeRendererUtils {
 		draw(primitiveType, mesh2d);
 
 		gl.glPopMatrix();
-		
+
 	}
 }
