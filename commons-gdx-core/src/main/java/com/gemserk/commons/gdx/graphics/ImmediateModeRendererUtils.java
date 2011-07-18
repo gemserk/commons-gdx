@@ -1,5 +1,7 @@
 package com.gemserk.commons.gdx.graphics;
 
+import java.nio.FloatBuffer;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -109,14 +111,14 @@ public class ImmediateModeRendererUtils {
 		}
 		renderer.end();
 	}
-	
-	public static void drawPolygon (Vector2[] vertices, float x, float y, float angle, Color color) {
+
+	public static void drawPolygon(Vector2[] vertices, float x, float y, float angle, Color color) {
 		GL10 gl = Gdx.graphics.getGL10();
 		gl.glPushMatrix();
 
 		gl.glTranslatef(x, y, 0f);
 		gl.glRotatef(angle, 0f, 0f, 1f);
-		
+
 		renderer.begin(GL10.GL_LINE_LOOP);
 		for (int i = 0; i < vertices.length; i++) {
 			Vector2 v = vertices[i];
@@ -124,17 +126,17 @@ public class ImmediateModeRendererUtils {
 			renderer.vertex(v.x, v.y, 0);
 		}
 		renderer.end();
-		
+
 		gl.glPopMatrix();
 	}
-	
-	public static void render(Triangulator triangulator, float x, float y, float angle, Color color) {
+
+	public static void draw(Triangulator triangulator, float x, float y, float angle, Color color) {
 		GL10 gl = Gdx.graphics.getGL10();
-		
+
 		gl.glPushMatrix();
 		gl.glTranslatef(x, y, 0f);
 		gl.glRotatef(angle, 0f, 0f, 1f);
-		
+
 		renderer.begin(GL10.GL_TRIANGLES);
 		for (int i = 0; i < triangulator.getTriangleCount(); i++) {
 			for (int p = 0; p < 3; p++) {
@@ -144,8 +146,36 @@ public class ImmediateModeRendererUtils {
 			}
 		}
 		renderer.end();
-		
+
 		gl.glPopMatrix();
+	}
+
+	public static void draw(int primitiveType, int count, FloatBuffer verticesBuffer) {
+		GL10 gl = Gdx.gl10;
+		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, verticesBuffer);
+		gl.glDrawArrays(primitiveType, 0, count);
+	}
+
+	public static void draw(int primitiveType, int count, FloatBuffer verticesBuffer, FloatBuffer colorsBuffer) {
+		GL10 gl = Gdx.gl10;
+
+		gl.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_LINE);
+		
+		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, verticesBuffer);
+
+		if (colorsBuffer != null) {
+			gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
+			gl.glColorPointer(4, GL10.GL_FLOAT, 0, colorsBuffer);
+		}
+
+		gl.glDrawArrays(primitiveType, 0, count);
+
+		if (colorsBuffer != null) {
+			gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
+			gl.glColorPointer(4, GL10.GL_FLOAT, 0, colorsBuffer);
+		}
 	}
 
 }
