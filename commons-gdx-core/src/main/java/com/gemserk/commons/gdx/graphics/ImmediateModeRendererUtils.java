@@ -204,4 +204,17 @@ public class ImmediateModeRendererUtils {
 	public static void draw(int primitiveType, Mesh2d mesh2d) {
 		draw(primitiveType, mesh2d.getVertexArray(), mesh2d.getColorArray(), mesh2d.getTexCoordArray());
 	}
+
+	public static void draw(int primitiveType, Mesh2d mesh2d, float x, float y, float angle) {
+		GL10 gl = Gdx.graphics.getGL10();
+
+		gl.glPushMatrix();
+		gl.glTranslatef(x, y, 0f);
+		gl.glRotatef(angle, 0f, 0f, 1f);
+
+		draw(primitiveType, mesh2d);
+
+		gl.glPopMatrix();
+		
+	}
 }

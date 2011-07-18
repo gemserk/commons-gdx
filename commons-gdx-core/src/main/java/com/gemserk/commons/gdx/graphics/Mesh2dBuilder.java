@@ -16,10 +16,13 @@ public class Mesh2dBuilder {
 	int idxColors;
 	int idxTexCoords;
 
+	boolean hasColors;
+	boolean hasTexCoords;
+
 	public Mesh2dBuilder() {
 		this(2000);
 	}
-	
+
 	public Mesh2dBuilder(int maxCount) {
 		vertices = new float[maxCount];
 		colors = new float[maxCount];
@@ -43,12 +46,14 @@ public class Mesh2dBuilder {
 		colors[idxColors + 1] = g;
 		colors[idxColors + 2] = b;
 		colors[idxColors + 3] = a;
+		hasColors = true;
 		return this;
 	}
 
 	public Mesh2dBuilder texCoord(float u, float v) {
 		texCoords[idxTexCoords] = u;
 		texCoords[idxTexCoords + 1] = v;
+		hasTexCoords = true;
 		return this;
 	}
 
@@ -56,20 +61,28 @@ public class Mesh2dBuilder {
 		Mesh2d mesh2d = new Mesh2d();
 
 		mesh2d.setVertexArray(allocateBuffer(3 * idxVertices));
-		mesh2d.setColorArray(allocateBuffer(4 * idxColors));
-		mesh2d.setTexCoordArray(allocateBuffer(2 * idxColors));
-
 		BufferUtils.copy(vertices, mesh2d.getVertexArray(), idxVertices, 0);
-		BufferUtils.copy(colors, mesh2d.getColorArray(), idxColors, 0);
-		BufferUtils.copy(texCoords, mesh2d.getTexCoordArray(), idxTexCoords, 0);
+
+		if (hasColors) {
+			mesh2d.setColorArray(allocateBuffer(4 * idxColors));
+			BufferUtils.copy(colors, mesh2d.getColorArray(), idxColors, 0);
+		}
+
+		if (hasTexCoords) {
+			mesh2d.setTexCoordArray(allocateBuffer(2 * idxTexCoords));
+			BufferUtils.copy(texCoords, mesh2d.getTexCoordArray(), idxTexCoords, 0);
+		}
 
 		idxVertices = 0;
 		idxColors = 0;
 		idxTexCoords = 0;
 
+		hasColors = false;
+		hasTexCoords = false;
+
 		return mesh2d;
 	}
-	
+
 	private FloatBuffer allocateBuffer(int numFloats) {
 		ByteBuffer buffer = ByteBuffer.allocateDirect(numFloats * 4);
 		buffer.order(ByteOrder.nativeOrder());
