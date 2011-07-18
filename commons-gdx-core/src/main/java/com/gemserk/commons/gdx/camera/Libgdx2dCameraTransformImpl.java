@@ -12,18 +12,18 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	private static final Vector3 rotationAxis = new Vector3(0f, 0f, 1f);
 
 	private final Matrix4 transform = new Matrix4();
-
 	private final Matrix4 invertedTransform = new Matrix4();
-
 	private final Matrix4 scaleMatrix = new Matrix4();
-
 	private final Matrix4 rotationMatrix = new Matrix4();
-
 	private final Matrix4 translationMatrix = new Matrix4();
-
 	private final Vector2 center = new Vector2();
-
 	private final Vector3 tmp = new Vector3();
+
+	Matrix4 projectionMatrix = new Matrix4();
+
+	public Libgdx2dCameraTransformImpl() {
+		projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	}
 
 	@Override
 	public void move(float x, float y) {
@@ -65,8 +65,21 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		spriteBatch.setTransformMatrix(transform);
 	}
 
+	public void apply() {
+		GL10 gl = Gdx.gl10;
+
+		gl.glMatrixMode(GL10.GL_PROJECTION);
+		gl.glLoadMatrixf(projectionMatrix.val, 0);
+
+		calculateTransform(transform);
+		
+		gl.glMatrixMode(GL10.GL_MODELVIEW);
+		gl.glLoadMatrixf(transform.val, 0);
+	}
+
 	public void push() {
 		GL10 gl = Gdx.gl10;
+		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glPushMatrix();
 		calculateTransform(transform);
 		gl.glLoadIdentity();

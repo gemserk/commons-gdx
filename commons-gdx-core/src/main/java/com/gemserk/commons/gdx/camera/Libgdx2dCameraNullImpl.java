@@ -40,5 +40,9 @@ public class Libgdx2dCameraNullImpl implements Libgdx2dCamera {
 		
 	}
 
+	@Override
+	public void apply() {
+		
+	}
 
 }
