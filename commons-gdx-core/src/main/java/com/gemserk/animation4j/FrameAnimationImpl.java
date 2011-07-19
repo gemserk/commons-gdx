@@ -29,14 +29,6 @@ public class FrameAnimationImpl implements FrameAnimation {
 		set(f0, framesTimes);
 	}
 
-	// public FrameAnimationImpl(boolean loop, int f0, int... framesTimes) {
-	// // this.framesTimes = framesTimes;
-	// this.currentFrame = 0;
-	// this.currentTime = 0;
-	// this.loop = loop;
-	// set(f0, framesTimes);
-	// }
-
 	public FrameAnimationImpl(boolean loop, int... framesTimes) {
 		// we could use the pattern 1+
 		assert (framesTimes.length > 0);
@@ -58,19 +50,6 @@ public class FrameAnimationImpl implements FrameAnimation {
 		for (int i = 0; i < frames.length; i++)
 			this.framesTimes[i] = frames[i];
 	}
-
-	// public FrameAnimationImpl(int frameTime, int frameCount) {
-	// this(frameTime, frameCount, false);
-	// }
-
-	// public FrameAnimationImpl(int frameTime, int frameCount, boolean loop) {
-	// framesTimes = new int[frameCount];
-	// for (int i = 0; i < framesTimes.length; i++)
-	// framesTimes[i] = frameTime;
-	// this.currentFrame = 0;
-	// this.currentTime = 0;
-	// this.loop = loop;
-	// }
 
 	public int getFramesCount() {
 		return framesTimes.length;
