@@ -134,10 +134,21 @@ public class LibgdxResourceBuilder {
 			public Animation load() {
 				Texture spriteSheet = resourceManager.getResourceValue(spriteSheetId);
 				Sprite[] frames = new Sprite[framesCount];
+				
+				int xOffset = 0;
+				int yOffset = 0;
+				
 				for (int i = 0; i < frames.length; i++) {
-					frames[i] = new Sprite(spriteSheet, x + i * w, y, w, h);
+					frames[i] = new Sprite(spriteSheet, x + xOffset, y + yOffset, w, h);
+					
+					xOffset += w;
+					
+					if (xOffset >= spriteSheet.getWidth()) {
+						yOffset += w;
+						xOffset = 0;
+					}
 				}
-
+				
 				int[] newTimes = new int[framesCount - 1];
 				int lastTime = time;
 
