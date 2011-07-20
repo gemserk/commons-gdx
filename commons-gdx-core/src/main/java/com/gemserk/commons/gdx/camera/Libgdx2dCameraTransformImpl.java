@@ -72,7 +72,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		gl.glLoadMatrixf(projectionMatrix.val, 0);
 
 		calculateTransform(transform);
-		
+
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadMatrixf(transform.val, 0);
 	}
