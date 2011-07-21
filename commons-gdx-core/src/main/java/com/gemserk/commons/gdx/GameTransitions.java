@@ -250,7 +250,6 @@ public class GameTransitions {
 		public void update(int delta) {
 			super.update(delta);
 			screenTransition.update(delta);
-			// screenTransition.getCurrentScreen().update(delta);
 		}
 
 		@Override
