@@ -39,7 +39,7 @@ public class SpriteComponent extends Component {
 	public SpriteComponent(Sprite sprite, int layer, Vector2 center, Color color) {
 		this.sprite = sprite;
 		this.layer = layer;
-		this.color = color;
+		this.color = new Color(color);
 		this.center = center;
 	}
 
@@ -48,7 +48,7 @@ public class SpriteComponent extends Component {
 	}
 
 	public SpriteComponent(Sprite sprite, int layer) {
-		this(sprite, layer, new Color(Color.WHITE));
+		this(sprite, layer, Color.WHITE);
 	}
 
 }
