@@ -9,8 +9,6 @@ public class SpriteComponent extends Component {
 
 	private Sprite sprite;
 
-	private int layer;
-
 	private Color color;
 
 	private Vector2 center; // x and y values between 0,1
@@ -24,10 +22,6 @@ public class SpriteComponent extends Component {
 		this.sprite.set(sprite);
 	}
 
-	public int getLayer() {
-		return layer;
-	}
-
 	public Vector2 getCenter() {
 		return center;
 	}
@@ -36,19 +30,18 @@ public class SpriteComponent extends Component {
 		return color;
 	}
 
-	public SpriteComponent(Sprite sprite, int layer, Vector2 center, Color color) {
+	public SpriteComponent(Sprite sprite, Vector2 center, Color color) {
 		this.sprite = sprite;
-		this.layer = layer;
 		this.color = new Color(color);
 		this.center = center;
 	}
 
-	public SpriteComponent(Sprite sprite, int layer, Color color) {
-		this(sprite, layer, new Vector2(0.5f, 0.5f), color);
+	public SpriteComponent(Sprite sprite, Color color) {
+		this(sprite, new Vector2(0.5f, 0.5f), color);
 	}
 
-	public SpriteComponent(Sprite sprite, int layer) {
-		this(sprite, layer, Color.WHITE);
+	public SpriteComponent(Sprite sprite) {
+		this(sprite, Color.WHITE);
 	}
 
 }

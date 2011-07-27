@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 
@@ -44,10 +45,8 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
 	@Override
 	public boolean belongs(Entity entity) {
-		SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
-		if (spriteComponent == null)
-			return false;
-		return spriteComponent.getLayer() >= minLayer && spriteComponent.getLayer() < maxLayer;
+		RenderableComponent renderableComponent = entity.getComponent(RenderableComponent.class);
+		return renderableComponent.getLayer() >= minLayer && renderableComponent.getLayer() < maxLayer;
 	}
 
 	@Override
