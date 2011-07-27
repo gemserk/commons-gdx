@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
-public class SpriteRendererSystem extends EntitySystem {
-	
-	private SpriteBatch spriteBatch;
+public class SpriteRendererSystem extends EntitySystem implements Disposable {
 
 	private ArrayList<RenderLayer> renderLayers;
 
@@ -27,7 +25,7 @@ public class SpriteRendererSystem extends EntitySystem {
 		this.renderLayers = new ArrayList<RenderLayer>();
 		renderLayers.add(new RenderLayer(-1000, 1000, camera));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public SpriteRendererSystem(ArrayList<RenderLayer> renderLayers) {
 		super(SpriteComponent.class);
@@ -38,10 +36,10 @@ public class SpriteRendererSystem extends EntitySystem {
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		for (int i = 0; i < renderLayers.size(); i++) {
 			RenderLayer renderLayer = renderLayers.get(i);
-			renderLayer.draw(spriteBatch);
+			renderLayer.draw();
 		}
 	}
-	
+
 	@Override
 	protected void added(Entity entity) {
 		// order the entity in the Layer, probably the same inside the layer
@@ -53,7 +51,7 @@ public class SpriteRendererSystem extends EntitySystem {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void removed(Entity entity) {
 		// remove the order
@@ -68,11 +66,22 @@ public class SpriteRendererSystem extends EntitySystem {
 
 	@Override
 	public void initialize() {
-		spriteBatch = new SpriteBatch();
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayer = renderLayers.get(i);
+			renderLayer.init();
+		}
 	}
 
 	@Override
 	protected boolean checkProcessing() {
 		return true;
+	}
+
+	@Override
+	public void dispose() {
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayer = renderLayers.get(i);
+			renderLayer.dispose();
+		}
 	}
 }

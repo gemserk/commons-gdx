@@ -7,7 +7,7 @@ import com.artemis.World;
 import com.badlogic.gdx.utils.Disposable;
 
 public class WorldWrapper {
-
+	
 	private World world;
 
 	private ArrayList<EntitySystem> updateSystems;
