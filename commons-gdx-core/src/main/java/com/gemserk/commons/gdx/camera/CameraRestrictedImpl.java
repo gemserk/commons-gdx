@@ -134,11 +134,15 @@ public class CameraRestrictedImpl implements Camera {
 		float zoomedWidth = getRealWidth();
 		float zoomedHeight = getRealHeight();
 
-		if (zoomedWidth >= worldBounds.getWidth()) {
+		if (zoomedWidth >= worldBounds.getWidth())
 			this.zoom = this.width / worldBounds.getWidth();
-		} else if (zoomedHeight >= worldBounds.getHeight()) {
-			this.zoom = this.height / worldBounds.getHeight();
+
+		if (zoomedHeight >= worldBounds.getHeight()) {
+			float newZoom = this.height / worldBounds.getHeight();
+			if (newZoom > this.zoom)
+				this.zoom = newZoom;
 		}
+
 	}
 
 	@Override

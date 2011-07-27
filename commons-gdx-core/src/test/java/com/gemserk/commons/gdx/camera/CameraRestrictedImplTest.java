@@ -33,7 +33,7 @@ public class CameraRestrictedImplTest {
 		camera.setPosition(0f, -49f);
 		assertThat(camera.getY(), IsEqual.equalTo(-40f));
 	}
-	
+
 	@Test
 	public void testSetPosition() {
 		CameraRestrictedImpl camera = new CameraRestrictedImpl();
@@ -52,7 +52,7 @@ public class CameraRestrictedImplTest {
 		assertThat(camera.getX(), IsEqual.equalTo(16f));
 		assertThat(camera.getY(), IsEqual.equalTo(8f));
 	}
-	
+
 	@Test
 	public void testSetPositionWithZoom() {
 		CameraRestrictedImpl camera = new CameraRestrictedImpl();
@@ -108,7 +108,7 @@ public class CameraRestrictedImplTest {
 		assertThat(camera.getX(), IsEqual.equalTo(150f));
 		assertThat(camera.getY(), IsEqual.equalTo(270f));
 	}
-	
+
 	@Test
 	public void shouldNotZoomOutIfInternalBoundsAreGreaterThanWorldBounds() {
 		CameraRestrictedImpl camera = new CameraRestrictedImpl();
@@ -119,7 +119,7 @@ public class CameraRestrictedImplTest {
 		camera.setZoom(0.01f);
 		assertThat(camera.getZoom(), IsEqual.equalTo(0.1f));
 	}
-	
+
 	@Test
 	public void shouldRecalculateZoomIfBoundsChanged() {
 		CameraRestrictedImpl camera = new CameraRestrictedImpl();
@@ -130,7 +130,7 @@ public class CameraRestrictedImplTest {
 		camera.setBounds(20, 20);
 		assertThat(camera.getZoom(), IsEqual.equalTo(0.2f));
 	}
-	
+
 	@Test
 	public void shouldRecalculateZoomIfBoundsChanged2() {
 		CameraRestrictedImpl camera = new CameraRestrictedImpl();
@@ -141,12 +141,20 @@ public class CameraRestrictedImplTest {
 		camera.setZoom(0.5f);
 		assertThat(camera.getZoom(), IsEqual.equalTo(1f));
 	}
-	
+
 	@Test
 	public void shouldRecalculateZoomIfBoundsChanged3() {
-		CameraRestrictedImpl camera = new CameraRestrictedImpl(0f,0f, 40f, 0f, 800f, 480f, new Rectangle(0f, 0f, 20f, 12f));
+		CameraRestrictedImpl camera = new CameraRestrictedImpl(0f, 0f, 40f, 0f, 800f, 480f, new Rectangle(0f, 0f, 20f, 12f));
 		assertThat(camera.getZoom(), IsEqual.equalTo(40f));
 		camera.setZoom(1f);
 		assertThat(camera.getZoom(), IsEqual.equalTo(40f));
+	}
+
+	@Test
+	public void bugWhenRecalculatingZoomShouldUseSmallerDimension() {
+		CameraRestrictedImpl camera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, 800f, 480f, new Rectangle(0f, 0f, 12f, 4f));
+		assertThat(camera.getZoom(), IsEqual.equalTo(120f));
+		camera = new CameraRestrictedImpl(0f, 0f, 1f, 0f, 800f, 480f, new Rectangle(0f, 0f, 4f, 12f));
+		assertThat(camera.getZoom(), IsEqual.equalTo(200f));
 	}
 }
