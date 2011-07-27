@@ -12,7 +12,7 @@ import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
 public class SpriteRendererSystem extends EntitySystem implements Disposable {
 
-	private ArrayList<RenderLayerSpriteBatchImpl> renderLayerSpriteBatchImpls;
+	private ArrayList<RenderLayer> renderLayerSpriteBatchImpls;
 
 	public SpriteRendererSystem() {
 		this(new Libgdx2dCameraTransformImpl());
@@ -22,12 +22,12 @@ public class SpriteRendererSystem extends EntitySystem implements Disposable {
 	public SpriteRendererSystem(Libgdx2dCamera camera) {
 		super(SpriteComponent.class);
 		// default layers
-		this.renderLayerSpriteBatchImpls = new ArrayList<RenderLayerSpriteBatchImpl>();
+		this.renderLayerSpriteBatchImpls = new ArrayList<RenderLayer>();
 		renderLayerSpriteBatchImpls.add(new RenderLayerSpriteBatchImpl(-1000, 1000, camera));
 	}
 
 	@SuppressWarnings("unchecked")
-	public SpriteRendererSystem(ArrayList<RenderLayerSpriteBatchImpl> renderLayerSpriteBatchImpls) {
+	public SpriteRendererSystem(ArrayList<RenderLayer> renderLayerSpriteBatchImpls) {
 		super(SpriteComponent.class);
 		this.renderLayerSpriteBatchImpls = renderLayerSpriteBatchImpls;
 	}
@@ -36,7 +36,7 @@ public class SpriteRendererSystem extends EntitySystem implements Disposable {
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		for (int i = 0; i < renderLayerSpriteBatchImpls.size(); i++) {
 			RenderLayer renderLayerSpriteBatchImpl = renderLayerSpriteBatchImpls.get(i);
-			renderLayerSpriteBatchImpl.draw();
+			renderLayerSpriteBatchImpl.render();
 		}
 	}
 

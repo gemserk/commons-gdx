@@ -8,12 +8,18 @@ public interface RenderLayer {
 
 	void dispose();
 
+	/**
+	 * Returns true if the entity belongs to the RenderLayer, probably based on one of its components, false otherwise.
+	 */
 	boolean belongs(Entity entity);
 
 	void add(Entity entity);
 
 	void remove(Entity entity);
 
-	void draw();
+	/**
+	 * Renders all the entities of the render layer.
+	 */
+	void render();
 
 }

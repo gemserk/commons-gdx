@@ -62,7 +62,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	}
 
 	@Override
-	public void draw() {
+	public void render() {
 		camera.apply(spriteBatch);
 		spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerEntities.size; i++) {
