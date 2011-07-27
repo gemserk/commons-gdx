@@ -7,27 +7,22 @@ import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.artemis.components.RenderableComponent;
-import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
-public class SpriteRendererSystem extends EntitySystem implements Disposable {
+public class RenderableSystem extends EntitySystem implements Disposable {
 
 	private ArrayList<RenderLayer> renderLayerSpriteBatchImpls;
 
-	public SpriteRendererSystem() {
-		this(new Libgdx2dCameraTransformImpl());
-	}
-
 	@SuppressWarnings("unchecked")
-	public SpriteRendererSystem(Libgdx2dCamera camera) {
+	public RenderableSystem() {
 		super(RenderableComponent.class);
 		// default layers
-		this.renderLayerSpriteBatchImpls = new ArrayList<RenderLayer>();
-		renderLayerSpriteBatchImpls.add(new RenderLayerSpriteBatchImpl(-1000, 1000, camera));
+		renderLayerSpriteBatchImpls = new ArrayList<RenderLayer>();
+		renderLayerSpriteBatchImpls.add(new RenderLayerSpriteBatchImpl(-1000, 1000, new Libgdx2dCameraTransformImpl()));
 	}
 
 	@SuppressWarnings("unchecked")
-	public SpriteRendererSystem(ArrayList<RenderLayer> renderLayerSpriteBatchImpls) {
+	public RenderableSystem(ArrayList<RenderLayer> renderLayerSpriteBatchImpls) {
 		super(RenderableComponent.class);
 		this.renderLayerSpriteBatchImpls = renderLayerSpriteBatchImpls;
 	}
