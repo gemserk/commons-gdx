@@ -36,18 +36,15 @@ public class SpriteRendererSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-		
 		for (int i = 0; i < renderLayers.size(); i++) {
 			RenderLayer renderLayer = renderLayers.get(i);
 			renderLayer.draw(spriteBatch);
 		}
-
 	}
 	
 	@Override
 	protected void added(Entity entity) {
 		// order the entity in the Layer, probably the same inside the layer
-		
 		for (int i = 0; i < renderLayers.size(); i++) {
 			RenderLayer renderLayer = renderLayers.get(i);
 			if (renderLayer.belongs(entity)) {
@@ -55,13 +52,11 @@ public class SpriteRendererSystem extends EntitySystem {
 				return;
 			}
 		}
-		
 	}
 	
 	@Override
 	protected void removed(Entity entity) {
 		// remove the order
-		
 		for (int i = 0; i < renderLayers.size(); i++) {
 			RenderLayer renderLayer = renderLayers.get(i);
 			if (renderLayer.belongs(entity)) {
@@ -69,7 +64,6 @@ public class SpriteRendererSystem extends EntitySystem {
 				return;
 			}
 		}
-		
 	}
 
 	@Override
