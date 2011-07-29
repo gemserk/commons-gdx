@@ -107,7 +107,12 @@ public class GuiControls {
 			imageButton.setSize(w, h);
 			return this;
 		}
-		
+
+		public ImageButtonBuilder center(float cx, float cy) {
+			imageButton.setCenter(cx, cy);
+			return this;
+		}
+
 		public ImageButtonBuilder color(Color color) {
 			imageButton.setColor(color);
 			return this;

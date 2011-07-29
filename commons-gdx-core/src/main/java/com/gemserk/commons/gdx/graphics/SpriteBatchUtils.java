@@ -72,8 +72,20 @@ public class SpriteBatchUtils {
 	 * Draws a Sprite centered.
 	 */
 	public static void drawCentered(SpriteBatch spriteBatch, Sprite sprite, float x, float y, float w, float h, float angle) {
+		// sprite.setSize(w, h);
+		// sprite.setOrigin(w * 0.5f, h * 0.5f);
+		// sprite.setPosition(x - sprite.getOriginX(), y - sprite.getOriginY());
+		// sprite.setRotation(angle);
+		// sprite.draw(spriteBatch);
+		drawCentered(spriteBatch, sprite, x, y, w, h, angle, 0.5f, 0.5f);
+	}
+
+	/**
+	 * Draws a Sprite centered.
+	 */
+	public static void drawCentered(SpriteBatch spriteBatch, Sprite sprite, float x, float y, float w, float h, float angle, float cx, float cy) {
 		sprite.setSize(w, h);
-		sprite.setOrigin(w * 0.5f, h * 0.5f);
+		sprite.setOrigin(w * cx, h * cy);
 		sprite.setPosition(x - sprite.getOriginX(), y - sprite.getOriginY());
 		sprite.setRotation(angle);
 		sprite.draw(spriteBatch);

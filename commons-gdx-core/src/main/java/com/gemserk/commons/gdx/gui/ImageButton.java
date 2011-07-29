@@ -10,15 +10,18 @@ import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
 public class ImageButton implements Control {
-	
+
 	ButtonHandler buttonHandler;
 	Sprite sprite;
 	LibgdxPointer libgdxPointer;
 	Color color;
-	float x,y;
-	float w,h;
+
+	float x, y;
+	float w, h;
+	float cx, cy;
+
 	Rectangle bounds;
-	
+
 	public void setColor(Color color) {
 		this.color.set(color);
 	}
@@ -30,23 +33,25 @@ public class ImageButton implements Control {
 	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
-		float cx = 0.5f;
-		float cy = 0.5f;
 		this.bounds.set(x - w * cx, y - h * cy, w, h);
 	}
-	
+
+	 public void setCenter(float cx, float cy) {
+		 this.cx = cx;
+		 this.cy = cy;
+		 this.bounds.set(x - w * cx, y - h * cy, w, h);
+	 }
+
 	public void setSize(float w, float h) {
 		this.w = w;
 		this.h = h;
-		float cx = 0.5f;
-		float cy = 0.5f;
 		this.bounds.set(x - w * cx, y - h * cy, w, h);
 	}
-	
+
 	public void setButtonHandler(ButtonHandler buttonHandler) {
 		this.buttonHandler = buttonHandler;
 	}
-	
+
 	public ImageButton(Sprite sprite) {
 		this.sprite = sprite;
 		this.buttonHandler = new ButtonHandler();
@@ -55,14 +60,16 @@ public class ImageButton implements Control {
 		this.w = sprite.getWidth();
 		this.h = sprite.getHeight();
 		this.bounds = new Rectangle(0, 0, w, h);
+		this.cx = 0.5f;
+		this.cy = 0.5f;
 	}
-	
+
 	public void draw(SpriteBatch spriteBatch) {
 		sprite.setColor(color);
 		sprite.setSize(w, h);
-		SpriteBatchUtils.drawCentered(spriteBatch, sprite, x, y, 0f);
+		SpriteBatchUtils.drawCentered(spriteBatch, sprite, x, y, w, h, 0f, cx, cy);
 	}
-	
+
 	public void update() {
 		libgdxPointer.update();
 
@@ -74,13 +81,13 @@ public class ImageButton implements Control {
 
 		if (libgdxPointer.wasReleased)
 			released = MathUtils2.inside(bounds, libgdxPointer.getReleasedPosition());
-		
+
 		if (pressed)
 			buttonHandler.onPressed();
-		
+
 		if (released)
 			buttonHandler.onReleased();
-		
+
 	}
-	
+
 }
