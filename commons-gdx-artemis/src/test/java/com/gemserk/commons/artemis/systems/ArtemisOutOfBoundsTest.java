@@ -1,5 +1,8 @@
 package com.gemserk.commons.artemis.systems;
 
+import static org.junit.Assert.assertThat;
+
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
 
 import com.artemis.Component;
@@ -8,31 +11,77 @@ import com.artemis.World;
 
 public class ArtemisOutOfBoundsTest {
 
-	private static class Component1 extends Component {}
-	private static class Component2 extends Component {}
-	private static class Component3 extends Component {}
-	private static class Component4 extends Component {}
-	private static class Component5 extends Component {}
-	private static class Component6 extends Component {}
-	private static class Component7 extends Component {}
-	private static class Component8 extends Component {}
-	private static class Component9 extends Component {}
-	private static class Component10 extends Component {}
-	private static class Component11 extends Component {}
-	private static class Component12 extends Component {}
-	private static class Component13 extends Component {}
-	private static class Component14 extends Component {}
-	private static class Component15 extends Component {}
-	private static class Component16 extends Component {}
+	private static class Component1 extends Component {
+	}
 
-	private static class ComponentOutOfBounds extends Component {}
+	private static class Component2 extends Component {
+	}
+
+	private static class Component3 extends Component {
+	}
+
+	private static class Component4 extends Component {
+	}
+
+	private static class Component5 extends Component {
+	}
+
+	private static class Component6 extends Component {
+	}
+
+	private static class Component7 extends Component {
+	}
+
+	private static class Component8 extends Component {
+	}
+
+	private static class Component9 extends Component {
+	}
+
+	private static class Component10 extends Component {
+	}
+
+	private static class Component11 extends Component {
+	}
+
+	private static class Component12 extends Component {
+	}
+
+	private static class Component13 extends Component {
+	}
+
+	private static class Component14 extends Component {
+	}
+
+	private static class Component15 extends Component {
+	}
+
+	private static class Component16 extends Component {
+	}
+
+	private static class ComponentOutOfBounds extends Component {
+	}
 
 	@Test
-	public void notest(){
+	public void notest() {
 		// to avoid mvn test failing
 	}
-	
-	public void test() {
+
+	@Test
+	public void shouldGetComponent() {
+		World world = new World();
+
+		Entity e = world.createEntity();
+		e.addComponent(new Component1());
+		e.refresh();
+
+		Component1 component = e.getComponent(Component1.class);
+		assertThat(component, IsNull.notNullValue());
+
+	}
+
+	@Test
+	public void shouldNotFailWhenAskingForComponentOutsideBounds() {
 
 		World world = new World();
 
@@ -56,6 +105,7 @@ public class ArtemisOutOfBoundsTest {
 		e.addComponent(new Component14());
 		e.addComponent(new Component15());
 		e.addComponent(new Component16());
+		e.addComponent(new ComponentOutOfBounds());
 
 		e.refresh();
 
@@ -78,7 +128,13 @@ public class ArtemisOutOfBoundsTest {
 		e.getComponent(Component15.class);
 		e.getComponent(Component16.class);
 
-		e.getComponent(ComponentOutOfBounds.class);
+		// e.getComponent(ComponentOutOfBounds.class);
+
+		ComponentOutOfBounds component = e.getComponent(ComponentOutOfBounds.class);
+		assertThat(component, IsNull.notNullValue());
+
+		Component7 component7 = e.getComponent(Component7.class);
+		assertThat(component7, IsNull.nullValue());
 
 	}
 
