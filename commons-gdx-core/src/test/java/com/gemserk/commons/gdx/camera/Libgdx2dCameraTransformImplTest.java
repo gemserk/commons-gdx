@@ -170,6 +170,13 @@ public class Libgdx2dCameraTransformImplTest {
 			return false;
 			
 		}
+
+		@Override
+		public float getDensity() {
+			// TODO Auto-generated function stub
+			return 0;
+			
+		}
 	}
 
 	@Test
