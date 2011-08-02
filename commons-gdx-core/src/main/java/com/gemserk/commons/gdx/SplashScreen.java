@@ -36,6 +36,7 @@ public class SplashScreen extends ScreenAdapter {
 	private Sprite sprite;
 
 	private AnimationHandlerManager animationHandlerManager;
+	
 
 	public SplashScreen(Texture texture) {
 		this.sprite = new Sprite(texture);
