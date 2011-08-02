@@ -6,15 +6,15 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.gemserk.animation4j.event.AnimationEvent;
-import com.gemserk.animation4j.event.AnimationEventHandler;
-import com.gemserk.animation4j.event.AnimationHandlerManager;
+import com.gemserk.animation4j.animations.events.AnimationEvent;
+import com.gemserk.animation4j.animations.events.AnimationEventHandler;
+import com.gemserk.animation4j.animations.events.AnimationHandlerManager;
 import com.gemserk.animation4j.gdx.converters.LibgdxConverters;
 import com.gemserk.animation4j.timeline.TimelineAnimationBuilder;
 import com.gemserk.animation4j.timeline.TimelineValueBuilder;
 import com.gemserk.animation4j.timeline.sync.ObjectSynchronizer;
 import com.gemserk.animation4j.timeline.sync.ReflectionObjectSynchronizer;
-import com.gemserk.animation4j.timeline.sync.SynchrnonizedAnimation;
+import com.gemserk.animation4j.timeline.sync.SynchronizedAnimation;
 import com.gemserk.animation4j.timeline.sync.TimelineSynchronizer;
 
 public class SplashScreen extends ScreenAdapter {
@@ -31,7 +31,7 @@ public class SplashScreen extends ScreenAdapter {
 		return color;
 	}
 
-	private SynchrnonizedAnimation splashAnimation;
+	private SynchronizedAnimation splashAnimation;
 
 	private Sprite sprite;
 
@@ -43,10 +43,10 @@ public class SplashScreen extends ScreenAdapter {
 
 		ObjectSynchronizer objectSynchronizer = new ReflectionObjectSynchronizer();
 
-		splashAnimation = new SynchrnonizedAnimation(new TimelineAnimationBuilder() {
+		splashAnimation = new SynchronizedAnimation(new TimelineAnimationBuilder() {
 			{
 				delay(1000);
-				value("color", new TimelineValueBuilder<Color>(LibgdxConverters.color()) {
+				value("color", new TimelineValueBuilder(LibgdxConverters.color()) {
 					{
 						keyFrame(0, new Color(1f, 1f, 1f, 0f));
 						keyFrame(2000, new Color(1f, 1f, 1f, 1f));
