@@ -13,13 +13,6 @@
 	<name>Common Gdx - Core module</name>
 	<description>Common utitilites to be used with libgdx</description>
 
-	<properties>
-		<libgdxversion>0.9.2-SNAPSHOT</libgdxversion>
-		<animation4j.version>0.0.13-SNAPSHOT</animation4j.version>
-		<componentsengine.version>0.0.10-SNAPSHOT</componentsengine.version>
-		<resourcesmanager.version>0.0.12-SNAPSHOT</resourcesmanager.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.badlogic.gdx</groupId>
@@ -49,7 +42,7 @@
 		<dependency>
 			<groupId>com.gemserk.vecmath</groupId>
 			<artifactId>vecmath</artifactId>
-			<version>1.5.3-GEMSERK</version>
+			<version>${vecmath.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.gemserk.resources</groupId>
@@ -77,20 +70,6 @@
 			<groupId>org.jmock</groupId>
 			<artifactId>jmock-junit4</artifactId>
 			<scope>test</scope>
-		</dependency>
-		
-		<!-- they should be only on android module :S -->
-		<dependency>
-			<groupId>com.adwhirl.adwhirl</groupId>
-			<artifactId>adwhirl</artifactId>
-			<version>3.0.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<version>2.2.1</version>
-			<scope>provided</scope>
 		</dependency>
 		
 	</dependencies>

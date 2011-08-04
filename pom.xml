@@ -51,11 +51,22 @@
 
 	<modules>
 		<module>commons-gdx-core</module>
+		<module>commons-gdx-android</module>
+		<module>commons-gdx-desktop</module>
 		<module>commons-gdx-artemis</module>
 	</modules>
 
 	<properties>
 		<compiler.version>1.6</compiler.version>
+
+		<admob.version>2.2.1</admob.version>
+		<adwhirl.version>3.0.0</adwhirl.version>
+		<animation4j.version>0.0.13-SNAPSHOT</animation4j.version>
+		<artemis.version>0.0.1-GEMSERK-SNAPSHOT</artemis.version>
+		<componentsengine.version>0.0.10-SNAPSHOT</componentsengine.version>
+		<gdx.version>0.9.2-SNAPSHOT</gdx.version>
+		<resourcesmanager.version>0.0.12-SNAPSHOT</resourcesmanager.version>
+		<vecmath.version>1.5.3-GEMSERK</vecmath.version>
 	</properties>
 
 	<build>
