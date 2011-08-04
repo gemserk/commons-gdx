@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>com.badlogic.gdx</groupId>
 			<artifactId>gdx</artifactId>
-			<version>${libgdxversion}</version>
+			<version>${gdx.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.gemserk.animation4j</groupId>

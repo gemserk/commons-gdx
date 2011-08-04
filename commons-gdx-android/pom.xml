@@ -48,7 +48,8 @@
 		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
-			<version>${admob.version}</version>
+			<version>${android.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

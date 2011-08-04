@@ -59,8 +59,8 @@
 	<properties>
 		<compiler.version>1.6</compiler.version>
 
-		<admob.version>2.2.1</admob.version>
 		<adwhirl.version>3.0.0</adwhirl.version>
+		<android.version>2.2.1</android.version>
 		<animation4j.version>0.0.13-SNAPSHOT</animation4j.version>
 		<artemis.version>0.0.1-GEMSERK-SNAPSHOT</artemis.version>
 		<componentsengine.version>0.0.10-SNAPSHOT</componentsengine.version>

@@ -12,3 +12,13 @@ commons-gdx-artemis/target
 commons-gdx-artemis/.classpath
 commons-gdx-artemis/.project
 commons-gdx-artemis/.settings
+
+commons-gdx-android/target
+commons-gdx-android/.classpath
+commons-gdx-android/.project
+commons-gdx-android/.settings
+
+commons-gdx-desktop/target
+commons-gdx-desktop/.classpath
+commons-gdx-desktop/.project
+commons-gdx-desktop/.settings
