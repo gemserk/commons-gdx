@@ -2,7 +2,6 @@ package com.gemserk.commons.artemis.templates;
 
 import com.artemis.Entity;
 import com.artemis.World;
-import com.gemserk.commons.artemis.systems.EntityTemplateTest;
 import com.gemserk.componentsengine.utils.Parameters;
 
 public class EntityFactoryImpl implements EntityFactory {
