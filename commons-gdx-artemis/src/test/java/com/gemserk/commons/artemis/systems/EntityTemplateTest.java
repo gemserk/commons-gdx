@@ -329,7 +329,6 @@ public class EntityTemplateTest {
 		// this parameters are stored in each weapon instance.
 		ParametersWrapper weaponBulletParameters = new ParametersWrapper();
 		weaponBulletParameters.put("damage", weaponComponent.getDamage());
-		weaponBulletParameters.put("position", new Vector2());
 
 		// the interesting part here is that I could change it dynamically without changing the template or the instantiation call
 
