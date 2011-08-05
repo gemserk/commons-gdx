@@ -40,10 +40,10 @@ public class ParametersWithFallBack implements Parameters {
 
 	@Override
 	public <T> T get(String id, T defaultValue) {
-		T t = get(id);
-		if (t == null)
+		Object o = get(id);
+		if (o == null)
 			return defaultValue;
-		return t;
+		return (T) o;
 	}
 
 	@Override
