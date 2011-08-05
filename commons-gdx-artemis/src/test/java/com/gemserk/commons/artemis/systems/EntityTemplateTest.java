@@ -69,6 +69,19 @@ public class EntityTemplateTest {
 		}
 
 	}
+	
+	class OwnerComponent extends Component {
+		
+		Entity owner;
+		
+		public Entity getOwner() {
+			return owner;
+		}
+		
+		public OwnerComponent(Entity owen) {
+			owner = owen;
+		}
+	}
 
 	interface EntityTemplate {
 
@@ -118,7 +131,7 @@ public class EntityTemplateTest {
 		public WeaponEntityTemplate() {
 			defaultParameters.put("damage", new Float(5f));
 			defaultParameters.put("script", new ScriptJavaImpl());
-			defaultParameters.put("position", new Vector2());
+			defaultParameters.put("owner", null);
 		}
 
 		@Override
@@ -136,10 +149,10 @@ public class EntityTemplateTest {
 			Float damage = parameters.get("damage");
 			EntityTemplate bulletTemplate = parameters.get("bulletTemplate");
 			Script script = parameters.get("script");
-			Vector2 position = parameters.get("position");
+			Entity owner = parameters.get("owner");
 
 			entity.addComponent(new WeaponComponent(damage, bulletTemplate));
-			entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, 1f, 1f, 0f)));
+			entity.addComponent(new OwnerComponent(owner));
 			entity.addComponent(new ScriptComponent(script));
 		}
 
@@ -249,7 +262,6 @@ public class EntityTemplateTest {
 
 	@Test
 	public void test() {
-
 		EntityTemplate customShipTemplate = new ShipEntityTemplate() {
 			{
 				defaultParameters.put("x", 100f);
@@ -273,7 +285,6 @@ public class EntityTemplateTest {
 
 		assertThat(health.getCurrent(), IsEqual.equalTo(53f));
 		assertThat(health.getTotal(), IsEqual.equalTo(250f));
-
 	}
 
 	@Test
@@ -351,13 +362,19 @@ public class EntityTemplateTest {
 
 		final EntityFactory entityFactory = new EntityFactoryImpl(world);
 
+		EntityTemplate shipTemplate = new ShipEntityTemplate() {{
+			defaultParameters.put("x", 750f);
+			defaultParameters.put("y", 125f);
+		}};
+		Entity ship = entityFactory.instantiate(shipTemplate);
+		
 		EntityTemplate weaponTemplate = new WeaponEntityTemplate();
 		EntityTemplate bulletTemplate = new BulletEntityTemplate();
 
 		ParametersWrapper weaponParameters = new ParametersWrapper();
 		weaponParameters.put("damage", 30f);
 		weaponParameters.put("bulletTemplate", bulletTemplate);
-		weaponParameters.put("position", new Vector2(750f, 125f));
+		weaponParameters.put("owner", ship);
 		weaponParameters.put("script", new ScriptJavaImpl() {
 
 			ParametersWrapper bulletParameters = new ParametersWrapper();
@@ -365,7 +382,10 @@ public class EntityTemplateTest {
 			@Override
 			public void update(World world, Entity e) {
 				WeaponComponent weaponComponent = e.getComponent(WeaponComponent.class);
-				SpatialComponent spatialComponent = e.getComponent(SpatialComponent.class);
+				OwnerComponent ownerComponent = e.getComponent(OwnerComponent.class);
+				
+				Entity owner = ownerComponent.getOwner();
+				SpatialComponent spatialComponent = owner.getComponent(SpatialComponent.class);
 
 				bulletParameters.put("damage", weaponComponent.getDamage());
 				bulletParameters.put("position", spatialComponent.getPosition());
