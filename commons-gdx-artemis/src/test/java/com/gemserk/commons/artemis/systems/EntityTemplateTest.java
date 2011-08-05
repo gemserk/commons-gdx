@@ -13,6 +13,9 @@ import com.gemserk.commons.artemis.Script;
 import com.gemserk.commons.artemis.ScriptJavaImpl;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.templates.EntityFactory;
+import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
+import com.gemserk.commons.artemis.templates.EntityTemplate;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.componentsengine.utils.Container;
@@ -69,28 +72,18 @@ public class EntityTemplateTest {
 		}
 
 	}
-	
+
 	class OwnerComponent extends Component {
-		
+
 		Entity owner;
-		
+
 		public Entity getOwner() {
 			return owner;
 		}
-		
+
 		public OwnerComponent(Entity owen) {
 			owner = owen;
 		}
-	}
-
-	interface EntityTemplate {
-
-		Parameters getDefaultParameters();
-
-		void apply(Entity entity);
-
-		void apply(Entity entity, Parameters parameters);
-
 	}
 
 	class ShipEntityTemplate implements EntityTemplate {
@@ -183,79 +176,6 @@ public class EntityTemplateTest {
 			Vector2 position = parameters.get("position");
 			entity.addComponent(new DamageComponent(damage));
 			entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, 1f, 1f, 0f)));
-		}
-
-	}
-
-	interface EntityFactory {
-
-		Entity instantiate(EntityTemplate template);
-
-		Entity instantiate(EntityTemplate template, Parameters parameters);
-
-	}
-
-	class EntityFactoryImpl implements EntityFactory {
-
-		ParametersWithFallBack parametersWithFallBack;
-		World world;
-
-		public EntityFactoryImpl(World world) {
-			this.world = world;
-			parametersWithFallBack = new ParametersWithFallBack();
-		}
-
-		@Override
-		public Entity instantiate(EntityTemplate template) {
-			return internalInstantiate(template, template.getDefaultParameters());
-		}
-
-		@Override
-		public Entity instantiate(EntityTemplate template, Parameters parameters) {
-			parametersWithFallBack.setFallBackParameters(template.getDefaultParameters());
-			parametersWithFallBack.setParameters(parameters);
-			return internalInstantiate(template, parametersWithFallBack);
-		}
-
-		private Entity internalInstantiate(EntityTemplate template, Parameters parameters) {
-			Entity entity = world.createEntity();
-			template.apply(entity, parameters);
-			entity.refresh();
-			return entity;
-		}
-
-	}
-
-	class ParametersWithFallBack implements Parameters {
-
-		Parameters parameters;
-		Parameters fallBackParameters;
-
-		public void setParameters(Parameters parameters) {
-			this.parameters = parameters;
-		}
-
-		public void setFallBackParameters(Parameters fallBackParameters) {
-			this.fallBackParameters = fallBackParameters;
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public <T> T get(String id) {
-			Object o = parameters.get(id);
-			if (o == null)
-				return fallBackParameters.get(id);
-			return (T) o;
-		}
-
-		@Override
-		public <T> T get(String id, T defaultValue) {
-			return parameters.get(id, defaultValue);
-		}
-
-		@Override
-		public void put(String id, Object value) {
-			parameters.put(id, value);
 		}
 
 	}
@@ -361,12 +281,14 @@ public class EntityTemplateTest {
 
 		final EntityFactory entityFactory = new EntityFactoryImpl(world);
 
-		EntityTemplate shipTemplate = new ShipEntityTemplate() {{
-			defaultParameters.put("x", 750f);
-			defaultParameters.put("y", 125f);
-		}};
+		EntityTemplate shipTemplate = new ShipEntityTemplate() {
+			{
+				defaultParameters.put("x", 750f);
+				defaultParameters.put("y", 125f);
+			}
+		};
 		Entity ship = entityFactory.instantiate(shipTemplate);
-		
+
 		EntityTemplate weaponTemplate = new WeaponEntityTemplate();
 		EntityTemplate bulletTemplate = new BulletEntityTemplate();
 
@@ -382,7 +304,7 @@ public class EntityTemplateTest {
 			public void update(World world, Entity e) {
 				WeaponComponent weaponComponent = e.getComponent(WeaponComponent.class);
 				OwnerComponent ownerComponent = e.getComponent(OwnerComponent.class);
-				
+
 				Entity owner = ownerComponent.getOwner();
 				SpatialComponent spatialComponent = owner.getComponent(SpatialComponent.class);
 
