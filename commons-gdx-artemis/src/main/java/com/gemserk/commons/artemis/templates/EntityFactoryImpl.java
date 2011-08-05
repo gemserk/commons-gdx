@@ -6,29 +6,24 @@ import com.gemserk.componentsengine.utils.Parameters;
 
 public class EntityFactoryImpl implements EntityFactory {
 
-	ParametersWithFallBack parametersWithFallBack;
-	World world;
+	private World world;
 
 	public EntityFactoryImpl(World world) {
 		this.world = world;
-		parametersWithFallBack = new ParametersWithFallBack();
 	}
 
 	@Override
 	public Entity instantiate(EntityTemplate template) {
-		return internalInstantiate(template, template.getDefaultParameters());
+		return instantiate(template, null);
 	}
 
 	@Override
 	public Entity instantiate(EntityTemplate template, Parameters parameters) {
-		parametersWithFallBack.setFallBackParameters(template.getDefaultParameters());
-		parametersWithFallBack.setParameters(parameters);
-		return internalInstantiate(template, parametersWithFallBack);
-	}
-
-	private Entity internalInstantiate(EntityTemplate template, Parameters parameters) {
 		Entity entity = world.createEntity();
-		template.apply(entity, parameters);
+		if (parameters != null)
+			template.apply(entity, parameters);
+		else
+			template.apply(entity);
 		entity.refresh();
 		return entity;
 	}

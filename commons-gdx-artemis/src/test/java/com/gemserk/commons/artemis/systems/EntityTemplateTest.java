@@ -16,6 +16,7 @@ import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.templates.EntityFactory;
 import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
+import com.gemserk.commons.artemis.templates.ParametersWithFallBack;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.componentsengine.utils.Container;
@@ -100,11 +101,6 @@ public class EntityTemplateTest {
 		}
 
 		@Override
-		public Parameters getDefaultParameters() {
-			return defaultParameters;
-		}
-
-		@Override
 		public void apply(Entity entity, Parameters parameters) {
 			Float x = parameters.get("x", 0f);
 			Float y = parameters.get("y", 0f);
@@ -133,11 +129,6 @@ public class EntityTemplateTest {
 		}
 
 		@Override
-		public Parameters getDefaultParameters() {
-			return defaultParameters;
-		}
-
-		@Override
 		public void apply(Entity entity, Parameters parameters) {
 			Float damage = parameters.get("damage");
 			EntityTemplate bulletTemplate = parameters.get("bulletTemplate");
@@ -153,7 +144,9 @@ public class EntityTemplateTest {
 
 	class BulletEntityTemplate implements EntityTemplate {
 
-		Parameters defaultParameters = new ParametersWrapper();
+		// it is the template responsibility to use default parameters or not.
+		
+		ParametersWithFallBack defaultParameters = new ParametersWithFallBack();
 
 		public BulletEntityTemplate() {
 			defaultParameters.put("damage", new Float(5f));
@@ -166,14 +159,10 @@ public class EntityTemplateTest {
 		}
 
 		@Override
-		public Parameters getDefaultParameters() {
-			return defaultParameters;
-		}
-
-		@Override
 		public void apply(Entity entity, Parameters parameters) {
-			Float damage = parameters.get("damage");
-			Vector2 position = parameters.get("position");
+			defaultParameters.setParameters(parameters);
+			Float damage = defaultParameters.get("damage");
+			Vector2 position = defaultParameters.get("position");
 			entity.addComponent(new DamageComponent(damage));
 			entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, 1f, 1f, 0f)));
 		}
@@ -226,12 +215,12 @@ public class EntityTemplateTest {
 		spatial.setPosition(100f, 100f);
 	}
 
-	@Test
+	@Deprecated
 	public void weaponInstantiateBullet() {
 		EntityTemplate bulletTemplate = new BulletEntityTemplate();
 
 		// modifies the template forever, if we are using the same template in different weapons or something similar, then they will be modified as well.
-		bulletTemplate.getDefaultParameters().put("damage", new Float(200f));
+		// bulletTemplate.getDefaultParameters().put("damage", new Float(200f));
 
 		EntityFactory entityFactory = new EntityFactoryImpl(new World());
 		Entity bullet = entityFactory.instantiate(bulletTemplate);

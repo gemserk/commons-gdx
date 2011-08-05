@@ -6,11 +6,6 @@ import com.gemserk.componentsengine.utils.Parameters;
 public interface EntityTemplate {
 
 	/**
-	 * Returns the default Parameters of this template, not sure it should be on the API.
-	 */
-	Parameters getDefaultParameters();
-
-	/**
 	 * Applies a template to the specified Entity.
 	 * 
 	 * @param entity
