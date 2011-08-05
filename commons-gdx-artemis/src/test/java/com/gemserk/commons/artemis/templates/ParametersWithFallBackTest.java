@@ -18,11 +18,11 @@ public class ParametersWithFallBackTest {
 
 		parameters.put("a", 100f);
 
-		float a = parametersWithFallBack.get("a");
+		Float a = parametersWithFallBack.get("a");
 		assertThat(a, IsEqual.equalTo(100f));
 
 	}
-	
+
 	@Test
 	public void shouldReturnObjectFromParametersFallbackIfNotFoundOnParameters() {
 		ParametersWithFallBack parametersWithFallBack = new ParametersWithFallBack();
@@ -31,10 +31,10 @@ public class ParametersWithFallBackTest {
 
 		parametersWithFallBack.put("a", 100f);
 
-		float a = parametersWithFallBack.get("a");
+		Float a = parametersWithFallBack.get("a");
 		assertThat(a, IsEqual.equalTo(100f));
 	}
-	
+
 	@Test
 	public void shouldReturnObjectFromParametersIfFoundWithDefaultValue() {
 		ParametersWithFallBack parametersWithFallBack = new ParametersWithFallBack();
@@ -43,10 +43,10 @@ public class ParametersWithFallBackTest {
 
 		parameters.put("a", 100f);
 
-		float a = parametersWithFallBack.get("a", 500f);
+		Float a = parametersWithFallBack.get("a", 500f);
 		assertThat(a, IsEqual.equalTo(100f));
 	}
-	
+
 	@Test
 	public void shouldReturnObjectFromParametersFallbackIfNotFoundOnParametersWithDefaultValue() {
 		ParametersWithFallBack parametersWithFallBack = new ParametersWithFallBack();
@@ -55,18 +55,17 @@ public class ParametersWithFallBackTest {
 
 		parametersWithFallBack.put("a", 100f);
 
-		float a = parametersWithFallBack.get("a", 500f);
+		Float a = parametersWithFallBack.get("a", 500f);
 		assertThat(a, IsEqual.equalTo(100f));
 	}
-	
+
 	@Test
 	public void shouldReturnDefaultValueIfObjectNotFound() {
 		ParametersWithFallBack parametersWithFallBack = new ParametersWithFallBack();
 		Parameters parameters = new ParametersWrapper();
 		parametersWithFallBack.setParameters(parameters);
-		float a = parametersWithFallBack.get("a", 500f);
+		Float a = parametersWithFallBack.get("a", 500f);
 		assertThat(a, IsEqual.equalTo(500f));
 	}
-	
 
 }
