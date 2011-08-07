@@ -22,8 +22,9 @@ public class HierarchicalSpatialTest {
 		private final Vector2 absolutePosition = new Vector2();
 
 		private float localAngle;
+		private float w, h;
 
-		public SpatialHierarchicalImpl(Spatial parent) {
+		public SpatialHierarchicalImpl(Spatial parent, float width, float height) {
 			this.parent = parent;
 			this.localAngle = 0f;
 			setPosition(parent.getX(), parent.getY());
@@ -65,17 +66,18 @@ public class HierarchicalSpatialTest {
 
 		@Override
 		public float getWidth() {
-			return 0;
+			return w;
 		}
 
 		@Override
 		public float getHeight() {
-			return 0;
+			return h;
 		}
 
 		@Override
 		public void setSize(float width, float height) {
-
+			this.w = width;
+			this.h = height;
 		}
 
 		@Override
@@ -93,7 +95,7 @@ public class HierarchicalSpatialTest {
 
 		Spatial parent = new SpatialImpl(x, y, 1f, 1f, 0f);
 
-		Spatial child = new SpatialHierarchicalImpl(parent);
+		Spatial child = new SpatialHierarchicalImpl(parent, 1f, 1f);
 
 		assertThat(child.getX(), IsEqual.equalTo(x));
 		assertThat(child.getY(), IsEqual.equalTo(y));
@@ -103,7 +105,7 @@ public class HierarchicalSpatialTest {
 	public void shouldSetAbsolutePositionWhenSettingChildPosition() {
 		Spatial parent = new SpatialImpl(10f, 20f, 1f, 1f, 0f);
 
-		Spatial child = new SpatialHierarchicalImpl(parent);
+		Spatial child = new SpatialHierarchicalImpl(parent, 1f, 1f);
 
 		child.setPosition(35f, 55f);
 
@@ -117,7 +119,7 @@ public class HierarchicalSpatialTest {
 	public void shouldCalculateOnGet() {
 		Spatial parent = new SpatialImpl(10f, 20f, 1f, 1f, 0f);
 
-		Spatial child = new SpatialHierarchicalImpl(parent);
+		Spatial child = new SpatialHierarchicalImpl(parent, 1f, 1f);
 
 		child.setPosition(35f, 55f);
 		parent.setPosition(0f, 0f);
@@ -131,14 +133,14 @@ public class HierarchicalSpatialTest {
 	@Test
 	public void shouldReturnParentAngle() {
 		Spatial parent = new SpatialImpl(0f, 0f, 1f, 1f, 55f);
-		Spatial child = new SpatialHierarchicalImpl(parent);
+		Spatial child = new SpatialHierarchicalImpl(parent, 1f, 1f);
 		assertThat(child.getAngle(), IsEqual.equalTo(55f));
 	}
 
 	@Test
 	public void shouldSetAngle() {
 		Spatial parent = new SpatialImpl(0f, 0f, 1f, 1f, 55f);
-		Spatial child = new SpatialHierarchicalImpl(parent);
+		Spatial child = new SpatialHierarchicalImpl(parent, 1f, 1f);
 		child.setAngle(25f);
 		assertThat(child.getAngle(), IsEqual.equalTo(25f));
 	}
@@ -146,7 +148,7 @@ public class HierarchicalSpatialTest {
 	@Test
 	public void shouldRecalculateAngleBasedOnParentAngle() {
 		Spatial parent = new SpatialImpl(0f, 0f, 1f, 1f, 55f);
-		Spatial child = new SpatialHierarchicalImpl(parent);
+		Spatial child = new SpatialHierarchicalImpl(parent, 1f, 1f);
 		child.setAngle(25f);
 		parent.setAngle(75f);
 		assertThat(child.getAngle(), IsEqual.equalTo(45f));
@@ -155,7 +157,7 @@ public class HierarchicalSpatialTest {
 	@Test
 	public void shouldRecalculatePositionBasedOnParentAngle() {
 		Spatial parent = new SpatialImpl(0f, 0f, 1f, 1f, 0f);
-		Spatial child = new SpatialHierarchicalImpl(parent);
+		Spatial child = new SpatialHierarchicalImpl(parent, 1f, 1f);
 		child.setPosition(100f, 0f);
 		parent.setAngle(90f);
 		assertEquals(0f, child.getX(), 0.1f);
