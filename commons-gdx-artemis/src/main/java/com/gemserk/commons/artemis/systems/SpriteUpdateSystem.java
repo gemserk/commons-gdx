@@ -41,7 +41,8 @@ public class SpriteUpdateSystem extends EntitySystem {
 			Sprite sprite = spriteComponent.getSprite();
 			Vector2 center = spriteComponent.getCenter();
 
-			sprite.setRotation(spatial.getAngle());
+			if (spriteComponent.isUpdateRotation())
+				sprite.setRotation(spatial.getAngle());
 			sprite.setOrigin(spatial.getWidth() * center.x, spatial.getHeight() * center.y);
 
 			sprite.setSize(spatial.getWidth(), spatial.getHeight());

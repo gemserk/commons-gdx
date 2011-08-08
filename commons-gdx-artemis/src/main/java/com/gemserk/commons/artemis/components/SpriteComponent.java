@@ -8,10 +8,17 @@ import com.badlogic.gdx.math.Vector2;
 public class SpriteComponent extends Component {
 
 	private Sprite sprite;
-
 	private Color color;
-
 	private Vector2 center; // x and y values between 0,1
+	private boolean updateRotation = true;
+	
+	public void setUpdateRotation(boolean updateRotation) {
+		this.updateRotation = updateRotation;
+	}
+	
+	public boolean isUpdateRotation() {
+		return updateRotation;
+	}
 
 	public Sprite getSprite() {
 		return sprite;

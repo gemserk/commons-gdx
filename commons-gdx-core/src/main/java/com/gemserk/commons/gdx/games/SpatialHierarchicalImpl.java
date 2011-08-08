@@ -19,6 +19,11 @@ public class SpatialHierarchicalImpl implements Spatial {
 		this.localAngle = 0f;
 		setPosition(parent.getX(), parent.getY());
 		setAngle(parent.getAngle());
+		setSize(width, height);
+	}
+	
+	public SpatialHierarchicalImpl(Spatial parent) {
+		this(parent, parent.getWidth(), parent.getHeight());
 	}
 
 	@Override
