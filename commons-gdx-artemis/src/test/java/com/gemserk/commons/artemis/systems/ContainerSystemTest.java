@@ -18,17 +18,17 @@ public class ContainerSystemTest {
 	class ContainerComponent extends Component {
 
 		private RandomAccessSet<Entity> children = new RandomAccessSet<Entity>();
-		
+
 		public RandomAccessSet<Entity> getChildren() {
 			return children;
 		}
-		
+
 	}
 
 	class OwnerComponent extends Component {
 
 		private Entity owner;
-		
+
 		public Entity getOwner() {
 			return owner;
 		}
@@ -81,12 +81,15 @@ public class ContainerSystemTest {
 				return;
 
 			ContainerComponent containerComponent = ownerComponent.owner.getComponent(ContainerComponent.class);
+			if (containerComponent == null)
+				return;
+
 			containerComponent.children.remove(e);
 		}
 
 		@Override
 		protected void process(Entity e) {
-			
+
 		}
 
 	}
@@ -140,34 +143,6 @@ public class ContainerSystemTest {
 		assertThat(e3, IsNull.nullValue());
 	}
 
-	// @Test
-	// public void shouldRemoveChildrenIfContainerComponentRemoved() {
-	// World world = new World();
-	// WorldWrapper worldWrapper = new WorldWrapper(world);
-	// worldWrapper.addUpdateSystem(new ContainerSystem());
-	// worldWrapper.addUpdateSystem(new ParentSystem());
-	// worldWrapper.init();
-	//
-	// ContainerComponent containerComponent = new ContainerComponent();
-	//
-	// Entity e1 = world.createEntity();
-	// e1.addComponent(containerComponent);
-	// e1.refresh();
-	//
-	// Entity e2 = world.createEntity();
-	// e2.addComponent(new ParentComponent(e1));
-	// e2.refresh();
-	//
-	// worldWrapper.update(10);
-	//
-	// e1.removeComponent(containerComponent);
-	// e1.refresh();
-	//
-	// worldWrapper.update(1);
-	// worldWrapper.update(1);
-	//
-	// Entity e3 = world.getEntity(e2.getId());
-	// assertThat(e3, IsNull.nullValue());
-	// }
+	// TEST: removing the container component should remove children too?
 
 }
