@@ -6,10 +6,6 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
-import com.gemserk.commons.gdx.games.Spatial;
-import com.gemserk.commons.gdx.games.SpatialHierarchicalImpl;
-import com.gemserk.commons.gdx.games.SpatialImpl;
-
 public class HierarchicalSpatialTest {
 
 	@Test
@@ -86,6 +82,49 @@ public class HierarchicalSpatialTest {
 		parent.setAngle(90f);
 		assertEquals(0f, child.getX(), 0.1f);
 		assertEquals(100f, child.getY(), 0.1f);
+	}
+	
+	@Test
+	public void shouldReturnCorrectAngleForMultipleChilds() {
+		Spatial parent = new SpatialImpl(0f, 0f, 1f, 1f, 0f);
+		Spatial child = new SpatialHierarchicalImpl(parent, 1f, 1f);
+		Spatial third = new SpatialHierarchicalImpl(child, 1f, 1f);
+		
+		child.setPosition(10f, 0f);
+		third.setPosition(20f, 0f);
+		
+		parent.setAngle(90f);
+		
+		assertEquals(90f, child.getAngle(), 0.1f);
+		assertEquals(90f, third.getAngle(), 0.1f);
+		
+		child.setAngle(120f);
+		
+		assertEquals(120f, third.getAngle(), 0.1f);
+	}
+	
+	@Test
+	public void shouldReturnCorrectPositionForMultipleChilds() {
+		Spatial parent = new SpatialImpl(0f, 0f, 1f, 1f, 0f);
+		Spatial child = new SpatialHierarchicalImpl(parent, 1f, 1f);
+		Spatial third = new SpatialHierarchicalImpl(child, 1f, 1f);
+		
+		child.setPosition(20f, 0f);
+		third.setPosition(30f, 0f);
+		
+		assertEquals(30f, third.getX(), 0.1f);
+		assertEquals(0f, third.getY(), 0.1f);
+
+		child.setAngle(0f);
+		parent.setAngle(90f);
+		
+		assertEquals(90f, child.getAngle(), 0.1f);
+		assertEquals(0f, child.getX(), 0.1f);
+		assertEquals(20f, child.getY(), 0.1f);
+		
+		assertEquals(90f, third.getAngle(), 0.1f);
+		assertEquals(0f, third.getX(), 0.1f);
+		assertEquals(30f, third.getY(), 0.1f);
 	}
 
 }

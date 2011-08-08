@@ -2,6 +2,7 @@ package com.gemserk.commons.artemis.templates;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.gemserk.componentsengine.utils.Parameters;
 
@@ -49,6 +50,13 @@ public class ParametersWithFallBack implements Parameters {
 	@Override
 	public void put(String id, Object value) {
 		fallBackParameters.put(id, value);
+	}
+
+	@Override
+	public void putAll(Map<String, Object> values) {
+		Set<String> keySet = values.keySet();
+		for (String key : keySet)
+			put(key, values.get(key));
 	}
 
 }

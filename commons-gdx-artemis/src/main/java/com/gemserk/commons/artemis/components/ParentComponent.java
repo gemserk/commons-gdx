@@ -4,37 +4,29 @@ import java.util.ArrayList;
 
 import com.artemis.Component;
 import com.artemis.Entity;
-import com.gemserk.componentsengine.properties.Property;
-import com.gemserk.componentsengine.properties.PropertyBuilder;
 
 public class ParentComponent extends Component {
 
-	private final Property<ArrayList<Entity>> children;
+	private final ArrayList<Entity> children;
 	
 	public ArrayList<Entity> getChildren() {
-		return children.get();
+		return children;
 	}
 	
 	public void addChild(Entity child){ 
-		children.get().add(child);
+		children.add(child);
 	}
 	
 	public void addChildren(ArrayList<Entity> children) {
-		this.children.get().addAll(children);
-	}
-	
-	public ParentComponent(Property<ArrayList<Entity>> children) {
-		this.children = children;
+		this.children.addAll(children);
 	}
 	
 	public ParentComponent(ArrayList<Entity> children) {
-		this(PropertyBuilder.property(children));
+		this.children = children;
 	}
 
 	public ParentComponent() {
 		this(new ArrayList<Entity>());
 	}
-
-
 
 }

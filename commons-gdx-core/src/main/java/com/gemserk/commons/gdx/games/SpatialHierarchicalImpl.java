@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class SpatialHierarchicalImpl implements Spatial {
 
-	private static final Vector2 aux = new Vector2();
+	private final Vector2 aux = new Vector2();
 
 	private final Spatial parent;
 
