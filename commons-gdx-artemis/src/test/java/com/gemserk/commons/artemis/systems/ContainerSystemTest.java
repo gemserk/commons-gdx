@@ -6,93 +6,13 @@ import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
 
-import com.artemis.Component;
 import com.artemis.Entity;
-import com.artemis.EntityProcessingSystem;
 import com.artemis.World;
 import com.gemserk.commons.artemis.WorldWrapper;
-import com.gemserk.componentsengine.utils.RandomAccessSet;
+import com.gemserk.commons.artemis.components.ContainerComponent;
+import com.gemserk.commons.artemis.components.OwnerComponent;
 
 public class ContainerSystemTest {
-
-	class ContainerComponent extends Component {
-
-		private RandomAccessSet<Entity> children = new RandomAccessSet<Entity>();
-
-		public RandomAccessSet<Entity> getChildren() {
-			return children;
-		}
-
-	}
-
-	class OwnerComponent extends Component {
-
-		private Entity owner;
-
-		public Entity getOwner() {
-			return owner;
-		}
-
-		public OwnerComponent(Entity owner) {
-			this.owner = owner;
-		}
-
-	}
-
-	public static class ContainerSystem extends EntityProcessingSystem {
-
-		public ContainerSystem() {
-			super(ContainerComponent.class);
-		}
-
-		@Override
-		protected void removed(Entity e) {
-			ContainerComponent containerComponent = e.getComponent(ContainerComponent.class);
-			for (int i = 0; i < containerComponent.children.size(); i++)
-				containerComponent.children.get(i).delete();
-		}
-
-		@Override
-		protected void process(Entity e) {
-
-		}
-
-	}
-
-	public static class OwnerSystem extends EntityProcessingSystem {
-
-		public OwnerSystem() {
-			super(OwnerComponent.class);
-		}
-
-		@Override
-		protected void added(Entity e) {
-			OwnerComponent ownerComponent = e.getComponent(OwnerComponent.class);
-			if (ownerComponent.owner == null)
-				return;
-
-			ContainerComponent containerComponent = ownerComponent.owner.getComponent(ContainerComponent.class);
-			containerComponent.children.add(e);
-		}
-
-		protected void removed(Entity e) {
-			OwnerComponent ownerComponent = e.getComponent(OwnerComponent.class);
-			if (ownerComponent.owner == null)
-				return;
-
-			ContainerComponent containerComponent = ownerComponent.owner.getComponent(ContainerComponent.class);
-			if (containerComponent == null)
-				return;
-
-			containerComponent.children.remove(e);
-		}
-
-		@Override
-		protected void process(Entity e) {
-
-		}
-
-	}
 
 	@Test
 	public void shouldBeAddedToParentContainer() {
@@ -113,7 +33,7 @@ public class ContainerSystemTest {
 		worldWrapper.update(10);
 
 		ContainerComponent containerComponent = e1.getComponent(ContainerComponent.class);
-		assertThat(containerComponent.children.contains(e2), IsEqual.equalTo(true));
+		assertThat(containerComponent.getChildren().contains(e2), IsEqual.equalTo(true));
 	}
 
 	@Test
