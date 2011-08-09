@@ -16,7 +16,7 @@ public class ParametersWithFallBack implements Parameters {
 
 	private Map<String, Object> fallBackParameters;
 	private Parameters parameters;
-
+	
 	/**
 	 * Sets the Parameters instance to get items from.
 	 * 
@@ -57,6 +57,12 @@ public class ParametersWithFallBack implements Parameters {
 		Set<String> keySet = values.keySet();
 		for (String key : keySet)
 			put(key, values.get(key));
+	}
+
+	@Override
+	public void clear() {
+		fallBackParameters.clear();
+		parameters.clear();
 	}
 
 }
