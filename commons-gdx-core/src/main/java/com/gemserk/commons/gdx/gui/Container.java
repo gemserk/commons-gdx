@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Container  implements Control {
 
-	ArrayList<Control> controls;
+	private ArrayList<Control> controls;
 	
 	public Container() {
 		controls = new ArrayList<Control>();
@@ -26,6 +26,10 @@ public class Container  implements Control {
 	
 	public void add(Control control) {
 		controls.add(control);
+	}
+	
+	public void remove(Control control) {
+		controls.remove(control);
 	}
 	
 }
