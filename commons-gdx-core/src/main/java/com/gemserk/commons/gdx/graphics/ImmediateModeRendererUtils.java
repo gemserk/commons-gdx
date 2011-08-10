@@ -18,7 +18,12 @@ public class ImmediateModeRendererUtils {
 
 	private static final Vector2 tmp = new Vector2();
 	private static final Vector2 angleTmp = new Vector2(1, 0);
-	private static final Matrix4 matrix = new Matrix4().idt();
+	private static final Matrix4 projectionMatrix = new Matrix4();
+	
+	private static Matrix4 getProjectionMatrix() {
+		projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		return projectionMatrix;
+	}
 
 	public static void drawSolidCircle(Circle circle, float angle, Color color) {
 		drawSolidCircle(circle.x, circle.y, circle.radius, angle, color);
@@ -48,7 +53,7 @@ public class ImmediateModeRendererUtils {
 	}
 
 	public static void drawSolidCircle(float x, float y, float radius, Color color) {
-		renderer.begin(matrix, GL10.GL_LINE_LOOP);
+		renderer.begin(getProjectionMatrix(), GL10.GL_LINE_LOOP);
 		{
 			float angle = 0;
 			float angleInc = 2 * (float) Math.PI / 20;
@@ -66,7 +71,7 @@ public class ImmediateModeRendererUtils {
 	}
 
 	public static void drawLine(float x0, float y0, float x1, float y1, Color color) {
-		renderer.begin(matrix, GL10.GL_LINES);
+		renderer.begin(getProjectionMatrix(), GL10.GL_LINES);
 		{
 			renderer.color(color.r, color.g, color.b, color.a);
 			renderer.vertex(x0, y0, 0);
@@ -97,7 +102,7 @@ public class ImmediateModeRendererUtils {
 	}
 
 	public static void drawRectangle(float x0, float y0, float x1, float y1, Color color) {
-		renderer.begin(matrix, GL10.GL_LINE_LOOP);
+		renderer.begin(getProjectionMatrix(), GL10.GL_LINE_LOOP);
 		{
 			renderer.color(color.r, color.g, color.b, color.a);
 			renderer.vertex(x0, y0, 0f);
@@ -121,7 +126,7 @@ public class ImmediateModeRendererUtils {
 		gl.glTranslatef(x, y, 0f);
 		gl.glRotatef(angle, 0f, 0f, 1f);
 
-		renderer.begin(matrix, GL10.GL_LINE_LOOP);
+		renderer.begin(getProjectionMatrix(), GL10.GL_LINE_LOOP);
 		for (int i = 0; i < vertices.length; i++) {
 			Vector2 v = vertices[i];
 			renderer.color(color.r, color.g, color.b, color.a);
@@ -139,7 +144,7 @@ public class ImmediateModeRendererUtils {
 		gl.glTranslatef(x, y, 0f);
 		gl.glRotatef(angle, 0f, 0f, 1f);
 
-		renderer.begin(matrix, GL10.GL_TRIANGLES);
+		renderer.begin(getProjectionMatrix(), GL10.GL_TRIANGLES);
 		for (int i = 0; i < triangulator.getTriangleCount(); i++) {
 			for (int p = 0; p < 3; p++) {
 				float[] pt = triangulator.getTrianglePoint(i, p);
