@@ -1,4 +1,4 @@
-package com.gemserk.commons.artemis.systems;
+package com.gemserk.commons.artemis.events;
 
 import static org.junit.Assert.assertThat;
 
