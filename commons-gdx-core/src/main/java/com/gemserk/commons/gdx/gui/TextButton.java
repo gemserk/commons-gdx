@@ -12,43 +12,35 @@ import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
 public class TextButton implements Control {
-	
+
 	public static class ButtonHandler {
-		
+
 		public void onPressed() {
-			
+
 		}
-		
+
 		public void onReleased() {
-			
+
 		}
-		
+
 	}
 
 	private float x, y;
+	private float cx, cy;
+	private float w, h;
+	private float offsetX, offsetY;
 
 	private BitmapFont font;
-
 	private String text;
-
 	private Rectangle bounds = new Rectangle();
-
 	private boolean pressed;
-
 	private boolean released;
-
 	private LibgdxPointer libgdxPointer = new LibgdxPointer(0);
-
 	private Color color = new Color(1f, 1f, 1f, 1f);
-
 	private Color overColor = new Color(1f, 1f, 1f, 1f);
-
 	private Color notOverColor = new Color(0.5f, 0.5f, 0.5f, 1f);
-
 	private boolean wasInside;
-
 	private HAlignment alignment = HAlignment.LEFT;
-	
 	private ButtonHandler buttonHandler = new ButtonHandler();
 
 	public TextButton setColor(Color color) {
@@ -72,21 +64,57 @@ public class TextButton implements Control {
 
 	public TextButton setText(String text) {
 		this.text = text;
-		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
+		recalculateBoundsSize(text);
+		recalculateBounds();
 		return this;
 	}
-	
+
+	private void recalculateBounds() {
+		this.bounds.set(x - w * cx - offsetX * 0.5f, y - h * cy - offsetY * 0.5f, w + offsetX, h + offsetY);
+	}
+
+	private void recalculateBoundsSize(String text) {
+		Rectangle textBounds = SpriteBatchUtils.getBounds(font, text, x, y);
+		w = textBounds.getWidth();
+		h = textBounds.getHeight();
+	}
+
 	public TextButton setButtonHandler(ButtonHandler buttonHandler) {
 		this.buttonHandler = buttonHandler;
 		return this;
 	}
-	
+
 	/**
 	 * Increment size of the bounds by the specified w,h
 	 */
 	public TextButton setBoundsOffset(float w, float h) {
-		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y, w, h);
+		this.offsetX = w;
+		this.offsetY = h;
+		recalculateBounds();
 		return this;
+	}
+
+	public void setFont(BitmapFont font) {
+		this.font = font;
+		recalculateBoundsSize(text);
+	}
+
+	public void setPosition(float x, float y) {
+		this.x = x;
+		this.y = y;
+		recalculateBounds();
+	}
+
+	public void setCenter(float cx, float cy) {
+		this.cx = cx;
+		this.cy = cy;
+		recalculateBounds();
+	}
+
+	public TextButton() {
+		this.cx = 0.5f;
+		this.cy = 0.5f;
+		recalculateBounds();
 	}
 
 	public TextButton(BitmapFont font, String text, float x, float y) {
@@ -94,8 +122,10 @@ public class TextButton implements Control {
 		this.text = text;
 		this.x = x;
 		this.y = y;
-		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
 		color.set(notOverColor);
+		this.cx = 0.5f;
+		this.cy = 0.5f;
+		recalculateBounds();
 	}
 
 	public TextButton setAlignment(HAlignment alignment) {
@@ -103,10 +133,10 @@ public class TextButton implements Control {
 		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
 		return this;
 	}
-	
+
 	public void draw(SpriteBatch spriteBatch) {
 		font.setColor(color);
-		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, 0.5f, 0.5f, alignment);
+		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, alignment);
 		// ImmediateModeRendererUtils.drawRectangle(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, Color.GREEN);
 	}
 
@@ -141,10 +171,10 @@ public class TextButton implements Control {
 
 		if (libgdxPointer.wasReleased)
 			released = MathUtils2.inside(bounds, libgdxPointer.getReleasedPosition());
-		
+
 		if (pressed)
 			buttonHandler.onPressed();
-		
+
 		if (released)
 			buttonHandler.onReleased();
 
