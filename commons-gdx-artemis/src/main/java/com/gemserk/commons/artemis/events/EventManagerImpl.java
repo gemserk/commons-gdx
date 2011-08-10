@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.gemserk.componentsengine.utils.Pool;
+import com.gemserk.componentsengine.utils.Pool.PoolObjectFactory;
+
 public class EventManagerImpl implements EventManager {
-	
-	// TODO: use a pool of objects for the Events.
 
-	private Map<String, Event> events;
-	private ArrayList<Event> eventList;
+	private final Pool<Event> eventPool = new Pool<Event>(new PoolObjectFactory<Event>() {
+		@Override
+		public Event createObject() {
+			return new Event();
+		}
+	}, 50);
 
-	public EventManagerImpl() {
-		events = new HashMap<String, Event>();
-		eventList = new ArrayList<Event>();
-	}
+	private Map<String, Event> events = new HashMap<String, Event>();
+	private ArrayList<Event> eventList = new ArrayList<Event>();
 
 	@Override
 	public void registerEvent(String id, Object source) {
-		Event event = new Event();
+		Event event = eventPool.newObject();
 		event.setSource(source);
 		event.setId(id);
 		events.put(id, event);
@@ -34,10 +37,13 @@ public class EventManagerImpl implements EventManager {
 	public void handled(Event e) {
 		events.remove(e.getId());
 		eventList.remove(e);
+		eventPool.free(e);
 	}
 
 	@Override
 	public void clear() {
+		for (int i = 0; i < getEventCount(); i++) 
+			eventPool.free(eventList.get(i));
 		events.clear();
 		eventList.clear();
 	}
@@ -53,5 +59,5 @@ public class EventManagerImpl implements EventManager {
 			return null;
 		return eventList.get(index);
 	}
-	
+
 }
