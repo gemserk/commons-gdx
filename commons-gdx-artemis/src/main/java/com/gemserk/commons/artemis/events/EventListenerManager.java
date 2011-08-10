@@ -1,6 +1,11 @@
 package com.gemserk.commons.artemis.events;
 
-
+/**
+ * Provides an API to register EventListeners for events.
+ * 
+ * @author acoppes
+ * 
+ */
 public interface EventListenerManager {
 
 	/**
