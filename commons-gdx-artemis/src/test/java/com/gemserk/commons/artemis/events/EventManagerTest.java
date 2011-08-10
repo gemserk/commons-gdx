@@ -2,18 +2,15 @@ package com.gemserk.commons.artemis.events;
 
 import static org.junit.Assert.assertThat;
 
-
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.Test;
-
-import com.gemserk.commons.artemis.events.Event;
-import com.gemserk.commons.artemis.events.EventManagerImpl;
 
 public class EventManagerTest {
 
 	@Test
 	public void shouldNotReturnEventIfNoEvent() {
-		EventManagerImpl eventManager = new EventManagerImpl();
+		EventManager eventManager = new EventManagerImpl();
 		Event event = eventManager.getEvent("cameraReachedTarget");
 		assertThat(event, IsNull.nullValue());
 	}
@@ -21,7 +18,7 @@ public class EventManagerTest {
 	@Test
 	public void shouldReturnEventIfEventRegisteredWithName() {
 		Object o = new Float(5f);
-		EventManagerImpl eventManager = new EventManagerImpl();
+		EventManager eventManager = new EventManagerImpl();
 		eventManager.registerEvent("cameraReachedTarget", o);
 		Event event = eventManager.getEvent("cameraReachedTarget");
 		assertThat(event, IsNull.notNullValue());
@@ -30,7 +27,7 @@ public class EventManagerTest {
 	@Test
 	public void shouldReturnNullIfEventRegisteredWithOtherName() {
 		Object o = new Float(5f);
-		EventManagerImpl eventManager = new EventManagerImpl();
+		EventManager eventManager = new EventManagerImpl();
 		eventManager.registerEvent("shipDied", o);
 		Event event = eventManager.getEvent("cameraReachedTarget");
 		assertThat(event, IsNull.nullValue());
@@ -39,12 +36,64 @@ public class EventManagerTest {
 	@Test
 	public void shouldRemoveWhenHandled() {
 		Object o = new Float(5f);
-		EventManagerImpl eventManager = new EventManagerImpl();
+		EventManager eventManager = new EventManagerImpl();
 		eventManager.registerEvent("cameraReachedTarget", o);
 		Event event = eventManager.getEvent("cameraReachedTarget");
 		eventManager.handled(event);
 		event = eventManager.getEvent("cameraReachedTarget");
 		assertThat(event, IsNull.nullValue());
+	}
+	
+	@Test
+	public void shouldReturnAllRegisteredEventsCount() {
+		Object o = new Float(5f);
+		EventManager eventManager = new EventManagerImpl();
+		
+		eventManager.registerEvent("cameraReachedTarget", o);
+		eventManager.registerEvent("cameraReachedTarget", o);
+		eventManager.registerEvent("cameraReachedTarget", o);
+		
+		assertThat(eventManager.getEventCount(), IsEqual.equalTo(3));
+	}
+	
+	@Test
+	public void shouldReturnNullForEventOutsideCount() {
+		Object o = new Float(5f);
+		EventManager eventManager = new EventManagerImpl();
+		eventManager.registerEvent("cameraReachedTarget", o);
+		assertThat(eventManager.getEvent(-1), IsNull.nullValue());
+		assertThat(eventManager.getEvent(1), IsNull.nullValue());
+	}
+	
+	@Test
+	public void shouldReturnEventRegisteredForIndexInOrder() {
+		Object o = new Float(5f);
+		EventManager eventManager = new EventManagerImpl();
+		
+		eventManager.registerEvent("event1", o);
+		eventManager.registerEvent("event2", o);
+		
+		Event event1 = eventManager.getEvent(0);
+		assertThat(event1, IsNull.notNullValue());
+		assertThat(event1.getId(), IsEqual.equalTo("event1"));
+		
+		Event event2 = eventManager.getEvent(1);
+		assertThat(event2, IsNull.notNullValue());
+		assertThat(event2.getId(), IsEqual.equalTo("event2"));
+	}
+	
+	@Test
+	public void testClearEvents() {
+		Object o = new Float(5f);
+		EventManager eventManager = new EventManagerImpl();
+		
+		eventManager.registerEvent("event1", o);
+		eventManager.registerEvent("event2", o);
+		eventManager.registerEvent("event3", o);
+		
+		eventManager.clear();
+		
+		assertThat(eventManager.getEventCount(), IsEqual.equalTo(0));
 	}
 
 }

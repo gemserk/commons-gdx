@@ -33,4 +33,14 @@ public interface EventManager {
 	 */
 	void clear();
 
+	/**
+	 * Returns how many registered events are.
+	 */
+	int getEventCount();
+
+	/**
+	 * Returns the event registered in that index?
+	 */
+	Event getEvent(int index);
+
 }
