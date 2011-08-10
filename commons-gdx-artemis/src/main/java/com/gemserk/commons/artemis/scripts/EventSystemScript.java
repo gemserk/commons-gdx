@@ -3,7 +3,7 @@ package com.gemserk.commons.artemis.scripts;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.gemserk.commons.artemis.events.Event;
-import com.gemserk.commons.artemis.events.EventListenerManagerTest.EventListenerManager;
+import com.gemserk.commons.artemis.events.EventListenerManager;
 import com.gemserk.commons.artemis.events.EventManager;
 
 public class EventSystemScript extends ScriptJavaImpl {
