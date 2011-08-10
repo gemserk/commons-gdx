@@ -13,22 +13,6 @@ public interface EventManager {
 	void registerEvent(String id, Object source);
 
 	/**
-	 * Returns an event identified by the specified id.
-	 * 
-	 * @param id
-	 *            The id of the event.
-	 */
-	Event getEvent(String id);
-
-	/**
-	 * This event should not be returned again from getEvent() method.
-	 * 
-	 * @param e
-	 *            The event to mark as handled.
-	 */
-	void handled(Event e);
-
-	/**
 	 * Removes all the registered events.
 	 */
 	void clear();

@@ -1,8 +1,6 @@
 package com.gemserk.commons.artemis.events;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.gemserk.componentsengine.utils.Pool;
 import com.gemserk.componentsengine.utils.Pool.PoolObjectFactory;
@@ -16,7 +14,6 @@ public class EventManagerImpl implements EventManager {
 		}
 	}, 50);
 
-	private Map<String, Event> events = new HashMap<String, Event>();
 	private ArrayList<Event> eventList = new ArrayList<Event>();
 
 	@Override
@@ -24,27 +21,13 @@ public class EventManagerImpl implements EventManager {
 		Event event = eventPool.newObject();
 		event.setSource(source);
 		event.setId(id);
-		events.put(id, event);
 		eventList.add(event);
 	}
 
 	@Override
-	public Event getEvent(String id) {
-		return events.get(id);
-	}
-
-	@Override
-	public void handled(Event e) {
-		events.remove(e.getId());
-		eventList.remove(e);
-		eventPool.free(e);
-	}
-
-	@Override
 	public void clear() {
-		for (int i = 0; i < getEventCount(); i++) 
+		for (int i = 0; i < getEventCount(); i++)
 			eventPool.free(eventList.get(i));
-		events.clear();
 		eventList.clear();
 	}
 
