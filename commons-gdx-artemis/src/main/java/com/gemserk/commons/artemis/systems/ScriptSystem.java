@@ -3,8 +3,8 @@ package com.gemserk.commons.artemis.systems;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
-import com.gemserk.commons.artemis.Script;
 import com.gemserk.commons.artemis.components.ScriptComponent;
+import com.gemserk.commons.artemis.scripts.Script;
 
 public class ScriptSystem extends EntityProcessingSystem {
 	

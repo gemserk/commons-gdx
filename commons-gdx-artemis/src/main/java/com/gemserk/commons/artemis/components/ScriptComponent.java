@@ -1,7 +1,7 @@
 package com.gemserk.commons.artemis.components;
 
 import com.artemis.Component;
-import com.gemserk.commons.artemis.Script;
+import com.gemserk.commons.artemis.scripts.Script;
 
 public class ScriptComponent extends Component {
 

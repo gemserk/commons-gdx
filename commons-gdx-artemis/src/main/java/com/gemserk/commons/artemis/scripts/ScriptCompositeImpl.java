@@ -1,4 +1,4 @@
-package com.gemserk.commons.artemis;
+package com.gemserk.commons.artemis.scripts;
 
 import com.artemis.Entity;
 import com.artemis.World;
