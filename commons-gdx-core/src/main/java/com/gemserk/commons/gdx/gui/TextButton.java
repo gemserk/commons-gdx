@@ -87,9 +87,9 @@ public class TextButton implements Control {
 	/**
 	 * Increment size of the bounds by the specified w,h
 	 */
-	public TextButton setBoundsOffset(float w, float h) {
-		this.offsetX = w;
-		this.offsetY = h;
+	public TextButton setBoundsOffset(float offsetX, float offsetY) {
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
 		recalculateBounds();
 		return this;
 	}
@@ -97,6 +97,7 @@ public class TextButton implements Control {
 	public void setFont(BitmapFont font) {
 		this.font = font;
 		recalculateBoundsSize(text);
+		recalculateBounds();
 	}
 
 	public void setPosition(float x, float y) {
@@ -130,7 +131,7 @@ public class TextButton implements Control {
 
 	public TextButton setAlignment(HAlignment alignment) {
 		this.alignment = alignment;
-		this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
+		// this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
 		return this;
 	}
 
