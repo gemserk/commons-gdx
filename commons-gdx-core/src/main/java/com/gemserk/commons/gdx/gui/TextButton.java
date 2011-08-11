@@ -83,6 +83,10 @@ public class TextButton implements Control {
 		this.buttonHandler = buttonHandler;
 		return this;
 	}
+	
+	public ButtonHandler getButtonHandler() {
+		return buttonHandler;
+	}
 
 	/**
 	 * Increment size of the bounds by the specified w,h
@@ -110,6 +114,14 @@ public class TextButton implements Control {
 		this.cx = cx;
 		this.cy = cy;
 		recalculateBounds();
+	}
+	
+	public Color getOverColor() {
+		return overColor;
+	}
+	
+	public Color getNotOverColor() {
+		return notOverColor;
 	}
 
 	public TextButton() {

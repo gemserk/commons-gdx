@@ -8,6 +8,10 @@ public class Container  implements Control {
 
 	private ArrayList<Control> controls;
 	
+	public ArrayList<Control> getControls() {
+		return controls;
+	}
+	
 	public Container() {
 		controls = new ArrayList<Control>();
 	}
