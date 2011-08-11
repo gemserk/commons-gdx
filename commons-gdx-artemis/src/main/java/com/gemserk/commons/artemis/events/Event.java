@@ -1,5 +1,7 @@
 package com.gemserk.commons.artemis.events;
 
+// Event should be named Message to try to match all the ComponentsEngine paradigm. 
+
 public class Event {
 
 	private String id;
@@ -12,6 +14,8 @@ public class Event {
 	public Object getSource() {
 		return source;
 	}
+	
+	// public <T> T getSource() { .. }
 	
 	public void setId(String id) {
 		this.id = id;
