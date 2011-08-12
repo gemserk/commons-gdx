@@ -89,10 +89,10 @@ public class ImageButton implements Control {
 			released = MathUtils2.inside(bounds, libgdxPointer.getReleasedPosition());
 
 		if (pressed)
-			buttonHandler.onPressed();
+			buttonHandler.onPressed(this);
 
 		if (released)
-			buttonHandler.onReleased();
+			buttonHandler.onReleased(this);
 
 	}
 

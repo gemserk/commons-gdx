@@ -192,10 +192,10 @@ public class TextButton implements Control {
 			released = MathUtils2.inside(bounds, libgdxPointer.getReleasedPosition());
 
 		if (pressed)
-			buttonHandler.onPressed();
+			buttonHandler.onPressed(this);
 
 		if (released)
-			buttonHandler.onReleased();
+			buttonHandler.onReleased(this);
 
 		// NOTE: for now the button could be released while it was never pressed before
 

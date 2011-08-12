@@ -19,7 +19,7 @@ public class ImmediateModeRendererUtils {
 	private static final Vector2 tmp = new Vector2();
 	private static final Vector2 angleTmp = new Vector2(1, 0);
 	private static final Matrix4 projectionMatrix = new Matrix4();
-	
+
 	private static Matrix4 getProjectionMatrix() {
 		projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		return projectionMatrix;
@@ -98,7 +98,13 @@ public class ImmediateModeRendererUtils {
 	}
 
 	public static void drawRectangle(Rectangle r, Color color) {
-		drawRectangle(r.x, r.y, r.x + r.getWidth(), r.y + r.getHeight(), color);
+		drawRectangle(r, 0f, 0f, color);
+	}
+
+	public static void drawRectangle(Rectangle r, float cx, float cy, Color color) {
+		float x = r.x - r.getWidth() * cx;
+		float y = r.y - r.getHeight() * cy;
+		drawRectangle(x, y, x + r.getWidth(), y + r.getHeight(), color);
 	}
 
 	public static void drawRectangle(float x0, float y0, float x1, float y1, Color color) {
