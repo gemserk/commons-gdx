@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.gemserk.commons.gdx.gui.TextButton.ButtonHandler;
 
 public class GuiControls {
 
@@ -40,6 +39,11 @@ public class GuiControls {
 
 		public TextButtonBuilder boundsOffset(float w, float h) {
 			textButton.setBoundsOffset(w, h);
+			return this;
+		}
+		
+		public TextButtonBuilder id(String id) {
+			textButton.setId(id);
 			return this;
 		}
 
@@ -90,6 +94,11 @@ public class GuiControls {
 			imageButton = new ImageButton(sprite);
 			return this;
 		}
+		
+		public ImageButtonBuilder id(String id) {
+			imageButton.setId(id);
+			return this;
+		}
 
 		public ImageButtonBuilder position(float x, float y) {
 			imageButton.setPosition(x, y);
@@ -131,6 +140,11 @@ public class GuiControls {
 	public static class LabelBuilder implements Builder<Text> {
 		
 		Text text;
+		
+		public LabelBuilder id(String id) {
+			text.setId(id);
+			return this;
+		}
 
 		private LabelBuilder newText(String text) {
 			this.text = new Text(text);

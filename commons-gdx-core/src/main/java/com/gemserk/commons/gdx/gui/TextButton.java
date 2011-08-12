@@ -13,18 +13,7 @@ import com.gemserk.commons.gdx.math.MathUtils2;
 
 public class TextButton implements Control {
 
-	public static class ButtonHandler {
-
-		public void onPressed() {
-
-		}
-
-		public void onReleased() {
-
-		}
-
-	}
-
+	private String id;
 	private float x, y;
 	private float cx, cy;
 	private float w, h;
@@ -136,6 +125,7 @@ public class TextButton implements Control {
 		this.cx = 0.5f;
 		this.cy = 0.5f;
 		recalculateBounds();
+		this.id = "";
 	}
 
 	public TextButton(BitmapFont font, String text, float x, float y) {
@@ -147,11 +137,11 @@ public class TextButton implements Control {
 		this.cx = 0.5f;
 		this.cy = 0.5f;
 		recalculateBounds();
+		this.id = "";
 	}
 
 	public TextButton setAlignment(HAlignment alignment) {
 		this.alignment = alignment;
-		// this.bounds = SpriteBatchUtils.getBounds(font, text, x, y);
 		return this;
 	}
 
@@ -203,4 +193,12 @@ public class TextButton implements Control {
 
 	}
 
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

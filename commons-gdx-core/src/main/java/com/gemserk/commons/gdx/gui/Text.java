@@ -7,18 +7,12 @@ import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 
 public class Text implements Control {
 
-	private float x;
-
-	private float y;
-
+	private String id;
+	private float x, y;
 	private String text;
-
 	private float cx, cy;
-
 	private boolean visible = true;
-	
 	private Color color = new Color(Color.WHITE);
-	
 	private BitmapFont font;
 
 	public Text setVisible(boolean visible) {
@@ -34,20 +28,20 @@ public class Text implements Control {
 		this.text = text;
 		return this;
 	}
-	
+
 	public Text setColor(Color color) {
 		this.color.set(color);
 		return this;
 	}
-	
+
 	public void setColor(float r, float g, float b, float a) {
 		this.color.set(r, g, b, a);
 	}
-	
+
 	public void setFont(BitmapFont font) {
 		this.font = font;
 	}
-	
+
 	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
@@ -69,7 +63,7 @@ public class Text implements Control {
 	public String getText() {
 		return text;
 	}
-	
+
 	public Color getColor() {
 		return color;
 	}
@@ -83,17 +77,23 @@ public class Text implements Control {
 	}
 
 	public Text(String text, float x, float y, float cx, float cy) {
+		this("", text, x, y, cx, cy);
+	}
+
+	public Text(String text) {
+		this(text, 0f, 0f, 0.5f, 0.5f);
+	}
+	
+	public Text(String id, String text, float x, float y, float cx, float cy) {
+		this.id = id;
 		this.text = text;
 		this.x = x;
 		this.y = y;
 		this.cx = cx;
 		this.cy = cy;
 	}
-	
-	public Text(String text) {
-		this(text, 0f, 0f, 0.5f, 0.5f);
-	}
-	
+
+
 	public void draw(SpriteBatch spriteBatch, BitmapFont font) {
 		if (!isVisible())
 			return;
@@ -103,14 +103,33 @@ public class Text implements Control {
 
 	@Override
 	public void update() {
-		
+
 	}
 
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
 		draw(spriteBatch, font);
 	}
+
+	@Override
+	public String getId() {
+		return id;
+	}
 	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	@Override
+	public float getX() {
+		return y;
+	}
+
+	@Override
+	public float getY() {
+		return x;
+	}
+
 	// style .get font(...)
 
 }

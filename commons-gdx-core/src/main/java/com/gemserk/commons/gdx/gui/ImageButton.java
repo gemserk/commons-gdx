@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
-import com.gemserk.commons.gdx.gui.TextButton.ButtonHandler;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
 public class ImageButton implements Control {
+	
+	private String id;
 
 	ButtonHandler buttonHandler;
 	Sprite sprite;
@@ -53,6 +54,11 @@ public class ImageButton implements Control {
 	}
 
 	public ImageButton(Sprite sprite) {
+		this("", sprite);
+	}
+	
+	public ImageButton(String id, Sprite sprite) {
+		this.id = id;
 		this.sprite = sprite;
 		this.buttonHandler = new ButtonHandler();
 		this.color = new Color(1f, 1f, 1f, 1f);
@@ -88,6 +94,25 @@ public class ImageButton implements Control {
 		if (released)
 			buttonHandler.onReleased();
 
+	}
+
+	@Override
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Override
+	public float getX() {
+		return x;
+	}
+
+	@Override
+	public float getY() {
+		return y;
 	}
 
 }
