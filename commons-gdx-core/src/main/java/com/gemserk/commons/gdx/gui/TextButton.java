@@ -43,6 +43,14 @@ public class TextButton implements Control {
 	private HAlignment alignment = HAlignment.LEFT;
 	private ButtonHandler buttonHandler = new ButtonHandler();
 
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
+	}
+
 	public TextButton setColor(Color color) {
 		this.color.set(color);
 		return this;

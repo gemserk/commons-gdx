@@ -20,13 +20,13 @@ public class Mesh2dBuilder {
 	boolean hasTexCoords;
 
 	public Mesh2dBuilder() {
-		this(2000);
+		this(1000);
 	}
 
 	public Mesh2dBuilder(int maxCount) {
-		vertices = new float[maxCount];
-		colors = new float[maxCount];
-		texCoords = new float[maxCount];
+		vertices = new float[maxCount * 3];
+		colors = new float[maxCount * 4];
+		texCoords = new float[maxCount * 2];
 		idxVertices = 0;
 		idxColors = 0;
 		idxTexCoords = 0;
