@@ -57,10 +57,10 @@ public class Container implements Control {
 		return 0;
 	}
 
-	public Control findControl(String id) {
+	public <T extends Control> T findControl(String id) {
 		for (int i = 0; i < controls.size(); i++)
 			if (controls.get(i).getId().equals(id))
-				return controls.get(i);
+				return (T) controls.get(i);
 		return null;
 	}
 

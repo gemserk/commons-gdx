@@ -14,7 +14,7 @@ public class GuiControls {
 	}
 
 	public static class TextButtonBuilder implements Builder<TextButton> {
-		
+
 		BitmapFont defaultFont = new BitmapFont();
 
 		TextButton textButton;
@@ -41,7 +41,7 @@ public class GuiControls {
 			textButton.setBoundsOffset(w, h);
 			return this;
 		}
-		
+
 		public TextButtonBuilder id(String id) {
 			textButton.setId(id);
 			return this;
@@ -57,8 +57,18 @@ public class GuiControls {
 			return this;
 		}
 
+		public TextButtonBuilder overColor(float r, float g, float b, float a) {
+			textButton.setOverColor(r, g, b, a);
+			return this;
+		}
+
 		public TextButtonBuilder notOverColor(Color color) {
 			textButton.setNotOverColor(color);
+			return this;
+		}
+
+		public TextButtonBuilder notOverColor(float r, float g, float b, float a) {
+			textButton.setNotOverColor(r, g, b, a);
 			return this;
 		}
 
@@ -71,7 +81,7 @@ public class GuiControls {
 			textButton.setAlignment(alignment);
 			return this;
 		}
-		
+
 		public TextButtonBuilder center(float cx, float cy) {
 			textButton.setCenter(cx, cy);
 			return this;
@@ -94,7 +104,7 @@ public class GuiControls {
 			imageButton = new ImageButton(sprite);
 			return this;
 		}
-		
+
 		public ImageButtonBuilder id(String id) {
 			imageButton.setId(id);
 			return this;
@@ -138,9 +148,9 @@ public class GuiControls {
 	}
 
 	public static class LabelBuilder implements Builder<Text> {
-		
+
 		Text text;
-		
+
 		public LabelBuilder id(String id) {
 			text.setId(id);
 			return this;

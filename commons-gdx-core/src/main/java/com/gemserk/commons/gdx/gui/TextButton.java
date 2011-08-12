@@ -35,7 +35,7 @@ public class TextButton implements Control {
 	public float getX() {
 		return x;
 	}
-	
+
 	public float getY() {
 		return y;
 	}
@@ -45,17 +45,25 @@ public class TextButton implements Control {
 		return this;
 	}
 
-	public TextButton setOverColor(Color overColor) {
-		this.overColor.set(overColor);
+	public TextButton setOverColor(Color c) {
+		return this.setOverColor(c.r, c.g, c.b, c.a);
+	}
+	
+	public TextButton setOverColor(float r, float g, float b, float a) {
+		this.overColor.set(r, g, b, a);
 		if (wasInside)
-			setColor(overColor);
+			setColor(this.overColor);
 		return this;
 	}
 
-	public TextButton setNotOverColor(Color notOverColor) {
-		this.notOverColor.set(notOverColor);
+	public TextButton setNotOverColor(Color c) {
+		return this.setNotOverColor(c.r, c.g, c.b, c.a);
+	}
+
+	public TextButton setNotOverColor(float r, float g, float b, float a) {
+		this.notOverColor.set(r, g, b, a);
 		if (!wasInside)
-			setColor(notOverColor);
+			setColor(this.notOverColor);
 		return this;
 	}
 
@@ -80,7 +88,7 @@ public class TextButton implements Control {
 		this.buttonHandler = buttonHandler;
 		return this;
 	}
-	
+
 	public ButtonHandler getButtonHandler() {
 		return buttonHandler;
 	}
@@ -112,11 +120,11 @@ public class TextButton implements Control {
 		this.cy = cy;
 		recalculateBounds();
 	}
-	
+
 	public Color getOverColor() {
 		return overColor;
 	}
-	
+
 	public Color getNotOverColor() {
 		return notOverColor;
 	}
