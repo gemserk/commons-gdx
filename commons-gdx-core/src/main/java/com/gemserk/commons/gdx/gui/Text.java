@@ -9,7 +9,7 @@ public class Text implements Control {
 
 	private String id;
 	private float x, y;
-	private String text;
+	private CharSequence text;
 	private float cx, cy;
 	private boolean visible = true;
 	private Color color = new Color(Color.WHITE);
@@ -24,7 +24,7 @@ public class Text implements Control {
 		return visible;
 	}
 
-	public Text setText(String text) {
+	public Text setText(CharSequence text) {
 		this.text = text;
 		return this;
 	}
@@ -60,7 +60,7 @@ public class Text implements Control {
 		this.cy = cy;
 	}
 
-	public String getText() {
+	public CharSequence getText() {
 		return text;
 	}
 
@@ -72,19 +72,19 @@ public class Text implements Control {
 		return font;
 	}
 
-	public Text(String text, float x, float y) {
+	public Text(CharSequence text, float x, float y) {
 		this(text, x, y, 0.5f, 0.5f);
 	}
 
-	public Text(String text, float x, float y, float cx, float cy) {
+	public Text(CharSequence text, float x, float y, float cx, float cy) {
 		this("", text, x, y, cx, cy);
 	}
 
-	public Text(String text) {
+	public Text(CharSequence text) {
 		this(text, 0f, 0f, 0.5f, 0.5f);
 	}
 	
-	public Text(String id, String text, float x, float y, float cx, float cy) {
+	public Text(String id, CharSequence text, float x, float y, float cx, float cy) {
 		this.id = id;
 		this.text = text;
 		this.x = x;

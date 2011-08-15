@@ -20,7 +20,7 @@ public class TextButton implements Control {
 	private float offsetX, offsetY;
 
 	private BitmapFont font;
-	private String text;
+	private CharSequence text;
 	private Rectangle bounds = new Rectangle();
 	private boolean pressed;
 	private boolean released;
@@ -67,7 +67,7 @@ public class TextButton implements Control {
 		return this;
 	}
 
-	public TextButton setText(String text) {
+	public TextButton setText(CharSequence text) {
 		this.text = text;
 		recalculateBoundsSize(text);
 		recalculateBounds();
@@ -78,7 +78,7 @@ public class TextButton implements Control {
 		this.bounds.set(x - w * cx - offsetX * 0.5f, y - h * cy - offsetY * 0.5f, w + offsetX, h + offsetY);
 	}
 
-	private void recalculateBoundsSize(String text) {
+	private void recalculateBoundsSize(CharSequence text) {
 		Rectangle textBounds = SpriteBatchUtils.getBounds(font, text, x, y);
 		w = textBounds.getWidth();
 		h = textBounds.getHeight();
@@ -136,7 +136,7 @@ public class TextButton implements Control {
 		this.id = "";
 	}
 
-	public TextButton(BitmapFont font, String text, float x, float y) {
+	public TextButton(BitmapFont font, CharSequence text, float x, float y) {
 		this.font = font;
 		this.text = text;
 		this.x = x;

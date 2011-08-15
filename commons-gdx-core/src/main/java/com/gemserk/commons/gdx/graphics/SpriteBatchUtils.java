@@ -12,7 +12,7 @@ public class SpriteBatchUtils {
 	/**
 	 * Draws a text centered in the specified coordinates
 	 */
-	public static void drawCentered(SpriteBatch spriteBatch, BitmapFont font, String text, float x, float y) {
+	public static void drawCentered(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y) {
 		TextBounds bounds = font.getBounds(text);
 		font.draw(spriteBatch, text, x - bounds.width * 0.5f, y + bounds.height * 0.5f);
 	}
@@ -20,7 +20,7 @@ public class SpriteBatchUtils {
 	/**
 	 * Draws a multi line text centered.
 	 */
-	public static void drawMultilineTextCentered(SpriteBatch spriteBatch, BitmapFont font, String text, float x, float y) {
+	public static void drawMultilineTextCentered(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y) {
 		drawMultilineText(spriteBatch, font, text, x, y, 0.5f, 0.5f);
 	}
 
@@ -37,13 +37,13 @@ public class SpriteBatchUtils {
 	 * @param cy
 	 *            A value between 0 and 1 to center the text over the vertical axis.
 	 */
-	public static void drawMultilineText(SpriteBatch spriteBatch, BitmapFont font, String text, float x, float y, float cx, float cy) {
+	public static void drawMultilineText(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y, float cx, float cy) {
 		// TextBounds bounds = font.getMultiLineBounds(text);
 		// font.drawMultiLine(spriteBatch, text, x - bounds.width * cx, y + bounds.height * cy);
 		drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, HAlignment.LEFT);
 	}
 
-	public static void drawMultilineTextWithAlignment(SpriteBatch spriteBatch, BitmapFont font, String text, float x, float y, float cx, float cy, HAlignment alignment) {
+	public static void drawMultilineTextWithAlignment(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y, float cx, float cy, HAlignment alignment) {
 		TextBounds bounds = font.getMultiLineBounds(text);
 		float centerx = getCenterForAlignment(cx, alignment, bounds);
 		font.drawMultiLine(spriteBatch, text, x + centerx, y + bounds.height * cy, 0f, alignment);
@@ -57,11 +57,11 @@ public class SpriteBatchUtils {
 		return -bounds.width * cx;
 	}
 
-	public static Rectangle getBounds(BitmapFont font, String text, float x, float y) {
+	public static Rectangle getBounds(BitmapFont font, CharSequence text, float x, float y) {
 		return getBounds(font, text, x, y, 0f, 0f);
 	}
 
-	public static Rectangle getBounds(BitmapFont font, String text, float x, float y, float sx, float sy) {
+	public static Rectangle getBounds(BitmapFont font, CharSequence text, float x, float y, float sx, float sy) {
 		TextBounds bounds = font.getMultiLineBounds(text);
 		float w = bounds.width;
 		float h = bounds.height;
@@ -72,11 +72,6 @@ public class SpriteBatchUtils {
 	 * Draws a Sprite centered.
 	 */
 	public static void drawCentered(SpriteBatch spriteBatch, Sprite sprite, float x, float y, float w, float h, float angle) {
-		// sprite.setSize(w, h);
-		// sprite.setOrigin(w * 0.5f, h * 0.5f);
-		// sprite.setPosition(x - sprite.getOriginX(), y - sprite.getOriginY());
-		// sprite.setRotation(angle);
-		// sprite.draw(spriteBatch);
 		drawCentered(spriteBatch, sprite, x, y, w, h, angle, 0.5f, 0.5f);
 	}
 

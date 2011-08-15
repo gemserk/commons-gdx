@@ -47,7 +47,7 @@ public class GuiControls {
 			return this;
 		}
 
-		public TextButtonBuilder text(String text) {
+		public TextButtonBuilder text(CharSequence text) {
 			textButton.setText(text);
 			return this;
 		}
@@ -156,7 +156,7 @@ public class GuiControls {
 			return this;
 		}
 
-		private LabelBuilder newText(String text) {
+		private LabelBuilder newText(CharSequence text) {
 			this.text = new Text(text);
 			return this;
 		}
@@ -207,7 +207,7 @@ public class GuiControls {
 		return imageButtonBuilder.newButton(sprite);
 	}
 
-	public static LabelBuilder label(String text) {
+	public static LabelBuilder label(CharSequence text) {
 		return labelBuilder.newText(text);
 	}
 
