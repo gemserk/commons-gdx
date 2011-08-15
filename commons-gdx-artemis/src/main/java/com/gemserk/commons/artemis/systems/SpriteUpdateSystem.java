@@ -1,16 +1,18 @@
 package com.gemserk.commons.artemis.systems;
 
+import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.EntitySystem;
-import com.artemis.utils.ImmutableBag;
+import com.artemis.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.gemserk.commons.artemis.EntityDebugger;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.games.Spatial;
 
-public class SpriteUpdateSystem extends EntitySystem {
+public class SpriteUpdateSystem extends EntityProcessingSystem {
+
+	ComponentMapper<SpatialComponent> spatialComponentMapper;
+	ComponentMapper<SpriteComponent> spriteComponentMapper;
 
 	@SuppressWarnings("unchecked")
 	public SpriteUpdateSystem() {
@@ -18,46 +20,27 @@ public class SpriteUpdateSystem extends EntitySystem {
 	}
 
 	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
-		for (int i = 0; i < entities.size(); i++) {
-
-			Entity entity = entities.get(i);
-
-			SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
-			SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
-
-			if (spatialComponent == null) {
-				EntityDebugger.debug("spatial component missing in drawable entity", entity);
-				continue;
-			}
-
-			if (spriteComponent == null) {
-				EntityDebugger.debug("sprite component missing in drawable entity", entity);
-				continue;
-			}
-
-			Spatial spatial = spatialComponent.getSpatial();
-
-			Sprite sprite = spriteComponent.getSprite();
-			Vector2 center = spriteComponent.getCenter();
-
-			if (spriteComponent.isUpdateRotation())
-				sprite.setRotation(spatial.getAngle());
-			sprite.setOrigin(spatial.getWidth() * center.x, spatial.getHeight() * center.y);
-
-			sprite.setSize(spatial.getWidth(), spatial.getHeight());
-			sprite.setPosition(spatial.getX() - sprite.getOriginX(), spatial.getY() - sprite.getOriginY());
-
-		}
-	}
-
-	@Override
 	public void initialize() {
-
+		spatialComponentMapper = new ComponentMapper<SpatialComponent>(SpatialComponent.class, world.getEntityManager());
+		spriteComponentMapper = new ComponentMapper<SpriteComponent>(SpriteComponent.class, world.getEntityManager());
 	}
 
 	@Override
-	protected boolean checkProcessing() {
-		return true;
+	protected void process(Entity e) {
+		SpatialComponent spatialComponent = spatialComponentMapper.get(e);
+		SpriteComponent spriteComponent = spriteComponentMapper.get(e);
+
+		Spatial spatial = spatialComponent.getSpatial();
+
+		Sprite sprite = spriteComponent.getSprite();
+		Vector2 center = spriteComponent.getCenter();
+
+		if (spriteComponent.isUpdateRotation())
+			sprite.setRotation(spatial.getAngle());
+		sprite.setOrigin(spatial.getWidth() * center.x, spatial.getHeight() * center.y);
+
+		sprite.setSize(spatial.getWidth(), spatial.getHeight());
+		sprite.setPosition(spatial.getX() - sprite.getOriginX(), spatial.getY() - sprite.getOriginY());
+
 	}
 }
