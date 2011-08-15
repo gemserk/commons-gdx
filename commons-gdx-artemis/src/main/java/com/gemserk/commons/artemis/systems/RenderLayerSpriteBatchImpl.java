@@ -11,7 +11,9 @@ import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
 	private static final SpriteComponentComparator spriteComponentComparator = new SpriteComponentComparator();
-
+	private static final Class<RenderableComponent> renderableComponentClass = RenderableComponent.class;
+	private static final Class<SpriteComponent> spriteComponentClass = SpriteComponent.class;
+	
 	private final int minLayer, maxLayer;
 	private final SpriteBatch spriteBatch;
 
@@ -45,7 +47,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
 	@Override
 	public boolean belongs(Entity entity) {
-		RenderableComponent renderableComponent = entity.getComponent(RenderableComponent.class);
+		RenderableComponent renderableComponent = entity.getComponent(renderableComponentClass);
 		return renderableComponent.getLayer() >= minLayer && renderableComponent.getLayer() < maxLayer;
 	}
 
@@ -66,7 +68,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerEntities.size; i++) {
 			Entity entity = orderedByLayerEntities.get(i);
-			SpriteComponent spriteComponent = entity.getComponent(SpriteComponent.class);
+			SpriteComponent spriteComponent = entity.getComponent(spriteComponentClass);
 			Sprite sprite = spriteComponent.getSprite();
 			sprite.setColor(spriteComponent.getColor());
 			sprite.draw(spriteBatch);

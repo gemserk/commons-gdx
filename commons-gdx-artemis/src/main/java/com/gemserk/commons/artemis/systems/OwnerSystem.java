@@ -11,6 +11,8 @@ import com.gemserk.commons.artemis.components.OwnerComponent;
 public class OwnerSystem extends EntityProcessingSystem {
 	
 	protected static final Logger logger = LoggerFactory.getLogger(OwnerSystem.class);
+	private static final Class<OwnerComponent> ownerComponentClass = OwnerComponent.class;
+	private static final Class<ContainerComponent> containerComponentClass = ContainerComponent.class;
 	
 	public OwnerSystem() {
 		super(OwnerComponent.class);
@@ -18,11 +20,11 @@ public class OwnerSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void added(Entity e) {
-		OwnerComponent ownerComponent = e.getComponent(OwnerComponent.class);
+		OwnerComponent ownerComponent = e.getComponent(ownerComponentClass);
 		if (ownerComponent.getOwner() == null)
 			return;
 
-		ContainerComponent containerComponent = ownerComponent.getOwner().getComponent(ContainerComponent.class);
+		ContainerComponent containerComponent = ownerComponent.getOwner().getComponent(containerComponentClass);
 		if (containerComponent == null)
 			return;
 		containerComponent.getChildren().add(e);
@@ -32,11 +34,11 @@ public class OwnerSystem extends EntityProcessingSystem {
 	}
 
 	protected void removed(Entity e) {
-		OwnerComponent ownerComponent = e.getComponent(OwnerComponent.class);
+		OwnerComponent ownerComponent = e.getComponent(ownerComponentClass);
 		if (ownerComponent.getOwner() == null)
 			return;
 
-		ContainerComponent containerComponent = ownerComponent.getOwner().getComponent(ContainerComponent.class);
+		ContainerComponent containerComponent = ownerComponent.getOwner().getComponent(containerComponentClass);
 		if (containerComponent == null)
 			return;
 		containerComponent.getChildren().remove(e);
