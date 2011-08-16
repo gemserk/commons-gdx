@@ -3,43 +3,34 @@ package com.gemserk.commons.artemis.systems;
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 
 public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
-	private static final SpriteComponentComparator spriteComponentComparator = new SpriteComponentComparator();
 	private static final Class<RenderableComponent> renderableComponentClass = RenderableComponent.class;
 	private static final Class<SpriteComponent> spriteComponentClass = SpriteComponent.class;
-	
-	private final int minLayer, maxLayer;
+
 	private final SpriteBatch spriteBatch;
-
-	Array<Entity> orderedByLayerEntities = new Array<Entity>();
-
-	Libgdx2dCamera camera;
+	private final OrderedByLayerEntities orderedByLayerEntities;
+	private final Libgdx2dCamera camera;
 
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch) {
-		this.minLayer = minLayer;
-		this.maxLayer = maxLayer;
 		this.camera = camera;
 		this.spriteBatch = spriteBatch;
+		this.orderedByLayerEntities = new OrderedByLayerEntities(minLayer, maxLayer);
 	}
-	
+
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera) {
-		this.minLayer = minLayer;
-		this.maxLayer = maxLayer;
-		this.camera = camera;
-		this.spriteBatch = new SpriteBatch();
+		this(minLayer, maxLayer, camera, new SpriteBatch());
 	}
-	
+
 	@Override
 	public void init() {
-		
+
 	}
-	
+
 	@Override
 	public void dispose() {
 		spriteBatch.dispose();
@@ -48,25 +39,24 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	@Override
 	public boolean belongs(Entity entity) {
 		RenderableComponent renderableComponent = entity.getComponent(renderableComponentClass);
-		return renderableComponent.getLayer() >= minLayer && renderableComponent.getLayer() < maxLayer;
+		return orderedByLayerEntities.belongs(renderableComponent.getLayer());
 	}
 
 	@Override
 	public void add(Entity entity) {
 		orderedByLayerEntities.add(entity);
-		orderedByLayerEntities.sort(spriteComponentComparator);
 	}
 
 	@Override
 	public void remove(Entity entity) {
-		orderedByLayerEntities.removeValue(entity, true);
+		orderedByLayerEntities.remove(entity);
 	}
 
 	@Override
 	public void render() {
 		camera.apply(spriteBatch);
 		spriteBatch.begin();
-		for (int i = 0; i < orderedByLayerEntities.size; i++) {
+		for (int i = 0; i < orderedByLayerEntities.size(); i++) {
 			Entity entity = orderedByLayerEntities.get(i);
 			SpriteComponent spriteComponent = entity.getComponent(spriteComponentClass);
 			Sprite sprite = spriteComponent.getSprite();
