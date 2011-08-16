@@ -37,15 +37,22 @@ public class Contact {
 	}
 
 	public void addContact(com.badlogic.gdx.physics.box2d.Contact contact, Body body) {
+		Vector2 normal = contact.getWorldManifold().getNormal();
+		Body otherBody = contact.getFixtureB().getBody();
+		addContact(body, normal, otherBody);
+	}
+
+	void addContact(Body body, Vector2 normal, Body otherBody) {
 		for (int i = 0; i < contacts.length; i++) {
 			InternalContact c = contacts[i];
-			if (c.inContact && c.body != body)
+			
+			if (c.inContact)
 				continue;
 
-			c.setContact(body, contact.getWorldManifold().getNormal());
+			c.setContact(body, normal);
 
 			// if the body in contact is the first one declared by the contact, then we have to invert the normal.
-			if (contact.getFixtureB().getBody() == body)
+			if (otherBody == body)
 				c.normal.mul(-1f);
 
 			return;
@@ -60,6 +67,7 @@ public class Contact {
 			if (c.body != body)
 				continue;
 			c.unsetContact();
+			return;
 		}
 	}
 
