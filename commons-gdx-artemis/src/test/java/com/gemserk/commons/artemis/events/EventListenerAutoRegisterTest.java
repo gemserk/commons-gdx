@@ -53,9 +53,12 @@ public class EventListenerAutoRegisterTest {
 
 	}
 
-	static class EventListenerAutoRegister {
+	static class EventListenerReflectionRegistrator {
 
-		protected static final Logger logger = LoggerFactory.getLogger(EventListenerAutoRegisterTest.EventListenerAutoRegister.class);
+		protected static final Logger logger = LoggerFactory.getLogger(EventListenerAutoRegisterTest.EventListenerReflectionRegistrator.class);
+		
+		private static final Class<Handles> handlesClass = Handles.class;
+		private static final Class<Event> eventClass = Event.class;
 
 		// use a Pool of MethodEventListeners
 
@@ -64,10 +67,10 @@ public class EventListenerAutoRegisterTest {
 		}
 
 		// On another class and with cache and stuff
-		
+
 		private static Method getMethod(String name, Class<?> clazz) {
 			try {
-				return clazz.getMethod(name, Event.class);
+				return clazz.getMethod(name, eventClass);
 			} catch (SecurityException e) {
 				if (logger.isErrorEnabled())
 					logger.error("Failed to get method " + name, e);
@@ -86,11 +89,39 @@ public class EventListenerAutoRegisterTest {
 					logger.error("Failed to register EventListener for event " + eventId);
 				return;
 			}
+			registerEventListenerForMethod(eventId, o, method, eventListenerManager);
+		}
+
+		private static void registerEventListenerForMethod(String eventId, final Object o, final Method method, EventListenerManager eventListenerManager) {
 			method.setAccessible(true);
 			MethodEventListener methodEventListener = getMethodEventListener();
 			methodEventListener.setOwner(o);
 			methodEventListener.setMethod(method);
 			eventListenerManager.register(eventId, methodEventListener);
+		}
+
+		/**
+		 * Registers all methods from object o with @Handles annotation.
+		 * 
+		 * @param o
+		 *            The object to register the methods as event listeners.
+		 * @param eventListenerManager
+		 *            The EventListenerManager to register the event listeners to.
+		 */
+		public static void registerEventListeners(Object o, EventListenerManager eventListenerManager) {
+			Class<?> clazz = o.getClass();
+			Method[] methods = clazz.getMethods();
+			for (int i = 0; i < methods.length; i++) {
+				Method method = methods[i];
+				Handles handlesAnnotation = method.getAnnotation(handlesClass);
+				if (handlesAnnotation == null)
+					continue;
+				String[] eventIds = handlesAnnotation.ids();
+				for (int j = 0; j < eventIds.length; j++) {
+					String eventId = eventIds[i];
+					registerEventListenerForMethod(eventId, o, method, eventListenerManager);
+				}
+			}
 		}
 
 	}
@@ -111,7 +142,7 @@ public class EventListenerAutoRegisterTest {
 
 		MyScript myScript = new MyScript();
 
-		EventListenerAutoRegister.registerEventListener("customEvent", myScript, eventListenerManager);
+		EventListenerReflectionRegistrator.registerEventListener("customEvent", myScript, eventListenerManager);
 
 		Event event = new Event();
 		event.setId("customEvent");
@@ -126,7 +157,7 @@ public class EventListenerAutoRegisterTest {
 
 		MyScript myScript = new MyScript();
 
-		EventListenerAutoRegister.registerEventListener("customEvent2", myScript, eventListenerManager);
+		EventListenerReflectionRegistrator.registerEventListener("customEvent2", myScript, eventListenerManager);
 
 		Event event = new Event();
 		event.setId("customEvent");
@@ -149,13 +180,51 @@ public class EventListenerAutoRegisterTest {
 			}
 		};
 
-		EventListenerAutoRegister.registerEventListener("customEvent", myScript, eventListenerManager);
+		EventListenerReflectionRegistrator.registerEventListener("customEvent", myScript, eventListenerManager);
 
 		Event event = new Event();
 		event.setId("customEvent");
 		eventListenerManager.process(event);
 
 		assertThat(anonymousWasCalled, IsEqual.equalTo(true));
+	}
+	
+	class MyScript2 extends ScriptJavaImpl {
+
+		boolean wasCalled = false;
+		boolean wasCalled2 = false;
+
+		@Handles(ids={"anotherEvent"})
+		public void customEvent(Event e) {
+			wasCalled = true;
+		}
+
+		public void myEvent(Event e) {
+			wasCalled2 = true;
+		}
+
+	}
+	
+	@Test
+	public void shouldRegisterMethodWithAnnotation() {
+		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
+		MyScript2 myScript2 = new MyScript2();
+		
+		EventListenerReflectionRegistrator.registerEventListeners(myScript2, eventListenerManager);
+		
+		Event event = new Event();
+		event.setId("customEvent");
+		eventListenerManager.process(event);
+		
+		assertThat(myScript2.wasCalled, IsEqual.equalTo(false));
+		assertThat(myScript2.wasCalled2, IsEqual.equalTo(false));
+		
+		event = new Event();
+		event.setId("anotherEvent");
+		eventListenerManager.process(event);
+		
+		assertThat(myScript2.wasCalled, IsEqual.equalTo(true));
+		assertThat(myScript2.wasCalled2, IsEqual.equalTo(false));
 	}
 
 }
