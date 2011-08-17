@@ -132,6 +132,44 @@ public class EventListenerReflectionRegistratorTest {
 		assertThat(myScript2.wasCalled2, IsEqual.equalTo(false));
 	}
 	
+	class MyScript3 extends ScriptJavaImpl {
+
+		boolean wasCalled = false;
+
+		@Handles
+		public void customEvent(Event e) {
+			wasCalled = true;
+		}
+
+	}
 	
+	@Test
+	public void shouldRegisterMethodWithAnnotationForEventWithSameName() {
+		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
+		MyScript3 o = new MyScript3();
+		
+		EventListenerReflectionRegistrator.registerEventListeners(o, eventListenerManager);
+		
+		Event event = new Event();
+		event.setId("customEvent");
+		eventListenerManager.process(event);
+		
+		assertThat(o.wasCalled, IsEqual.equalTo(true));
+	}
+	
+	@Test
+	public void shouldUnregisterMethodWithAnnotationForEventWithSameName() {
+		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
+		MyScript3 o = new MyScript3();
+		
+		EventListenerReflectionRegistrator.registerEventListeners(o, eventListenerManager);
+		EventListenerReflectionRegistrator.unregisterEventListeners(o, eventListenerManager);
+		
+		Event event = new Event();
+		event.setId("customEvent");
+		eventListenerManager.process(event);
+		
+		assertThat(o.wasCalled, IsEqual.equalTo(false));
+	}
 
 }

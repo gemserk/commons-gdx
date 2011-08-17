@@ -114,6 +114,10 @@ public class EventListenerReflectionRegistrator {
 			if (handlesAnnotation == null)
 				continue;
 			String[] eventIds = handlesAnnotation.ids();
+			if (eventIds.length ==0)  {
+				registerEventListenerForMethod(method.getName(), o, method, eventListenerManager);
+				continue;
+			}
 			for (int j = 0; j < eventIds.length; j++) {
 				String eventId = eventIds[i];
 				registerEventListenerForMethod(eventId, o, method, eventListenerManager);
@@ -137,6 +141,10 @@ public class EventListenerReflectionRegistrator {
 			if (handlesAnnotation == null)
 				continue;
 			String[] eventIds = handlesAnnotation.ids();
+			if (eventIds.length ==0)  {
+				unregisterEventListenerForMethod(method.getName(), o, method, eventListenerManager);
+				continue;
+			}
 			for (int j = 0; j < eventIds.length; j++) {
 				String eventId = eventIds[i];
 				unregisterEventListenerForMethod(eventId, o, method, eventListenerManager);
