@@ -116,16 +116,16 @@ public class LibgdxResourceBuilder {
 	 * @param textureAtlasId
 	 *            the TextureAtlas resource identifier.
 	 */
-	public void spriteAtlas(final String id, final String textureAtlasId) {
+	public void spriteAtlas(final String id, final String textureAtlasId, final String regionId) {
 		resourceManager.add(id, new ResourceLoaderImpl<Sprite>(new DataLoader<Sprite>() {
 			@Override
 			public Sprite load() {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
-				return new Sprite(textureAtlas.findRegion(id));
+				return new Sprite(textureAtlas.findRegion(regionId));
 			}
 		}));
 	}
-
+	
 	public void animation(String id, final String spriteSheetId, final int x, final int y, final int w, final int h, final int framesCount, //
 			final boolean loop, final int time, final int... times) {
 		resourceManager.add(id, new ResourceLoaderImpl<Animation>(new DataLoader<Animation>() {
