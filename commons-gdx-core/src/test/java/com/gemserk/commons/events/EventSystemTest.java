@@ -6,6 +6,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.gemserk.componentsengine.utils.Pool;
+import com.gemserk.componentsengine.utils.Pool.PoolObjectFactory;
+
 /**
  * This test provides some classes for events system copied from the entry <a href=http://altdevblogaday.com/2011/08/17/scripting-with-no-scripts/>scripting with no scripts</a>
  * 
@@ -66,7 +69,14 @@ public class EventSystemTest {
 
 	class EventRegistry {
 
-		Map<String, Event> events = new HashMap<String, Event>();
+		private Pool<Event> eventPool = new Pool<EventSystemTest.Event>(new PoolObjectFactory<Event>() {
+			@Override
+			public Event createObject() {
+				return new Event();
+			}
+		}, 32);
+
+		private Map<String, Event> events = new HashMap<String, Event>();
 
 		SenderEventHandle register(String eventName) {
 
@@ -85,50 +95,55 @@ public class EventSystemTest {
 
 		private Event getEvent(String name) {
 			if (!events.containsKey(name))
-				events.put(name, new Event());
+				events.put(name, eventPool.newObject());
 			return events.get(name);
 		}
 
-		void subscribe(String eventName, ReceiverEventHandle receiverEventHandle, EventReceiver eventReceiver) {
+		ReceiverEventHandle subscribe(String eventName, EventReceiver eventReceiver) {
 
-			unsubscribe(receiverEventHandle, eventReceiver);
+			// unsubscribe(receiverEventHandle, eventReceiver);
 
 			Event event = getEvent(eventName);
 			event.name = eventName;
 			event.receivers.add(eventReceiver);
 			event.eventRegistry = this;
 
+			ReceiverEventHandle receiverEventHandle = new ReceiverEventHandle();
 			receiverEventHandle.event = event;
 			receiverEventHandle.eventReceiver = eventReceiver;
+
+			return receiverEventHandle;
 
 		}
 
 		void unregister(SenderEventHandle senderEventHandle) {
 
-			Event e = senderEventHandle.event;
-			if (e == null)
+			Event event = senderEventHandle.event;
+			if (event == null)
 				return;
 
-			e.senderCount--;
+			event.senderCount--;
 
-			if (e.senderCount == 0)
-				events.remove(e.name);
+			if (event.senderCount == 0) {
+				events.remove(event.name);
+				eventPool.free(event);
+			}
 
 			senderEventHandle.event = null;
 		}
 
-		void unsubscribe(ReceiverEventHandle receiverEventHandle, EventReceiver eventReceiver) {
+		void unsubscribe(ReceiverEventHandle receiverEventHandle) {
 
 			Event event = receiverEventHandle.event;
 			if (event == null)
 				return;
 
-			event.receivers.remove(eventReceiver);
+			event.receivers.remove(receiverEventHandle.eventReceiver);
 
-			if (event.receivers.isEmpty() && event.senderCount == 0)
+			if (event.receivers.isEmpty() && event.senderCount == 0) {
 				events.remove(event.name);
-
-			// eventPool.free(event);
+				eventPool.free(event);
+			}
 
 			receiverEventHandle.event = null;
 			receiverEventHandle.eventReceiver = null;
@@ -140,21 +155,33 @@ public class EventSystemTest {
 	@Test
 	public void sendEventsTest() {
 
-		ReceiverEventHandle receiverEventHandle = new ReceiverEventHandle();
-
 		EventRegistry eventRegistry = new EventRegistry();
 
 		SenderEventHandle senderEventHandle = eventRegistry.register("event1");
-		eventRegistry.subscribe("event1", receiverEventHandle, new EventReceiver() {
+
+		EventReceiver myEventReceiver = new EventReceiver() {
 			@Override
 			public void receiveEvent(Event e, Object source) {
 				System.out.println("event1 " + source.toString());
 			}
-		});
+		};
+
+		ReceiverEventHandle receiverEventHandle = eventRegistry.subscribe("event1", myEventReceiver);
 
 		senderEventHandle.sendMessage("a");
 		senderEventHandle.sendMessage("b");
 
+		eventRegistry.unsubscribe(receiverEventHandle);
+
+		senderEventHandle.sendMessage("c");
+
+		receiverEventHandle = eventRegistry.subscribe("event1", myEventReceiver);
+
+		senderEventHandle.sendMessage("d");
+
+		eventRegistry.unregister(senderEventHandle);
+
+		senderEventHandle.sendMessage("e");
 	}
 
 }
