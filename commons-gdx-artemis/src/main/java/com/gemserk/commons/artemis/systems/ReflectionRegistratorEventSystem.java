@@ -10,13 +10,11 @@ import com.gemserk.commons.artemis.scripts.Script;
 public class ReflectionRegistratorEventSystem extends EntityProcessingSystem {
 
 	private static final Class<ScriptComponent> scriptComponentClass = ScriptComponent.class;
-	private final EventListenerManager eventListenerManager;
 	private final EventListenerReflectionRegistrator eventListenerReflectionRegistrator;
-	
+
 	public ReflectionRegistratorEventSystem(EventListenerManager eventListenerManager) {
 		super(ScriptComponent.class);
-		this.eventListenerManager = eventListenerManager;
-		this.eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		this.eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
 	}
 
 	@Override
@@ -25,7 +23,7 @@ public class ReflectionRegistratorEventSystem extends EntityProcessingSystem {
 		Script[] scripts = e.getComponent(scriptComponentClass).getScripts();
 		for (int i = 0; i < scripts.length; i++) {
 			Script script = scripts[i];
-			eventListenerReflectionRegistrator.registerEventListeners(script, eventListenerManager);
+			eventListenerReflectionRegistrator.registerEventListeners(script);
 		}
 	}
 
@@ -34,13 +32,13 @@ public class ReflectionRegistratorEventSystem extends EntityProcessingSystem {
 		Script[] scripts = e.getComponent(scriptComponentClass).getScripts();
 		for (int i = 0; i < scripts.length; i++) {
 			Script script = scripts[i];
-			eventListenerReflectionRegistrator.unregisterEventListeners(script, eventListenerManager);
+			eventListenerReflectionRegistrator.unregisterEventListeners(script);
 		}
 	}
 
 	@Override
 	protected void process(Entity e) {
-		
+
 	}
 
 }

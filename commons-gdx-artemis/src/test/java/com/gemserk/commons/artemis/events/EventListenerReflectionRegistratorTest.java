@@ -31,8 +31,8 @@ public class EventListenerReflectionRegistratorTest {
 
 		MyScript myScript = new MyScript();
 
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
-		eventListenerReflectionRegistrator.registerEventListener("customEvent", myScript, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		eventListenerReflectionRegistrator.registerEventListener("customEvent", myScript);
 
 		Event event = new Event();
 		event.setId("customEvent");
@@ -47,8 +47,8 @@ public class EventListenerReflectionRegistratorTest {
 
 		MyScript myScript = new MyScript();
 
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
-		eventListenerReflectionRegistrator.registerEventListener("customEvent2", myScript, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		eventListenerReflectionRegistrator.registerEventListener("customEvent2", myScript);
 
 		Event event = new Event();
 		event.setId("customEvent");
@@ -71,8 +71,8 @@ public class EventListenerReflectionRegistratorTest {
 			}
 		};
 
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
-		eventListenerReflectionRegistrator.registerEventListener("customEvent", myScript, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		eventListenerReflectionRegistrator.registerEventListener("customEvent", myScript);
 
 		Event event = new Event();
 		event.setId("customEvent");
@@ -102,8 +102,8 @@ public class EventListenerReflectionRegistratorTest {
 		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
 		MyScript2 myScript2 = new MyScript2();
 		
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
-		eventListenerReflectionRegistrator.registerEventListeners(myScript2, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		eventListenerReflectionRegistrator.registerEventListeners(myScript2);
 		
 		Event event = new Event();
 		event.setId("customEvent");
@@ -125,10 +125,10 @@ public class EventListenerReflectionRegistratorTest {
 		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
 		MyScript2 myScript2 = new MyScript2();
 		
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
 		
-		eventListenerReflectionRegistrator.registerEventListeners(myScript2, eventListenerManager);
-		eventListenerReflectionRegistrator.unregisterEventListeners(myScript2, eventListenerManager);
+		eventListenerReflectionRegistrator.registerEventListeners(myScript2);
+		eventListenerReflectionRegistrator.unregisterEventListeners(myScript2);
 		
 		Event event = new Event();
 		event.setId("anotherEvent");
@@ -154,9 +154,9 @@ public class EventListenerReflectionRegistratorTest {
 		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
 		MyScript3 o = new MyScript3();
 		
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
 		
-		eventListenerReflectionRegistrator.registerEventListeners(o, eventListenerManager);
+		eventListenerReflectionRegistrator.registerEventListeners(o);
 		
 		Event event = new Event();
 		event.setId("customEvent");
@@ -170,10 +170,10 @@ public class EventListenerReflectionRegistratorTest {
 		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
 		MyScript3 o = new MyScript3();
 		
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
 		
-		eventListenerReflectionRegistrator.registerEventListeners(o, eventListenerManager);
-		eventListenerReflectionRegistrator.unregisterEventListeners(o, eventListenerManager);
+		eventListenerReflectionRegistrator.registerEventListeners(o);
+		eventListenerReflectionRegistrator.unregisterEventListeners(o);
 		
 		Event event = new Event();
 		event.setId("customEvent");
