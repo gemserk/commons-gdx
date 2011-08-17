@@ -31,7 +31,8 @@ public class EventListenerReflectionRegistratorTest {
 
 		MyScript myScript = new MyScript();
 
-		EventListenerReflectionRegistrator.registerEventListener("customEvent", myScript, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		eventListenerReflectionRegistrator.registerEventListener("customEvent", myScript, eventListenerManager);
 
 		Event event = new Event();
 		event.setId("customEvent");
@@ -46,7 +47,8 @@ public class EventListenerReflectionRegistratorTest {
 
 		MyScript myScript = new MyScript();
 
-		EventListenerReflectionRegistrator.registerEventListener("customEvent2", myScript, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		eventListenerReflectionRegistrator.registerEventListener("customEvent2", myScript, eventListenerManager);
 
 		Event event = new Event();
 		event.setId("customEvent");
@@ -69,7 +71,8 @@ public class EventListenerReflectionRegistratorTest {
 			}
 		};
 
-		EventListenerReflectionRegistrator.registerEventListener("customEvent", myScript, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		eventListenerReflectionRegistrator.registerEventListener("customEvent", myScript, eventListenerManager);
 
 		Event event = new Event();
 		event.setId("customEvent");
@@ -99,7 +102,8 @@ public class EventListenerReflectionRegistratorTest {
 		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
 		MyScript2 myScript2 = new MyScript2();
 		
-		EventListenerReflectionRegistrator.registerEventListeners(myScript2, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		eventListenerReflectionRegistrator.registerEventListeners(myScript2, eventListenerManager);
 		
 		Event event = new Event();
 		event.setId("customEvent");
@@ -121,8 +125,10 @@ public class EventListenerReflectionRegistratorTest {
 		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
 		MyScript2 myScript2 = new MyScript2();
 		
-		EventListenerReflectionRegistrator.registerEventListeners(myScript2, eventListenerManager);
-		EventListenerReflectionRegistrator.unregisterEventListeners(myScript2, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		
+		eventListenerReflectionRegistrator.registerEventListeners(myScript2, eventListenerManager);
+		eventListenerReflectionRegistrator.unregisterEventListeners(myScript2, eventListenerManager);
 		
 		Event event = new Event();
 		event.setId("anotherEvent");
@@ -148,7 +154,9 @@ public class EventListenerReflectionRegistratorTest {
 		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
 		MyScript3 o = new MyScript3();
 		
-		EventListenerReflectionRegistrator.registerEventListeners(o, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		
+		eventListenerReflectionRegistrator.registerEventListeners(o, eventListenerManager);
 		
 		Event event = new Event();
 		event.setId("customEvent");
@@ -162,8 +170,10 @@ public class EventListenerReflectionRegistratorTest {
 		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
 		MyScript3 o = new MyScript3();
 		
-		EventListenerReflectionRegistrator.registerEventListeners(o, eventListenerManager);
-		EventListenerReflectionRegistrator.unregisterEventListeners(o, eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator();
+		
+		eventListenerReflectionRegistrator.registerEventListeners(o, eventListenerManager);
+		eventListenerReflectionRegistrator.unregisterEventListeners(o, eventListenerManager);
 		
 		Event event = new Event();
 		event.setId("customEvent");

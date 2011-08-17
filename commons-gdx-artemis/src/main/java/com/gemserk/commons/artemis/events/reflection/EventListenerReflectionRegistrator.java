@@ -35,18 +35,18 @@ public class EventListenerReflectionRegistrator {
 		}
 	};
 
-	private static final Pool<InvokeMethodEventListener> invokeMethodEventListenerPool = new Pool<InvokeMethodEventListener>(invokeMethodEventListenerFactory, 64);
+	private final Pool<InvokeMethodEventListener> invokeMethodEventListenerPool = new Pool<InvokeMethodEventListener>(invokeMethodEventListenerFactory, 64);
 
 	// this doesn't allows multiple event listeners per method
-	private static final Map<Object, Map<Method, InvokeMethodEventListener>> createdMethodEventListeners = new HashMap<Object, Map<Method, InvokeMethodEventListener>>();
-
-	private static Map<String, Method> getClassCachedMethods(Class<?> clazz) {
+	private final Map<Object, Map<Method, InvokeMethodEventListener>> createdMethodEventListeners = new HashMap<Object, Map<Method, InvokeMethodEventListener>>();
+	
+	private Map<String, Method> getClassCachedMethods(Class<?> clazz) {
 		if (!cachedMethodsPerClass.containsKey(clazz))
 			cachedMethodsPerClass.put(clazz, new HashMap<String, Method>());
 		return cachedMethodsPerClass.get(clazz);
 	}
 
-	private static Method getMethod(String name, Class<?> clazz) {
+	private Method getMethod(String name, Class<?> clazz) {
 		Map<String, Method> cachedMethods = getClassCachedMethods(clazz);
 		if (cachedMethods.containsKey(name))
 			return cachedMethods.get(name);
@@ -64,7 +64,7 @@ public class EventListenerReflectionRegistrator {
 		return null;
 	}
 
-	public static void registerEventListener(String eventId, final Object o, EventListenerManager eventListenerManager) {
+	public void registerEventListener(String eventId, final Object o, EventListenerManager eventListenerManager) {
 		// On ComponentsEngine Component methods were cached to improve performance when registering for events and more.
 		final Method method = getMethod(eventId, o.getClass());
 		if (method == null) {
@@ -75,7 +75,7 @@ public class EventListenerReflectionRegistrator {
 		registerEventListenerForMethod(eventId, o, method, eventListenerManager);
 	}
 
-	private static void registerEventListenerForMethod(String eventId, final Object o, final Method method, EventListenerManager eventListenerManager) {
+	private void registerEventListenerForMethod(String eventId, final Object o, final Method method, EventListenerManager eventListenerManager) {
 		method.setAccessible(true);
 		InvokeMethodEventListener invokeMethodEventListener = invokeMethodEventListenerPool.newObject();
 		invokeMethodEventListener.setOwner(o);
@@ -87,13 +87,13 @@ public class EventListenerReflectionRegistrator {
 		cachedMethodEventListeners.put(method, invokeMethodEventListener);
 	}
 
-	private static Map<Method, InvokeMethodEventListener> getCachedMethodEventListenersForObject(final Object o) {
+	private Map<Method, InvokeMethodEventListener> getCachedMethodEventListenersForObject(final Object o) {
 		if (!createdMethodEventListeners.containsKey(o))
 			createdMethodEventListeners.put(o, new HashMap<Method, InvokeMethodEventListener>());
 		return createdMethodEventListeners.get(o);
 	}
 
-	private static void unregisterEventListenerForMethod(String eventId, final Object o, final Method method, EventListenerManager eventListenerManager) {
+	private void unregisterEventListenerForMethod(String eventId, final Object o, final Method method, EventListenerManager eventListenerManager) {
 		Map<Method, InvokeMethodEventListener> cachedMethodEventListeners = getCachedMethodEventListenersForObject(o);
 		InvokeMethodEventListener invokeMethodEventListener = cachedMethodEventListeners.get(method);
 		eventListenerManager.unregister(eventId, invokeMethodEventListener);
@@ -109,7 +109,7 @@ public class EventListenerReflectionRegistrator {
 	 * @param eventListenerManager
 	 *            The EventListenerManager to register the event listeners to.
 	 */
-	public static void registerEventListeners(Object o, EventListenerManager eventListenerManager) {
+	public void registerEventListeners(Object o, EventListenerManager eventListenerManager) {
 		Class<?> clazz = o.getClass();
 		Method[] methods = clazz.getMethods();
 		for (int i = 0; i < methods.length; i++) {
@@ -137,7 +137,7 @@ public class EventListenerReflectionRegistrator {
 	 * @param eventListenerManager
 	 *            The EventListenerManager to unregister the event listeners from.
 	 */
-	public static void unregisterEventListeners(Object o, EventListenerManager eventListenerManager) {
+	public void unregisterEventListeners(Object o, EventListenerManager eventListenerManager) {
 		Class<?> clazz = o.getClass();
 		Method[] methods = clazz.getMethods();
 		for (int i = 0; i < methods.length; i++) {
