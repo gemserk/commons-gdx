@@ -12,6 +12,12 @@ import com.gemserk.commons.artemis.events.EventListenerManager;
 import com.gemserk.componentsengine.utils.Pool;
 import com.gemserk.componentsengine.utils.Pool.PoolObjectFactory;
 
+/**
+ * Provides reflection utilities to register event listeners for the methods of a class, maybe should be used in an instance way, to avoid problems when forgetting to call unregister().
+ * 
+ * @author acoppes
+ * 
+ */
 public class EventListenerReflectionRegistrator {
 
 	protected static final Logger logger = LoggerFactory.getLogger(EventListenerReflectionRegistrator.class);
@@ -30,8 +36,6 @@ public class EventListenerReflectionRegistrator {
 	};
 
 	private static final Pool<InvokeMethodEventListener> invokeMethodEventListenerPool = new Pool<InvokeMethodEventListener>(invokeMethodEventListenerFactory, 64);
-
-	// On another class and with cache and stuff
 
 	// this doesn't allows multiple event listeners per method
 	private static final Map<Object, Map<Method, InvokeMethodEventListener>> createdMethodEventListeners = new HashMap<Object, Map<Method, InvokeMethodEventListener>>();
@@ -114,7 +118,7 @@ public class EventListenerReflectionRegistrator {
 			if (handlesAnnotation == null)
 				continue;
 			String[] eventIds = handlesAnnotation.ids();
-			if (eventIds.length ==0)  {
+			if (eventIds.length == 0) {
 				registerEventListenerForMethod(method.getName(), o, method, eventListenerManager);
 				continue;
 			}
@@ -126,11 +130,12 @@ public class EventListenerReflectionRegistrator {
 	}
 
 	/**
-	 * Unregisters all registered methods from object with @Handles annotation
+	 * Unregisters all registered methods from object with @Handles annotation. If not called correctly, then the cached event listeners per method will be stored forever.
 	 * 
 	 * @param o
-	 *            The object
+	 *            The object to unregister the methods as event listeners from.
 	 * @param eventListenerManager
+	 *            The EventListenerManager to unregister the event listeners from.
 	 */
 	public static void unregisterEventListeners(Object o, EventListenerManager eventListenerManager) {
 		Class<?> clazz = o.getClass();
@@ -141,7 +146,7 @@ public class EventListenerReflectionRegistrator {
 			if (handlesAnnotation == null)
 				continue;
 			String[] eventIds = handlesAnnotation.ids();
-			if (eventIds.length ==0)  {
+			if (eventIds.length == 0) {
 				unregisterEventListenerForMethod(method.getName(), o, method, eventListenerManager);
 				continue;
 			}
