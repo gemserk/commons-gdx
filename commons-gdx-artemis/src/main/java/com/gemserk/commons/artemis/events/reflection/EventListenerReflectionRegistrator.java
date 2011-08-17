@@ -9,25 +9,34 @@ import org.slf4j.LoggerFactory;
 
 import com.gemserk.commons.artemis.events.Event;
 import com.gemserk.commons.artemis.events.EventListenerManager;
+import com.gemserk.componentsengine.utils.Pool;
+import com.gemserk.componentsengine.utils.Pool.PoolObjectFactory;
 
 public class EventListenerReflectionRegistrator {
 
 	protected static final Logger logger = LoggerFactory.getLogger(EventListenerReflectionRegistrator.class);
-	
+
 	private static final Class<Handles> handlesClass = Handles.class;
 	private static final Class<Event> eventClass = Event.class;
-	
+
 	private static final Map<Class<?>, Map<String, Method>> cachedMethodsPerClass = new HashMap<Class<?>, Map<String, Method>>();
 
-	// use a Pool of MethodEventListeners
+	private static final PoolObjectFactory<InvokeMethodEventListener> invokeMethodEventListenerFactory = new PoolObjectFactory<InvokeMethodEventListener>() {
 
-	private static InvokeMethodEventListener getMethodEventListener() {
-		return new InvokeMethodEventListener();
-	}
+		@Override
+		public InvokeMethodEventListener createObject() {
+			return new InvokeMethodEventListener();
+		}
+	};
+
+	private static final Pool<InvokeMethodEventListener> invokeMethodEventListenerPool = new Pool<InvokeMethodEventListener>(invokeMethodEventListenerFactory, 64);
 
 	// On another class and with cache and stuff
-	
-	private static Map<String, Method> getClassCachedMethods(Class<?> clazz){
+
+	// this doesn't allows multiple event listeners per method
+	private static final Map<Object, Map<Method, InvokeMethodEventListener>> createdMethodEventListeners = new HashMap<Object, Map<Method, InvokeMethodEventListener>>();
+
+	private static Map<String, Method> getClassCachedMethods(Class<?> clazz) {
 		if (!cachedMethodsPerClass.containsKey(clazz))
 			cachedMethodsPerClass.put(clazz, new HashMap<String, Method>());
 		return cachedMethodsPerClass.get(clazz);
@@ -64,10 +73,28 @@ public class EventListenerReflectionRegistrator {
 
 	private static void registerEventListenerForMethod(String eventId, final Object o, final Method method, EventListenerManager eventListenerManager) {
 		method.setAccessible(true);
-		InvokeMethodEventListener invokeMethodEventListener = getMethodEventListener();
+		InvokeMethodEventListener invokeMethodEventListener = invokeMethodEventListenerPool.newObject();
 		invokeMethodEventListener.setOwner(o);
 		invokeMethodEventListener.setMethod(method);
 		eventListenerManager.register(eventId, invokeMethodEventListener);
+
+		// used to be returned to the pool later.
+		Map<Method, InvokeMethodEventListener> cachedMethodEventListeners = getCachedMethodEventListenersForObject(o);
+		cachedMethodEventListeners.put(method, invokeMethodEventListener);
+	}
+
+	private static Map<Method, InvokeMethodEventListener> getCachedMethodEventListenersForObject(final Object o) {
+		if (!createdMethodEventListeners.containsKey(o))
+			createdMethodEventListeners.put(o, new HashMap<Method, InvokeMethodEventListener>());
+		return createdMethodEventListeners.get(o);
+	}
+
+	private static void unregisterEventListenerForMethod(String eventId, final Object o, final Method method, EventListenerManager eventListenerManager) {
+		Map<Method, InvokeMethodEventListener> cachedMethodEventListeners = getCachedMethodEventListenersForObject(o);
+		InvokeMethodEventListener invokeMethodEventListener = cachedMethodEventListeners.get(method);
+		eventListenerManager.unregister(eventId, invokeMethodEventListener);
+		invokeMethodEventListenerPool.free(invokeMethodEventListener);
+		cachedMethodEventListeners.remove(method);
 	}
 
 	/**
@@ -92,6 +119,30 @@ public class EventListenerReflectionRegistrator {
 				registerEventListenerForMethod(eventId, o, method, eventListenerManager);
 			}
 		}
+	}
+
+	/**
+	 * Unregisters all registered methods from object with @Handles annotation
+	 * 
+	 * @param o
+	 *            The object
+	 * @param eventListenerManager
+	 */
+	public static void unregisterEventListeners(Object o, EventListenerManager eventListenerManager) {
+		Class<?> clazz = o.getClass();
+		Method[] methods = clazz.getMethods();
+		for (int i = 0; i < methods.length; i++) {
+			Method method = methods[i];
+			Handles handlesAnnotation = method.getAnnotation(handlesClass);
+			if (handlesAnnotation == null)
+				continue;
+			String[] eventIds = handlesAnnotation.ids();
+			for (int j = 0; j < eventIds.length; j++) {
+				String eventId = eventIds[i];
+				unregisterEventListenerForMethod(eventId, o, method, eventListenerManager);
+			}
+		}
+		createdMethodEventListeners.remove(o);
 	}
 
 }

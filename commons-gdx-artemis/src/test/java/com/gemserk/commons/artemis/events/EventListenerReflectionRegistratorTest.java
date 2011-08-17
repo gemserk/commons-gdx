@@ -2,7 +2,6 @@ package com.gemserk.commons.artemis.events;
 
 import static org.junit.Assert.assertThat;
 
-
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
@@ -116,5 +115,23 @@ public class EventListenerReflectionRegistratorTest {
 		assertThat(myScript2.wasCalled, IsEqual.equalTo(true));
 		assertThat(myScript2.wasCalled2, IsEqual.equalTo(false));
 	}
+	
+	@Test
+	public void shouldUnregisterMethodWithAnnotation() {
+		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
+		MyScript2 myScript2 = new MyScript2();
+		
+		EventListenerReflectionRegistrator.registerEventListeners(myScript2, eventListenerManager);
+		EventListenerReflectionRegistrator.unregisterEventListeners(myScript2, eventListenerManager);
+		
+		Event event = new Event();
+		event.setId("anotherEvent");
+		eventListenerManager.process(event);
+		
+		assertThat(myScript2.wasCalled, IsEqual.equalTo(false));
+		assertThat(myScript2.wasCalled2, IsEqual.equalTo(false));
+	}
+	
+	
 
 }
