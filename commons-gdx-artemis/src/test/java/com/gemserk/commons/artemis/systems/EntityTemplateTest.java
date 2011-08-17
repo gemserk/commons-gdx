@@ -318,7 +318,9 @@ public class EntityTemplateTest {
 		// ... on script system
 
 		ScriptComponent scriptComponent = weapon.getComponent(ScriptComponent.class);
-		scriptComponent.getScript().update(world, weapon);
+		Script[] scripts = scriptComponent.getScripts();
+		for (int i = 0; i < scripts.length; i++) 
+			scripts[i].update(world, weapon);
 	}
 
 }

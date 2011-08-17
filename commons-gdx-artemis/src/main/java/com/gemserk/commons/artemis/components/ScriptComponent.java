@@ -5,18 +5,16 @@ import com.gemserk.commons.artemis.scripts.Script;
 
 public class ScriptComponent extends Component {
 
-	private Script script;
+	private Script[] scripts;
 
-	public Script getScript() {
-		return script;
+	public Script[] getScripts() {
+		return scripts;
 	}
 
-	public void setScript(Script script) {
-		this.script = script;
-	}
-
-	public ScriptComponent(Script script) {
-		this.script = script;
+	public ScriptComponent(Script... scripts) {
+		if (scripts == null)
+			throw new RuntimeException("Cant create a ScriptComponent with null scripts");
+		this.scripts = scripts;
 	}
 
 }
