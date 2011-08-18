@@ -7,6 +7,17 @@ public class Game implements ApplicationListener {
 
 	protected Screen screen;
 
+	private boolean fixMaxDelta = true;
+	private float maxDelta = 1f / 30f;
+
+	public void setFixMaxDelta(boolean fixMaxDelta) {
+		this.fixMaxDelta = fixMaxDelta;
+	}
+
+	public void setMaxDelta(float maxDelta) {
+		this.maxDelta = maxDelta;
+	}
+
 	public Screen getScreen() {
 		return screen;
 	}
@@ -36,13 +47,21 @@ public class Game implements ApplicationListener {
 	public void render() {
 		if (screen == null)
 			return;
-		screen.setDelta(Gdx.graphics.getDeltaTime());
+
+		float delta = getDelta();
+
+		GlobalTime.setDelta(delta);
+		screen.setDelta(delta);
+
 		screen.update();
 		screen.render();
 	}
 
-	protected float getDeltaInMs() {
-		return Gdx.graphics.getDeltaTime() * 1000f;
+	private float getDelta() {
+		float delta = Gdx.graphics.getDeltaTime();
+		if (fixMaxDelta && delta > maxDelta)
+			delta = maxDelta;
+		return delta;
 	}
 
 	@Override
@@ -54,13 +73,13 @@ public class Game implements ApplicationListener {
 	public void setScreen(Screen screen) {
 		setScreen(screen, false);
 	}
-	
+
 	public void setScreen(Screen screen, boolean shouldDispose) {
 		if (screen == null)
 			return;
 
 		Screen currentScreen = getScreen();
-		
+
 		if (currentScreen != null) {
 			currentScreen.pause();
 			currentScreen.hide();
