@@ -10,7 +10,7 @@ import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
 public class RenderableSystem extends EntitySystem implements Disposable {
-
+	
 	private ArrayList<RenderLayer> renderLayerSpriteBatchImpls;
 
 	@SuppressWarnings("unchecked")
