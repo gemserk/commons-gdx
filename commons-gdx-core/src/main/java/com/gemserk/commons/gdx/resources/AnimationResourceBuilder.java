@@ -54,11 +54,14 @@ public class AnimationResourceBuilder implements ResourceBuilder<Animation> {
 	public Animation build() {
 		Texture spriteSheet = resourceManager.getResourceValue(spriteSheetId);
 		Sprite[] frames = new Sprite[this.frames.size()];
-		int[] times = new int[this.frames.size()];
+		float[] times = new float[this.frames.size()];
 		for (int i = 0; i < frames.length; i++) { 
 			Frame frame = this.frames.get(i);
 			frames[i] = new Sprite(spriteSheet, frame.x, frame.y, frame.w, frame.h);
-			times[i] = frame.time;
+
+			// convert time from milliseconds to seconds
+			
+			times[i] = (float) frame.time * 0.001f; 
 		}
 		return new Animation(frames, new FrameAnimationImpl(loop, times));
 	}

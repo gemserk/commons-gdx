@@ -26,7 +26,7 @@ public class Animation  {
 		return getFrame(frameAnimation.getCurrentFrame());
 	}
 	
-	public void update(int delta) {
+	public void update(float delta) {
 		frameAnimation.update(delta);
 	}
 

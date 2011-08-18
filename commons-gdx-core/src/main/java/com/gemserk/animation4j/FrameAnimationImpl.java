@@ -8,11 +8,10 @@ public class FrameAnimationImpl implements FrameAnimation {
 	/**
 	 * Represents each frame time
 	 */
-	private int[] framesTimes;
-
+	private float[] framesTimes;
+	
 	private int currentFrame;
-
-	private int currentTime;
+	private float currentTime;
 
 	// add all play/stop/pause/etc?
 
@@ -22,14 +21,14 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.loop = loop;
 	}
 
-	public FrameAnimationImpl(int f0, int... framesTimes) {
+	public FrameAnimationImpl(float f0, float... framesTimes) {
 		this.currentFrame = 0;
 		this.currentTime = 0;
 		this.loop = false;
 		set(f0, framesTimes);
 	}
 
-	public FrameAnimationImpl(boolean loop, int... framesTimes) {
+	public FrameAnimationImpl(boolean loop, float... framesTimes) {
 		// we could use the pattern 1+
 		assert (framesTimes.length > 0);
 		this.currentFrame = 0;
@@ -38,15 +37,15 @@ public class FrameAnimationImpl implements FrameAnimation {
 		set(framesTimes);
 	}
 
-	private void set(int f0, int... frames) {
-		this.framesTimes = new int[frames.length + 1];
+	private void set(float f0, float... frames) {
+		this.framesTimes = new float[frames.length + 1];
 		this.framesTimes[0] = f0;
 		for (int i = 1; i < frames.length + 1; i++)
 			this.framesTimes[i] = frames[i - 1];
 	}
 
-	private void set(int... frames) {
-		this.framesTimes = new int[frames.length];
+	private void set(float... frames) {
+		this.framesTimes = new float[frames.length];
 		for (int i = 0; i < frames.length; i++)
 			this.framesTimes[i] = frames[i];
 	}
@@ -71,16 +70,16 @@ public class FrameAnimationImpl implements FrameAnimation {
 	 * @see com.gemserk.games.taken.FrameAnimation#update(int)
 	 */
 	@Override
-	public void update(int delta) {
+	public void update(float delta) {
 		currentTime += delta;
-		int currentFrameTime = getCurrentFrameTime();
+		float currentFrameTime = getCurrentFrameTime();
 		if (currentTime >= currentFrameTime) {
 			nextFrame();
 			currentTime -= currentFrameTime;
 		}
 	}
 
-	private int getCurrentFrameTime() {
+	private float getCurrentFrameTime() {
 		return framesTimes[getCurrentFrame()];
 	}
 

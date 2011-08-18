@@ -7,6 +7,6 @@ public interface FrameAnimation {
 
 	int getCurrentFrame();
 
-	void update(int delta);
+	void update(float delta);
 
 }

@@ -149,18 +149,20 @@ public class LibgdxResourceBuilder {
 					}
 				}
 				
-				int[] newTimes = new int[framesCount - 1];
+				float[] newTimes = new float[framesCount - 1];
 				int lastTime = time;
 
+				// added convert from int time in milliseconds to float time in seconds
+				
 				for (int i = 0; i < framesCount - 1; i++) {
 					if (i < times.length) {
-						newTimes[i] = times[i];
+						newTimes[i] = ((float) times[i]) * 0.001f;
 						lastTime = times[i];
 					} else
-						newTimes[i] = lastTime;
+						newTimes[i] = ((float) lastTime) * 0.001f;
 				}
 
-				FrameAnimationImpl frameAnimation = new FrameAnimationImpl(time, newTimes);
+				FrameAnimationImpl frameAnimation = new FrameAnimationImpl((float) time * 0.001f, newTimes);
 				frameAnimation.setLoop(loop);
 
 				return new Animation(frames, frameAnimation);
