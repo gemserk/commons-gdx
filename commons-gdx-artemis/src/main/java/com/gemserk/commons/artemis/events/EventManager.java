@@ -13,18 +13,29 @@ public interface EventManager {
 	void registerEvent(String id, Object source);
 
 	/**
-	 * Removes all the registered events.
+	 * Registers a new EventListener to listen the specified eventId.
 	 */
-	void clear();
+	void register(String eventId, EventListener listener);
 
 	/**
-	 * Returns how many registered events are.
+	 * Unregisters the specified EventListener from listening events with the specified eventId.
 	 */
-	int getEventCount();
+	void unregister(String eventId, EventListener listener);
 
 	/**
-	 * Returns the event registered in that index?
+	 * Unregisters the specified EventListener from listening all events it was registered for.
 	 */
-	Event getEvent(int index);
+	void unregister(EventListener listener);
+
+	/**
+	 * Process the specified Event by calling all the EventListeners registered for it.
+	 */
+	void process(Event event);
+
+	/**
+	 * Process all events from registered using the EventManager interface.
+	 */
+	void process();
+
 
 }

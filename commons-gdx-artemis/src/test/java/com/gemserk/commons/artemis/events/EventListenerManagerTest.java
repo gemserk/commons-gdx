@@ -23,7 +23,7 @@ public class EventListenerManagerTest {
 	@Test
 	public void testRegisterListenerForEventAndProcess() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventListenerManager eventListenerManagerImpl = new EventListenerManagerImpl();
+		EventManager eventListenerManagerImpl = new EventListenerManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");
@@ -37,7 +37,7 @@ public class EventListenerManagerTest {
 	@Test
 	public void shouldNotCallListenerIfEventIdDontMatch() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventListenerManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");
@@ -51,7 +51,7 @@ public class EventListenerManagerTest {
 	@Test
 	public void shouldNotCallListenerIfItWasUnregisteredForThatEvent() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventListenerManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");
@@ -66,7 +66,7 @@ public class EventListenerManagerTest {
 	@Test
 	public void shouldRegisterOnlyOnceForAnEvent() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventListenerManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");
@@ -82,7 +82,7 @@ public class EventListenerManagerTest {
 	@Test
 	public void shouldNotCallListenerIfItWasUnregisteredForAllEvents() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventListenerManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventListenerManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");

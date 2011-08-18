@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gemserk.commons.artemis.events.Event;
-import com.gemserk.commons.artemis.events.EventListenerManager;
+import com.gemserk.commons.artemis.events.EventManager;
 import com.gemserk.componentsengine.utils.Pool;
 import com.gemserk.componentsengine.utils.Pool.PoolObjectFactory;
 
@@ -40,9 +40,9 @@ public class EventListenerReflectionRegistrator {
 	// this doesn't allows multiple event listeners per method
 	private final Map<Object, Map<Method, InvokeMethodEventListener>> createdMethodEventListeners = new HashMap<Object, Map<Method, InvokeMethodEventListener>>();
 
-	private final EventListenerManager eventListenerManager;
+	private final EventManager eventListenerManager;
 	
-	public EventListenerReflectionRegistrator(EventListenerManager eventListenerManager) {
+	public EventListenerReflectionRegistrator(EventManager eventListenerManager) {
 		this.eventListenerManager = eventListenerManager;
 	}
 	

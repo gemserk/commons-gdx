@@ -2,13 +2,13 @@ package com.gemserk.commons.artemis.scripts;
 
 import com.artemis.Entity;
 import com.artemis.World;
-import com.gemserk.commons.artemis.events.EventListenerManager;
+import com.gemserk.commons.artemis.events.EventManager;
 
 public class EventSystemScript extends ScriptJavaImpl {
 	
-	private final EventListenerManager eventListenerManager;
+	private final EventManager eventListenerManager;
 	
-	public EventSystemScript(EventListenerManager eventListenerManager) {
+	public EventSystemScript(EventManager eventListenerManager) {
 		this.eventListenerManager = eventListenerManager;
 	}
 	
