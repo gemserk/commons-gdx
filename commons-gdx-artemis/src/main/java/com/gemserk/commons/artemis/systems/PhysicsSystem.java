@@ -28,9 +28,21 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		physicsContactListener = new PhysicsContactListener();
 	}
 
+	float time;
+
+	// update physics engine at 60Hz
+
+	float physicsDelta = 1f / 60f;
+
 	@Override
 	protected void begin() {
-		physicsWorld.step(Gdx.app.getGraphics().getDeltaTime(), 7, 7);
+		time += Gdx.app.getGraphics().getDeltaTime();
+
+		if (time < physicsDelta)
+			return;
+
+		physicsWorld.step(physicsDelta, 6, 2);
+		time -= physicsDelta;
 	}
 
 	@Override
