@@ -18,7 +18,12 @@ public class RenderLayers {
 	}
 
 	public void add(String layerName, RenderLayer layer) {
+		this.add(layerName, layer, true);
+	}
+	
+	public void add(String layerName, RenderLayer layer, boolean enabled) {
 		renderLayers.put(layerName, layer);
+		layer.setEnabled(enabled);
 	}
 
 	public RenderLayer get(String layerName) {
