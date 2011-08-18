@@ -1,30 +1,29 @@
 package com.gemserk.commons.artemis.systems;
 
-import java.util.ArrayList;
-
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.artemis.components.RenderableComponent;
+import com.gemserk.commons.artemis.render.RenderLayers;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
 public class RenderableSystem extends EntitySystem implements Disposable {
 	
-	private ArrayList<RenderLayer> renderLayers;
+	private RenderLayers renderLayers;
 
 	@SuppressWarnings("unchecked")
 	public RenderableSystem() {
 		super(RenderableComponent.class);
 		// default layers
-		renderLayers = new ArrayList<RenderLayer>();
-		renderLayers.add(new RenderLayerSpriteBatchImpl(-1000, 1000, new Libgdx2dCameraTransformImpl()));
+		renderLayers = new RenderLayers();
+		renderLayers.add("default", new RenderLayerSpriteBatchImpl(-1000, 1000, new Libgdx2dCameraTransformImpl()));
 	}
 
 	@SuppressWarnings("unchecked")
-	public RenderableSystem(ArrayList<RenderLayer> renderLayerSpriteBatchImpls) {
+	public RenderableSystem(RenderLayers renderLayers) {
 		super(RenderableComponent.class);
-		this.renderLayers = renderLayerSpriteBatchImpls;
+		this.renderLayers = renderLayers;
 	}
 
 	@Override
@@ -41,9 +40,9 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	protected void added(Entity entity) {
 		// order the entity in the Layer, probably the same inside the layer
 		for (int i = 0; i < renderLayers.size(); i++) {
-			RenderLayer renderLayerSpriteBatchImpl = renderLayers.get(i);
-			if (renderLayerSpriteBatchImpl.belongs(entity)) {
-				renderLayerSpriteBatchImpl.add(entity);
+			RenderLayer renderLayer = renderLayers.get(i);
+			if (renderLayer.belongs(entity)) {
+				renderLayer.add(entity);
 				return;
 			}
 		}
@@ -53,9 +52,9 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	protected void removed(Entity entity) {
 		// remove the order
 		for (int i = 0; i < renderLayers.size(); i++) {
-			RenderLayer renderLayerSpriteBatchImpl = renderLayers.get(i);
-			if (renderLayerSpriteBatchImpl.belongs(entity)) {
-				renderLayerSpriteBatchImpl.remove(entity);
+			RenderLayer renderLayer = renderLayers.get(i);
+			if (renderLayer.belongs(entity)) {
+				renderLayer.remove(entity);
 				return;
 			}
 		}
@@ -64,8 +63,8 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	@Override
 	public void initialize() {
 		for (int i = 0; i < renderLayers.size(); i++) {
-			RenderLayer renderLayerSpriteBatchImpl = renderLayers.get(i);
-			renderLayerSpriteBatchImpl.init();
+			RenderLayer renderLayer = renderLayers.get(i);
+			renderLayer.init();
 		}
 	}
 

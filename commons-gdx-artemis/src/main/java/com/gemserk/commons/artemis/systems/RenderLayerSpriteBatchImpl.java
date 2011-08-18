@@ -21,6 +21,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		this.camera = camera;
 		this.spriteBatch = spriteBatch;
 		this.orderedByLayerEntities = new OrderedByLayerEntities(minLayer, maxLayer);
+		this.enabled = true;
 	}
 
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera) {
