@@ -1,7 +1,5 @@
 package com.gemserk.commons.gdx;
 
-import com.gemserk.componentsengine.utils.timers.CountDownTimer;
-import com.gemserk.componentsengine.utils.timers.Timer;
 
 public class GameTransitions {
 
@@ -54,18 +52,15 @@ public class GameTransitions {
 	private static abstract class InternalScreenTransitionImpl implements InternalScreenTransition {
 
 		private final Screen screen;
-
 		private final TransitionHandler transitionHandler;
 
-		private Timer timer;
-
 		private boolean finished;
-
 		private boolean started;
+		
+		private float totalTime;
 
 		@Override
 		public void init() {
-			// timer.reset();
 			started = true;
 		}
 
@@ -84,7 +79,7 @@ public class GameTransitions {
 		public InternalScreenTransitionImpl(Screen screen, float time, TransitionHandler transitionHandler) {
 			this.screen = screen;
 			this.transitionHandler = transitionHandler;
-			this.timer = new CountDownTimer((int) (time * 1000f), true);
+			this.totalTime = time;
 		}
 
 		public void preRender(float delta) {
@@ -102,7 +97,10 @@ public class GameTransitions {
 		}
 
 		protected void internalUpdate(float delta) {
-			finished = timer.update((int)(delta * 1000f));
+			if (isFinished())
+				return;
+			totalTime -= delta;
+			finished = totalTime <= 0f;
 			getScreen().update();
 		}
 
