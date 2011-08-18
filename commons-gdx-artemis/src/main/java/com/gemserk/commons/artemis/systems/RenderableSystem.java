@@ -30,8 +30,10 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		for (int i = 0; i < renderLayerSpriteBatchImpls.size(); i++) {
-			RenderLayer renderLayerSpriteBatchImpl = renderLayerSpriteBatchImpls.get(i);
-			renderLayerSpriteBatchImpl.render();
+			RenderLayer renderLayer = renderLayerSpriteBatchImpls.get(i);
+			if (!renderLayer.isEnabled())
+				continue;
+			renderLayer.render();
 		}
 	}
 

@@ -15,6 +15,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	private final SpriteBatch spriteBatch;
 	private final OrderedByLayerEntities orderedByLayerEntities;
 	private final Libgdx2dCamera camera;
+	private boolean enabled;
 
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch) {
 		this.camera = camera;
@@ -64,6 +65,16 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			sprite.draw(spriteBatch);
 		}
 		spriteBatch.end();
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }
