@@ -177,10 +177,10 @@ public class TextButton implements Control {
 		boolean inside = MathUtils2.inside(bounds, libgdxPointer.getPosition());
 
 		if (wasInside && !inside)
-			Synchronizers.transition(color, Transitions.transitionBuilder(color).end(notOverColor).time(150));
+			Synchronizers.transition(color, Transitions.transitionBuilder(color).end(notOverColor).time(500));
 
 		if (!wasInside && inside) {
-			Synchronizers.transition(color, Transitions.transitionBuilder(color).end(overColor).time(150));
+			Synchronizers.transition(color, Transitions.transitionBuilder(color).end(overColor).time(500));
 		}
 
 		wasInside = inside;
