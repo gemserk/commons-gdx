@@ -77,14 +77,14 @@ public class GameTransitions {
 			return transitionHandler;
 		}
 
-		public InternalScreenTransitionImpl(Screen screen, int time) {
+		public InternalScreenTransitionImpl(Screen screen, float time) {
 			this(screen, time, new TransitionHandler());
 		}
 
-		public InternalScreenTransitionImpl(Screen screen, int time, TransitionHandler transitionHandler) {
+		public InternalScreenTransitionImpl(Screen screen, float time, TransitionHandler transitionHandler) {
 			this.screen = screen;
 			this.transitionHandler = transitionHandler;
-			this.timer = new CountDownTimer(time, true);
+			this.timer = new CountDownTimer((int) (time * 1000f), true);
 		}
 
 		public void preRender(float delta) {
@@ -114,11 +114,11 @@ public class GameTransitions {
 
 	public static class LeaveTransition extends InternalScreenTransitionImpl {
 
-		public LeaveTransition(Screen screen, int time) {
+		public LeaveTransition(Screen screen, float time) {
 			super(screen, time);
 		}
 
-		public LeaveTransition(Screen screen, int time, TransitionHandler transitionHandler) {
+		public LeaveTransition(Screen screen, float time, TransitionHandler transitionHandler) {
 			super(screen, time, transitionHandler);
 		}
 
@@ -140,11 +140,11 @@ public class GameTransitions {
 
 	public static class EnterTransition extends InternalScreenTransitionImpl {
 
-		public EnterTransition(Screen screen, int time) {
+		public EnterTransition(Screen screen, float time) {
 			super(screen, time);
 		}
 
-		public EnterTransition(Screen screen, int time, TransitionHandler transitionHandler) {
+		public EnterTransition(Screen screen, float time, TransitionHandler transitionHandler) {
 			super(screen, time, transitionHandler);
 		}
 
