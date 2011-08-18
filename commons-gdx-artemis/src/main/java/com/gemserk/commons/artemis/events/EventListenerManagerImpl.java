@@ -9,6 +9,7 @@ import com.gemserk.componentsengine.utils.RandomAccessSet;
 public class EventListenerManagerImpl implements EventListenerManager {
 
 	private final Map<String, RandomAccessSet<EventListener>> eventListeners = new HashMap<String, RandomAccessSet<EventListener>>();
+	private final EventManager eventManager = new EventManagerImpl();
 
 	@Override
 	public void register(String eventId, EventListener listener) {
@@ -48,5 +49,36 @@ public class EventListenerManagerImpl implements EventListenerManager {
 		for (int i = 0; i < listeners.size(); i++)
 			listeners.get(i).onEvent(event);
 	}
+	
+	@Override
+	public void process() {
+		for (int i = 0; i < eventManager.getEventCount(); i++) {
+			Event event = eventManager.getEvent(i);
+			process(event);
+		}
+		eventManager.clear();
+	}
+
+	@Override
+	public void registerEvent(String id, Object source) {
+		eventManager.registerEvent(id, source);
+	}
+
+	@Override
+	public void clear() {
+		eventManager.clear();		
+	}
+
+	@Override
+	public int getEventCount() {
+		return eventManager.getEventCount();		
+	}
+
+	@Override
+	public Event getEvent(int index) {
+		return eventManager.getEvent(index);
+	}
+
+
 
 }

@@ -6,7 +6,7 @@ package com.gemserk.commons.artemis.events;
  * @author acoppes
  * 
  */
-public interface EventListenerManager {
+public interface EventListenerManager extends EventManager {
 
 	/**
 	 * Registers a new EventListener to listen the specified eventId.
@@ -27,5 +27,10 @@ public interface EventListenerManager {
 	 * Process the specified Event by calling all the EventListeners registered for it.
 	 */
 	void process(Event event);
+
+	/**
+	 * Process all events from registered using the EventManager interface.
+	 */
+	void process();
 
 }

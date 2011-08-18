@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.gemserk.componentsengine.utils.Pool;
 import com.gemserk.componentsengine.utils.Pool.PoolObjectFactory;
 
-public class EventManagerImpl implements EventManager {
+class EventManagerImpl implements EventManager {
 
 	private final Pool<Event> eventPool = new Pool<Event>(new PoolObjectFactory<Event>() {
 		@Override
