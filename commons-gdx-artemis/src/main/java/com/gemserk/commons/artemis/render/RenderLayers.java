@@ -43,6 +43,13 @@ public class RenderLayers {
 			return;
 		layer.setEnabled(true);
 	}
+	
+	public void toggle(String layerName) {
+		RenderLayer layer = get(layerName);
+		if (layer == null)
+			return;
+		layer.setEnabled(!layer.isEnabled());
+	}
 
 	public int size() {
 		return renderLayers.size();

@@ -2,7 +2,7 @@ package com.gemserk.commons.signals;
 
 import java.util.ArrayList;
 
-class Signal {
+public class Signal {
 
 	String name;
 	ArrayList<SignalHandler> receivers;
