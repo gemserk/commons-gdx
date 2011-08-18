@@ -8,61 +8,20 @@ import org.hamcrest.core.IsSame;
 import org.junit.Test;
 
 import com.gemserk.commons.artemis.systems.RenderLayer;
-import com.gemserk.componentsengine.utils.RandomAccessMap;
 
 public class RenderLayersTest {
-
-	static class RenderLayers {
-
-		RandomAccessMap<String, RenderLayer> renderLayers;
-		RandomAccessMap<String, RenderLayer> disabledLayers;
-
-		public RenderLayers() {
-			renderLayers = new RandomAccessMap<String, RenderLayer>();
-			disabledLayers = new RandomAccessMap<String, RenderLayer>();
-		}
-
-		void add(String layerName, RenderLayer layer) {
-			renderLayers.put(layerName, layer);
-		}
-
-		void disable(String layerName) {
-			RenderLayer layer = renderLayers.remove(layerName);
-			if (layer == null)
-				return;
-			disabledLayers.put(layerName, layer);
-		}
-
-		void enable(String layerName) {
-			RenderLayer layer = disabledLayers.remove(layerName);
-			if (layer == null)
-				return;
-			renderLayers.put(layerName, layer);
-		}
-
-		int enabledLayerCount() {
-			return renderLayers.size();
-		}
-
-		RenderLayer getEnabledLayer(int layer) {
-			if (layer >= renderLayers.size())
-				return null;
-			return renderLayers.get(layer);
-		}
-
-	}
 
 	@Test
 	public void shouldStartWithNoLayers() {
 		RenderLayers renderLayers = new RenderLayers();
-		assertThat(renderLayers.enabledLayerCount(), IsEqual.equalTo(0));
+		assertThat(renderLayers.size(), IsEqual.equalTo(0));
 	}
 
 	@Test
 	public void shouldIncrementLayerCount() {
 		RenderLayers renderLayers = new RenderLayers();
 		renderLayers.add("LAYER", new MockRenderLayer());
-		assertThat(renderLayers.enabledLayerCount(), IsEqual.equalTo(1));
+		assertThat(renderLayers.size(), IsEqual.equalTo(1));
 	}
 
 	@Test
@@ -70,18 +29,19 @@ public class RenderLayersTest {
 		RenderLayers renderLayers = new RenderLayers();
 		RenderLayer renderLayer = new MockRenderLayer();
 		renderLayers.add("LAYER", renderLayer);
-		assertThat(renderLayers.getEnabledLayer(0), IsNull.notNullValue());
-		assertThat(renderLayers.getEnabledLayer(0), IsSame.sameInstance(renderLayer));
+		assertThat(renderLayers.get(0), IsNull.notNullValue());
+		assertThat(renderLayers.get(0), IsSame.sameInstance(renderLayer));
 	}
 
 	@Test
-	public void shouldNotReturnAddedLayerAndDisabled() {
+	public void shouldReturnAddedLayerAndDisabled() {
 		RenderLayers renderLayers = new RenderLayers();
 		RenderLayer renderLayer = new MockRenderLayer();
 		renderLayers.add("LAYER", renderLayer);
 		renderLayers.disable("LAYER");
-		assertThat(renderLayers.enabledLayerCount(), IsEqual.equalTo(0));
-		assertThat(renderLayers.getEnabledLayer(0), IsNull.nullValue());
+		assertThat(renderLayers.size(), IsEqual.equalTo(1));
+		assertThat(renderLayers.get(0), IsNull.notNullValue());
+		assertThat(renderLayers.get(0), IsSame.sameInstance(renderLayer));
 	}
 
 	@Test
@@ -91,20 +51,9 @@ public class RenderLayersTest {
 		renderLayers.add("LAYER", renderLayer);
 		renderLayers.disable("LAYER");
 		renderLayers.enable("LAYER");
-		assertThat(renderLayers.enabledLayerCount(), IsEqual.equalTo(1));
-		assertThat(renderLayers.getEnabledLayer(0), IsNull.notNullValue());
-		assertThat(renderLayers.getEnabledLayer(0), IsSame.sameInstance(renderLayer));
-	}
-
-	@Test
-	public void shouldReturnAddedLayerAndDisabledOther() {
-		RenderLayers renderLayers = new RenderLayers();
-		RenderLayer renderLayer = new MockRenderLayer();
-		renderLayers.add("LAYER", renderLayer);
-		renderLayers.disable("LAYER2");
-		assertThat(renderLayers.enabledLayerCount(), IsEqual.equalTo(1));
-		assertThat(renderLayers.getEnabledLayer(0), IsNull.notNullValue());
-		assertThat(renderLayers.getEnabledLayer(0), IsSame.sameInstance(renderLayer));
+		assertThat(renderLayers.size(), IsEqual.equalTo(1));
+		assertThat(renderLayers.get(0), IsNull.notNullValue());
+		assertThat(renderLayers.get(0), IsSame.sameInstance(renderLayer));
 	}
 
 }

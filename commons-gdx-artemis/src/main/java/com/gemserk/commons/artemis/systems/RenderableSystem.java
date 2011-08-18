@@ -11,26 +11,26 @@ import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
 public class RenderableSystem extends EntitySystem implements Disposable {
 	
-	private ArrayList<RenderLayer> renderLayerSpriteBatchImpls;
+	private ArrayList<RenderLayer> renderLayers;
 
 	@SuppressWarnings("unchecked")
 	public RenderableSystem() {
 		super(RenderableComponent.class);
 		// default layers
-		renderLayerSpriteBatchImpls = new ArrayList<RenderLayer>();
-		renderLayerSpriteBatchImpls.add(new RenderLayerSpriteBatchImpl(-1000, 1000, new Libgdx2dCameraTransformImpl()));
+		renderLayers = new ArrayList<RenderLayer>();
+		renderLayers.add(new RenderLayerSpriteBatchImpl(-1000, 1000, new Libgdx2dCameraTransformImpl()));
 	}
 
 	@SuppressWarnings("unchecked")
 	public RenderableSystem(ArrayList<RenderLayer> renderLayerSpriteBatchImpls) {
 		super(RenderableComponent.class);
-		this.renderLayerSpriteBatchImpls = renderLayerSpriteBatchImpls;
+		this.renderLayers = renderLayerSpriteBatchImpls;
 	}
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-		for (int i = 0; i < renderLayerSpriteBatchImpls.size(); i++) {
-			RenderLayer renderLayer = renderLayerSpriteBatchImpls.get(i);
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayer = renderLayers.get(i);
 			if (!renderLayer.isEnabled())
 				continue;
 			renderLayer.render();
@@ -40,8 +40,8 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	@Override
 	protected void added(Entity entity) {
 		// order the entity in the Layer, probably the same inside the layer
-		for (int i = 0; i < renderLayerSpriteBatchImpls.size(); i++) {
-			RenderLayer renderLayerSpriteBatchImpl = renderLayerSpriteBatchImpls.get(i);
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayerSpriteBatchImpl = renderLayers.get(i);
 			if (renderLayerSpriteBatchImpl.belongs(entity)) {
 				renderLayerSpriteBatchImpl.add(entity);
 				return;
@@ -52,8 +52,8 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	@Override
 	protected void removed(Entity entity) {
 		// remove the order
-		for (int i = 0; i < renderLayerSpriteBatchImpls.size(); i++) {
-			RenderLayer renderLayerSpriteBatchImpl = renderLayerSpriteBatchImpls.get(i);
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayerSpriteBatchImpl = renderLayers.get(i);
 			if (renderLayerSpriteBatchImpl.belongs(entity)) {
 				renderLayerSpriteBatchImpl.remove(entity);
 				return;
@@ -63,8 +63,8 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 
 	@Override
 	public void initialize() {
-		for (int i = 0; i < renderLayerSpriteBatchImpls.size(); i++) {
-			RenderLayer renderLayerSpriteBatchImpl = renderLayerSpriteBatchImpls.get(i);
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayerSpriteBatchImpl = renderLayers.get(i);
 			renderLayerSpriteBatchImpl.init();
 		}
 	}
@@ -76,8 +76,8 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 
 	@Override
 	public void dispose() {
-		for (int i = 0; i < renderLayerSpriteBatchImpls.size(); i++) {
-			RenderLayer renderLayerSpriteBatchImpl = renderLayerSpriteBatchImpls.get(i);
+		for (int i = 0; i < renderLayers.size(); i++) {
+			RenderLayer renderLayerSpriteBatchImpl = renderLayers.get(i);
 			renderLayerSpriteBatchImpl.dispose();
 		}
 	}
