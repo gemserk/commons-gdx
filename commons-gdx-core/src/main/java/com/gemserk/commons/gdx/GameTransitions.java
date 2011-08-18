@@ -184,7 +184,7 @@ public class GameTransitions {
 			return currentTransition;
 		}
 
-		public ScreenTransition(Screen start, Screen end, int timeStart, int timeEnd) {
+		public ScreenTransition(Screen start, Screen end, float timeStart, float timeEnd) {
 			this(new LeaveTransition(start, timeStart), new EnterTransition(end, timeEnd));
 		}
 

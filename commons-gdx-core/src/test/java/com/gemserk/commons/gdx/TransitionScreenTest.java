@@ -78,7 +78,7 @@ public class TransitionScreenTest {
 		MockScreen screenA = new MockScreen();
 		MockScreen screenB = new MockScreen();
 
-		ScreenTransition screenTransition = new ScreenTransition(screenA, screenB, 200, 500);
+		ScreenTransition screenTransition = new ScreenTransition(screenA, screenB, 0.2f, 0.5f);
 
 		screenTransition.start();
 		screenTransition.update(201 * 0.001f);
