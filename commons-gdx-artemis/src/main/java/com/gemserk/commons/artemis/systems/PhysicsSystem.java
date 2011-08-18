@@ -30,7 +30,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 	@Override
 	protected void begin() {
-		physicsWorld.step(Gdx.app.getGraphics().getDeltaTime(), 3, 3);
+		physicsWorld.step(Gdx.app.getGraphics().getDeltaTime(), 7, 7);
 	}
 
 	@Override
