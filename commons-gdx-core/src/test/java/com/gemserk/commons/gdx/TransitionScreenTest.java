@@ -81,15 +81,15 @@ public class TransitionScreenTest {
 		ScreenTransition screenTransition = new ScreenTransition(screenA, screenB, 200, 500);
 
 		screenTransition.start();
-		screenTransition.update(201);
+		screenTransition.update(201 * 0.001f);
 
 		assertThat(screenTransition.getCurrentScreen(), IsSame.sameInstance((Screen) screenB));
 		assertThat(screenTransition.isFinished(), IsEqual.equalTo(false));
 
-		screenTransition.update(490);
+		screenTransition.update(490 * 0.001f);
 		assertThat(screenTransition.isFinished(), IsEqual.equalTo(false));
 
-		screenTransition.update(11);
+		screenTransition.update(11 * 0.001f);
 		assertThat(screenTransition.isFinished(), IsEqual.equalTo(true));
 	}
 

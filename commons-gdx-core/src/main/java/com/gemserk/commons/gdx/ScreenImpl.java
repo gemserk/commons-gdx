@@ -16,6 +16,12 @@ public class ScreenImpl implements Screen {
 
 	private boolean inited = false;
 
+	private float delta;
+	
+	protected float getDelta() {
+		return delta;
+	}
+
 	public ScreenImpl(GameState gameState) {
 		this.gameState = gameState;
 	}
@@ -43,17 +49,19 @@ public class ScreenImpl implements Screen {
 	}
 
 	@Override
-	public void render(int delta) {
+	public void render() {
 		if (!visible)
 			return;
-		gameState.render(delta);
+		gameState.setDelta(this.delta);
+		gameState.render();
 	}
 
 	@Override
-	public void update(int delta) {
+	public void update() {
 		if (paused)
 			return;
-		gameState.update(delta);
+		gameState.setDelta(this.delta);
+		gameState.update();
 	}
 
 	@Override
@@ -91,6 +99,11 @@ public class ScreenImpl implements Screen {
 			return;
 		paused = false;
 		gameState.resume();
+	}
+
+	@Override
+	public void setDelta(float delta) {
+		this.delta = delta;
 	}
 
 }

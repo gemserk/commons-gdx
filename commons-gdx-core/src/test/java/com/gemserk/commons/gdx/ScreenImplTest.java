@@ -12,7 +12,7 @@ public class ScreenImplTest {
 		MockGameState gameState = new MockGameState();
 		ScreenImpl screen = new ScreenImpl(gameState);
 		screen.hide();
-		screen.render(10);
+		screen.render();
 		assertThat(gameState.renderCalled, IsEqual.equalTo(false));
 	}
 	
@@ -21,7 +21,7 @@ public class ScreenImplTest {
 		MockGameState gameState = new MockGameState();
 		ScreenImpl screen = new ScreenImpl(gameState);
 		screen.show();
-		screen.render(10);
+		screen.render();
 		assertThat(gameState.renderCalled, IsEqual.equalTo(true));
 	}
 	
@@ -30,7 +30,7 @@ public class ScreenImplTest {
 		MockGameState gameState = new MockGameState();
 		ScreenImpl screen = new ScreenImpl(gameState);
 		screen.pause();
-		screen.update(10);
+		screen.update();
 		assertThat(gameState.updateCalled, IsEqual.equalTo(false));
 	}
 	
@@ -39,7 +39,7 @@ public class ScreenImplTest {
 		MockGameState gameState = new MockGameState();
 		ScreenImpl screen = new ScreenImpl(gameState);
 		screen.resume();
-		screen.update(10);
+		screen.update();
 		assertThat(gameState.updateCalled, IsEqual.equalTo(true));
 	}
 

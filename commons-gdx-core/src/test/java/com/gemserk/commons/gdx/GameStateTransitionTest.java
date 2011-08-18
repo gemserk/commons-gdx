@@ -40,7 +40,7 @@ public class GameStateTransitionTest {
 		}
 
 		@Override
-		public void set(GameState t, int time) {
+		public void set(GameState t, float time) {
 			if (current == null || time <= 0) {
 				current = t;
 				started = true;

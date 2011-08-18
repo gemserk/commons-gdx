@@ -6,6 +6,8 @@ class MockGameState implements GameState {
 	
 	boolean renderCalled = false;
 
+	private float delta;
+
 	@Override
 	public void init() {
 
@@ -17,12 +19,12 @@ class MockGameState implements GameState {
 	}
 
 	@Override
-	public void update(int delta) {
+	public void update() {
 		updateCalled = true;
 	}
 
 	@Override
-	public void render(int delta) {
+	public void render() {
 		renderCalled = true;
 	}
 
@@ -44,6 +46,11 @@ class MockGameState implements GameState {
 	@Override
 	public void hide() {
 		
+	}
+
+	@Override
+	public void setDelta(float delta) {
+		this.delta = delta;
 	}
 
 }

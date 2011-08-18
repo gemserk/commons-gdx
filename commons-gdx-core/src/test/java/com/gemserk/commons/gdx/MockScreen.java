@@ -18,13 +18,15 @@ class MockScreen implements Screen {
 	
 	boolean hideCalled = false;
 
+	private float delta;
+
 	@Override
-	public void update(int delta) {
+	public void update() {
 		updateCalled = true;
 	}
 
 	@Override
-	public void render(int delta) {
+	public void render() {
 		renderCalled = true;
 	}
 
@@ -67,6 +69,11 @@ class MockScreen implements Screen {
 	public void restart() {
 		dispose();
 		init();
+	}
+
+	@Override
+	public void setDelta(float delta) {
+		this.delta = delta;
 	}
 
 }

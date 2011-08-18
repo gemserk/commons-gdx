@@ -16,10 +16,12 @@ public interface Screen {
 	
 	void resume();
 
-	void update(int delta);
+	void update();
 	
-	void render(int delta);
+	void render();
 	
 	void resize(int width, int height);
 
+	void setDelta(float delta);
+	
 }

@@ -30,7 +30,7 @@ public class GameTransitions {
 		 * 
 		 * @param delta
 		 */
-		void preRender(int delta);
+		void preRender(float delta);
 
 		/**
 		 * Called after the screen.render() was called.
@@ -38,9 +38,9 @@ public class GameTransitions {
 		 * @param delta
 		 *            the delta time in ms
 		 */
-		void postRender(int delta);
+		void postRender(float delta);
 
-		void update(int delta);
+		void update(float delta);
 
 		/**
 		 * Returns true if the transition ended, false otherwise.
@@ -87,23 +87,23 @@ public class GameTransitions {
 			this.timer = new CountDownTimer(time, true);
 		}
 
-		public void preRender(int delta) {
+		public void preRender(float delta) {
 
 		}
 
-		public void postRender(int delta) {
+		public void postRender(float delta) {
 
 		}
 
-		public void update(int delta) {
+		public void update(float delta) {
 			if (!started)
 				return;
 			internalUpdate(delta);
 		}
 
-		protected void internalUpdate(int delta) {
-			finished = timer.update(delta);
-			getScreen().update(delta);
+		protected void internalUpdate(float delta) {
+			finished = timer.update((int)(delta * 1000f));
+			getScreen().update();
 		}
 
 		public boolean isFinished() {
@@ -198,14 +198,14 @@ public class GameTransitions {
 			leaveTransition.init();
 		}
 
-		public void update(int delta) {
+		public void update(float delta) {
 			if (isFinished())
 				return;
 			updateEnterTransition(delta);
 			updateLeaveTransition(delta);
 		}
 
-		private void updateLeaveTransition(int delta) {
+		private void updateLeaveTransition(float delta) {
 			if (leaveTransition.isFinished())
 				return;
 
@@ -217,7 +217,7 @@ public class GameTransitions {
 			}
 		}
 
-		private void updateEnterTransition(int delta) {
+		private void updateEnterTransition(float delta) {
 			if (!leaveTransition.isFinished())
 				return;
 
@@ -247,18 +247,18 @@ public class GameTransitions {
 		}
 
 		@Override
-		public void update(int delta) {
-			super.update(delta);
-			screenTransition.update(delta);
+		public void update() {
+			super.update();
+			screenTransition.update(getDelta());
 		}
 
 		@Override
-		public void render(int delta) {
-			super.render(delta);
+		public void render() {
+			super.render();
 			InternalScreenTransition transition = screenTransition.getCurrentTransition();
-			transition.preRender(delta);
-			screenTransition.getCurrentScreen().render(delta);
-			transition.postRender(delta);
+			transition.preRender(getDelta());
+			screenTransition.getCurrentScreen().render();
+			transition.postRender(getDelta());
 		}
 
 	}

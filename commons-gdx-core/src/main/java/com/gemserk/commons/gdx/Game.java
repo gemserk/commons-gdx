@@ -36,12 +36,13 @@ public class Game implements ApplicationListener {
 	public void render() {
 		if (screen == null)
 			return;
-		screen.update(getDelta());
-		screen.render(getDelta());
+		screen.setDelta(Gdx.graphics.getDeltaTime());
+		screen.update();
+		screen.render();
 	}
 
-	protected int getDelta() {
-		return (int) (Gdx.graphics.getDeltaTime() * 1000f);
+	protected float getDeltaInMs() {
+		return Gdx.graphics.getDeltaTime() * 1000f;
 	}
 
 	@Override

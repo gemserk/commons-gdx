@@ -33,14 +33,14 @@ public class InternalScreen extends ScreenAdapter {
 	public void internalRender(float delta) {
 		super.internalRender(delta);
 		init();
-		gameState.render((int) (delta * 1000f));
+		gameState.render();
 	}
 
 	@Override
 	public void internalUpdate(float delta) {
 		super.internalUpdate(delta);
 		init();
-		gameState.update((int) (delta * 1000f));
+		gameState.update();
 	}
 
 	@Override

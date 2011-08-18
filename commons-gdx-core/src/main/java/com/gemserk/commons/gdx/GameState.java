@@ -20,8 +20,10 @@ public interface GameState {
 	
 	void hide();
 	
-	void update(int delta);
+	void update();
 	
-	void render(int delta);
+	void render();
+	
+	void setDelta(float delta);
 
 }
