@@ -4,11 +4,11 @@
 	<parent>
 		<groupId>com.gemserk.commons.gdx</groupId>
 		<artifactId>commons-gdx</artifactId>
-		<version>0.0.4-SNAPSHOT</version>
+		<version>0.0.5-SNAPSHOT</version>
 	</parent>
 	<groupId>com.gemserk.commons.gdx</groupId>
 	<artifactId>commons-gdx-core</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Common Gdx - Core module</name>
 	<description>Common utitilites to be used with libgdx</description>
