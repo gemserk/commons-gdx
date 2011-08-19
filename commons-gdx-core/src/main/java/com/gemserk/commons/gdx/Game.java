@@ -7,17 +7,6 @@ public class Game implements ApplicationListener {
 
 	protected Screen screen;
 
-	private boolean fixMaxDelta = true;
-	private float maxDelta = 1f / 30f;
-
-	public void setFixMaxDelta(boolean fixMaxDelta) {
-		this.fixMaxDelta = fixMaxDelta;
-	}
-
-	public void setMaxDelta(float maxDelta) {
-		this.maxDelta = maxDelta;
-	}
-
 	public Screen getScreen() {
 		return screen;
 	}
@@ -42,26 +31,49 @@ public class Game implements ApplicationListener {
 		if (screen != null)
 			screen.resume();
 	}
+	
+	// used to fix the timestep http://gafferongames.com/game-physics/fix-your-timestep/
+	private float dt = 0.01f;
+	private float accumulator;
+	
+	public void setDt(float dt) {
+		this.dt = dt;
+	}
 
 	@Override
 	public void render() {
 		if (screen == null)
 			return;
 
-		float delta = getDelta();
+		// float t = 0f;
+		float frameTime = Gdx.graphics.getDeltaTime();
 
-		GlobalTime.setDelta(delta);
-		screen.setDelta(delta);
+		// note: max frame time to avoid spiral of death
+		if (frameTime > 0.25f)
+			frameTime = 0.25f;
 
-		screen.update();
+		accumulator += frameTime;
+
+		while (accumulator >= dt) {
+			GlobalTime.setDelta(dt);
+
+			screen.setDelta(dt);
+			screen.update();
+
+			// previousState = currentState;
+			// integrate( currentState, t, dt );
+
+			// t += dt;
+			accumulator -= dt;
+		}
+
+		// const double alpha = accumulator / dt;
+		//
+		// State state = currentState*alpha + previousState * ( 1.0 - alpha );
+		//
+		// render( state );
+
 		screen.render();
-	}
-
-	private float getDelta() {
-		float delta = Gdx.graphics.getDeltaTime();
-		if (fixMaxDelta && delta > maxDelta)
-			delta = maxDelta;
-		return delta;
 	}
 
 	@Override

@@ -2,13 +2,13 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.gemserk.commons.artemis.components.AntiGravityComponent;
 import com.gemserk.commons.artemis.components.LinearVelocityLimitComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
+import com.gemserk.commons.gdx.GlobalTime;
 
 public class PhysicsSystem extends EntityProcessingSystem implements ActivableSystem {
 
@@ -28,21 +28,9 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		physicsContactListener = new PhysicsContactListener();
 	}
 
-	float time;
-
-	// update physics engine at 60Hz
-
-	float physicsDelta = 1f / 60f;
-
 	@Override
 	protected void begin() {
-		time += Gdx.app.getGraphics().getDeltaTime();
-
-		if (time < physicsDelta)
-			return;
-
-		physicsWorld.step(physicsDelta, 6, 2);
-		time -= physicsDelta;
+		physicsWorld.step(GlobalTime.getDelta(), 6, 2);
 	}
 
 	@Override
