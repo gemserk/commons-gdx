@@ -16,7 +16,7 @@ import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.commons.artemis.templates.EntityFactory;
 import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
-import com.gemserk.commons.artemis.templates.EntityTemplateWithDefaultParameters;
+import com.gemserk.commons.artemis.templates.EntityTemplateImpl;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.componentsengine.utils.Container;
@@ -86,7 +86,7 @@ public class EntityTemplateTest {
 		}
 	}
 
-	class ShipEntityTemplate extends EntityTemplateWithDefaultParameters {
+	class ShipEntityTemplate extends EntityTemplateImpl {
 
 		public ShipEntityTemplate() {
 			parameters.put("health", new Container(100f, 100f));
@@ -105,7 +105,7 @@ public class EntityTemplateTest {
 
 	}
 
-	class WeaponEntityTemplate extends EntityTemplateWithDefaultParameters {
+	class WeaponEntityTemplate extends EntityTemplateImpl {
 
 		public WeaponEntityTemplate() {
 			parameters.put("damage", new Float(5f));
@@ -127,7 +127,7 @@ public class EntityTemplateTest {
 
 	}
 
-	class BulletEntityTemplate extends EntityTemplateWithDefaultParameters {
+	class BulletEntityTemplate extends EntityTemplateImpl {
 
 		// it is the template responsibility to use default parameters or not.
 
