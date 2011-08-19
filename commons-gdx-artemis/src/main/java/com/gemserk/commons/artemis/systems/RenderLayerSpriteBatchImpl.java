@@ -60,6 +60,9 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerEntities.size(); i++) {
 			Entity entity = orderedByLayerEntities.get(i);
+			RenderableComponent renderableComponent = entity.getComponent(renderableComponentClass);
+			if (!renderableComponent.isVisible())
+				continue;
 			SpriteComponent spriteComponent = entity.getComponent(spriteComponentClass);
 			Sprite sprite = spriteComponent.getSprite();
 			sprite.setColor(spriteComponent.getColor());
