@@ -1,6 +1,5 @@
 package com.gemserk.commons.artemis.templates;
 
-import com.artemis.Entity;
 import com.gemserk.componentsengine.utils.Parameters;
 
 
@@ -9,9 +8,8 @@ public abstract class EntityTemplateWithDefaultParameters implements EntityTempl
 	protected ParametersWithFallBack parameters = new ParametersWithFallBack();
 
 	@Override
-	public void apply(Entity entity, Parameters parameters) {
+	public void setParameters(Parameters parameters) {
 		this.parameters.setParameters(parameters);
-		apply(entity);
 	}
 
 }

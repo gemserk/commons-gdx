@@ -16,11 +16,10 @@ import com.gemserk.commons.artemis.scripts.ScriptJavaImpl;
 import com.gemserk.commons.artemis.templates.EntityFactory;
 import com.gemserk.commons.artemis.templates.EntityFactoryImpl;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
-import com.gemserk.commons.artemis.templates.ParametersWithFallBack;
+import com.gemserk.commons.artemis.templates.EntityTemplateWithDefaultParameters;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.games.SpatialImpl;
 import com.gemserk.componentsengine.utils.Container;
-import com.gemserk.componentsengine.utils.Parameters;
 import com.gemserk.componentsengine.utils.ParametersWrapper;
 
 public class EntityTemplateTest {
@@ -87,21 +86,14 @@ public class EntityTemplateTest {
 		}
 	}
 
-	class ShipEntityTemplate implements EntityTemplate {
-
-		Parameters defaultParameters = new ParametersWrapper();
+	class ShipEntityTemplate extends EntityTemplateWithDefaultParameters {
 
 		public ShipEntityTemplate() {
-			defaultParameters.put("health", new Container(100f, 100f));
+			parameters.put("health", new Container(100f, 100f));
 		}
 
 		@Override
 		public void apply(Entity entity) {
-			apply(entity, defaultParameters);
-		}
-
-		@Override
-		public void apply(Entity entity, Parameters parameters) {
 			Float x = parameters.get("x", 0f);
 			Float y = parameters.get("y", 0f);
 
@@ -113,23 +105,16 @@ public class EntityTemplateTest {
 
 	}
 
-	class WeaponEntityTemplate implements EntityTemplate {
-
-		Parameters defaultParameters = new ParametersWrapper();
+	class WeaponEntityTemplate extends EntityTemplateWithDefaultParameters {
 
 		public WeaponEntityTemplate() {
-			defaultParameters.put("damage", new Float(5f));
-			defaultParameters.put("script", new ScriptJavaImpl());
-			defaultParameters.put("owner", null);
+			parameters.put("damage", new Float(5f));
+			parameters.put("script", new ScriptJavaImpl());
+			parameters.put("owner", null);
 		}
 
 		@Override
 		public void apply(Entity entity) {
-			apply(entity, defaultParameters);
-		}
-
-		@Override
-		public void apply(Entity entity, Parameters parameters) {
 			Float damage = parameters.get("damage");
 			EntityTemplate bulletTemplate = parameters.get("bulletTemplate");
 			Script script = parameters.get("script");
@@ -142,27 +127,19 @@ public class EntityTemplateTest {
 
 	}
 
-	class BulletEntityTemplate implements EntityTemplate {
+	class BulletEntityTemplate extends EntityTemplateWithDefaultParameters {
 
 		// it is the template responsibility to use default parameters or not.
-		
-		ParametersWithFallBack defaultParameters = new ParametersWithFallBack();
 
 		public BulletEntityTemplate() {
-			defaultParameters.put("damage", new Float(5f));
-			defaultParameters.put("position", new Vector2());
+			parameters.put("damage", new Float(5f));
+			parameters.put("position", new Vector2());
 		}
 
 		@Override
 		public void apply(Entity entity) {
-			apply(entity, defaultParameters);
-		}
-
-		@Override
-		public void apply(Entity entity, Parameters parameters) {
-			defaultParameters.setParameters(parameters);
-			Float damage = defaultParameters.get("damage");
-			Vector2 position = defaultParameters.get("position");
+			Float damage = parameters.get("damage");
+			Vector2 position = parameters.get("position");
 			entity.addComponent(new DamageComponent(damage));
 			entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, 1f, 1f, 0f)));
 		}
@@ -173,9 +150,9 @@ public class EntityTemplateTest {
 	public void test() {
 		EntityTemplate customShipTemplate = new ShipEntityTemplate() {
 			{
-				defaultParameters.put("x", 100f);
-				defaultParameters.put("y", 200f);
-				defaultParameters.put("health", new Container(53f, 250f));
+				parameters.put("x", 100f);
+				parameters.put("y", 200f);
+				parameters.put("health", new Container(53f, 250f));
 			}
 		};
 
@@ -201,7 +178,7 @@ public class EntityTemplateTest {
 		// default parameters through a custom template, could be created when the level starts with custom level information
 		EntityTemplate customShipTemplate = new ShipEntityTemplate() {
 			{
-				defaultParameters.put("health", new Container(250f, 250f));
+				parameters.put("health", new Container(250f, 250f));
 			}
 		};
 
@@ -272,8 +249,8 @@ public class EntityTemplateTest {
 
 		EntityTemplate shipTemplate = new ShipEntityTemplate() {
 			{
-				defaultParameters.put("x", 750f);
-				defaultParameters.put("y", 125f);
+				parameters.put("x", 750f);
+				parameters.put("y", 125f);
 			}
 		};
 		Entity ship = entityFactory.instantiate(shipTemplate);
@@ -319,7 +296,7 @@ public class EntityTemplateTest {
 
 		ScriptComponent scriptComponent = weapon.getComponent(ScriptComponent.class);
 		Script[] scripts = scriptComponent.getScripts();
-		for (int i = 0; i < scripts.length; i++) 
+		for (int i = 0; i < scripts.length; i++)
 			scripts[i].update(world, weapon);
 	}
 

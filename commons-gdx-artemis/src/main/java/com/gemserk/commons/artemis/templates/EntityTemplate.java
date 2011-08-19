@@ -14,13 +14,11 @@ public interface EntityTemplate {
 	void apply(Entity entity);
 
 	/**
-	 * Applies the current template to the specified Entity.
+	 * Sets the parameters to be used when applying the template
 	 * 
-	 * @param entity
-	 *            The Entity to apply the template to.
 	 * @param parameters
 	 *            The Parameters to use when applying the template.
 	 */
-	void apply(Entity entity, Parameters parameters);
+	void setParameters(Parameters parameters);
 
 }
