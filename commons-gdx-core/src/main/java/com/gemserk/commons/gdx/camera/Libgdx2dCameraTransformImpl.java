@@ -25,7 +25,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		this(0, 0);
 	}
 
-	public Libgdx2dCameraTransformImpl(int centerX, int centerY) {
+	public Libgdx2dCameraTransformImpl(float centerX, float centerY) {
 		projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		center(centerX, centerY);
 	}
