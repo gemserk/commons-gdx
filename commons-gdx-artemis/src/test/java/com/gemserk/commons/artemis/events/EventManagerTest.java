@@ -11,7 +11,7 @@ public class EventManagerTest {
 	@Test
 	public void shouldReturnAllRegisteredEventsCount() {
 		Object o = new Float(5f);
-		EventManagerImpl eventManager = new EventManagerImpl();
+		InternalEventManager eventManager = new InternalEventManager();
 
 		eventManager.registerEvent("cameraReachedTarget", o);
 		eventManager.registerEvent("cameraReachedTarget", o);
@@ -23,7 +23,7 @@ public class EventManagerTest {
 	@Test
 	public void shouldReturnNullForEventOutsideCount() {
 		Object o = new Float(5f);
-		EventManagerImpl eventManager = new EventManagerImpl();
+		InternalEventManager eventManager = new InternalEventManager();
 		eventManager.registerEvent("cameraReachedTarget", o);
 		assertThat(eventManager.getEvent(-1), IsNull.nullValue());
 		assertThat(eventManager.getEvent(1), IsNull.nullValue());
@@ -32,7 +32,7 @@ public class EventManagerTest {
 	@Test
 	public void shouldReturnEventRegisteredForIndexInOrder() {
 		Object o = new Float(5f);
-		EventManagerImpl eventManager = new EventManagerImpl();
+		InternalEventManager eventManager = new InternalEventManager();
 
 		eventManager.registerEvent("event1", o);
 		eventManager.registerEvent("event2", o);
@@ -49,7 +49,7 @@ public class EventManagerTest {
 	@Test
 	public void testClearEvents() {
 		Object o = new Float(5f);
-		EventManagerImpl eventManager = new EventManagerImpl();
+		InternalEventManager eventManager = new InternalEventManager();
 
 		eventManager.registerEvent("event1", o);
 		eventManager.registerEvent("event2", o);

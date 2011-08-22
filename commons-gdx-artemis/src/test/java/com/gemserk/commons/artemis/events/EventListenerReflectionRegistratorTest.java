@@ -27,7 +27,7 @@ public class EventListenerReflectionRegistratorTest {
 
 	@Test
 	public void shouldRegisterEventListenerForMethodWithEventName() {
-		EventManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventManagerImpl();
 
 		MyScript myScript = new MyScript();
 
@@ -43,7 +43,7 @@ public class EventListenerReflectionRegistratorTest {
 
 	@Test
 	public void shouldNotRegisterEventListenerIfNoMethodForEvent() {
-		EventManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventManagerImpl();
 
 		MyScript myScript = new MyScript();
 
@@ -61,7 +61,7 @@ public class EventListenerReflectionRegistratorTest {
 
 	@Test
 	public void shouldRegisterEventListenerForMethodWithEventNameOnAnonymousClass() {
-		EventManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventManagerImpl();
 
 		anonymousWasCalled = false;
 
@@ -99,7 +99,7 @@ public class EventListenerReflectionRegistratorTest {
 	
 	@Test
 	public void shouldRegisterMethodWithAnnotation() {
-		EventManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventManagerImpl();
 		MyScript2 myScript2 = new MyScript2();
 		
 		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
@@ -122,7 +122,7 @@ public class EventListenerReflectionRegistratorTest {
 	
 	@Test
 	public void shouldUnregisterMethodWithAnnotation() {
-		EventManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventManagerImpl();
 		MyScript2 myScript2 = new MyScript2();
 		
 		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
@@ -151,7 +151,7 @@ public class EventListenerReflectionRegistratorTest {
 	
 	@Test
 	public void shouldRegisterMethodWithAnnotationForEventWithSameName() {
-		EventManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventManagerImpl();
 		MyScript3 o = new MyScript3();
 		
 		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
@@ -167,7 +167,7 @@ public class EventListenerReflectionRegistratorTest {
 	
 	@Test
 	public void shouldUnregisterMethodWithAnnotationForEventWithSameName() {
-		EventManager eventListenerManager = new EventListenerManagerImpl();
+		EventManager eventListenerManager = new EventManagerImpl();
 		MyScript3 o = new MyScript3();
 		
 		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
