@@ -129,7 +129,7 @@ public class EventListenerReflectionRegistrator {
 				continue;
 			}
 			for (int j = 0; j < eventIds.length; j++) {
-				String eventId = eventIds[i];
+				String eventId = eventIds[j];
 				registerEventListenerForMethod(eventId, o, method);
 			}
 		}
@@ -157,7 +157,7 @@ public class EventListenerReflectionRegistrator {
 				continue;
 			}
 			for (int j = 0; j < eventIds.length; j++) {
-				String eventId = eventIds[i];
+				String eventId = eventIds[j];
 				unregisterEventListenerForMethod(eventId, o, method);
 			}
 		}

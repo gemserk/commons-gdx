@@ -181,5 +181,36 @@ public class EventListenerReflectionRegistratorTest {
 		
 		assertThat(o.wasCalled, IsEqual.equalTo(false));
 	}
+	
+	class MyScript4 extends ScriptJavaImpl {
+
+		@Handles(ids="a")
+		public void customEvent(Event e) {
+			
+		}
+
+		@Handles(ids="b")
+		public void customEvent2(Event e) {
+			
+		}
+
+	}
+	
+	@Test
+	public void bugArrayOutOfBoundsWhenRegisterOneIdsButMultipleMethodsWithHandes() {
+		EventManager eventListenerManager = new EventManagerImpl();
+		MyScript4 o = new MyScript4();
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		eventListenerReflectionRegistrator.registerEventListeners(o);
+	}
+	
+	@Test
+	public void bugArrayOutOfBoundsWhenUnregisterOneIdsButMultipleMethodsWithHandes() {
+		EventManager eventListenerManager = new EventManagerImpl();
+		MyScript4 o = new MyScript4();
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		eventListenerReflectionRegistrator.registerEventListeners(o);
+		eventListenerReflectionRegistrator.unregisterEventListeners(o);
+	}
 
 }
