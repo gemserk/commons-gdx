@@ -5,12 +5,13 @@ import com.artemis.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.artemis.components.AntiGravityComponent;
 import com.gemserk.commons.artemis.components.LinearVelocityLimitComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.gdx.GlobalTime;
 
-public class PhysicsSystem extends EntityProcessingSystem implements ActivableSystem {
+public class PhysicsSystem extends EntityProcessingSystem implements ActivableSystem, Disposable {
 
 	private static final Vector2 antiGravity = new Vector2(0, 10f);
 
@@ -123,6 +124,11 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 	public boolean isEnabled() {
 		return activableSystem.isEnabled();
+	}
+
+	@Override
+	public void dispose() {
+		physicsWorld.dispose();
 	}
 
 }
