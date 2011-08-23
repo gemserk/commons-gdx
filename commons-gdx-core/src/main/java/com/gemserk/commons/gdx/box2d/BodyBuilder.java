@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
@@ -19,6 +20,7 @@ public class BodyBuilder {
 
 	private BodyDef bodyDef;
 	private ArrayList<FixtureDef> fixtureDefs;
+	private ArrayList<Object> fixtureUserDatas;
 	private Object userData = null;
 	private Vector2 position = new Vector2();
 	private final World world;
@@ -33,6 +35,7 @@ public class BodyBuilder {
 		this.world = world;
 		this.fixtureDefBuilder = new FixtureDefBuilder();
 		this.fixtureDefs = new ArrayList<FixtureDef>();
+		this.fixtureUserDatas = new ArrayList<Object>();
 		reset();
 	}
 
@@ -51,6 +54,7 @@ public class BodyBuilder {
 
 		bodyDef = new BodyDef();
 		fixtureDefs.clear();
+		fixtureUserDatas.clear();
 		angle = 0f;
 		userData = null;
 		position.set(0f, 0f);
@@ -72,20 +76,48 @@ public class BodyBuilder {
 		return this;
 	}
 
+	private void addUserDataToLastFixture(Object fixtureUserData) {
+		fixtureUserDatas.ensureCapacity(fixtureDefs.size());
+		fixtureUserDatas.add(fixtureDefs.size() - 1, fixtureUserData);
+	}
+
 	public BodyBuilder fixture(FixtureDefBuilder fixtureDef) {
+		return fixture(fixtureDef, null);
+	}
+
+	public BodyBuilder fixture(FixtureDefBuilder fixtureDef, Object fixtureUserData) {
 		fixtureDefs.add(fixtureDef.build());
+		fixtureUserDatas.add(fixtureUserData);
 		return this;
 	}
 
 	public BodyBuilder fixture(FixtureDef fixtureDef) {
+		return fixture(fixtureDef, null);
+	}
+
+	public BodyBuilder fixture(FixtureDef fixtureDef, Object fixtureUserData) {
 		fixtureDefs.add(fixtureDef);
+		fixtureUserDatas.add(fixtureUserData);
 		return this;
 	}
 
 	public BodyBuilder fixtures(FixtureDef[] fixtureDefs) {
-		for (int i = 0; i < fixtureDefs.length; i++)
+		return fixtures(fixtureDefs, null);
+	}
+
+	public BodyBuilder fixtures(FixtureDef[] fixtureDefs, Object[] fixtureUserDatas) {
+		if (fixtureUserDatas != null && (fixtureDefs.length != fixtureUserDatas.length))
+			throw new RuntimeException("length mismatch between fixtureDefs(" + fixtureDefs.length + ") and fixtureUserDatas(" + fixtureUserDatas.length + ")");
+
+		for (int i = 0; i < fixtureDefs.length; i++) {
 			this.fixtureDefs.add(fixtureDefs[i]);
+
+			Object fixtureUserData = fixtureUserDatas != null ? fixtureUserDatas[i] : null;
+			this.fixtureUserDatas.add(fixtureUserData);
+		}
+
 		return this;
+
 	}
 
 	public BodyBuilder mass(float mass) {
@@ -93,7 +125,7 @@ public class BodyBuilder {
 		this.massSet = true;
 		return this;
 	}
-	
+
 	public BodyBuilder inertia(float intertia) {
 		this.massData.I = intertia;
 		this.massSet = true;
@@ -120,16 +152,17 @@ public class BodyBuilder {
 
 		for (int i = 0; i < fixtureDefs.size(); i++) {
 			FixtureDef fixtureDef = fixtureDefs.get(i);
-			body.createFixture(fixtureDef);
+			Fixture fixture = body.createFixture(fixtureDef);
+			fixture.setUserData(fixtureUserDatas.get(i));
 		}
 
 		if (massSet) {
 			MassData bodyMassData = body.getMassData();
-			
-//			massData.center.set(position);
-			 massData.center.set(bodyMassData.center);
+
+			// massData.center.set(position);
+			massData.center.set(bodyMassData.center);
 			// massData.I = bodyMassData.I;
-			
+
 			body.setMassData(massData);
 		}
 		// MassData massData = body.getMassData();
@@ -138,7 +171,7 @@ public class BodyBuilder {
 
 		body.setUserData(userData);
 		body.setTransform(position, angle);
-		
+
 		reset();
 		return body;
 	}
