@@ -8,7 +8,7 @@ import org.junit.Test;
 public class FrameAnimationImplTest {
 	
 	@Test
-	public void test() {
+	public void testFrameAnimationImplConstructor1() {
 		
 		FrameAnimationImpl frameAnimationImpl = new FrameAnimationImpl(false, 150, 1000);
 		
@@ -25,7 +25,7 @@ public class FrameAnimationImplTest {
 	}
 	
 	@Test
-	public void test2() {
+	public void testFrameAnimationImplConstructor2() {
 		
 		FrameAnimationImpl frameAnimationImpl = new FrameAnimationImpl(true, 150, 1000);
 		

@@ -43,6 +43,12 @@ public class SpriteComponent extends Component {
 		this.center = center;
 	}
 
+	public SpriteComponent(Sprite sprite, float cx, float cy, Color color) {
+		this.sprite = sprite;
+		this.color = new Color(color);
+		this.center = new Vector2(cx, cy);
+	}
+
 	public SpriteComponent(Sprite sprite, Color color) {
 		this(sprite, new Vector2(0.5f, 0.5f), color);
 	}
