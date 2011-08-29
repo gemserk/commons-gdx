@@ -18,10 +18,18 @@ public class ImmediateModeRendererUtils {
 
 	private static final Vector2 tmp = new Vector2();
 	private static final Vector2 angleTmp = new Vector2(1, 0);
-	private static final Matrix4 projectionMatrix = new Matrix4();
+	private static Matrix4 projectionMatrix = null;
 
-	private static Matrix4 getProjectionMatrix() {
-		projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	public static void calculateProjectionMatrix(float x, float y, float zoom, float w, float h) {
+		getProjectionMatrix().setToOrtho2D(x, y, w / zoom, h / zoom);
+	}
+
+	public static Matrix4 getProjectionMatrix() {
+		if (projectionMatrix == null) {
+			projectionMatrix = new Matrix4();
+			// don't like the Gdx.graphics here
+			projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		}
 		return projectionMatrix;
 	}
 
