@@ -12,14 +12,17 @@ public class PhysicsContactListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
+		if(!contact.isTouching())
+			return;
+		
 		Body bodyA = contact.getFixtureA().getBody();
 		Body bodyB = contact.getFixtureB().getBody();
 
 		Entity entityA = (Entity) bodyA.getUserData();
 		Entity entityB = (Entity) bodyB.getUserData();
 
-		addBodyToContacts(entityA, bodyB, contact);
-		addBodyToContacts(entityB, bodyA, contact);
+		addBodyToContacts(entityA, contact,true);
+		addBodyToContacts(entityB, contact,false);
 	}
 
 	/**
@@ -32,13 +35,14 @@ public class PhysicsContactListener implements ContactListener {
 	 * @param contact
 	 *            The real contact, used internally to get some data like normals and stuff.
 	 */
-	private void addBodyToContacts(Entity e, Body body, Contact contact) {
+	private void addBodyToContacts(Entity e, Contact contact, boolean fixtureA) {
 		if (e == null)
 			return;
 		PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
 		if (physicsComponent == null)
 			return;
-		physicsComponent.getContact().addContact(contact, body);
+		
+		physicsComponent.getContact().addContact(contact, fixtureA);
 	}
 
 	@Override
@@ -49,8 +53,8 @@ public class PhysicsContactListener implements ContactListener {
 		Entity entityA = (Entity) bodyA.getUserData();
 		Entity entityB = (Entity) bodyB.getUserData();
 
-		removeBodyFromContacts(entityA, bodyB);
-		removeBodyFromContacts(entityB, bodyA);
+		removeBodyFromContacts(entityA, contact,true);
+		removeBodyFromContacts(entityB, contact,false);
 	}
 
 	/**
@@ -61,13 +65,13 @@ public class PhysicsContactListener implements ContactListener {
 	 * @param body
 	 *            The body to be removed from contacts.
 	 */
-	private void removeBodyFromContacts(Entity e, Body body) {
+	private void removeBodyFromContacts(Entity e, Contact contact, boolean fixtureA) {
 		if (e == null)
 			return;
 		PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
 		if (physicsComponent == null)
 			return;
-		physicsComponent.getContact().removeContact(body);
+		physicsComponent.getContact().removeContact(contact, fixtureA);
 	}
 
 	@Override

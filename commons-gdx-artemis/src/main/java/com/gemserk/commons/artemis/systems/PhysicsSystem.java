@@ -102,7 +102,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 				continue;
 
 			PhysicsComponent otherPhyiscsComponent = otherEntity.getComponent(PhysicsComponent.class);
-			otherPhyiscsComponent.getContact().removeContact(body);
+			otherPhyiscsComponent.getContact().removeContact(contact.getOtherFixture(i),contact.getMyFixture(i));
 		}
 
 		physicsWorld.destroyBody(body);
