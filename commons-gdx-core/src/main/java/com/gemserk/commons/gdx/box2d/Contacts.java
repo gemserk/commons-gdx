@@ -1,12 +1,12 @@
 package com.gemserk.commons.gdx.box2d;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.utils.Array;
 
-public class Contact {
+public class Contacts {
 
-	private static class InternalContact {
+	public static class Contact {
 
 		Fixture myFixture;
 		Fixture otherFixture;
@@ -28,20 +28,30 @@ public class Contact {
 			otherFixture = null;
 			this.normal.set(0f, 0f);
 		}
+		
+		public Fixture getMyFixture() {
+			return myFixture;
+		}
+		
+		public Fixture getOtherFixture() {
+			return otherFixture;
+		}
+		
+		public boolean isInContact() {
+			return inContact;
+		}
+		
+		public Vector2 getNormal() {
+			return normal;
+		}
 
 	}
 
-	private static int maxContactSize = 5;
 
-	private InternalContact[] contacts = new InternalContact[maxContactSize];
-
-	public Contact() {
-		for (int i = 0; i < contacts.length; i++)
-			contacts[i] = new InternalContact();
-	}
+	Array<Contact> contacts = new Array<Contact>();
+	int activeContacts = 0;
 
 	public void addContact(com.badlogic.gdx.physics.box2d.Contact contact, boolean AB) {
-		
 		Vector2 normal = contact.getWorldManifold().getNormal();
 		Fixture myFixture;
 		Fixture otherFixture;
@@ -58,16 +68,16 @@ public class Contact {
 	}
 
 	void addContact(Fixture myFixture, Fixture otherFixture, Vector2 normal) {
-		for (int i = 0; i < contacts.length; i++) {
-			InternalContact c = contacts[i];
-			
-			if (c.inContact)
-				continue;
-
-			c.setContact(myFixture,otherFixture,normal);
-
-			return;
+		Contact contact = null;
+		if(activeContacts==contacts.size){
+			contact = new Contact();
+			contacts.add(contact);
+		} else {
+			contact = contacts.get(activeContacts);
 		}
+		
+		contact.setContact(myFixture, otherFixture, normal);
+		activeContacts++;
 	}
 
 	public void removeContact(com.badlogic.gdx.physics.box2d.Contact contact, boolean AB) {
@@ -86,73 +96,31 @@ public class Contact {
 	}
 	
 	public void removeContact(Fixture myFixture, Fixture otherFixture) {
-		for (int i = 0; i < contacts.length; i++) {
-			InternalContact c = contacts[i];
-			if (!c.inContact)
-				continue;
+		
+		for (int i = 0; i < activeContacts; i++) {
+			Contact c = contacts.get(i);
 			
 			if(c.myFixture != myFixture || c.otherFixture != otherFixture)
 				continue;
 			
 			c.unsetContact();
+			contacts.set(i, contacts.get(activeContacts-1));
+			contacts.set(activeContacts-1, c);
+			activeContacts--;
 			return;
 		}
 	}
 	
+	public int getContactCount() {
+		return activeContacts;
+	}
 	
-	
+	public Contact getContact(int i){
+		return contacts.get(i);
+	}
 
 	public boolean isInContact() {
-		for (int i = 0; i < contacts.length; i++) {
-			InternalContact c = contacts[i];
-			if (c.inContact)
-				return true;
-		}
-		return false;
-	}
-
-	public boolean isInContact(int i) {
-		return contacts[i].inContact;
-	}
-
-	public Vector2 getNormal() {
-		return contacts[0].normal;
-	}
-
-	public Vector2 getNormal(int contact) {
-		return contacts[contact].normal;
-	}
-
-	public int getContactCount() {
-		return contacts.length;
-	}
-
-	public Object getUserData() {
-		return getUserData(0);
-	}
-
-	public Object getUserData(int i) {
-		return contacts[i].otherFixture.getBody().getUserData();
-	}
-
-	public Body getBody() {
-		return getBody(0);
-	}
-
-	public Body getBody(int i) {
-		return contacts[i].otherFixture.getBody();
-	}
-	
-	public Fixture getMyFixture(int i){
-		return contacts[i].myFixture;
-	}
-	
-	public Fixture getOtherFixture(int i){
-		return contacts[i].otherFixture;
-	}
-	
-	public InternalContact getContact(int i){
-		return contacts[i];
+		return activeContacts!=0;
 	}
 
 }

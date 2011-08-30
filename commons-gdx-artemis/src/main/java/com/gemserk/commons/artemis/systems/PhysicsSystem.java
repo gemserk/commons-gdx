@@ -10,6 +10,8 @@ import com.gemserk.commons.artemis.components.AntiGravityComponent;
 import com.gemserk.commons.artemis.components.LinearVelocityLimitComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.gdx.GlobalTime;
+import com.gemserk.commons.gdx.box2d.Contacts;
+import com.gemserk.commons.gdx.box2d.Contacts.Contact;
 
 public class PhysicsSystem extends EntityProcessingSystem implements ActivableSystem, Disposable {
 
@@ -86,14 +88,13 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		Body body = component.getBody();
 		body.setUserData(null);
 
-		com.gemserk.commons.gdx.box2d.Contact contact = component.getContact();
+		Contacts contacts = component.getContact();
 
 		// removes contact from the other entity
-		for (int i = 0; i < contact.getContactCount(); i++) {
-			if (!contact.isInContact(i))
-				continue;
+		for (int i = 0; i < contacts.getContactCount(); i++) {
+			Contact contact = contacts.getContact(i);
 
-			Body otherBody = contact.getBody(i);
+			Body otherBody = contact.getOtherFixture().getBody();
 			if (otherBody == null)
 				continue;
 
@@ -102,7 +103,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 				continue;
 
 			PhysicsComponent otherPhyiscsComponent = otherEntity.getComponent(PhysicsComponent.class);
-			otherPhyiscsComponent.getContact().removeContact(contact.getOtherFixture(i),contact.getMyFixture(i));
+			otherPhyiscsComponent.getContact().removeContact(contact.getOtherFixture(),contact.getMyFixture());
 		}
 
 		physicsWorld.destroyBody(body);
