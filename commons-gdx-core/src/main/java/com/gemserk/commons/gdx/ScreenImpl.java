@@ -1,5 +1,8 @@
 package com.gemserk.commons.gdx;
 
+import com.gemserk.componentsengine.utils.Parameters;
+import com.gemserk.componentsengine.utils.ParametersWrapper;
+
 /**
  * Screen implementation with internal state to call the GameState methods in the correct way and only once when required.
  * 
@@ -17,13 +20,16 @@ public class ScreenImpl implements Screen {
 	private boolean inited = false;
 
 	private float delta;
-	
+
+	private Parameters parameters;
+
 	protected float getDelta() {
 		return delta;
 	}
 
 	public ScreenImpl(GameState gameState) {
 		this.gameState = gameState;
+		this.parameters = new ParametersWrapper(); 
 	}
 
 	@Override
@@ -31,6 +37,7 @@ public class ScreenImpl implements Screen {
 		if (inited)
 			return;
 		inited = true;
+		gameState.setParameters(parameters);
 		gameState.init();
 	}
 
@@ -39,6 +46,7 @@ public class ScreenImpl implements Screen {
 		if (!inited)
 			return;
 		inited = false;
+		parameters.clear();
 		gameState.dispose();
 	}
 
@@ -98,12 +106,18 @@ public class ScreenImpl implements Screen {
 		if (!paused)
 			return;
 		paused = false;
+		gameState.setParameters(parameters);
 		gameState.resume();
 	}
 
 	@Override
 	public void setDelta(float delta) {
 		this.delta = delta;
+	}
+
+	@Override
+	public Parameters getParameters() {
+		return parameters;
 	}
 
 }

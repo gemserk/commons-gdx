@@ -1,17 +1,27 @@
 package com.gemserk.commons.gdx;
 
+import com.gemserk.componentsengine.utils.Parameters;
+
 public class GameStateImpl implements GameState {
 
 	/**
 	 * Delta time in seconds.
 	 */
 	private float delta;
+	private Parameters parameters;
 
 	/**
 	 * Returns the delta time in seconds.
 	 */
 	protected float getDelta() {
 		return delta;
+	}
+
+	/**
+	 * Returns the parameters used when entering the game state.
+	 */
+	protected Parameters getParameters() {
+		return parameters;
 	}
 
 	/**
@@ -64,6 +74,11 @@ public class GameStateImpl implements GameState {
 	@Override
 	public void setDelta(float delta) {
 		this.delta = delta;
+	}
+
+	@Override
+	public void setParameters(Parameters parameters) {
+		this.parameters = parameters;
 	}
 
 }

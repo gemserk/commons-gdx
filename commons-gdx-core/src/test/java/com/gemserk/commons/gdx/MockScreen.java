@@ -1,5 +1,7 @@
 package com.gemserk.commons.gdx;
 
+import com.gemserk.componentsengine.utils.Parameters;
+
 class MockScreen implements Screen {
 
 	boolean updateCalled = false;
@@ -74,6 +76,11 @@ class MockScreen implements Screen {
 	@Override
 	public void setDelta(float delta) {
 		this.delta = delta;
+	}
+
+	@Override
+	public Parameters getParameters() {
+		return null;
 	}
 
 }

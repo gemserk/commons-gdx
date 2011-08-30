@@ -1,5 +1,7 @@
 package com.gemserk.commons.gdx;
 
+import com.gemserk.componentsengine.utils.Parameters;
+
 public interface GameState {
 	
 	/**
@@ -25,5 +27,7 @@ public interface GameState {
 	void render();
 	
 	void setDelta(float delta);
+	
+	void setParameters(Parameters parameters);
 
 }

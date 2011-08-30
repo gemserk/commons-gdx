@@ -1,5 +1,7 @@
 package com.gemserk.commons.gdx;
 
+import com.gemserk.componentsengine.utils.Parameters;
+
 class MockGameState implements GameState {
 	
 	boolean updateCalled = false;
@@ -51,6 +53,11 @@ class MockGameState implements GameState {
 	@Override
 	public void setDelta(float delta) {
 		this.delta = delta;
+	}
+
+	@Override
+	public void setParameters(Parameters parameters) {
+		
 	}
 
 }
