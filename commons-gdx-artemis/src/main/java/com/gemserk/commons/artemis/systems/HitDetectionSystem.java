@@ -5,7 +5,7 @@ import com.artemis.EntityProcessingSystem;
 import com.gemserk.commons.artemis.components.HitComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.triggers.Trigger;
-import com.gemserk.commons.gdx.box2d.Contact;
+import com.gemserk.commons.gdx.box2d.Contacts;
 
 public class HitDetectionSystem extends EntityProcessingSystem implements ActivableSystem {
 
@@ -30,7 +30,7 @@ public class HitDetectionSystem extends EntityProcessingSystem implements Activa
 		HitComponent hitComponent = e.getComponent(HitComponent.class);
 
 		PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
-		Contact contact = physicsComponent.getContact();
+		Contacts contact = physicsComponent.getContact();
 		Trigger trigger = hitComponent.getTrigger();
 
 		if (!contact.isInContact())
