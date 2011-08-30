@@ -29,7 +29,7 @@ public class ScreenImpl implements Screen {
 
 	public ScreenImpl(GameState gameState) {
 		this.gameState = gameState;
-		this.parameters = new ParametersWrapper(); 
+		this.parameters = new ParametersWrapper();
 	}
 
 	@Override
@@ -46,7 +46,6 @@ public class ScreenImpl implements Screen {
 		if (!inited)
 			return;
 		inited = false;
-		parameters.clear();
 		gameState.dispose();
 	}
 
