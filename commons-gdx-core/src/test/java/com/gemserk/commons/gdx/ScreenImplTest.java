@@ -39,6 +39,7 @@ public class ScreenImplTest {
 		MockGameState gameState = new MockGameState();
 		ScreenImpl screen = new ScreenImpl(gameState);
 		screen.resume();
+		screen.setDelta(0.25f);
 		screen.update();
 		assertThat(gameState.updateCalled, IsEqual.equalTo(true));
 	}
