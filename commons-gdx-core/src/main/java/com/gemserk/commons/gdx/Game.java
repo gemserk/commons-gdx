@@ -31,48 +31,42 @@ public class Game implements ApplicationListener {
 		if (screen != null)
 			screen.resume();
 	}
-	
-	// used to fix the timestep http://gafferongames.com/game-physics/fix-your-timestep/
-	private float dt = 0.01f;
-	private float accumulator;
-	
-	public void setDt(float dt) {
-		this.dt = dt;
-	}
 
 	@Override
 	public void render() {
 		if (screen == null)
 			return;
 
-		// float t = 0f;
-		float frameTime = Gdx.graphics.getDeltaTime();
-
-		// note: max frame time to avoid spiral of death
-		if (frameTime > 0.25f)
-			frameTime = 0.25f;
-
-		accumulator += frameTime;
-
-		while (accumulator >= dt) {
-			GlobalTime.setDelta(dt);
-
-			screen.setDelta(dt);
-			screen.update();
-
-			// previousState = currentState;
-			// integrate( currentState, t, dt );
-
-			// t += dt;
-			accumulator -= dt;
-		}
-
-		// const double alpha = accumulator / dt;
+		// // float t = 0f;
+		// float frameTime = Gdx.graphics.getDeltaTime();
 		//
-		// State state = currentState*alpha + previousState * ( 1.0 - alpha );
+		// // note: max frame time to avoid spiral of death
+		// if (frameTime > 0.25f)
+		// frameTime = 0.25f;
 		//
-		// render( state );
+		// accumulator += frameTime;
+		//
+		// while (accumulator >= dt) {
+		// GlobalTime.setDelta(dt);
+		//
+		// screen.setDelta(dt);
+		// screen.update();
+		//
+		// // previousState = currentState;
+		// // integrate( currentState, t, dt );
+		//
+		// // t += dt;
+		// accumulator -= dt;
+		// }
+		//
+		// // const double alpha = accumulator / dt;
+		// //
+		// // State state = currentState*alpha + previousState * ( 1.0 - alpha );
+		// //
+		// // render( state );
 
+		screen.setDelta(Gdx.graphics.getDeltaTime());
+		screen.update();
 		screen.render();
 	}
 
