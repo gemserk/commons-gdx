@@ -1,6 +1,5 @@
 package com.gemserk.commons.gdx;
 
-import com.badlogic.gdx.Gdx;
 import com.gemserk.componentsengine.utils.Parameters;
 
 /**
@@ -19,7 +18,9 @@ public class ScreenImpl implements Screen {
 
 	private float delta;
 
-	// used to fix the timestep http://gafferongames.com/game-physics/fix-your-timestep/
+	/**
+	 * used to fix the time step based on <a href="http://gafferongames.com/game-physics/fix-your-timestep/">fix your timestep</a>
+	 * */
 	private float dt = 0.01f;
 	private float accumulator;
 
@@ -67,7 +68,7 @@ public class ScreenImpl implements Screen {
 			return;
 
 		// float t = 0f;
-		float frameTime = Gdx.graphics.getDeltaTime();
+		float frameTime = getDelta();
 
 		// note: max frame time to avoid spiral of death
 		if (frameTime > 0.25f)
@@ -77,9 +78,6 @@ public class ScreenImpl implements Screen {
 
 		while (accumulator >= dt) {
 			GlobalTime.setDelta(dt);
-
-			// screen.setDelta(dt);
-			// screen.update();
 
 			gameState.setDelta(dt);
 			gameState.update();
@@ -97,8 +95,6 @@ public class ScreenImpl implements Screen {
 		//
 		// render( state );
 
-		// gameState.setDelta(this.delta);
-		// gameState.update();
 	}
 
 	@Override
