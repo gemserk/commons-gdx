@@ -24,6 +24,7 @@ public class EventListenerReflectionRegistrator {
 
 	private static final Class<Handles> handlesClass = Handles.class;
 	private static final Class<Event> eventClass = Event.class;
+	private static final Map<Class<?>, Method[]> cachedClassMethods = new HashMap<Class<?>, Method[]>();
 
 	private static final Map<Class<?>, Map<String, Method>> cachedMethodsPerClass = new HashMap<Class<?>, Map<String, Method>>();
 
@@ -117,7 +118,7 @@ public class EventListenerReflectionRegistrator {
 	 */
 	public void registerEventListeners(Object o) {
 		Class<?> clazz = o.getClass();
-		Method[] methods = clazz.getMethods();
+		Method[] methods = getCachedClassMethods(clazz);
 		for (int i = 0; i < methods.length; i++) {
 			Method method = methods[i];
 			Handles handlesAnnotation = method.getAnnotation(handlesClass);
@@ -145,7 +146,7 @@ public class EventListenerReflectionRegistrator {
 	 */
 	public void unregisterEventListeners(Object o) {
 		Class<?> clazz = o.getClass();
-		Method[] methods = clazz.getMethods();
+		Method[] methods = getCachedClassMethods(clazz);
 		for (int i = 0; i < methods.length; i++) {
 			Method method = methods[i];
 			Handles handlesAnnotation = method.getAnnotation(handlesClass);
@@ -162,6 +163,12 @@ public class EventListenerReflectionRegistrator {
 			}
 		}
 		createdMethodEventListeners.remove(o);
+	}
+
+	private static Method[] getCachedClassMethods(Class<?> clazz) {
+		if (!cachedClassMethods.containsKey(clazz))
+			cachedClassMethods.put(clazz, clazz.getMethods());
+		return cachedClassMethods.get(clazz);
 	}
 
 }
