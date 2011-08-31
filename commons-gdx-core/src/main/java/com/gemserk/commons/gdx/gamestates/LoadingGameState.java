@@ -1,4 +1,4 @@
-package com.gemserk.commons.gdx.screens;
+package com.gemserk.commons.gdx.gamestates;
 
 import com.gemserk.commons.gdx.GameStateImpl;
 import com.gemserk.resources.progress.TaskQueue;
