@@ -5,7 +5,6 @@ import com.gemserk.resources.progress.TaskQueue;
 
 public class LoadingGameState extends GameStateImpl {
 
-	private boolean loading;
 	private TaskQueue taskQueue;
 	
 	public TaskQueue getTaskQueue() {
@@ -15,17 +14,15 @@ public class LoadingGameState extends GameStateImpl {
 	@Override
 	public void init() {
 		super.init();
-		taskQueue = getParameters().get("taskQueue");
-		loading = !taskQueue.isDone();
+		taskQueue = new TaskQueue();
 	}
 
 	@Override
 	public void render() {
 		super.render();
-		if (loading) {
+		// should be on the update if the update was processed once 
+		if (!taskQueue.isDone()) 
 			taskQueue.processNext();
-			loading = !taskQueue.isDone();
-		} 
 	}
-
+	
 }
