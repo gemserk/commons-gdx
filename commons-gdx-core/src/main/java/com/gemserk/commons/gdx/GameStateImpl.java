@@ -77,9 +77,4 @@ public class GameStateImpl implements GameState {
 		this.delta = delta;
 	}
 
-//	@Override
-//	public void setParameters(Parameters parameters) {
-//		this.parameters = parameters;
-//	}
-
 }

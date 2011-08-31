@@ -30,6 +30,4 @@ public interface GameState {
 
 	Parameters getParameters();
 
-	// void setParameters(Parameters parameters);
-
 }
