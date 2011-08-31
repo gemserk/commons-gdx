@@ -56,8 +56,9 @@ class MockGameState implements GameState {
 	}
 
 	@Override
-	public void setParameters(Parameters parameters) {
-		
+	public Parameters getParameters() {
+		return null;
 	}
+
 
 }
