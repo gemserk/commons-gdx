@@ -64,4 +64,9 @@ public class Container implements Control {
 		return null;
 	}
 
+	@Override
+	public void setPosition(float x, float y) {
+		
+	}
+
 }

@@ -122,14 +122,12 @@ public class Text implements Control {
 	
 	@Override
 	public float getX() {
-		return y;
+		return x;
 	}
 
 	@Override
 	public float getY() {
-		return x;
+		return y;
 	}
-
-	// style .get font(...)
 
 }

@@ -10,6 +10,8 @@ public interface Control {
 	
 	float getY();
 	
+	void setPosition(float x, float y);
+	
 	void update();
 
 	void draw(SpriteBatch spriteBatch);
