@@ -5,7 +5,6 @@ import org.w3c.dom.Document;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -23,9 +22,6 @@ import com.gemserk.commons.svg.inkscape.DocumentParser;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.dataloaders.DataLoader;
-import com.gemserk.resources.resourceloaders.CachedResourceLoader;
-import com.gemserk.resources.resourceloaders.ResourceLoader;
-import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
 public class LibgdxResourceBuilder {
 	
@@ -60,7 +56,7 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void texture(String id, FileHandle fileHandle, boolean linearFilter) {
-		resourceManager.add(id, new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(fileHandle, linearFilter))));
+		resourceManager.add(id, new TextureDataLoader(fileHandle, linearFilter));
 		if (cacheWhenLoad)
 			resourceManager.get(id).get();
 	}
@@ -74,38 +70,38 @@ public class LibgdxResourceBuilder {
 	 *            The libgdx internal file path to create the texture atlas.
 	 */
 	public void textureAtlas(String id, String file) {
-		resourceManager.add(id, new CachedResourceLoader<TextureAtlas>(new ResourceLoaderImpl<TextureAtlas>(new DisposableDataLoader<TextureAtlas>(Gdx.files.internal(file)) {
+		resourceManager.add(id, new DisposableDataLoader<TextureAtlas>(Gdx.files.internal(file)) {
 			@Override
 			public TextureAtlas load() {
 				return new TextureAtlas(fileHandle);
 			}
-		})));
+		});
 	}
 
 	/**
 	 * registers a new sprite resource builder returning a new sprite each time it is called.
 	 */
 	public void sprite(String id, final String textureId) {
-		resourceManager.add(id, new ResourceLoaderImpl<Sprite>(new DataLoader<Sprite>() {
+		resourceManager.addVolatile(id, new DataLoader<Sprite>() {
 			@Override
 			public Sprite load() {
 				Resource<Texture> texture = resourceManager.get(textureId);
 				return new Sprite(texture.get());
 			}
-		}));
+		});
 	}
 
 	/**
 	 * registers a new sprite resource builder returning a new sprite each time it is called.
 	 */
 	public void sprite(String id, final String textureId, final int x, final int y, final int width, final int height) {
-		resourceManager.add(id, new ResourceLoaderImpl<Sprite>(new DataLoader<Sprite>() {
+		resourceManager.addVolatile(id, new DataLoader<Sprite>() {
 			@Override
 			public Sprite load() {
 				Resource<Texture> texture = resourceManager.get(textureId);
 				return new Sprite(texture.get(), x, y, width, height);
 			}
-		}));
+		});
 	}
 
 	/**
@@ -117,18 +113,18 @@ public class LibgdxResourceBuilder {
 	 *            the TextureAtlas resource identifier.
 	 */
 	public void spriteAtlas(final String id, final String textureAtlasId, final String regionId) {
-		resourceManager.add(id, new ResourceLoaderImpl<Sprite>(new DataLoader<Sprite>() {
+		resourceManager.addVolatile(id, new DataLoader<Sprite>() {
 			@Override
 			public Sprite load() {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
 				return new Sprite(textureAtlas.findRegion(regionId));
 			}
-		}));
+		});
 	}
 	
 	public void animation(String id, final String spriteSheetId, final int x, final int y, final int w, final int h, final int framesCount, //
 			final boolean loop, final int time, final int... times) {
-		resourceManager.add(id, new ResourceLoaderImpl<Animation>(new DataLoader<Animation>() {
+		resourceManager.addVolatile(id, new DataLoader<Animation>() {
 
 			@Override
 			public Animation load() {
@@ -168,7 +164,7 @@ public class LibgdxResourceBuilder {
 				return new Animation(frames, frameAnimation);
 			}
 
-		}));
+		});
 	}
 
 	public void font(String id, String imageFile, String fontFile) {
@@ -176,7 +172,7 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void font(String id, final String imageFile, final String fontFile, final boolean linearFilter) {
-		resourceManager.add(id, new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new DisposableDataLoader<BitmapFont>(internal(imageFile)) {
+		resourceManager.add(id, new DisposableDataLoader<BitmapFont>(internal(imageFile)) {
 			@Override
 			public BitmapFont load() {
 				Texture texture = new Texture(internal(imageFile));
@@ -184,7 +180,7 @@ public class LibgdxResourceBuilder {
 					texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 				return new BitmapFont(internal(fontFile), new Sprite(texture), false);
 			}
-		})));
+		});
 	}
 
 	public void sound(String id, String file) {
@@ -192,38 +188,38 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void sound(String id, FileHandle fileHandle) {
-		resourceManager.add(id, new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(fileHandle))));
+		resourceManager.add(id, new SoundDataLoader(fileHandle));
 		if (cacheWhenLoad)
 			resourceManager.get(id).get();
 	}
 
 	public void music(String id, String file) {
-		resourceManager.add(id, new CachedResourceLoader<Music>(new ResourceLoaderImpl<Music>(new DisposableDataLoader<Music>(internal(file)) {
+		resourceManager.add(id, new DisposableDataLoader<Music>(internal(file)) {
 			@Override
 			public Music load() {
 				return Gdx.audio.newMusic(fileHandle);
 			}
 
 			@Override
-			public void dispose(Music t) {
+			public void unload(Music t) {
 				if (t.isPlaying())
 					t.stop();
-				super.dispose(t);
+				super.unload(t);
 			}
-		})));
+		});
 	}
 
 	public void xmlDocument(String id, final String file) {
-		resourceManager.add(id, new CachedResourceLoader<Document>(new ResourceLoaderImpl<Document>(new DataLoader<Document>() {
+		resourceManager.add(id, new DataLoader<Document>() {
 			@Override
 			public Document load() {
 				return new DocumentParser().parse(internal(file).read());
 			}
-		})));
+		});
 	}
 	
 	public void particleEffect(String id, final String effectFile, final String imagesDir) {
-		resourceManager.add(id, new CachedResourceLoader<ParticleEffect>(new ResourceLoaderImpl<ParticleEffect>(new DataLoader<ParticleEffect>() {
+		resourceManager.add(id,new DataLoader<ParticleEffect>() {
 			@Override
 			public ParticleEffect load() {
 				ParticleEffect particleEffect = new ParticleEffect();
@@ -231,38 +227,39 @@ public class LibgdxResourceBuilder {
 				return particleEffect;
 			}
 			@Override
-			public void dispose(ParticleEffect t) {
+			public void unload(ParticleEffect t) {
 				t.dispose();
 			}
-		})));
+		});
 	}
 
 	public void particleEmitter(String id, final String particleEffectId, final String particleEmitterId) {
-		resourceManager.add(id, new ResourceLoaderImpl<ParticleEmitter>(new DataLoader<ParticleEmitter>() {
+		resourceManager.addVolatile(id, new DataLoader<ParticleEmitter>() {
 			@Override
 			public ParticleEmitter load() {
 				ParticleEffect particleEffect = resourceManager.getResourceValue(particleEffectId);
 				return new ParticleEmitter(particleEffect.findEmitter(particleEmitterId));
 			}
-		}));
+		});
 	}
 
 	// / TESTING STUFF
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes"})
 	public void resource(String id, final ResourceBuilder resourceBuilder) {
 
-		ResourceLoader resourceLoader = new ResourceLoaderImpl(new DataLoader() {
+		DataLoader dataLoader = new DataLoader() {
 			@Override
 			public Object load() {
 				return resourceBuilder.build();
 			}
-		});
+		};
 
 		if (resourceBuilder.isCached())
-			resourceLoader = new CachedResourceLoader(resourceLoader);
-
-		resourceManager.add(id, resourceLoader);
+			resourceManager.add(id, dataLoader);
+		else
+			resourceManager.addVolatile(id, dataLoader);
+		
 	}
 
 	public SpriteResourceBuilder sprite2(String textureId) {

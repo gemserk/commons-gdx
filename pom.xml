@@ -65,7 +65,7 @@
 		<artemis.version>0.0.1-GEMSERK-SNAPSHOT</artemis.version>
 		<componentsengine.version>0.0.10-SNAPSHOT</componentsengine.version>
 		<gdx.version>0.9.2-SNAPSHOT</gdx.version>
-		<resourcesmanager.version>0.0.12-SNAPSHOT</resourcesmanager.version>
+		<resourcesmanager.version>0.1.0-SNAPSHOT</resourcesmanager.version>
 		<vecmath.version>1.5.3-GEMSERK</vecmath.version>
 	</properties>
 

@@ -13,7 +13,7 @@ public abstract class DisposableDataLoader<T extends Disposable> extends DataLoa
 	}
 
 	@Override
-	public void dispose(Disposable t) {
+	public void unload(Disposable t) {
 		t.dispose();
 	}
 
