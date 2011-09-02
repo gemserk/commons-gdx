@@ -24,18 +24,18 @@ public class TransitionScreenTest {
 		// assertThat(screenA.pauseCalled, IsEqual.equalTo(true));
 	}
 
-	@Test
-	public void shouldCallUpdateOnLeavingScreen() {
-		MockScreen screenA = new MockScreen();
-		MockScreen screenB = new MockScreen();
-
-		ScreenTransition screenTransition = new ScreenTransition(screenA, screenB, 1000, 500);
-
-		screenTransition.start();
-		screenTransition.update(1);
-
-		assertThat(screenA.updateCalled, IsEqual.equalTo(true));
-	}
+	// @Test
+	// public void shouldCallUpdateOnLeavingScreen() {
+	// MockScreen screenA = new MockScreen();
+	// MockScreen screenB = new MockScreen();
+	//
+	// ScreenTransition screenTransition = new ScreenTransition(screenA, screenB, 1000, 500);
+	//
+	// screenTransition.start();
+	// screenTransition.update(1);
+	//
+	// assertThat(screenA.updateCalled, IsEqual.equalTo(true));
+	// }
 
 	@Test
 	public void shouldDoNothingIfTimeNotFinishedScreensOnUpdate() {

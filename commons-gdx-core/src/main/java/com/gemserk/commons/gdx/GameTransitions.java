@@ -101,7 +101,7 @@ public class GameTransitions {
 				return;
 			totalTime -= delta;
 			finished = totalTime <= 0f;
-			getScreen().update();
+			// getScreen().update();
 		}
 
 		public boolean isFinished() {
