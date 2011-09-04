@@ -1,6 +1,6 @@
 package com.gemserk.commons.svg.inkscape;
 
-public interface SvgInkscapeGroup extends SvgElement {
+public interface SvgInkscapeGroup extends SvgGroup {
 	
 	String getGroupMode();
 	
