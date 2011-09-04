@@ -3,20 +3,21 @@ package com.gemserk.commons.svg.inkscape;
 import org.w3c.dom.Element;
 
 
-public class SvgInkscapeGroupProcessor implements SvgElementProcessor {
+public class SvgInkscapeGroupProcessor extends SvgGroupProcessor {
 
 	@Override
 	public void process(SvgParser svgParser, Element element) {
-		String id = element.getAttribute("id");
 		String groupMode = SvgInkscapeUtils.getGroupMode(element);
 		String label = SvgInkscapeUtils.getLabel(element);
 		
-		SvgInkscapeGroupImpl svgGroup = new SvgInkscapeGroupImpl();
-		svgGroup.setId(id);
-		svgGroup.setGroupMode(groupMode);
-		svgGroup.setLabel(label);
+		SvgGroup svgGroup = super.getSvgGroup(element);
 		
-		svgParser.handle(svgGroup, element);
+		SvgInkscapeGroupImpl svgInkscapeGroup = new SvgInkscapeGroupImpl(svgGroup);
+
+		svgInkscapeGroup.setGroupMode(groupMode);
+		svgInkscapeGroup.setLabel(label);
+		
+		svgParser.handle(svgInkscapeGroup, element);
 	}
 
 	@Override

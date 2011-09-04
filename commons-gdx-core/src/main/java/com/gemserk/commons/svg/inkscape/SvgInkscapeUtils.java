@@ -55,12 +55,12 @@ public class SvgInkscapeUtils {
 	 * @return The modified matrix.
 	 */
 	public static Matrix3f getTransform(Element element, Matrix3f m) {
-		String transforms = element.getAttribute("transform");
+		String transform = element.getAttribute("transform");
 
-		if (transforms == null)
+		if (transform == null)
 			return m;
 
-		return parseTransformAttribute(transforms, m);
+		return parseTransformAttribute(transform, m);
 	}
 
 	/**
@@ -73,20 +73,20 @@ public class SvgInkscapeUtils {
 	 * @return The matrix with all transforms applied.
 	 */
 	public static Matrix3f parseTransformAttribute(String transformAttribute, Matrix3f m) {
-		
+
 		transformAttribute = transformAttribute.replace(" ", "");
-		
+
 		if (transformAttribute.startsWith("scale")) {
 			transformAttribute = transformAttribute.substring(0, transformAttribute.length() - 1);
 			transformAttribute = transformAttribute.substring("scale(".length());
 			StringTokenizer tokens = new StringTokenizer(transformAttribute, ", ");
-			
+
 			float sx = Float.parseFloat(tokens.nextToken());
 			float sy = sx;
-			
+
 			if (tokens.hasMoreTokens())
 				sy = Float.parseFloat(tokens.nextToken());
-			
+
 			m.setM00(sx);
 			m.setM11(sy);
 		} else if (transformAttribute.startsWith("matrix")) {
@@ -110,6 +110,16 @@ public class SvgInkscapeUtils {
 
 			m.setM02(tr[4]);
 			m.setM12(tr[5]);
+		} else if (transformAttribute.startsWith("translate")) {
+			transformAttribute = transformAttribute.substring(0, transformAttribute.length() - 1);
+			transformAttribute = transformAttribute.substring("translate(".length());
+			StringTokenizer tokens = new StringTokenizer(transformAttribute, ", ");
+
+			float tx = Float.parseFloat(tokens.nextToken());
+			float ty = Float.parseFloat(tokens.nextToken());
+
+			m.setM02(tx);
+			m.setM12(ty);
 		}
 		return m;
 	}
@@ -117,5 +127,5 @@ public class SvgInkscapeUtils {
 	public static boolean isFlipped(Matrix3f matrix) {
 		return matrix.getM00() != matrix.getM11();
 	}
-	
+
 }

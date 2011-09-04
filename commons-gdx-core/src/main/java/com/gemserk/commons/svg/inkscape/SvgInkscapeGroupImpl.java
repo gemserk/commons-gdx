@@ -4,22 +4,14 @@ import com.gemserk.vecmath.Matrix3f;
 
 public class SvgInkscapeGroupImpl implements SvgInkscapeGroup {
 
-	String id;
-
 	String groupMode;
-
 	String label;
+	SvgGroup svgGroup;
+
+	public SvgInkscapeGroupImpl(SvgGroup svgGroup) {
+		this.svgGroup = svgGroup;
+	}
 	
-	Matrix3f transform = new Matrix3f();
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getGroupMode() {
 		return groupMode;
 	}
@@ -38,7 +30,12 @@ public class SvgInkscapeGroupImpl implements SvgInkscapeGroup {
 
 	@Override
 	public Matrix3f getTransform() {
-		return transform;
+		return svgGroup.getTransform();
+	}
+
+	@Override
+	public String getId() {
+		return svgGroup.getId();
 	}
 
 }
