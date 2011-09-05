@@ -6,9 +6,7 @@ import com.gemserk.vecmath.Vector2f;
 public class SvgInkscapePathImpl implements SvgInkscapePath {
 
 	String id;
-
 	String label;
-
 	Vector2f[] points;
 
 	public String getId() {
