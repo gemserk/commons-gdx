@@ -81,7 +81,7 @@ public class SvgConvertUtils {
 		ArrayList<Vector2f> pointList = new ArrayList<Vector2f>();
 
 		Vector2f relativePoint = null;
-		
+
 		Command currentCommand = Command.None;
 
 		while (tokens.hasMoreTokens()) {
@@ -140,7 +140,10 @@ public class SvgConvertUtils {
 		svgPath.setLabel(label);
 		return svgPath;
 	}
-	
+
+	/**
+	 * Returns a new implementation of SvgElementConverter which converts the XML Element to SvgGroup.
+	 */
 	public static SvgElementConverter<SvgGroup> groupConverter() {
 		return new SvgElementConverter<SvgGroup>() {
 			@Override
@@ -149,7 +152,10 @@ public class SvgConvertUtils {
 			}
 		};
 	}
-	
+
+	/**
+	 * Returns a new implementation of SvgElementConverter which converts the XML Element to SvgImage.
+	 */
 	public static SvgElementConverter<SvgImage> imageConverter() {
 		return new SvgElementConverter<SvgImage>() {
 			@Override
@@ -158,7 +164,10 @@ public class SvgConvertUtils {
 			}
 		};
 	}
-	
+
+	/**
+	 * Returns a new implementation of SvgElementConverter which converts the XML Element to SvgPath.
+	 */
 	public static SvgElementConverter<SvgInkscapePath> pathConverter() {
 		return new SvgElementConverter<SvgInkscapePath>() {
 			@Override

@@ -22,6 +22,9 @@ public class SvgInkscapeConvertUtils {
 		return svgInkscapeImage;
 	}
 
+	/**
+	 * Returns a new implementation of SvgElementConverter which converts the XML Element to SvgInkscapeGroup.
+	 */
 	public static SvgElementConverter<SvgGroup> groupConverter() {
 		return new SvgElementConverter<SvgGroup>() {
 			@Override
@@ -30,7 +33,10 @@ public class SvgInkscapeConvertUtils {
 			}
 		};
 	}
-	
+
+	/**
+	 * Returns a new implementation of SvgElementConverter which converts the XML Element to SvgInkscapeImage.
+	 */
 	public static SvgElementConverter<SvgImage> imageConverter() {
 		return new SvgElementConverter<SvgImage>() {
 			@Override
@@ -39,5 +45,5 @@ public class SvgInkscapeConvertUtils {
 			}
 		};
 	}
-	
+
 }

@@ -21,7 +21,17 @@ public interface SvgElementHandler {
 	 *            The XML element to get extra information.
 	 */
 	void handle(SvgParser svgParser, SvgElement svgElement, Element element);
-	
+
+	/**
+	 * Called after SvgElement and its children were handled.
+	 * 
+	 * @param svgParser
+	 *            The SvgParser to continue the SVG parsing or not.
+	 * @param svgElement
+	 *            The SvgElement to do stuff with.
+	 * @param element
+	 *            The XML element to get extra information.
+	 */
 	void postHandle(SvgParser svgParser, SvgElement svgElement, Element element);
 
 }
