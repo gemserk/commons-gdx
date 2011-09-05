@@ -12,10 +12,18 @@ public abstract class SvgDocumentHandler implements SvgElementHandler {
 		SvgDocument svgDocument = (SvgDocument) svgElement;
 		handle(svgParser, svgDocument, element);
 	}
-
-	protected abstract void handle(SvgParser svgParser, SvgDocument svgDocument, Element element);
 	
 	@Override
-	public void postHandle(SvgParser svgParser, SvgElement svgElement, Element element) {}
+	public void postHandle(SvgParser svgParser, SvgElement svgElement, Element element) {
+		if (!(svgElement instanceof SvgDocument))
+			return;
+		SvgDocument svgDocument = (SvgDocument) svgElement;
+		postHandle(svgParser, svgDocument, element);
+	}
+
+	protected void handle(SvgParser svgParser, SvgDocument svgDocument, Element element) {}
+	
+	protected void postHandle(SvgParser svgParser, SvgDocument svgDocument, Element element) {}
+	
 
 }
