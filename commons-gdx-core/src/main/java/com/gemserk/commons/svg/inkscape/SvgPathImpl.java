@@ -3,7 +3,7 @@ package com.gemserk.commons.svg.inkscape;
 import com.gemserk.vecmath.Vector2f;
 
 
-public class SvgPathImpl implements SvgInkscapePath {
+public class SvgPathImpl implements SvgPath {
 
 	String id;
 	Vector2f[] points;

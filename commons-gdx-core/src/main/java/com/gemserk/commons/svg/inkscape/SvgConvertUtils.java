@@ -70,7 +70,7 @@ public class SvgConvertUtils {
 		return svgImage;
 	}
 
-	public static SvgInkscapePath getSvgPath(Element element) {
+	public static SvgPath getSvgPath(Element element) {
 
 		String id = element.getAttribute("id");
 //		String label = SvgInkscapeUtils.getLabel(element);
@@ -167,10 +167,10 @@ public class SvgConvertUtils {
 	/**
 	 * Returns a new implementation of SvgElementConverter which converts the XML Element to SvgPath.
 	 */
-	public static SvgElementConverter<SvgInkscapePath> pathConverter() {
-		return new SvgElementConverter<SvgInkscapePath>() {
+	public static SvgElementConverter<SvgPath> pathConverter() {
+		return new SvgElementConverter<SvgPath>() {
 			@Override
-			public SvgInkscapePath convert(Element element) {
+			public SvgPath convert(Element element) {
 				return getSvgPath(element);
 			}
 		};

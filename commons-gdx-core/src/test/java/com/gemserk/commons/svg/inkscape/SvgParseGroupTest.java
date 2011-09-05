@@ -50,7 +50,7 @@ public class SvgParseGroupTest {
 	public void testApplyGroupTransformToPath() {
 		SvgParser svgParser = new SvgParser();
 		
-		final ArrayList<SvgInkscapePath> paths = new ArrayList<SvgInkscapePath>();
+		final ArrayList<SvgPath> paths = new ArrayList<SvgPath>();
 		
 		final Matrix3f groupTransform = new Matrix3f();
 		
@@ -71,7 +71,7 @@ public class SvgParseGroupTest {
 			Vector3f tmp = new Vector3f();
 			
 			@Override
-			protected void handle(SvgParser svgParser, SvgInkscapePath svgPath, Element element) {
+			protected void handle(SvgParser svgParser, SvgPath svgPath, Element element) {
 				Vector2f[] points = svgPath.getPoints();
 				for (int i = 0; i < points.length; i++) {
 					Vector2f point = points[i];
@@ -95,12 +95,12 @@ public class SvgParseGroupTest {
 		
 		assertThat(paths.size(), IsEqual.equalTo(2));
 
-		SvgInkscapePath svgInkscapePath = paths.get(0);
+		SvgPath svgPath = paths.get(0);
 		
-		assertThat(svgInkscapePath.getPoints()[0].x, IsEqual.equalTo(23f));
-		assertThat(svgInkscapePath.getPoints()[0].y, IsEqual.equalTo(22f));
+		assertThat(svgPath.getPoints()[0].x, IsEqual.equalTo(23f));
+		assertThat(svgPath.getPoints()[0].y, IsEqual.equalTo(22f));
 
-		for (SvgInkscapePath path : paths) {
+		for (SvgPath path : paths) {
 			System.out.println(path.getId());
 			Vector2f[] points = path.getPoints();
 			for (int i = 0; i < points.length; i++) {
