@@ -1,6 +1,8 @@
 package com.gemserk.commons.svg.inkscape;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,14 +12,23 @@ public class SvgParser {
 
 	private ArrayList<SvgElementHandler> handlers = new ArrayList<SvgElementHandler>();
 
-	@SuppressWarnings("serial")
-	private ArrayList<SvgElementProcessor> processors = new ArrayList<SvgElementProcessor>() {
-		{
-			add(new SvgInkscapeGroupProcessor());
-			add(new SvgInkscapeImageProcessor());
-			add(new SvgInkscapePathProcessor());
+	class SvgConverters {
+
+		Map<String, SvgElementConverter> converters = new HashMap<String, SvgElementConverter>() {
+			{
+				put("g", SvgInkscapeConvertUtils.groupConverter());
+				put("image", SvgInkscapeConvertUtils.imageConverter());
+				put("path", SvgConvertUtils.pathConverter());
+			}
+		};
+
+		public SvgElementConverter<SvgElement> get(Element element) {
+			return converters.get(element.getNodeName().toLowerCase());
 		}
-	};
+
+	}
+
+	SvgConverters svgConverters = new SvgConverters();
 
 	private Boolean processChildren;
 
@@ -73,7 +84,7 @@ public class SvgParser {
 				}
 
 				loadChildren(childElement);
-				
+
 				// post process element
 				postProcessElement(childElement);
 			}
@@ -81,21 +92,17 @@ public class SvgParser {
 	}
 
 	private void processElement(Element element) {
-		for (int i = 0; i < processors.size(); i++) {
-			SvgElementProcessor processor = processors.get(i);
-			if (!processor.handles(element))
-				continue;
-			processor.process(this, element);
-		}
+		SvgElementConverter<SvgElement> converter = svgConverters.get(element);
+		if (converter == null)
+			return;
+		handle(converter.convert(element), element);
 	}
-	
+
 	private void postProcessElement(Element element) {
-		for (int i = 0; i < processors.size(); i++) {
-			SvgElementProcessor processor = processors.get(i);
-			if (!processor.handles(element))
-				continue;
-			processor.postProcess(this, element);
-		}
+		SvgElementConverter<SvgElement> converter = svgConverters.get(element);
+		if (converter == null)
+			return;
+		postHandle(converter.convert(element), element);
 	}
 
 	public void handle(SvgElement svgElement, Element element) {
@@ -104,7 +111,7 @@ public class SvgParser {
 			handler.handle(this, svgElement, element);
 		}
 	}
-	
+
 	public void postHandle(SvgElement svgElement, Element element) {
 		for (int i = 0; i < handlers.size(); i++) {
 			SvgElementHandler handler = handlers.get(i);

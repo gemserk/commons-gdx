@@ -140,5 +140,32 @@ public class SvgConvertUtils {
 		svgPath.setLabel(label);
 		return svgPath;
 	}
+	
+	public static SvgElementConverter<SvgGroup> groupConverter() {
+		return new SvgElementConverter<SvgGroup>() {
+			@Override
+			public SvgGroup convert(Element element) {
+				return getSvgGroup(element);
+			}
+		};
+	}
+	
+	public static SvgElementConverter<SvgImage> imageConverter() {
+		return new SvgElementConverter<SvgImage>() {
+			@Override
+			public SvgImage convert(Element element) {
+				return getSvgImage(element);
+			}
+		};
+	}
+	
+	public static SvgElementConverter<SvgInkscapePath> pathConverter() {
+		return new SvgElementConverter<SvgInkscapePath>() {
+			@Override
+			public SvgInkscapePath convert(Element element) {
+				return getSvgPath(element);
+			}
+		};
+	}
 
 }

@@ -22,4 +22,22 @@ public class SvgInkscapeConvertUtils {
 		return svgInkscapeImage;
 	}
 
+	public static SvgElementConverter<SvgGroup> groupConverter() {
+		return new SvgElementConverter<SvgGroup>() {
+			@Override
+			public SvgGroup convert(Element element) {
+				return getSvgInkscapeGroup(element);
+			}
+		};
+	}
+	
+	public static SvgElementConverter<SvgImage> imageConverter() {
+		return new SvgElementConverter<SvgImage>() {
+			@Override
+			public SvgImage convert(Element element) {
+				return getSvgInkscapeImage(element);
+			}
+		};
+	}
+	
 }
