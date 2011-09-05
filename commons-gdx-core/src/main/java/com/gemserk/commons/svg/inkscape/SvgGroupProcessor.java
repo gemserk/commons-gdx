@@ -4,13 +4,15 @@ import org.w3c.dom.Element;
 
 import com.gemserk.vecmath.Matrix3f;
 
-
 public class SvgGroupProcessor implements SvgElementProcessor {
 
 	@Override
 	public void process(SvgParser svgParser, Element element) {
-		SvgGroup svgGroup = getSvgGroup(element);
-		svgParser.handle(svgGroup, element);
+		svgParser.handle(getSvgElement(element), element);
+	}
+	
+	protected SvgElement getSvgElement(Element element) {
+		return getSvgGroup(element);
 	}
 
 	protected SvgGroup getSvgGroup(Element element) {
@@ -23,10 +25,10 @@ public class SvgGroupProcessor implements SvgElementProcessor {
 		SvgInkscapeUtils.getTransform(element, transform);
 
 		SvgGroupImpl svgGroup = new SvgGroupImpl();
-		
+
 		svgGroup.setId(id);
 		svgGroup.setTransform(transform);
-		
+
 		return svgGroup;
 	}
 

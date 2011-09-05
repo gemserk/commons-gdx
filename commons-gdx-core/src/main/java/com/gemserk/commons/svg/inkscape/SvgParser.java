@@ -66,17 +66,21 @@ public class SvgParser {
 				Element childElement = (Element) list.item(i);
 				processElement(childElement);
 
-				if (!processChildren)
+				if (!processChildren) {
+					// post process element
 					continue;
+				}
 
 				loadChildren(childElement);
+				
+				// post process element
 			}
 		}
 	}
 
 	private void processElement(Element element) {
 		for (int i = 0; i < processors.size(); i++) {
-			SvgElementProcessor processor = (SvgElementProcessor) processors.get(i);
+			SvgElementProcessor processor = processors.get(i);
 			if (!processor.handles(element))
 				continue;
 			processor.process(this, element);

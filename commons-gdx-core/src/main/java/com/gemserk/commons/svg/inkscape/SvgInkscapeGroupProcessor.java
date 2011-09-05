@@ -7,6 +7,14 @@ public class SvgInkscapeGroupProcessor extends SvgGroupProcessor {
 
 	@Override
 	public void process(SvgParser svgParser, Element element) {
+		svgParser.handle(getSvgElement(element), element);
+	}
+	
+	protected SvgElement getSvgElement(Element element) {
+		return getSvgInkscapeGroup(element);
+	}
+	
+	protected SvgInkscapeGroup getSvgInkscapeGroup(Element element) {
 		String groupMode = SvgInkscapeUtils.getGroupMode(element);
 		String label = SvgInkscapeUtils.getLabel(element);
 		
@@ -16,8 +24,7 @@ public class SvgInkscapeGroupProcessor extends SvgGroupProcessor {
 
 		svgInkscapeGroup.setGroupMode(groupMode);
 		svgInkscapeGroup.setLabel(label);
-		
-		svgParser.handle(svgInkscapeGroup, element);
+		return svgInkscapeGroup;
 	}
 
 	@Override

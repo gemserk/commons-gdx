@@ -60,6 +60,11 @@ public class SvgParseGroupTest {
 				Matrix3f transform = svgInkscapeGroup.getTransform();
 				groupTransform.set(transform);
 			}
+
+			@Override
+			public void postHandle(SvgParser svgParser, SvgElement svgElement, Element element) {
+				
+			}
 		});
 		svgParser.addHandler(new SvgInkscapePathHandler() {
 			
@@ -78,6 +83,11 @@ public class SvgParseGroupTest {
 				}
 				
 				paths.add(svgPath);
+			}
+
+			@Override
+			public void postHandle(SvgParser svgParser, SvgElement svgElement, Element element) {
+				
 			}
 		});
 		

@@ -14,5 +14,8 @@ public abstract class SvgInkscapeGroupHandler implements SvgElementHandler {
 	}
 
 	protected abstract void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element);
+	
+	@Override
+	public void postHandle(SvgParser svgParser, SvgElement svgElement, Element element) {}
 
 }

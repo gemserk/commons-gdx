@@ -14,5 +14,8 @@ public abstract class SvgImageHandler implements SvgElementHandler {
 	}
 
 	protected abstract void handle(SvgParser svgParser, SvgImage svgImage, Element element);
+	
+	@Override
+	public void postHandle(SvgParser svgParser, SvgElement svgElement, Element element) {}
 
 }

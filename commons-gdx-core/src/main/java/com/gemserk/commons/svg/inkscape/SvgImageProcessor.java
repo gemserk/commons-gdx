@@ -9,8 +9,11 @@ public class SvgImageProcessor implements SvgElementProcessor {
 
 	@Override
 	public void process(SvgParser svgParser, Element element) {
-		SvgImage svgImage = getSvgImage(element);
-		svgParser.handle(svgImage, element);
+		svgParser.handle(getSvgElement(element), element);
+	}
+	
+	protected SvgElement getSvgElement(Element element) {
+		return getSvgImage(element);
 	}
 
 	protected SvgImage getSvgImage(Element element) {
