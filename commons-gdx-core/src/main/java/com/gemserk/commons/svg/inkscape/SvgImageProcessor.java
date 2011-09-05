@@ -5,13 +5,9 @@ import org.w3c.dom.Element;
 import com.gemserk.vecmath.Matrix3f;
 
 
-public class SvgImageProcessor implements SvgElementProcessor {
+public class SvgImageProcessor extends SvgElementProcessor {
 
 	@Override
-	public void process(SvgParser svgParser, Element element) {
-		svgParser.handle(getSvgElement(element), element);
-	}
-	
 	protected SvgElement getSvgElement(Element element) {
 		return getSvgImage(element);
 	}

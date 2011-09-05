@@ -8,7 +8,7 @@ import org.w3c.dom.Element;
  * @author acoppes
  * 
  */
-public interface SvgElementProcessor {
+public abstract class SvgElementProcessor {
 
 	/**
 	 * Process the XML element in the way it want to.
@@ -18,7 +18,17 @@ public interface SvgElementProcessor {
 	 * @param element
 	 *            The XML element to process.
 	 */
-	void process(SvgParser svgParser, Element element);
+	public void process(SvgParser svgParser, Element element) {
+		svgParser.handle(getSvgElement(element), element);
+	}
+
+	/**
+	 * Returns a SvgElement built from the XML Element.
+	 * 
+	 * @param element
+	 *            The XML Element to be converted.
+	 */
+	protected abstract SvgElement getSvgElement(Element element);
 
 	/**
 	 * Returns true if the processor is able to process the element, false otherwise.
@@ -26,6 +36,6 @@ public interface SvgElementProcessor {
 	 * @param element
 	 *            The XML element to check if it is able to process or not.
 	 */
-	boolean handles(Element element);
+	public abstract boolean handles(Element element);
 
 }

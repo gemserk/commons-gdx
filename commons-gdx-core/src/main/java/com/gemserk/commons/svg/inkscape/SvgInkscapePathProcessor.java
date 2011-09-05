@@ -9,7 +9,7 @@ import org.w3c.dom.Element;
 
 import com.gemserk.vecmath.Vector2f;
 
-public class SvgInkscapePathProcessor implements SvgElementProcessor {
+public class SvgInkscapePathProcessor extends SvgElementProcessor {
 
 	private static enum Command {
 		None, 
@@ -39,10 +39,6 @@ public class SvgInkscapePathProcessor implements SvgElementProcessor {
 	private Command currentCommand = Command.None;
 
 	@Override
-	public void process(SvgParser svgParser, Element element) {
-		svgParser.handle(getSvgElement(element), element);
-	}
-	
 	protected SvgElement getSvgElement(Element element) {
 		return getSvgPath(element);
 	}
