@@ -13,52 +13,9 @@
  height="120"
  id="svg2"
  version="1.1"
- inkscape:version="0.48.1 r9760"
- sodipodi:docname="test-groups.svg"
- levelName="No turning back!"
- inkscape:export-filename="/tmp/levelexample.png"
- inkscape:export-xdpi="180"
- inkscape:export-ydpi="180">
+ sodipodi:docname="test-groups.svg">
 <defs
  id="defs4" />
-<sodipodi:namedview
- id="base"
- pagecolor="#000000"
- bordercolor="#666666"
- borderopacity="1.0"
- inkscape:pageopacity="1"
- inkscape:pageshadow="2"
- inkscape:zoom="13.2269"
- inkscape:cx="21.4006"
- inkscape:cy="93.81"
- inkscape:document-units="px"
- inkscape:current-layer="layer2"
- showgrid="true"
- units="px"
- inkscape:window-width="1440"
- inkscape:window-height="849"
- inkscape:window-x="0"
- inkscape:window-y="24"
- inkscape:window-maximized="1"
- showguides="true"
- inkscape:guide-bbox="true"
- inkscape:snap-global="true">
-<inkscape:grid
- type="xygrid"
- id="grid3765"
- empspacing="5"
- visible="true"
- enabled="true"
- snapvisiblegridlinesonly="true" />
-<sodipodi:guide
- orientation="1,0"
- position="-1840,4810"
- id="guide3838" />
-<sodipodi:guide
- orientation="1,0"
- position="-960,5720"
- id="guide3840" />
-</sodipodi:namedview>
 <metadata
  id="metadata7">
 <rdf:RDF>
@@ -71,39 +28,14 @@
 </cc:Work>
 </rdf:RDF>
 </metadata>
-<g
- inkscape:label="templates"
- inkscape:groupmode="layer"
- id="layer1" />
-<g
- inkscape:groupmode="layer"
- id="layer2"
- inkscape:label="Obstacles">
-<g
- id="group-path"
- transform="translate(20,10)">
-<path
- inkscape:connector-curvature="0"
- id="path-child-01"
- d="M 3,12 6,8 21,7 23,14 10,15 z"
- style="fill:#0000ff;fill-opacity:1;fill-rule:nonzero;stroke:none" />
-<path
- inkscape:connector-curvature="0"
- id="path-child-02"
- d="M 15,26 32,17 36,28 24,32 z"
- style="fill:#0000ff;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+<g id="group-path" transform="translate(20,10)">
+	<path 
+	 id="path-child-01"
+	 d="M 3,12 6,8 21,7 23,14 10,15 z"
+	 style="fill:#0000ff;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+	<path 
+	 id="path-child-02"
+	 d="M 15,26 32,17 36,28 24,32 z"
+	 style="fill:#0000ff;fill-opacity:1;fill-rule:nonzero;stroke:none" />
 </g>
-</g>
-<g
- inkscape:groupmode="layer"
- id="layer4"
- inkscape:label="Items" />
-<g
- inkscape:groupmode="layer"
- id="layer5"
- inkscape:label="Portals" />
-<g
- inkscape:groupmode="layer"
- id="layer3"
- inkscape:label="World" />
 </svg>
