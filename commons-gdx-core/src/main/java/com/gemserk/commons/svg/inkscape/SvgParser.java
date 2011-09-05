@@ -68,12 +68,14 @@ public class SvgParser {
 
 				if (!processChildren) {
 					// post process element
+					postProcessElement(childElement);
 					continue;
 				}
 
 				loadChildren(childElement);
 				
 				// post process element
+				postProcessElement(childElement);
 			}
 		}
 	}
@@ -86,11 +88,27 @@ public class SvgParser {
 			processor.process(this, element);
 		}
 	}
+	
+	private void postProcessElement(Element element) {
+		for (int i = 0; i < processors.size(); i++) {
+			SvgElementProcessor processor = processors.get(i);
+			if (!processor.handles(element))
+				continue;
+			processor.postProcess(this, element);
+		}
+	}
 
 	public void handle(SvgElement svgElement, Element element) {
 		for (int i = 0; i < handlers.size(); i++) {
 			SvgElementHandler handler = handlers.get(i);
 			handler.handle(this, svgElement, element);
+		}
+	}
+	
+	public void postHandle(SvgElement svgElement, Element element) {
+		for (int i = 0; i < handlers.size(); i++) {
+			SvgElementHandler handler = handlers.get(i);
+			handler.postHandle(this, svgElement, element);
 		}
 	}
 

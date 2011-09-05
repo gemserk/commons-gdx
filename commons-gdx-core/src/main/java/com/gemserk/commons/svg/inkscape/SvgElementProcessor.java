@@ -21,6 +21,10 @@ public abstract class SvgElementProcessor {
 	public void process(SvgParser svgParser, Element element) {
 		svgParser.handle(getSvgElement(element), element);
 	}
+	
+	public void postProcess(SvgParser svgParser, Element element) {
+		svgParser.postHandle(getSvgElement(element), element);
+	}
 
 	/**
 	 * Returns a SvgElement built from the XML Element.

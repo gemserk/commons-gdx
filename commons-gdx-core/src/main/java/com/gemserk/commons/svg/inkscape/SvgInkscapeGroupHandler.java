@@ -2,7 +2,6 @@ package com.gemserk.commons.svg.inkscape;
 
 import org.w3c.dom.Element;
 
-
 public abstract class SvgInkscapeGroupHandler implements SvgElementHandler {
 
 	@Override
@@ -13,9 +12,20 @@ public abstract class SvgInkscapeGroupHandler implements SvgElementHandler {
 		handle(svgParser, svgInkscapeGroup, element);
 	}
 
-	protected abstract void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element);
-	
 	@Override
-	public void postHandle(SvgParser svgParser, SvgElement svgElement, Element element) {}
+	public void postHandle(SvgParser svgParser, SvgElement svgElement, Element element) {
+		if (!(svgElement instanceof SvgInkscapeGroup))
+			return;
+		SvgInkscapeGroup svgInkscapeGroup = (SvgInkscapeGroup) svgElement;
+		postHandle(svgParser, svgInkscapeGroup, element);
+	}
+
+	protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element) {
+		
+	}
+
+	protected void postHandle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element) {
+		
+	}
 
 }
