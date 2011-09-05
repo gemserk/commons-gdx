@@ -73,7 +73,7 @@ public class SvgConvertUtils {
 	public static SvgInkscapePath getSvgPath(Element element) {
 
 		String id = element.getAttribute("id");
-		String label = SvgInkscapeUtils.getLabel(element);
+//		String label = SvgInkscapeUtils.getLabel(element);
 		String d = element.getAttribute("d");
 
 		StringTokenizer tokens = new StringTokenizer(d, ", ");
@@ -134,10 +134,9 @@ public class SvgConvertUtils {
 		Vector2f[] points = new Vector2f[pointList.size()];
 		pointList.toArray(points);
 
-		SvgInkscapePathImpl svgPath = new SvgInkscapePathImpl();
+		SvgPathImpl svgPath = new SvgPathImpl();
 		svgPath.setId(id);
 		svgPath.setPoints(points);
-		svgPath.setLabel(label);
 		return svgPath;
 	}
 

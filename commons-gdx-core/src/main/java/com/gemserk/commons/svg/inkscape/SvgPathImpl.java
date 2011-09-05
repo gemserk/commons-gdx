@@ -3,10 +3,9 @@ package com.gemserk.commons.svg.inkscape;
 import com.gemserk.vecmath.Vector2f;
 
 
-public class SvgInkscapePathImpl implements SvgInkscapePath {
+public class SvgPathImpl implements SvgInkscapePath {
 
 	String id;
-	String label;
 	Vector2f[] points;
 
 	public String getId() {
@@ -23,14 +22,6 @@ public class SvgInkscapePathImpl implements SvgInkscapePath {
 
 	public void setPoints(Vector2f[] points) {
 		this.points = points;
-	}
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
 	}
 
 }

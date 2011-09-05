@@ -8,6 +8,4 @@ public interface SvgInkscapePath extends SvgElement {
 
 	Vector2f[] getPoints();
 	
-	String getLabel();
-
 }
