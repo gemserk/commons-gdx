@@ -20,6 +20,9 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	private final Vector3 tmp = new Vector3();
 
 	Matrix4 projectionMatrix = new Matrix4();
+	Matrix4 combinedMatrix = new Matrix4();
+
+	private boolean matrixDirty;
 
 	public Libgdx2dCameraTransformImpl() {
 		this(0, 0);
@@ -28,25 +31,30 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	public Libgdx2dCameraTransformImpl(float centerX, float centerY) {
 		projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		center(centerX, centerY);
+		matrixDirty = true;
 	}
 
 	@Override
 	public void move(float x, float y) {
+		matrixDirty = true;
 		translationMatrix.setToTranslation(-x, -y, 0f);
 	}
 
 	@Override
 	public void center(float x, float y) {
+		matrixDirty = true;
 		center.set(x, y);
 	}
 
 	@Override
 	public void zoom(float s) {
+		matrixDirty = true;
 		scaleMatrix.setToScaling(s, s, 1f);
 	}
 
 	@Override
 	public void rotate(float angle) {
+		matrixDirty = true;
 		rotationMatrix.setToRotation(rotationAxis, angle);
 	}
 
@@ -112,6 +120,16 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		tmp.mul(transform);
 
 		position.set(tmp.x, tmp.y);
+	}
+
+	@Override
+	public Matrix4 getCombinedMatrix() {
+		if (!matrixDirty)
+			return combinedMatrix;
+		combinedMatrix.set(projectionMatrix);
+		Matrix4.mul(combinedMatrix.val, transform.val);
+		matrixDirty = false;
+		return combinedMatrix;
 	}
 
 }

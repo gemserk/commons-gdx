@@ -7,7 +7,6 @@ import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 public class Box2DCustomDebugRenderer {
 
 	private final Libgdx2dCamera camera;
-
 	private final World world;
 
 	private Box2DDebugRenderer box2dDebugRenderer;
@@ -19,9 +18,7 @@ public class Box2DCustomDebugRenderer {
 	}
 
 	public void render() {
-		camera.apply();
-		box2dDebugRenderer.render(world);
-		// camera.pop();
+		box2dDebugRenderer.render(world, camera.getCombinedMatrix());
 	}
 
 }
