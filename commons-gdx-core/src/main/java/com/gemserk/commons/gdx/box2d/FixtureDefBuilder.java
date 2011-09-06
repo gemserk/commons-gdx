@@ -25,10 +25,25 @@ public class FixtureDefBuilder {
 		fixtureDef.shape = shape;
 		return this;
 	}
+	
+	public FixtureDefBuilder boxShape(float hx, float hy, Vector2 center, float angleInRadians) {
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(hx, hy,center,angleInRadians);
+		fixtureDef.shape = shape;
+		return this;
+	}
 
 	public FixtureDefBuilder circleShape(float radius) {
 		Shape shape = new CircleShape();
 		shape.setRadius(radius);
+		fixtureDef.shape = shape;
+		return this;
+	}
+	
+	public FixtureDefBuilder circleShape(Vector2 center, float radius) {
+		CircleShape shape = new CircleShape();
+		shape.setRadius(radius);
+		shape.setPosition(center);
 		fixtureDef.shape = shape;
 		return this;
 	}
