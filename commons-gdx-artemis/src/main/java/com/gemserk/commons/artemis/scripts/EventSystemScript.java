@@ -6,15 +6,15 @@ import com.gemserk.commons.artemis.events.EventManager;
 
 public class EventSystemScript extends ScriptJavaImpl {
 	
-	private final EventManager eventListenerManager;
+	private final EventManager eventManager;
 	
 	public EventSystemScript(EventManager eventListenerManager) {
-		this.eventListenerManager = eventListenerManager;
+		this.eventManager = eventListenerManager;
 	}
 	
 	@Override
 	public void update(World world, Entity e) {
-		eventListenerManager.process();
+		eventManager.process();
 	}
 	
 }
