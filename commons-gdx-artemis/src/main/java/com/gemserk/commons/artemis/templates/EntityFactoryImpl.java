@@ -17,11 +17,6 @@ public class EntityFactoryImpl implements EntityFactory {
 	@Override
 	public Entity instantiate(EntityTemplate template) {
 		return instantiate(template, parameters);
-		// Entity entity = world.createEntity();
-		// template.apply(entity);
-		// entity.refresh();
-		// return entity;
-		// return instantiate(template, null);
 	}
 
 	@Override
@@ -31,14 +26,6 @@ public class EntityFactoryImpl implements EntityFactory {
 		template.apply(entity);
 		entity.refresh();
 		return entity;
-		// return instantiate(template);
-		// Entity entity = world.createEntity();
-		// if (parameters != null)
-		// template.setParameters(entity, parameters);
-		// else
-		// template.apply(entity);
-		// entity.refresh();
-		// return entity;
 	}
 
 }
