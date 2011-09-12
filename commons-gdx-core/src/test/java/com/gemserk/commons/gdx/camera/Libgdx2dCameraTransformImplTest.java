@@ -151,11 +151,6 @@ public class Libgdx2dCameraTransformImplTest {
 		}
 
 		@Override
-		public void setIcon(Pixmap pixmap) {
-			
-		}
-
-		@Override
 		public void setVSync(boolean vsync) {
 		}
 
@@ -175,6 +170,12 @@ public class Libgdx2dCameraTransformImplTest {
 		public float getDensity() {
 			// TODO Auto-generated function stub
 			return 0;
+			
+		}
+
+		@Override
+		public void setIcon(Pixmap[] arg0) {
+			// TODO Auto-generated function stub
 			
 		}
 	}
