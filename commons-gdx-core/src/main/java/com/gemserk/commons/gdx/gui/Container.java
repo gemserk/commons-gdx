@@ -64,9 +64,9 @@ public class Container implements Control {
 				return (T) control;
 			if (control instanceof Container) {
 				Container container = (Container) control;
-				T child = container.findControl(id);
+				T child = (T) container.findControl(id);
 				if (child != null)
-					return child;
+					return (T) child;
 			}
 		}
 		return null;
