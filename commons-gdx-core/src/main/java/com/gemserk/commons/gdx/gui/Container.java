@@ -58,9 +58,17 @@ public class Container implements Control {
 	}
 
 	public <T extends Control> T findControl(String id) {
-		for (int i = 0; i < controls.size(); i++)
-			if (controls.get(i).getId().equals(id))
-				return (T) controls.get(i);
+		for (int i = 0; i < controls.size(); i++) {
+			Control control = controls.get(i);
+			if (control.getId().equals(id))
+				return (T) control;
+			if (control instanceof Container) {
+				Container container = (Container) control;
+				T child = container.findControl(id);
+				if (child != null)
+					return child;
+			}
+		}
 		return null;
 	}
 
