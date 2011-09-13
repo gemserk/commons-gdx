@@ -17,6 +17,11 @@ public class FutureProcessor<T> {
 		this.futureHandler = futureHandler;
 	}
 
+	public FutureProcessor(FutureHandler<T> futureHandler, Future<T> future) {
+		this.futureHandler = futureHandler;
+		this.future = future;
+	}
+
 	public void update() {
 		if (future == null)
 			return;

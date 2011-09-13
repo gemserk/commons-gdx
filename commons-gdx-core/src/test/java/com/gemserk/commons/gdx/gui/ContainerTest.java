@@ -15,7 +15,7 @@ public class ContainerTest {
 	}
 
 	@Test
-	public void shouldFindControlInChildrenControls() {
+	public void shouldFindControlInHierarchyChildrenControls() {
 		Container parent = new Container();
 		Container child = new Container();
 		Control grandChild = mockControl("A");
