@@ -11,6 +11,10 @@ public class WorldWrapper {
 	private World world;
 	private ArrayList<EntitySystem> updateSystems;
 	private ArrayList<EntitySystem> renderSystems;
+	
+	public World getWorld() {
+		return world;
+	}
 
 	public WorldWrapper(World world) {
 		this.world = world;

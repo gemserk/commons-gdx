@@ -24,7 +24,7 @@ import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.dataloaders.DataLoader;
 
 public class LibgdxResourceBuilder {
-	
+
 	// TODO: Define folders for each type of resource?
 
 	protected ResourceManager<String> resourceManager;
@@ -121,7 +121,7 @@ public class LibgdxResourceBuilder {
 			}
 		});
 	}
-	
+
 	public void animation(String id, final String spriteSheetId, final int x, final int y, final int w, final int h, final int framesCount, //
 			final boolean loop, final int time, final int... times) {
 		resourceManager.addVolatile(id, new DataLoader<Animation>() {
@@ -130,26 +130,26 @@ public class LibgdxResourceBuilder {
 			public Animation load() {
 				Texture spriteSheet = resourceManager.getResourceValue(spriteSheetId);
 				Sprite[] frames = new Sprite[framesCount];
-				
+
 				int xOffset = 0;
 				int yOffset = 0;
-				
+
 				for (int i = 0; i < frames.length; i++) {
 					frames[i] = new Sprite(spriteSheet, x + xOffset, y + yOffset, w, h);
-					
+
 					xOffset += w;
-					
+
 					if (xOffset >= spriteSheet.getWidth()) {
 						yOffset += w;
 						xOffset = 0;
 					}
 				}
-				
+
 				float[] newTimes = new float[framesCount - 1];
 				int lastTime = time;
 
 				// added convert from int time in milliseconds to float time in seconds
-				
+
 				for (int i = 0; i < framesCount - 1; i++) {
 					if (i < times.length) {
 						newTimes[i] = ((float) times[i]) * 0.001f;
@@ -158,7 +158,7 @@ public class LibgdxResourceBuilder {
 						newTimes[i] = ((float) lastTime) * 0.001f;
 				}
 
-				FrameAnimationImpl frameAnimation = new FrameAnimationImpl((float) time * 0.001f, newTimes);
+				FrameAnimationImpl frameAnimation = new FrameAnimationImpl(0.001f * (float) time, newTimes);
 				frameAnimation.setLoop(loop);
 
 				return new Animation(frames, frameAnimation);
@@ -217,15 +217,16 @@ public class LibgdxResourceBuilder {
 			}
 		});
 	}
-	
+
 	public void particleEffect(String id, final String effectFile, final String imagesDir) {
-		resourceManager.add(id,new DataLoader<ParticleEffect>() {
+		resourceManager.add(id, new DataLoader<ParticleEffect>() {
 			@Override
 			public ParticleEffect load() {
 				ParticleEffect particleEffect = new ParticleEffect();
 				particleEffect.load(Gdx.files.internal(effectFile), Gdx.files.internal(imagesDir));
 				return particleEffect;
 			}
+
 			@Override
 			public void unload(ParticleEffect t) {
 				t.dispose();
@@ -245,7 +246,7 @@ public class LibgdxResourceBuilder {
 
 	// / TESTING STUFF
 
-	@SuppressWarnings({ "rawtypes"})
+	@SuppressWarnings({ "rawtypes" })
 	public void resource(String id, final ResourceBuilder resourceBuilder) {
 
 		DataLoader dataLoader = new DataLoader() {
@@ -259,7 +260,7 @@ public class LibgdxResourceBuilder {
 			resourceManager.add(id, dataLoader);
 		else
 			resourceManager.addVolatile(id, dataLoader);
-		
+
 	}
 
 	public SpriteResourceBuilder sprite2(String textureId) {
