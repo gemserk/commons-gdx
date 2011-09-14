@@ -73,7 +73,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 	public void update(float delta) {
 		currentTime += delta;
 		float currentFrameTime = getCurrentFrameTime();
-		if (currentTime >= currentFrameTime) {
+		while (currentTime >= currentFrameTime) {
 			nextFrame();
 			currentTime -= currentFrameTime;
 		}

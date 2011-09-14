@@ -40,5 +40,19 @@ public class FrameAnimationImplTest {
 		assertThat(frameAnimationImpl.getCurrentFrame(), IsEqual.equalTo(0));
 		
 	}
+	
+	@Test
+	public void bugNotStartingFromFirstFrameWhenLoop() {
+		
+		float[] frameTimes = new float [] {1f, 1f};
+		
+		FrameAnimationImpl frameAnimationImpl = new FrameAnimationImpl(1f, frameTimes);
+		frameAnimationImpl.setLoop(true);
+		
+		assertThat(frameAnimationImpl.getCurrentFrame(), IsEqual.equalTo(0));
+		frameAnimationImpl.update(3f);
+		assertThat(frameAnimationImpl.getCurrentFrame(), IsEqual.equalTo(0));
+		
+	}
 
 }
