@@ -26,7 +26,7 @@ public class SpriteComponent extends Component {
 
 	// Used right now to set an animation frame, another option could be to implement a common interface which returns different sprite on getSprite().
 	public void setSprite(Sprite sprite) {
-		this.sprite.set(sprite);
+		this.sprite = sprite;
 	}
 
 	public Vector2 getCenter() {
