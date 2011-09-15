@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
-import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
@@ -25,12 +25,12 @@ public class TextButton implements Control {
 	private boolean pressed;
 	private boolean released;
 	private LibgdxPointer libgdxPointer = new LibgdxPointer(0);
-	private Color color = new Color(1f, 1f, 1f, 1f);
 	private Color overColor = new Color(1f, 1f, 1f, 1f);
 	private Color notOverColor = new Color(0.5f, 0.5f, 0.5f, 1f);
 	private boolean wasInside;
 	private HAlignment alignment = HAlignment.LEFT;
 	private ButtonHandler buttonHandler = new ButtonHandler();
+	private Transition<Color> colorTransition;
 
 	public float getX() {
 		return x;
@@ -41,14 +41,15 @@ public class TextButton implements Control {
 	}
 
 	public TextButton setColor(Color color) {
-		this.color.set(color);
+		if (colorTransition != null)
+			colorTransition.set(color, 0.25f);
 		return this;
 	}
 
 	public TextButton setOverColor(Color c) {
 		return this.setOverColor(c.r, c.g, c.b, c.a);
 	}
-	
+
 	public TextButton setOverColor(float r, float g, float b, float a) {
 		this.overColor.set(r, g, b, a);
 		if (wasInside)
@@ -141,7 +142,7 @@ public class TextButton implements Control {
 		this.text = text;
 		this.x = x;
 		this.y = y;
-		color.set(notOverColor);
+		colorTransition = Transitions.transitionBuilder(notOverColor).build();
 		this.cx = 0.5f;
 		this.cy = 0.5f;
 		recalculateBounds();
@@ -154,7 +155,7 @@ public class TextButton implements Control {
 	}
 
 	public void draw(SpriteBatch spriteBatch) {
-		font.setColor(color);
+		font.setColor(colorTransition.get());
 		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, alignment);
 		// ImmediateModeRendererUtils.drawRectangle(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, Color.GREEN);
 	}
@@ -176,12 +177,11 @@ public class TextButton implements Control {
 
 		boolean inside = MathUtils2.inside(bounds, libgdxPointer.getPosition());
 
-		if (wasInside && !inside)
-			Synchronizers.transition(color, Transitions.transitionBuilder(color).end(notOverColor).time(250));
+		if (wasInside && !inside) 
+			colorTransition.set(notOverColor, 0.25f);
 
-		if (!wasInside && inside) {
-			Synchronizers.transition(color, Transitions.transitionBuilder(color).end(overColor).time(250));
-		}
+		if (!wasInside && inside) 
+			colorTransition.set(overColor, 0.25f);
 
 		wasInside = inside;
 
