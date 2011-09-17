@@ -127,6 +127,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		if (!matrixDirty)
 			return combinedMatrix;
 		combinedMatrix.set(projectionMatrix);
+		calculateTransform(transform);
 		Matrix4.mul(combinedMatrix.val, transform.val);
 		matrixDirty = false;
 		return combinedMatrix;
