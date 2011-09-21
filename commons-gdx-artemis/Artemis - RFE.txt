@@ -1,0 +1,15 @@
+Artemis - RFE
+
+- Listener of the events of add/remove of an entity.
+
+- Add a contains(Entity) to World to check if the entity is on the world or not (by checking if the uniqueid is on world, etc)
+
+- Be aware to events of component being added/removed to/from an entity. Is this useful? in which situations?
+
+- BUG: I believe entity delete should be processed before entity refresh/add on loopStart() method instead after.
+
+- ComponentMapper information could be static (map between classes and types), this is not so clear. 
+
+- Artemis system which process in each update independent of entities and components/
+
+- Add nanotime to World to be used optionally? (if you fix your time step this should not be needed though) 
