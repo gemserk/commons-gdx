@@ -12,6 +12,10 @@
 	<packaging>jar</packaging>
 	<name>Common Gdx - Core - Desktop module</name>
 	<description>Common Gdx - Core - Desktop platform implementations</description>
+	
+	<properties>
+		<sl4j.version>1.6.1</sl4j.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -41,9 +45,14 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gemserk.commons.gdx</groupId>
-			<artifactId>commons-gdx-resources</artifactId>
-			<version>${project.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>0.9.28</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${sl4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.badlogic.gdx</groupId>

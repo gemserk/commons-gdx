@@ -13,11 +13,14 @@
 	<name>Common Gdx - Core - Android module</name>
 	<description>Common Gdx - Core - Android module</description>
 
+	<properties>
+		<sl4j.version>1.6.1-RC1</sl4j.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -41,9 +44,9 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gemserk.commons.gdx</groupId>
-			<artifactId>commons-gdx-resources</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-android</artifactId>
+			<version>${sl4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.adwhirl.adwhirl</groupId>
