@@ -4,11 +4,11 @@
 	<parent>
 		<groupId>com.gemserk.commons.gdx</groupId>
 		<artifactId>commons-gdx</artifactId>
-		<version>0.0.5-SNAPSHOT</version>
+		<version>0.0.5</version>
 	</parent>
 	<groupId>com.gemserk.commons.gdx</groupId>
 	<artifactId>commons-gdx-desktop</artifactId>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.0.5</version>
 	<packaging>jar</packaging>
 	<name>Common Gdx - Core - Desktop module</name>
 	<description>Common Gdx - Core - Desktop platform implementations</description>
