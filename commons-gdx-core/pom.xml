@@ -25,21 +25,6 @@
 			<version>${animation4j.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gemserk.componentsengine</groupId>
-			<artifactId>componentsengine-input</artifactId>
-			<version>${componentsengine.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.gemserk.componentsengine</groupId>
-			<artifactId>componentsengine-properties</artifactId>
-			<version>${componentsengine.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.gemserk.componentsengine</groupId>
-			<artifactId>componentsengine-utils</artifactId>
-			<version>${componentsengine.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.gemserk.vecmath</groupId>
 			<artifactId>vecmath</artifactId>
 			<version>${vecmath.version}</version>
