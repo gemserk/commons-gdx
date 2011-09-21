@@ -22,3 +22,8 @@ commons-gdx-desktop/target
 commons-gdx-desktop/.classpath
 commons-gdx-desktop/.project
 commons-gdx-desktop/.settings
+
+commons-gdx-resources/target
+commons-gdx-resources/.classpath
+commons-gdx-resources/.project
+commons-gdx-resources/.settings

@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gemserk.commons.gdx</groupId>
+		<artifactId>commons-gdx</artifactId>
+		<version>0.0.6-SNAPSHOT</version>
+	</parent>
+	<groupId>com.gemserk.commons.gdx</groupId>
+	<artifactId>commons-gdx-resources</artifactId>
+	<version>0.0.6-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Common Gdx - Resources module</name>
+	<description>Common utitilites to be used with resourcesmanager and libGDX</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.gemserk.commons.gdx</groupId>
+			<artifactId>commons-gdx-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gemserk.resources</groupId>
+			<artifactId>resourcesmanager-core</artifactId>
+			<version>${resourcesmanager.version}</version>
+		</dependency>
+	</dependencies>
+
+</project>

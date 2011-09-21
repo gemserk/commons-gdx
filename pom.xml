@@ -50,10 +50,11 @@
 
 
 	<modules>
-		<module>commons-gdx-core</module>
 		<module>commons-gdx-android</module>
-		<module>commons-gdx-desktop</module>
 		<module>commons-gdx-artemis</module>
+		<module>commons-gdx-core</module>
+		<module>commons-gdx-desktop</module>
+		<module>commons-gdx-resources</module>
 	</modules>
 
 	<properties>

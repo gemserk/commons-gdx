@@ -29,11 +29,6 @@
 			<artifactId>vecmath</artifactId>
 			<version>${vecmath.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.gemserk.resources</groupId>
-			<artifactId>resourcesmanager-core</artifactId>
-			<version>${resourcesmanager.version}</version>
-		</dependency>
  		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>

@@ -12,7 +12,7 @@
 	<packaging>jar</packaging>
 	<name>Common Gdx - Core - Android module</name>
 	<description>Common Gdx - Core - Android module</description>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -38,6 +38,11 @@
 		<dependency>
 			<groupId>com.gemserk.commons.gdx</groupId>
 			<artifactId>commons-gdx-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gemserk.commons.gdx</groupId>
+			<artifactId>commons-gdx-resources</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
