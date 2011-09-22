@@ -1,5 +1,7 @@
 package com.gemserk.commons.artemis.systems;
 
+import java.util.ArrayList;
+
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
 import com.gemserk.commons.artemis.components.ScriptComponent;
@@ -20,18 +22,18 @@ public class ReflectionRegistratorEventSystem extends EntityProcessingSystem {
 	@Override
 	protected void added(Entity e) {
 		super.added(e);
-		Script[] scripts = e.getComponent(scriptComponentClass).getScripts();
-		for (int i = 0; i < scripts.length; i++) {
-			Script script = scripts[i];
+		ArrayList<Script> scripts = e.getComponent(scriptComponentClass).getScripts();
+		for (int i = 0; i < scripts.size(); i++) {
+			Script script = scripts.get(i);
 			eventListenerReflectionRegistrator.registerEventListeners(script);
 		}
 	}
 
 	@Override
 	protected void removed(Entity e) {
-		Script[] scripts = e.getComponent(scriptComponentClass).getScripts();
-		for (int i = 0; i < scripts.length; i++) {
-			Script script = scripts[i];
+		ArrayList<Script> scripts = e.getComponent(scriptComponentClass).getScripts();
+		for (int i = 0; i < scripts.size(); i++) {
+			Script script = scripts.get(i);
 			eventListenerReflectionRegistrator.unregisterEventListeners(script);
 		}
 	}

@@ -2,6 +2,8 @@ package com.gemserk.commons.artemis.systems;
 
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
@@ -295,9 +297,9 @@ public class EntityTemplateTest {
 		// ... on script system
 
 		ScriptComponent scriptComponent = weapon.getComponent(ScriptComponent.class);
-		Script[] scripts = scriptComponent.getScripts();
-		for (int i = 0; i < scripts.length; i++)
-			scripts[i].update(world, weapon);
+		ArrayList<Script> scripts = scriptComponent.getScripts();
+		for (int i = 0; i < scripts.size(); i++) 
+			scripts.get(i).update(world, weapon);
 	}
 
 }
