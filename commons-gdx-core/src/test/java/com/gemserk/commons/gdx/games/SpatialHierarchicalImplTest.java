@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
-public class HierarchicalSpatialTest {
+public class SpatialHierarchicalImplTest {
 
 	@Test
 	public void shouldReturnParentPosition() {
