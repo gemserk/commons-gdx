@@ -10,6 +10,10 @@ public class ScriptComponent extends Component {
 	public Script[] getScripts() {
 		return scripts;
 	}
+	
+	public void setScripts(Script[] scripts) {
+		this.scripts = scripts;
+	}
 
 	public ScriptComponent(Script... scripts) {
 		if (scripts == null)

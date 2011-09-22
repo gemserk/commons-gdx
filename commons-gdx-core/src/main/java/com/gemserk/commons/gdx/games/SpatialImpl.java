@@ -50,6 +50,10 @@ public class SpatialImpl implements Spatial {
 		this.w = width;
 		this.h = height;
 	}
+	
+	public SpatialImpl(float x, float y) {
+		this(x, y, 0f, 0f, 0f);
+	}
 
 	public SpatialImpl(float x, float y, float w, float h, float angle) {
 		super();
