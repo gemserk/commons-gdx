@@ -18,8 +18,11 @@ public class SpatialHierarchicalImpl2Test {
 
 		Spatial hierarchicalSpatial = new SpatialHierarchicalImpl2(parent, child);
 
-		assertThat(hierarchicalSpatial.getX(), IsEqual.equalTo(x));
-		assertThat(hierarchicalSpatial.getY(), IsEqual.equalTo(y));
+		assertThat(hierarchicalSpatial.getX(), IsEqual.equalTo(0f));
+		assertThat(hierarchicalSpatial.getY(), IsEqual.equalTo(0f));
+		
+		assertThat(child.getX(), IsEqual.equalTo(-20f));
+		assertThat(child.getY(), IsEqual.equalTo(-50f));
 	}
 
 	@Test
@@ -61,7 +64,9 @@ public class SpatialHierarchicalImpl2Test {
 
 		Spatial hierarchicalSpatial = new SpatialHierarchicalImpl2(parent, child);
 
-		assertThat(hierarchicalSpatial.getAngle(), IsEqual.equalTo(55f));
+		assertThat(hierarchicalSpatial.getAngle(), IsEqual.equalTo(0f));
+		
+		assertThat(child.getAngle(), IsEqual.equalTo(-55f));
 	}
 
 	@Test
@@ -148,6 +153,20 @@ public class SpatialHierarchicalImpl2Test {
 		assertEquals(90f, hierarchicalSpatial2.getAngle(), 0.1f);
 		assertEquals(0f, hierarchicalSpatial2.getX(), 0.1f);
 		assertEquals(30f, hierarchicalSpatial2.getY(), 0.1f);
+	}
+	
+	@Test
+	public void setAsChildComponentShouldConvertCoordinates() {
+		Spatial parent = new SpatialImpl(50f, 50f, 1f, 1f, 0f);
+		Spatial child = new SpatialImpl(25f, 25f, 1f, 1f, 0f);
+
+		Spatial hierarchicalSpatial = new SpatialHierarchicalImpl2(parent, child);
+		
+		assertEquals(25f, hierarchicalSpatial.getX(), 0.1f);
+		assertEquals(25f, hierarchicalSpatial.getY(), 0.1f);
+		
+		assertEquals(-25f, child.getX(), 0.1f);
+		assertEquals(-25f, child.getY(), 0.1f);
 	}
 
 }

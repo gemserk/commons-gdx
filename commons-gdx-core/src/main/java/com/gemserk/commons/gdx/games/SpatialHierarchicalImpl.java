@@ -79,6 +79,7 @@ public class SpatialHierarchicalImpl implements Spatial {
 	public void set(Spatial spatial) {
 		setPosition(spatial.getX(), spatial.getY());
 		setAngle(spatial.getAngle());
+		setSize(spatial.getWidth(), spatial.getHeight());
 	}
 
 }

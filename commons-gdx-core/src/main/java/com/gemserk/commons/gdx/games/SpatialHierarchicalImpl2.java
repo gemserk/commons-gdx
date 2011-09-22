@@ -9,9 +9,20 @@ public class SpatialHierarchicalImpl2 implements Spatial {
 
 	private final Vector2 position = new Vector2();
 
+	/**
+	 * Creates a new hierarchical spatial with two Spatial, converting the second one as a child of the first one.
+	 * 
+	 * @param parent
+	 *            The parent Spatial
+	 * @param child
+	 *            The child Spatial
+	 */
 	public SpatialHierarchicalImpl2(Spatial parent, Spatial child) {
 		this.parent = parent;
 		this.child = child;
+		setPosition(child.getX(), child.getY());
+		setAngle(child.getAngle());
+		setSize(child.getWidth(), child.getHeight());
 	}
 
 	@Override
