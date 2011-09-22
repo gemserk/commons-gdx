@@ -13,6 +13,10 @@ public class ScriptComponent extends Component {
 	public ArrayList<Script> getScripts() {
 		return scripts;
 	}
+	
+	public void setScripts(ArrayList<Script> scripts) {
+		this.scripts = scripts;
+	}
 
 	public ScriptComponent(Script... scripts) {
 		if (scripts == null)
