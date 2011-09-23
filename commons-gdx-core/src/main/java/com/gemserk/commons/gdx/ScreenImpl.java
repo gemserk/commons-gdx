@@ -89,12 +89,14 @@ public class ScreenImpl implements Screen {
 			accumulator -= dt;
 		}
 
+		float alpha = accumulator / dt;
+		GlobalTime.setAlpha(alpha);
+
 		// const double alpha = accumulator / dt;
 		//
 		// State state = currentState*alpha + previousState * ( 1.0 - alpha );
 		//
 		// render( state );
-
 	}
 
 	@Override
