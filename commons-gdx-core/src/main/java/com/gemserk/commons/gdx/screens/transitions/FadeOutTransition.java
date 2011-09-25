@@ -12,23 +12,23 @@ import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 import com.gemserk.commons.gdx.graphics.Mesh2d;
 import com.gemserk.commons.gdx.graphics.Mesh2dUtils;
 
-public class FadeInTransition extends GameTransitions.EnterTransition {
+public class FadeOutTransition extends GameTransitions.LeaveTransition {
 
 	private final float time;
 	private Mesh2d fadeRectangle;
 
 	private Transition<Color> colorTransition;
 
-	private final Color startColor = new Color(0f, 0f, 0f, 1f);
-	private final Color endColor = new Color(0f, 0f, 0f, 0f);
+	private final Color startColor = new Color(0f, 0f, 0f, 0f);
+	private final Color endColor = new Color(0f, 0f, 0f, 1f);
 
-	public FadeInTransition(Screen screen, float time) {
+	public FadeOutTransition(Screen screen, float time) {
 		super(screen, time);
 		this.time = time;
 		fadeRectangle = Mesh2dUtils.quad(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
-	public FadeInTransition(Screen screen, float time, TransitionHandler transitionHandler) {
+	public FadeOutTransition(Screen screen, float time, TransitionHandler transitionHandler) {
 		super(screen, time, transitionHandler);
 		this.time = time;
 		fadeRectangle = Mesh2dUtils.quad(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -56,5 +56,4 @@ public class FadeInTransition extends GameTransitions.EnterTransition {
 		Color color = colorTransition.get();
 		Mesh2dUtils.setColor(fadeRectangle, color.r, color.g, color.b, color.a);
 	}
-
 }
