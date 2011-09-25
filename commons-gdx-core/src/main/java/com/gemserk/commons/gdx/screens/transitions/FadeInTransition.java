@@ -1,0 +1,64 @@
+package com.gemserk.commons.gdx.screens.transitions;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
+import com.gemserk.animation4j.transitions.Transition;
+import com.gemserk.animation4j.transitions.Transitions;
+import com.gemserk.commons.gdx.GameTransitions;
+import com.gemserk.commons.gdx.GameTransitions.TransitionHandler;
+import com.gemserk.commons.gdx.Screen;
+import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
+import com.gemserk.commons.gdx.graphics.Mesh2d;
+import com.gemserk.commons.gdx.graphics.Mesh2dUtils;
+
+public class FadeInTransition extends GameTransitions.EnterTransition {
+
+	private final float time;
+	private Mesh2d fadeRectangle;
+
+	private Transition<Color> colorTransition;
+
+	public FadeInTransition(Screen screen, float time) {
+		super(screen, time);
+		this.time = time;
+
+		colorTransition = Transitions.transitionBuilder(new Color(0f, 0f, 0f, 1f)).end(new Color(0f, 0f, 0f, 0f)).time(time).build();
+		Color color = colorTransition.get();
+
+		fadeRectangle = Mesh2dUtils.quad(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Mesh2dUtils.setColor(fadeRectangle, color.r, color.g, color.b, color.a);
+	}
+
+	public FadeInTransition(Screen screen, float time, TransitionHandler transitionHandler) {
+		super(screen, time, transitionHandler);
+		this.time = time;
+
+		colorTransition = Transitions.transitionBuilder(new Color(0f, 0f, 0f, 1f)).end(new Color(0f, 0f, 0f, 0f)).time(time).build();
+		Color color = colorTransition.get();
+
+		fadeRectangle = Mesh2dUtils.quad(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Mesh2dUtils.setColor(fadeRectangle, color.r, color.g, color.b, color.a);
+	}
+
+	@Override
+	public void init() {
+		super.init();
+		colorTransition = Transitions.transitionBuilder(new Color(0f, 0f, 0f, 1f)).end(new Color(0f, 0f, 0f, 0f)).time(time).build();
+	}
+
+	@Override
+	public void postRender(float delta) {
+		Gdx.gl10.glEnable(GL10.GL_BLEND);
+		ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		ImmediateModeRendererUtils.draw(GL10.GL_TRIANGLES, fadeRectangle);
+		Gdx.gl10.glDisable(GL10.GL_BLEND);
+	}
+
+	@Override
+	public void internalUpdate(float delta) {
+		super.internalUpdate(delta);
+		Color color = colorTransition.get();
+		Mesh2dUtils.setColor(fadeRectangle, color.r, color.g, color.b, color.a);
+	}
+}
