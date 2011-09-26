@@ -34,6 +34,8 @@ public class CameraUpdateSystem extends EntityProcessingSystem {
 
 		float newX = camera.getX();
 		float newY = camera.getY();
+		float newZoom = camera.getZoom();
+		float newAngle = camera.getAngle();
 
 		PreviousStateCameraComponent previousStateCameraComponent = Components.getPreviousStateCameraComponent(e);
 
@@ -42,9 +44,13 @@ public class CameraUpdateSystem extends EntityProcessingSystem {
 			Camera previousCamera = previousStateCameraComponent.getCamera();
 			newX = FloatInterpolator.interpolate(previousCamera.getX(), camera.getX(), interpolationAlpha);
 			newY = FloatInterpolator.interpolate(previousCamera.getY(), camera.getY(), interpolationAlpha);
+			newZoom = FloatInterpolator.interpolate(previousCamera.getZoom(), camera.getZoom(), interpolationAlpha);
+			newAngle = FloatInterpolator.interpolate(previousCamera.getAngle(), camera.getAngle(), interpolationAlpha);
 		}
 
 		libgdx2dCamera.move(newX, newY);
+		libgdx2dCamera.zoom(newZoom);
+		libgdx2dCamera.rotate(newAngle);
 	}
 
 }
