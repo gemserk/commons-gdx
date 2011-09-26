@@ -8,6 +8,8 @@ import com.gemserk.commons.gdx.GameTransitions.TransitionScreen;
 import com.gemserk.commons.gdx.Screen;
 
 public class TransitionBuilder {
+	
+	// should be named ScreenTransitionBuilder
 
 	private final Screen screen;
 	private final Game game;

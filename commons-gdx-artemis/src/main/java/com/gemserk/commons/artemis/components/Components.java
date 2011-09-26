@@ -11,11 +11,12 @@ public class Components {
 	public static final Class<SpriteComponent> spriteComponentClass = SpriteComponent.class;
 	public static final Class<ScriptComponent> scriptComponentClass = ScriptComponent.class;
 	public static final Class<PhysicsComponent> physicsComponentClass = PhysicsComponent.class;
+	public static final Class<PreviousStateSpatialComponent> previousStateSpatialComponentClass = PreviousStateSpatialComponent.class;
 
 	public static SpatialComponent spatialComponent(Entity e) {
 		return e.getComponent(spatialComponentClass);
 	}
-	
+
 	public static SpriteComponent spriteComponent(Entity e) {
 		return e.getComponent(spriteComponentClass);
 	}
@@ -28,4 +29,8 @@ public class Components {
 		return e.getComponent(physicsComponentClass);
 	}
 
+	public static PreviousStateSpatialComponent getPreviousStateSpatialComponent(Entity e) {
+		return e.getComponent(previousStateSpatialComponentClass);
+	}
+	
 }
