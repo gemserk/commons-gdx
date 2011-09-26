@@ -28,6 +28,12 @@ public interface GameState {
 
 	void setDelta(float delta);
 
+	/**
+	 * Sets the alpha value used for interpolations reasons when rendering stuff, based on
+	 * <a href="http://gafferongames.com/game-physics/fix-your-timestep/">fix your timestep</a>
+	 */
+	void setAlpha(float alpha);
+
 	Parameters getParameters();
 
 }

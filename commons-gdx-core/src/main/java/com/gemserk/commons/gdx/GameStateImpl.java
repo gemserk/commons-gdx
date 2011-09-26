@@ -10,12 +10,17 @@ public class GameStateImpl implements GameState {
 	 */
 	private float delta;
 	private Parameters parameters = new ParametersWrapper();
+	private float alpha;
 	
 	/**
 	 * Returns the delta time in seconds.
 	 */
 	protected float getDelta() {
 		return delta;
+	}
+	
+	protected float getAlpha() {
+		return alpha;
 	}
 
 	/**
@@ -75,6 +80,11 @@ public class GameStateImpl implements GameState {
 	@Override
 	public void setDelta(float delta) {
 		this.delta = delta;
+	}
+
+	@Override
+	public void setAlpha(float alpha) {
+		this.alpha = alpha;
 	}
 
 }

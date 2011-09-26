@@ -22,6 +22,8 @@ public class ScreenImpl implements Screen {
 	 * used to fix the time step based on <a href="http://gafferongames.com/game-physics/fix-your-timestep/">fix your timestep</a>
 	 * */
 	private float dt = 0.01f;
+	private float maxFrameTime = 0.25f;
+	
 	private float accumulator;
 
 	protected float getDelta() {
@@ -71,8 +73,8 @@ public class ScreenImpl implements Screen {
 		float frameTime = getDelta();
 
 		// note: max frame time to avoid spiral of death
-		if (frameTime > 0.25f)
-			frameTime = 0.25f;
+		if (frameTime > maxFrameTime)
+			frameTime = maxFrameTime;
 
 		accumulator += frameTime;
 
@@ -91,6 +93,8 @@ public class ScreenImpl implements Screen {
 
 		float alpha = accumulator / dt;
 		GlobalTime.setAlpha(alpha);
+		
+		gameState.setAlpha(alpha);
 
 		// const double alpha = accumulator / dt;
 		//

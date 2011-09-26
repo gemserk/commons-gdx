@@ -10,6 +10,8 @@ class MockGameState implements GameState {
 
 	private float delta;
 
+	private float alpha;
+
 	@Override
 	public void init() {
 
@@ -60,5 +62,9 @@ class MockGameState implements GameState {
 		return null;
 	}
 
+	@Override
+	public void setAlpha(float alpha) {
+		this.alpha = alpha;
+	}
 
 }
