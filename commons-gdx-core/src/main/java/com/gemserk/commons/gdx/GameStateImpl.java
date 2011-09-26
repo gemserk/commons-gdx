@@ -15,11 +15,11 @@ public class GameStateImpl implements GameState {
 	/**
 	 * Returns the delta time in seconds.
 	 */
-	protected float getDelta() {
+	public float getDelta() {
 		return delta;
 	}
 	
-	protected float getAlpha() {
+	public float getAlpha() {
 		return alpha;
 	}
 
