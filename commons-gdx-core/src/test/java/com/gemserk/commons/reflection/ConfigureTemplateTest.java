@@ -1,4 +1,4 @@
-package com.gemserk.commons.artemis.templates;
+package com.gemserk.commons.reflection;
 
 import static org.junit.Assert.*;
 
@@ -67,20 +67,6 @@ public class ConfigureTemplateTest {
 		}
 
 	}
-
-	// class TemplateProvider {
-	//
-	// ObjectConfigurator objectConfigurator;
-	//
-	// public TemplateProvider(ObjectConfigurator objectConfigurator) {
-	// this.objectConfigurator = objectConfigurator;
-	// }
-	//
-	// public void register(EntityTemplate entityTemplate) {
-	// objectConfigurator.configure(entityTemplate);
-	// }
-	//
-	// }
 
 	static class MyTemplate {
 
