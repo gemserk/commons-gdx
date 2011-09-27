@@ -62,6 +62,7 @@ public class ObjectConfigurator {
 		}
 
 		try {
+			setter.setAccessible(true);
 			setter.invoke(object, value);
 		} catch (Exception e) {
 			throw new RuntimeException("failed to set value on " + setterName + "() method from " + object.getClass(), e);
