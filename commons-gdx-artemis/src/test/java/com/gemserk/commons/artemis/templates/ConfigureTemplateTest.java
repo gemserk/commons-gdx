@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.artemis.Entity;
 import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.componentsengine.utils.RandomAccessMap;
 
@@ -25,9 +24,9 @@ public class ConfigureTemplateTest {
 			configurationMap = new RandomAccessMap<String, Object>();
 		}
 
-		public void configure(EntityTemplate entityTemplate) {
+		public void configure(Object object) {
 
-			Class<? extends EntityTemplate> clazz = entityTemplate.getClass();
+			Class<?> clazz = object.getClass();
 			Field[] fields = clazz.getDeclaredFields();
 
 			for (int i = 0; i < fields.length; i++) {
@@ -40,7 +39,7 @@ public class ConfigureTemplateTest {
 					continue;
 				}
 
-				setField(entityTemplate, fieldName, value);
+				setField(object, fieldName, value);
 			}
 
 		}
@@ -69,21 +68,21 @@ public class ConfigureTemplateTest {
 
 	}
 
-	class TemplateProvider {
+	// class TemplateProvider {
+	//
+	// ObjectConfigurator objectConfigurator;
+	//
+	// public TemplateProvider(ObjectConfigurator objectConfigurator) {
+	// this.objectConfigurator = objectConfigurator;
+	// }
+	//
+	// public void register(EntityTemplate entityTemplate) {
+	// objectConfigurator.configure(entityTemplate);
+	// }
+	//
+	// }
 
-		ObjectConfigurator objectConfigurator;
-
-		public TemplateProvider(ObjectConfigurator objectConfigurator) {
-			this.objectConfigurator = objectConfigurator;
-		}
-
-		public void register(EntityTemplate entityTemplate) {
-			objectConfigurator.configure(entityTemplate);
-		}
-
-	}
-
-	static class MyTemplate extends EntityTemplateImpl {
+	static class MyTemplate {
 
 		private Object object;
 		private Object anotherObject;
@@ -96,14 +95,9 @@ public class ConfigureTemplateTest {
 			this.anotherObject = anotherObject;
 		}
 
-		@Override
-		public void apply(Entity entity) {
-
-		}
-
 	}
 
-	static class MyTemplate2 extends EntityTemplateImpl {
+	static class MyTemplate2 {
 
 		private Object object;
 
@@ -111,21 +105,11 @@ public class ConfigureTemplateTest {
 			this.object = object;
 		}
 
-		@Override
-		public void apply(Entity entity) {
-
-		}
-
 	}
 
-	static class MyTemplate3 extends EntityTemplateImpl {
+	static class MyTemplate3 {
 
 		Object object;
-
-		@Override
-		public void apply(Entity entity) {
-
-		}
 
 	}
 
@@ -198,36 +182,38 @@ public class ConfigureTemplateTest {
 		objectConfigurator.configure(myTemplate);
 		assertNull(myTemplate.object);
 	}
-	
+
 	@Test
 	public void objectConfiguratorUsageExample1() {
-		
-		ObjectConfigurator objectConfigurator = new ObjectConfigurator() {{
-			add("object", new Float(100f));
-		}};
 
-		MyTemplate myTemplate = new MyTemplate();
-		objectConfigurator.configure(myTemplate);
-		
-		assertNotNull(myTemplate.object);
-	}
-	
-	@Test
-	public void objectConfiguratorUsageExample2() {
-		
-		final Object someValue = new Float(100f);
-		
 		ObjectConfigurator objectConfigurator = new ObjectConfigurator() {
-			@Override
-			public void configure(EntityTemplate entityTemplate) {
-				super.configure(entityTemplate);
-				setField(entityTemplate, "object", someValue);
+			{
+				add("object", new Float(100f));
 			}
 		};
 
 		MyTemplate myTemplate = new MyTemplate();
 		objectConfigurator.configure(myTemplate);
-		
+
+		assertNotNull(myTemplate.object);
+	}
+
+	@Test
+	public void objectConfiguratorUsageExample2() {
+
+		final Object someValue = new Float(100f);
+
+		ObjectConfigurator objectConfigurator = new ObjectConfigurator() {
+			@Override
+			public void configure(Object object) {
+				super.configure(object);
+				setField(object, "object", someValue);
+			}
+		};
+
+		MyTemplate myTemplate = new MyTemplate();
+		objectConfigurator.configure(myTemplate);
+
 		assertNotNull(myTemplate.object);
 	}
 }
