@@ -1,4 +1,4 @@
-package com.gemserk.commons.artemis.templates;
+package com.gemserk.commons.reflection;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
-
-import com.artemis.Entity;
-import com.gemserk.commons.reflection.ObjectConfigurator;
 
 public class ProviderTest {
 
@@ -53,17 +50,12 @@ public class ProviderTest {
 
 	}
 
-	static class MyTemplate extends EntityTemplateImpl {
+	static class MyTemplate {
 
 		Object myObject;
 
 		public void setMyObject(Object myObject) {
 			this.myObject = myObject;
-		}
-
-		@Override
-		public void apply(Entity entity) {
-
 		}
 
 	}
@@ -102,8 +94,8 @@ public class ProviderTest {
 
 		MyTemplate myTemplate1 = new MyTemplate();
 
-		EntityTemplate myTemplate2 = providerImpl.get(myTemplate1);
-		EntityTemplate myTemplate3 = providerImpl.get(MyTemplate.class);
+		MyTemplate myTemplate2 = providerImpl.get(myTemplate1);
+		MyTemplate myTemplate3 = providerImpl.get(MyTemplate.class);
 
 		assertSame(myTemplate1, myTemplate2);
 		assertSame(myTemplate1, myTemplate3);
