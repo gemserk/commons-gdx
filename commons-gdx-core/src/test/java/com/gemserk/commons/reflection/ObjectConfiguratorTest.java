@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.componentsengine.utils.RandomAccessMap;
 
-public class ConfigureTemplateTest {
+public class ObjectConfiguratorTest {
 
 	static class ObjectConfigurator {
 
