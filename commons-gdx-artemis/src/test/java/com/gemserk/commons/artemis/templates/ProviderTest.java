@@ -11,24 +11,34 @@ import org.junit.Test;
 import com.artemis.Entity;
 import com.gemserk.commons.reflection.ObjectConfigurator;
 
-public class TemplateProviderTest {
+public class ProviderTest {
 
-	static class TemplateProvider {
+	static interface Provider {
+
+		<T> T get(T t);
+		
+		<T> T get(Class<? extends T> clazz);
+		
+	}
+
+	static class ProviderImpl implements Provider {
 
 		private final ObjectConfigurator objectConfigurator;
 		private Map<Class<?>, Object> instances;
 
-		public TemplateProvider(ObjectConfigurator objectConfigurator) {
+		public ProviderImpl(ObjectConfigurator objectConfigurator) {
 			this.objectConfigurator = objectConfigurator;
 			this.instances = new HashMap<Class<?>, Object>();
 		}
 
+		@Override
 		public <T> T get(T t) {
 			objectConfigurator.configure(t);
 			instances.put(t.getClass(), t);
 			return t;
 		}
 
+		@Override
 		public <T> T get(Class<? extends T> clazz) {
 			if (instances.containsKey(clazz))
 				return clazz.cast(instances.get(clazz));
@@ -63,37 +73,37 @@ public class TemplateProviderTest {
 		ObjectConfigurator objectConfigurator = new ObjectConfigurator();
 		objectConfigurator.add("myObject", new Float(100f));
 
-		TemplateProvider templateProvider = new TemplateProvider(objectConfigurator);
+		ProviderImpl providerImpl = new ProviderImpl(objectConfigurator);
 
-		MyTemplate myTemplate = templateProvider.get(new MyTemplate());
+		MyTemplate myTemplate = providerImpl.get(new MyTemplate());
 
 		assertNotNull(myTemplate.myObject);
 	}
-	
+
 	@Test
 	public void shouldConfigureTemplateWithNewInstance() {
 		ObjectConfigurator objectConfigurator = new ObjectConfigurator();
 		objectConfigurator.add("myObject", new Float(100f));
 
-		TemplateProvider templateProvider = new TemplateProvider(objectConfigurator);
+		ProviderImpl providerImpl = new ProviderImpl(objectConfigurator);
 
-		MyTemplate myTemplate = templateProvider.get(MyTemplate.class);
+		MyTemplate myTemplate = providerImpl.get(MyTemplate.class);
 
 		assertNotNull(myTemplate);
 		assertNotNull(myTemplate.myObject);
 	}
-	
+
 	@Test
 	public void shouldReturnAlreadyConfiguredInstance() {
 		ObjectConfigurator objectConfigurator = new ObjectConfigurator();
 		objectConfigurator.add("myObject", new Float(100f));
 
-		TemplateProvider templateProvider = new TemplateProvider(objectConfigurator);
+		ProviderImpl providerImpl = new ProviderImpl(objectConfigurator);
 
 		MyTemplate myTemplate1 = new MyTemplate();
-		
-		MyTemplate myTemplate2 = templateProvider.get(myTemplate1);
-		MyTemplate myTemplate3 = templateProvider.get(MyTemplate.class);
+
+		EntityTemplate myTemplate2 = providerImpl.get(myTemplate1);
+		EntityTemplate myTemplate3 = providerImpl.get(MyTemplate.class);
 
 		assertSame(myTemplate1, myTemplate2);
 		assertSame(myTemplate1, myTemplate3);
