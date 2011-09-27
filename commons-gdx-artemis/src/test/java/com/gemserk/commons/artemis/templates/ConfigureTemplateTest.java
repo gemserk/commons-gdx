@@ -15,46 +15,17 @@ import com.gemserk.componentsengine.utils.RandomAccessMap;
 
 public class ConfigureTemplateTest {
 
-	protected static final Logger logger = LoggerFactory.getLogger(ConfigureTemplateTest.TemplateConfiguratorMapImpl.class);
+	static class ObjectConfigurator {
 
-	public static class TemplatesReflectionUtils {
-		public static void setField(Object object, String fieldName, Object value) {
-			Class<?> clazz = object.getClass();
-			Method setter = ReflectionUtils.getSetter(clazz, fieldName);
-
-			String setterName = ReflectionUtils.getSetterName(fieldName);
-
-			if (setter == null)
-				throw new RuntimeException(setterName + "() method not found in " + object.getClass());
-
-			try {
-				setter.invoke(object, value);
-			} catch (Exception e) {
-				throw new RuntimeException("failed to set value on " + setterName + "() method from " + object.getClass(), e);
-			}
-		}
-	}
-
-	interface TemplateConfigurator {
-
-		void configure(EntityTemplate entityTemplate);
-
-	}
-
-	class TemplateConfiguratorMapImpl implements TemplateConfigurator {
+		protected static final Logger logger = LoggerFactory.getLogger(ObjectConfigurator.class);
 
 		private RandomAccessMap<String, Object> configurationMap;
 
-		public TemplateConfiguratorMapImpl() {
+		public ObjectConfigurator() {
 			configurationMap = new RandomAccessMap<String, Object>();
 		}
 
 		public void configure(EntityTemplate entityTemplate) {
-			// for (int i = 0; i < configurationMap.size(); i++) {
-			// String name = configurationMap.getKey(i);
-			// Object object = configurationMap.get(i);
-			// TemplatesReflectionUtils.setField(entityTemplate, name, object);
-			// }
 
 			Class<? extends EntityTemplate> clazz = entityTemplate.getClass();
 			Field[] fields = clazz.getDeclaredFields();
@@ -65,13 +36,31 @@ public class ConfigureTemplateTest {
 				Object value = configurationMap.get(fieldName);
 
 				if (value == null) {
-					logger.debug("Couldn't find value for field " + fieldName + " from class " + clazz);
+					logger.debug("Couldn't find value for field " + fieldName + " from " + clazz);
 					continue;
 				}
 
-				TemplatesReflectionUtils.setField(entityTemplate, fieldName, value);
+				setField(entityTemplate, fieldName, value);
 			}
 
+		}
+
+		public void setField(Object object, String fieldName, Object value) {
+			Class<?> clazz = object.getClass();
+			Method setter = ReflectionUtils.getSetter(clazz, fieldName);
+
+			String setterName = ReflectionUtils.getSetterName(fieldName);
+
+			if (setter == null) {
+				logger.debug("Failed to set value, " + setterName + "() method not found in " + object.getClass());
+				return;
+			}
+
+			try {
+				setter.invoke(object, value);
+			} catch (Exception e) {
+				throw new RuntimeException("failed to set value on " + setterName + "() method from " + object.getClass(), e);
+			}
 		}
 
 		public void add(String name, Object o) {
@@ -82,14 +71,14 @@ public class ConfigureTemplateTest {
 
 	class TemplateProvider {
 
-		TemplateConfiguratorMapImpl templateConfiguratorMapImpl;
+		ObjectConfigurator objectConfigurator;
 
-		public TemplateProvider(TemplateConfiguratorMapImpl templateConfiguratorMapImpl) {
-			this.templateConfiguratorMapImpl = templateConfiguratorMapImpl;
+		public TemplateProvider(ObjectConfigurator objectConfigurator) {
+			this.objectConfigurator = objectConfigurator;
 		}
 
 		public void register(EntityTemplate entityTemplate) {
-			templateConfiguratorMapImpl.configure(entityTemplate);
+			objectConfigurator.configure(entityTemplate);
 		}
 
 	}
@@ -129,23 +118,34 @@ public class ConfigureTemplateTest {
 
 	}
 
+	static class MyTemplate3 extends EntityTemplateImpl {
+
+		Object object;
+
+		@Override
+		public void apply(Entity entity) {
+
+		}
+
+	}
+
 	@Test
 	public void shouldNotConfigureInternalObjectWhenNotOnConfigurator() {
-		TemplateConfiguratorMapImpl templateConfiguratorMapImpl = new TemplateConfiguratorMapImpl();
+		ObjectConfigurator objectConfigurator = new ObjectConfigurator();
 		MyTemplate myTemplate = new MyTemplate();
-		templateConfiguratorMapImpl.configure(myTemplate);
+		objectConfigurator.configure(myTemplate);
 		assertNull(myTemplate.object);
 		assertNull(myTemplate.anotherObject);
 	}
 
 	@Test
 	public void shouldConfigureInternalObjectWhenItIsOnConfigurator() {
-		TemplateConfiguratorMapImpl templateConfiguratorMapImpl = new TemplateConfiguratorMapImpl();
+		ObjectConfigurator objectConfigurator = new ObjectConfigurator();
 		Float object = new Float(100f);
-		templateConfiguratorMapImpl.add("object", object);
+		objectConfigurator.add("object", object);
 
 		MyTemplate myTemplate = new MyTemplate();
-		templateConfiguratorMapImpl.configure(myTemplate);
+		objectConfigurator.configure(myTemplate);
 		assertNotNull(myTemplate.object);
 		assertSame(object, myTemplate.object);
 		assertNull(myTemplate.anotherObject);
@@ -153,16 +153,16 @@ public class ConfigureTemplateTest {
 
 	@Test
 	public void shouldConfigureMultipleInternalObjectsWhenOnConfigurator() {
-		TemplateConfiguratorMapImpl templateConfiguratorMapImpl = new TemplateConfiguratorMapImpl();
+		ObjectConfigurator objectConfigurator = new ObjectConfigurator();
 
 		Float object = new Float(100f);
 		Float anotherObject = new Float(100f);
 
-		templateConfiguratorMapImpl.add("object", object);
-		templateConfiguratorMapImpl.add("anotherObject", anotherObject);
+		objectConfigurator.add("object", object);
+		objectConfigurator.add("anotherObject", anotherObject);
 
 		MyTemplate myTemplate = new MyTemplate();
-		templateConfiguratorMapImpl.configure(myTemplate);
+		objectConfigurator.configure(myTemplate);
 		assertNotNull(myTemplate.object);
 		assertSame(object, myTemplate.object);
 
@@ -172,17 +172,62 @@ public class ConfigureTemplateTest {
 
 	@Test
 	public void shouldNotFailIfObjectSetterNotFoundWhenObjectOnConfigurator() {
-		TemplateConfiguratorMapImpl templateConfiguratorMapImpl = new TemplateConfiguratorMapImpl();
+		ObjectConfigurator objectConfigurator = new ObjectConfigurator();
 
 		Float object = new Float(100f);
 		Float anotherObject = new Float(100f);
 
-		templateConfiguratorMapImpl.add("object", object);
-		templateConfiguratorMapImpl.add("anotherObject", anotherObject);
+		objectConfigurator.add("object", object);
+		objectConfigurator.add("anotherObject", anotherObject);
 
 		MyTemplate2 myTemplate = new MyTemplate2();
-		templateConfiguratorMapImpl.configure(myTemplate);
+		objectConfigurator.configure(myTemplate);
 		assertNotNull(myTemplate.object);
 		assertSame(object, myTemplate.object);
+	}
+
+	@Test
+	public void shouldNotConfigureIfNotSetterForObjectInConfigurator() {
+		ObjectConfigurator objectConfigurator = new ObjectConfigurator();
+
+		Float object = new Float(100f);
+
+		objectConfigurator.add("object", object);
+
+		MyTemplate3 myTemplate = new MyTemplate3();
+		objectConfigurator.configure(myTemplate);
+		assertNull(myTemplate.object);
+	}
+	
+	@Test
+	public void objectConfiguratorUsageExample1() {
+		
+		ObjectConfigurator objectConfigurator = new ObjectConfigurator() {{
+			add("object", new Float(100f));
+		}};
+
+		MyTemplate myTemplate = new MyTemplate();
+		objectConfigurator.configure(myTemplate);
+		
+		assertNotNull(myTemplate.object);
+	}
+	
+	@Test
+	public void objectConfiguratorUsageExample2() {
+		
+		final Object someValue = new Float(100f);
+		
+		ObjectConfigurator objectConfigurator = new ObjectConfigurator() {
+			@Override
+			public void configure(EntityTemplate entityTemplate) {
+				super.configure(entityTemplate);
+				setField(entityTemplate, "object", someValue);
+			}
+		};
+
+		MyTemplate myTemplate = new MyTemplate();
+		objectConfigurator.configure(myTemplate);
+		
+		assertNotNull(myTemplate.object);
 	}
 }
