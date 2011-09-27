@@ -9,6 +9,11 @@ import org.slf4j.LoggerFactory;
 import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.componentsengine.utils.RandomAccessMap;
 
+/**
+ * Provides a very basic dependency injection by calling setter methods over the fields of an object.
+ * 
+ * @author acoppes
+ */
 public class ObjectConfigurator {
 
 	protected static final Logger logger = LoggerFactory.getLogger(ObjectConfigurator.class);
@@ -19,6 +24,12 @@ public class ObjectConfigurator {
 		configurationMap = new RandomAccessMap<String, Object>();
 	}
 
+	/**
+	 * For each field of the object, configures its value using the registered values with the add() method.
+	 * 
+	 * @param object
+	 *            The object to be configured (or injected).
+	 */
 	public void configure(Object object) {
 
 		Class<?> clazz = object.getClass();
@@ -39,7 +50,7 @@ public class ObjectConfigurator {
 
 	}
 
-	public void setField(Object object, String fieldName, Object value) {
+	protected void setField(Object object, String fieldName, Object value) {
 		Class<?> clazz = object.getClass();
 		Method setter = ReflectionUtils.getSetter(clazz, fieldName);
 
@@ -57,8 +68,16 @@ public class ObjectConfigurator {
 		}
 	}
 
-	public void add(String name, Object o) {
-		configurationMap.put(name, o);
+	/**
+	 * Registers a new value to be set when calling configure() method.
+	 * 
+	 * @param name
+	 *            The name of the value.
+	 * @param value
+	 *            The value.
+	 */
+	public void add(String name, Object value) {
+		configurationMap.put(name, value);
 	}
 
 }
