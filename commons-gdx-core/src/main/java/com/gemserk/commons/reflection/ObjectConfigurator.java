@@ -57,15 +57,27 @@ public class ObjectConfigurator {
 		String setterName = ReflectionUtils.getSetterName(fieldName);
 
 		if (setter == null) {
-			logger.debug("Failed to set value, " + setterName + "() method not found in " + object.getClass());
-			return;
-		}
 
-		try {
-			setter.setAccessible(true);
-			setter.invoke(object, value);
-		} catch (Exception e) {
-			throw new RuntimeException("failed to set value on " + setterName + "() method from " + object.getClass(), e);
+			// try to access the field directly....
+
+			logger.debug(setterName + "() method not found in " + object.getClass());
+			logger.debug("trying access field...");
+
+			try {
+				Field field = clazz.getDeclaredField(fieldName);
+				field.setAccessible(true);
+				field.set(object, value);
+			} catch (Exception e) {
+				throw new RuntimeException("Failed to set value to field " + fieldName, e);
+			}
+
+		} else {
+			try {
+				setter.setAccessible(true);
+				setter.invoke(object, value);
+			} catch (Exception e) {
+				throw new RuntimeException("failed to set value on " + setterName + "() method from " + object.getClass(), e);
+			}
 		}
 	}
 

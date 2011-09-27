@@ -105,7 +105,9 @@ public class ObjectConfiguratorTest {
 
 		MyTemplate3 myTemplate = new MyTemplate3();
 		objectConfigurator.configure(myTemplate);
-		assertNull(myTemplate.object);
+		
+		assertNotNull(myTemplate.object);
+		assertSame(object, myTemplate.object);
 	}
 
 	@Test
