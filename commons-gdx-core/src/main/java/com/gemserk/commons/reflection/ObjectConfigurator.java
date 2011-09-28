@@ -22,6 +22,7 @@ public class ObjectConfigurator {
 
 	public ObjectConfigurator() {
 		configurationMap = new RandomAccessMap<String, Object>();
+		configurationMap.put("objectConfigurator", this);
 	}
 
 	/**
