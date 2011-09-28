@@ -14,15 +14,15 @@ import com.gemserk.componentsengine.utils.RandomAccessMap;
  * 
  * @author acoppes
  */
-public class ObjectConfigurator {
+public class Injector {
 
-	protected static final Logger logger = LoggerFactory.getLogger(ObjectConfigurator.class);
+	protected static final Logger logger = LoggerFactory.getLogger(Injector.class);
 
 	private RandomAccessMap<String, Object> configurationMap;
 
-	public ObjectConfigurator() {
+	public Injector() {
 		configurationMap = new RandomAccessMap<String, Object>();
-		configurationMap.put("objectConfigurator", this);
+		configurationMap.put("injector", this);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class ObjectConfigurator {
 	 * @param object
 	 *            The object to be configured (or injected).
 	 */
-	public void configure(Object object) {
+	public void injectMembers(Object object) {
 
 		Class<?> clazz = object.getClass();
 		Field[] fields = clazz.getDeclaredFields();

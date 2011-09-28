@@ -5,17 +5,17 @@ import java.util.Map;
 
 public class ProviderImpl implements Provider {
 
-	private final ObjectConfigurator objectConfigurator;
+	private final Injector injector;
 	private Map<Class<?>, Object> instances;
 
-	public ProviderImpl(ObjectConfigurator objectConfigurator) {
-		this.objectConfigurator = objectConfigurator;
+	public ProviderImpl(Injector injector) {
+		this.injector = injector;
 		this.instances = new HashMap<Class<?>, Object>();
 	}
 
 	@Override
 	public <T> T get(T t) {
-		objectConfigurator.configure(t);
+		injector.injectMembers(t);
 		instances.put(t.getClass(), t);
 		return t;
 	}
