@@ -25,7 +25,8 @@ public class ObjectConfigurator {
 	}
 
 	/**
-	 * For each field of the object, configures its value using the registered values with the add() method.
+	 * For each field of the object, configures its value using the registered values with the add() method. 
+	 * For now, it will only work for the declared fields of the object class, it will not try to set fields from its super classes.
 	 * 
 	 * @param object
 	 *            The object to be configured (or injected).
