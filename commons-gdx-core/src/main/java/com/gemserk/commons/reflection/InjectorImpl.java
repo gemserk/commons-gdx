@@ -84,7 +84,7 @@ public class InjectorImpl implements Injector {
 	}
 
 	@Override
-	public void configureField(String name, Object value) {
+	public void bind(String name, Object value) {
 		configurationMap.put(name, value);
 	}
 
@@ -100,7 +100,6 @@ public class InjectorImpl implements Injector {
 			return clazz.cast(instances.get(clazz));
 		try {
 			T t = clazz.newInstance();
-			instances.put(clazz, t);
 			return configure(t);
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to create an instance of " + clazz, e);

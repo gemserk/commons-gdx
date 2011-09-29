@@ -21,13 +21,13 @@ public interface Injector {
 	<T> T getInstance(Class<? extends T> clazz);
 
 	/**
-	 * Registers a new object to be injected in the fields named with specified name.
+	 * Registers a new object to be injected in the fields named with specified name (similar to bind method, name could be changed)
 	 * 
-	 * @param name
+	 * @param fieldName
 	 *            The name of the field to inject the object to.
 	 * @param instance
 	 *            The instance to be injected.
 	 */
-	void configureField(String name, Object instance);
+	void bind(String fieldName, Object instance);
 
 }
