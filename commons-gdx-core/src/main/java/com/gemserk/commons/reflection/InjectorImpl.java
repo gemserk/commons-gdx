@@ -2,6 +2,8 @@ package com.gemserk.commons.reflection;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +12,7 @@ import com.gemserk.animation4j.reflection.ReflectionUtils;
 import com.gemserk.componentsengine.utils.RandomAccessMap;
 
 /**
- * Basic implementation of our Injector interface. 
+ * Basic implementation of our Injector interface, some limitations are that it works with singleton instances only and it can't inject superclass fields.
  * 
  * @author acoppes
  */
@@ -18,10 +20,12 @@ public class InjectorImpl implements Injector {
 
 	protected static final Logger logger = LoggerFactory.getLogger(InjectorImpl.class);
 
+	private Map<Class<?>, Object> instances;
 	private RandomAccessMap<String, Object> configurationMap;
 
 	public InjectorImpl() {
-		configurationMap = new RandomAccessMap<String, Object>();
+		this.instances = new HashMap<Class<?>, Object>();
+		this.configurationMap = new RandomAccessMap<String, Object>();
 		configurationMap.put("injector", this);
 	}
 
@@ -82,6 +86,25 @@ public class InjectorImpl implements Injector {
 	@Override
 	public void configureField(String name, Object value) {
 		configurationMap.put(name, value);
+	}
+
+	private <T> T configure(T t) {
+		injectMembers(t);
+		instances.put(t.getClass(), t);
+		return t;
+	}
+
+	@Override
+	public <T> T getInstance(Class<? extends T> clazz) {
+		if (instances.containsKey(clazz))
+			return clazz.cast(instances.get(clazz));
+		try {
+			T t = clazz.newInstance();
+			instances.put(clazz, t);
+			return configure(t);
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to create an instance of " + clazz, e);
+		}
 	}
 
 }

@@ -14,6 +14,11 @@ public interface Injector {
 	 *            The object to be injected.
 	 */
 	void injectMembers(Object instance);
+	
+	/**
+	 * Instantiates a new instance of the specified class, configures it and internally caches it.
+	 */
+	<T> T getInstance(Class<? extends T> clazz);
 
 	/**
 	 * Registers a new object to be injected in the fields named with specified name.

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class InjectorImplTest {
 
-	private static class MyTemplate {
+	static class MyTemplate {
 
 		private Object object;
 		private Object anotherObject;
@@ -142,5 +142,27 @@ public class InjectorImplTest {
 		injectorImpl.injectMembers(myTemplate);
 
 		assertNotNull(myTemplate.object);
+	}
+	
+	@Test
+	public void shouldConfigureTemplateWithNewInstance() {
+		InjectorImpl injectorImpl = new InjectorImpl();
+		injectorImpl.configureField("object", new Float(100f));
+
+		MyTemplate myTemplate = injectorImpl.getInstance(MyTemplate.class);
+
+		assertNotNull(myTemplate);
+		assertNotNull(myTemplate.object);
+	}
+
+	@Test
+	public void shouldReturnAlreadyConfiguredInstance() {
+		InjectorImpl injectorImpl = new InjectorImpl();
+		injectorImpl.configureField("object", new Float(100f));
+
+		MyTemplate myTemplate2 = injectorImpl.getInstance(MyTemplate.class);
+		MyTemplate myTemplate3 = injectorImpl.getInstance(MyTemplate.class);
+
+		assertSame(myTemplate2, myTemplate3);
 	}
 }
