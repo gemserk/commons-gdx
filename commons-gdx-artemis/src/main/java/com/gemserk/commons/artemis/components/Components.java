@@ -16,6 +16,8 @@ public class Components {
 	
 	public static final Class<CameraComponent> cameraComponentClass = CameraComponent.class;
 	public static final Class<PreviousStateCameraComponent> previousStateCameraComponentClass = PreviousStateCameraComponent.class;
+	
+	public static final Class<TextComponent> textComponentClass = TextComponent.class;
 
 	public static SpatialComponent spatialComponent(Entity e) {
 		return e.getComponent(spatialComponentClass);
@@ -43,6 +45,10 @@ public class Components {
 
 	public static PreviousStateCameraComponent getPreviousStateCameraComponent(Entity e) {
 		return e.getComponent(previousStateCameraComponentClass);
+	}
+	
+	public static TextComponent getTextComponent(Entity e) {
+		return e.getComponent(textComponentClass);
 	}
 	
 }

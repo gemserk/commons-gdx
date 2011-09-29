@@ -3,9 +3,12 @@ package com.gemserk.commons.artemis.systems;
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
+import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
+import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 
 public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
@@ -64,9 +67,16 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			if (!renderableComponent.isVisible())
 				continue;
 			SpriteComponent spriteComponent = entity.getComponent(spriteComponentClass);
-			Sprite sprite = spriteComponent.getSprite();
-			sprite.setColor(spriteComponent.getColor());
-			sprite.draw(spriteBatch);
+			if (spriteComponent != null) {
+				Sprite sprite = spriteComponent.getSprite();
+				sprite.setColor(spriteComponent.getColor());
+				sprite.draw(spriteBatch);
+			}
+			TextComponent textComponent = Components.getTextComponent(entity);
+			if (textComponent != null) {
+				SpriteBatchUtils.drawMultilineText(spriteBatch, textComponent.font, //
+						textComponent.text, textComponent.x, textComponent.y, textComponent.cx, textComponent.cy);
+			}
 		}
 		spriteBatch.end();
 	}
