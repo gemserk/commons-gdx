@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 
-public class InjectorTest {
+public class InjectorImplTest {
 
 	private static class MyTemplate {
 
@@ -40,21 +40,21 @@ public class InjectorTest {
 
 	@Test
 	public void shouldNotConfigureInternalObjectWhenNotOnConfigurator() {
-		Injector injector = new Injector();
+		Injector injectorImpl = new InjectorImpl();
 		MyTemplate myTemplate = new MyTemplate();
-		injector.injectMembers(myTemplate);
+		injectorImpl.injectMembers(myTemplate);
 		assertNull(myTemplate.object);
 		assertNull(myTemplate.anotherObject);
 	}
 
 	@Test
 	public void shouldConfigureInternalObjectWhenItIsOnConfigurator() {
-		Injector injector = new Injector();
+		InjectorImpl injectorImpl = new InjectorImpl();
 		Float object = new Float(100f);
-		injector.add("object", object);
+		injectorImpl.add("object", object);
 
 		MyTemplate myTemplate = new MyTemplate();
-		injector.injectMembers(myTemplate);
+		injectorImpl.injectMembers(myTemplate);
 		assertNotNull(myTemplate.object);
 		assertSame(object, myTemplate.object);
 		assertNull(myTemplate.anotherObject);
@@ -62,16 +62,16 @@ public class InjectorTest {
 
 	@Test
 	public void shouldConfigureMultipleInternalObjectsWhenOnConfigurator() {
-		Injector injector = new Injector();
+		InjectorImpl injectorImpl = new InjectorImpl();
 
 		Float object = new Float(100f);
 		Float anotherObject = new Float(100f);
 
-		injector.add("object", object);
-		injector.add("anotherObject", anotherObject);
+		injectorImpl.add("object", object);
+		injectorImpl.add("anotherObject", anotherObject);
 
 		MyTemplate myTemplate = new MyTemplate();
-		injector.injectMembers(myTemplate);
+		injectorImpl.injectMembers(myTemplate);
 		assertNotNull(myTemplate.object);
 		assertSame(object, myTemplate.object);
 
@@ -81,30 +81,30 @@ public class InjectorTest {
 
 	@Test
 	public void shouldNotFailIfObjectSetterNotFoundWhenObjectOnConfigurator() {
-		Injector injector = new Injector();
+		InjectorImpl injectorImpl = new InjectorImpl();
 
 		Float object = new Float(100f);
 		Float anotherObject = new Float(100f);
 
-		injector.add("object", object);
-		injector.add("anotherObject", anotherObject);
+		injectorImpl.add("object", object);
+		injectorImpl.add("anotherObject", anotherObject);
 
 		MyTemplate2 myTemplate = new MyTemplate2();
-		injector.injectMembers(myTemplate);
+		injectorImpl.injectMembers(myTemplate);
 		assertNotNull(myTemplate.object);
 		assertSame(object, myTemplate.object);
 	}
 
 	@Test
 	public void shouldNotConfigureIfNotSetterForObjectInConfigurator() {
-		Injector injector = new Injector();
+		InjectorImpl injectorImpl = new InjectorImpl();
 
 		Float object = new Float(100f);
 
-		injector.add("object", object);
+		injectorImpl.add("object", object);
 
 		MyTemplate3 myTemplate = new MyTemplate3();
-		injector.injectMembers(myTemplate);
+		injectorImpl.injectMembers(myTemplate);
 		
 		assertNotNull(myTemplate.object);
 		assertSame(object, myTemplate.object);
@@ -113,14 +113,14 @@ public class InjectorTest {
 	@Test
 	public void objectConfiguratorUsageExample1() {
 
-		Injector injector = new Injector() {
+		Injector injectorImpl = new InjectorImpl() {
 			{
 				add("object", new Float(100f));
 			}
 		};
 
 		MyTemplate myTemplate = new MyTemplate();
-		injector.injectMembers(myTemplate);
+		injectorImpl.injectMembers(myTemplate);
 
 		assertNotNull(myTemplate.object);
 	}
@@ -130,7 +130,7 @@ public class InjectorTest {
 
 		final Object someValue = new Float(100f);
 
-		Injector injector = new Injector() {
+		Injector injectorImpl = new InjectorImpl() {
 			@Override
 			public void injectMembers(Object object) {
 				super.injectMembers(object);
@@ -139,7 +139,7 @@ public class InjectorTest {
 		};
 
 		MyTemplate myTemplate = new MyTemplate();
-		injector.injectMembers(myTemplate);
+		injectorImpl.injectMembers(myTemplate);
 
 		assertNotNull(myTemplate.object);
 	}

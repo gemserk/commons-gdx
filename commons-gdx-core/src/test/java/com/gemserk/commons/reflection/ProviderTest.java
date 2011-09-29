@@ -19,10 +19,10 @@ public class ProviderTest {
 
 	@Test
 	public void shouldConfigureTemplate() {
-		Injector injector = new Injector();
-		injector.add("myObject", new Float(100f));
+		InjectorImpl injectorImpl = new InjectorImpl();
+		injectorImpl.add("myObject", new Float(100f));
 
-		ProviderImpl providerImpl = new ProviderImpl(injector);
+		ProviderImpl providerImpl = new ProviderImpl(injectorImpl);
 
 		MyTemplate myTemplate = providerImpl.get(new MyTemplate());
 
@@ -31,10 +31,10 @@ public class ProviderTest {
 
 	@Test
 	public void shouldConfigureTemplateWithNewInstance() {
-		Injector injector = new Injector();
-		injector.add("myObject", new Float(100f));
+		InjectorImpl injectorImpl = new InjectorImpl();
+		injectorImpl.add("myObject", new Float(100f));
 
-		ProviderImpl providerImpl = new ProviderImpl(injector);
+		ProviderImpl providerImpl = new ProviderImpl(injectorImpl);
 
 		MyTemplate myTemplate = providerImpl.get(MyTemplate.class);
 
@@ -44,10 +44,10 @@ public class ProviderTest {
 
 	@Test
 	public void shouldReturnAlreadyConfiguredInstance() {
-		Injector injector = new Injector();
-		injector.add("myObject", new Float(100f));
+		InjectorImpl injectorImpl = new InjectorImpl();
+		injectorImpl.add("myObject", new Float(100f));
 
-		ProviderImpl providerImpl = new ProviderImpl(injector);
+		ProviderImpl providerImpl = new ProviderImpl(injectorImpl);
 
 		MyTemplate myTemplate1 = new MyTemplate();
 
