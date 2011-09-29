@@ -13,8 +13,7 @@ public class ProviderImpl implements Provider {
 		this.instances = new HashMap<Class<?>, Object>();
 	}
 
-	@Override
-	public <T> T getInstance(T t) {
+	private <T> T configure(T t) {
 		injector.injectMembers(t);
 		instances.put(t.getClass(), t);
 		return t;
@@ -27,7 +26,7 @@ public class ProviderImpl implements Provider {
 		try {
 			T t = clazz.newInstance();
 			instances.put(clazz, t);
-			return getInstance(t);
+			return configure(t);
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to create an instance of " + clazz, e);
 		}
