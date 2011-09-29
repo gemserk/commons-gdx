@@ -1,9 +1,12 @@
 package com.gemserk.commons.artemis.components;
 
 import com.artemis.Component;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class TextComponent extends Component {
+
+	public Color color = new Color(1f, 1f, 1f, 1f);
 	
 	public float x,y;
 	public float cx, cy;

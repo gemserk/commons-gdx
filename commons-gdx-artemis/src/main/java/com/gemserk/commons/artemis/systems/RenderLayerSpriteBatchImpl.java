@@ -74,6 +74,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			}
 			TextComponent textComponent = Components.getTextComponent(entity);
 			if (textComponent != null) {
+				textComponent.font.setColor(textComponent.color);
 				SpriteBatchUtils.drawMultilineText(spriteBatch, textComponent.font, //
 						textComponent.text, textComponent.x, textComponent.y, textComponent.cx, textComponent.cy);
 			}
