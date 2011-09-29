@@ -8,11 +8,21 @@ package com.gemserk.commons.reflection;
 public interface Injector {
 
 	/**
-	 * For each field of the object, configures its value using the registered values with the add() method. 
+	 * For each field of the object, configures its value using the registered values with the add() method.
 	 * 
 	 * @param instance
 	 *            The object to be injected.
 	 */
 	void injectMembers(Object instance);
+
+	/**
+	 * Registers a new object to be injected in the fields named with specified name.
+	 * 
+	 * @param name
+	 *            The name of the field to inject the object to.
+	 * @param instance
+	 *            The instance to be injected.
+	 */
+	void configureField(String name, Object instance);
 
 }

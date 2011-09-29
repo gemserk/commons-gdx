@@ -51,7 +51,7 @@ public class InjectorImplTest {
 	public void shouldConfigureInternalObjectWhenItIsOnConfigurator() {
 		InjectorImpl injectorImpl = new InjectorImpl();
 		Float object = new Float(100f);
-		injectorImpl.add("object", object);
+		injectorImpl.configureField("object", object);
 
 		MyTemplate myTemplate = new MyTemplate();
 		injectorImpl.injectMembers(myTemplate);
@@ -67,8 +67,8 @@ public class InjectorImplTest {
 		Float object = new Float(100f);
 		Float anotherObject = new Float(100f);
 
-		injectorImpl.add("object", object);
-		injectorImpl.add("anotherObject", anotherObject);
+		injectorImpl.configureField("object", object);
+		injectorImpl.configureField("anotherObject", anotherObject);
 
 		MyTemplate myTemplate = new MyTemplate();
 		injectorImpl.injectMembers(myTemplate);
@@ -86,8 +86,8 @@ public class InjectorImplTest {
 		Float object = new Float(100f);
 		Float anotherObject = new Float(100f);
 
-		injectorImpl.add("object", object);
-		injectorImpl.add("anotherObject", anotherObject);
+		injectorImpl.configureField("object", object);
+		injectorImpl.configureField("anotherObject", anotherObject);
 
 		MyTemplate2 myTemplate = new MyTemplate2();
 		injectorImpl.injectMembers(myTemplate);
@@ -101,7 +101,7 @@ public class InjectorImplTest {
 
 		Float object = new Float(100f);
 
-		injectorImpl.add("object", object);
+		injectorImpl.configureField("object", object);
 
 		MyTemplate3 myTemplate = new MyTemplate3();
 		injectorImpl.injectMembers(myTemplate);
@@ -115,7 +115,7 @@ public class InjectorImplTest {
 
 		Injector injectorImpl = new InjectorImpl() {
 			{
-				add("object", new Float(100f));
+				configureField("object", new Float(100f));
 			}
 		};
 

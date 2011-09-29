@@ -79,15 +79,8 @@ public class InjectorImpl implements Injector {
 		}
 	}
 
-	/**
-	 * Registers a new value to be set when calling configure() method.
-	 * 
-	 * @param name
-	 *            The name of the value.
-	 * @param value
-	 *            The value.
-	 */
-	public void add(String name, Object value) {
+	@Override
+	public void configureField(String name, Object value) {
 		configurationMap.put(name, value);
 	}
 

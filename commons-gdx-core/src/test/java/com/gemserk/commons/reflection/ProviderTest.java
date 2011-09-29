@@ -20,11 +20,11 @@ public class ProviderTest {
 	@Test
 	public void shouldConfigureTemplate() {
 		InjectorImpl injectorImpl = new InjectorImpl();
-		injectorImpl.add("myObject", new Float(100f));
+		injectorImpl.configureField("myObject", new Float(100f));
 
 		ProviderImpl providerImpl = new ProviderImpl(injectorImpl);
 
-		MyTemplate myTemplate = providerImpl.get(new MyTemplate());
+		MyTemplate myTemplate = providerImpl.getInstance(new MyTemplate());
 
 		assertNotNull(myTemplate.myObject);
 	}
@@ -32,11 +32,11 @@ public class ProviderTest {
 	@Test
 	public void shouldConfigureTemplateWithNewInstance() {
 		InjectorImpl injectorImpl = new InjectorImpl();
-		injectorImpl.add("myObject", new Float(100f));
+		injectorImpl.configureField("myObject", new Float(100f));
 
 		ProviderImpl providerImpl = new ProviderImpl(injectorImpl);
 
-		MyTemplate myTemplate = providerImpl.get(MyTemplate.class);
+		MyTemplate myTemplate = providerImpl.getInstance(MyTemplate.class);
 
 		assertNotNull(myTemplate);
 		assertNotNull(myTemplate.myObject);
@@ -45,14 +45,14 @@ public class ProviderTest {
 	@Test
 	public void shouldReturnAlreadyConfiguredInstance() {
 		InjectorImpl injectorImpl = new InjectorImpl();
-		injectorImpl.add("myObject", new Float(100f));
+		injectorImpl.configureField("myObject", new Float(100f));
 
 		ProviderImpl providerImpl = new ProviderImpl(injectorImpl);
 
 		MyTemplate myTemplate1 = new MyTemplate();
 
-		MyTemplate myTemplate2 = providerImpl.get(myTemplate1);
-		MyTemplate myTemplate3 = providerImpl.get(MyTemplate.class);
+		MyTemplate myTemplate2 = providerImpl.getInstance(myTemplate1);
+		MyTemplate myTemplate3 = providerImpl.getInstance(MyTemplate.class);
 
 		assertSame(myTemplate1, myTemplate2);
 		assertSame(myTemplate1, myTemplate3);

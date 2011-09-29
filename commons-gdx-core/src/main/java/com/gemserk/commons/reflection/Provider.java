@@ -8,11 +8,11 @@ public interface Provider {
 	/**
 	 * Configures the specified instance and caches it.
 	 */
-	<T> T get(T t);
+	<T> T getInstance(T t);
 
 	/**
 	 * Instantiates a new instance of the specified class, configures it and internally caches it.
 	 */
-	<T> T get(Class<? extends T> clazz);
+	<T> T getInstance(Class<? extends T> clazz);
 
 }
