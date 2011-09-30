@@ -14,7 +14,7 @@ public interface Injector {
 	 *            The object to be injected.
 	 */
 	void injectMembers(Object instance);
-	
+
 	/**
 	 * Instantiates a new instance of the specified class, configures it and internally caches it.
 	 */
@@ -29,5 +29,8 @@ public interface Injector {
 	 *            The instance to be injected.
 	 */
 	void bind(String fieldName, Object instance);
+
+	// TODO: simple bind between an object instance and its class to be injected for every field of that class
+	// void bind(Object instance)
 
 }
