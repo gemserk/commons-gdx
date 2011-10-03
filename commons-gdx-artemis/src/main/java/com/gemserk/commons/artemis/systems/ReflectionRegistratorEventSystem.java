@@ -14,9 +14,9 @@ public class ReflectionRegistratorEventSystem extends EntityProcessingSystem {
 	private static final Class<ScriptComponent> scriptComponentClass = ScriptComponent.class;
 	private final EventListenerReflectionRegistrator eventListenerReflectionRegistrator;
 
-	public ReflectionRegistratorEventSystem(EventManager eventListenerManager) {
+	public ReflectionRegistratorEventSystem(EventManager eventManager) {
 		super(ScriptComponent.class);
-		this.eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		this.eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 	}
 
 	@Override
