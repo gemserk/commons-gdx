@@ -114,6 +114,9 @@ public class InjectorImpl implements Injector {
 		InjectorImpl childInjector = new InjectorImpl();
 		childInjector.configurationMap.putAll(configurationMap);
 		childInjector.instances.putAll(instances);
+		
+		childInjector.configurationMap.put("injector", childInjector);
+		
 		return childInjector;
 	}
 
