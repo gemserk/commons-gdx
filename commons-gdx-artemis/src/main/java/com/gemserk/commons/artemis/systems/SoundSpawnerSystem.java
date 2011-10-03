@@ -32,6 +32,14 @@ public class SoundSpawnerSystem extends EntityProcessingSystem {
 
 	SoundPlayer soundPlayer;
 	EventManager eventManager;
+	
+	public void setSoundPlayer(SoundPlayer soundPlayer) {
+		this.soundPlayer = soundPlayer;
+	}
+	
+	public void setEventManager(EventManager eventManager) {
+		this.eventManager = eventManager;
+	}
 
 	public SoundSpawnerSystem() {
 		super(Components.soundSpawnerComponentClass);
