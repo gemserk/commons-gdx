@@ -13,11 +13,13 @@ public class Components {
 
 	public static final Class<SpatialComponent> spatialComponentClass = SpatialComponent.class;
 	public static final Class<PreviousStateSpatialComponent> previousStateSpatialComponentClass = PreviousStateSpatialComponent.class;
-	
+
 	public static final Class<CameraComponent> cameraComponentClass = CameraComponent.class;
 	public static final Class<PreviousStateCameraComponent> previousStateCameraComponentClass = PreviousStateCameraComponent.class;
-	
+
 	public static final Class<TextComponent> textComponentClass = TextComponent.class;
+
+	public static final Class<SoundSpawnerComponent> soundSpawnerComponentClass = SoundSpawnerComponent.class;
 
 	public static SpatialComponent spatialComponent(Entity e) {
 		return e.getComponent(spatialComponentClass);
@@ -38,7 +40,7 @@ public class Components {
 	public static PreviousStateSpatialComponent getPreviousStateSpatialComponent(Entity e) {
 		return e.getComponent(previousStateSpatialComponentClass);
 	}
-	
+
 	public static CameraComponent getCameraComponent(Entity e) {
 		return e.getComponent(cameraComponentClass);
 	}
@@ -46,9 +48,13 @@ public class Components {
 	public static PreviousStateCameraComponent getPreviousStateCameraComponent(Entity e) {
 		return e.getComponent(previousStateCameraComponentClass);
 	}
-	
+
 	public static TextComponent getTextComponent(Entity e) {
 		return e.getComponent(textComponentClass);
 	}
-	
+
+	public static SoundSpawnerComponent getSoundSpawnerComponent(Entity e) {
+		return e.getComponent(soundSpawnerComponentClass);
+	}
+
 }
