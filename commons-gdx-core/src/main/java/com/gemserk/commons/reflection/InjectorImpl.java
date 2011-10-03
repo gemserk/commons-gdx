@@ -28,7 +28,7 @@ public class InjectorImpl implements Injector {
 		this.configurationMap = new RandomAccessMap<String, Object>();
 		configurationMap.put("injector", this);
 	}
-
+	
 	@Override
 	public void injectMembers(Object object) {
 
@@ -104,6 +104,17 @@ public class InjectorImpl implements Injector {
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to create an instance of " + clazz, e);
 		}
+	}
+
+	@Override
+	public Injector createChildInjector() {
+		
+		// for now, child injector is not related any more with parent after creation.
+		
+		InjectorImpl childInjector = new InjectorImpl();
+		childInjector.configurationMap.putAll(configurationMap);
+		childInjector.instances.putAll(instances);
+		return childInjector;
 	}
 
 }

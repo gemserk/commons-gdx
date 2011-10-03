@@ -33,4 +33,11 @@ public interface Injector {
 	// TODO: simple bind between an object instance and its class to be injected for every field of that class
 	// void bind(Object instance)
 
+	// create child
+
+	/**
+	 * Creates a new Injector with the bindings of the current Injector.
+	 */
+	Injector createChildInjector();
+
 }

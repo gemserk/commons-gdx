@@ -165,4 +165,46 @@ public class InjectorImplTest {
 
 		assertSame(myTemplate2, myTemplate3);
 	}
+	
+	@Test
+	public void childInjectorShouldHaveSameBindings() {
+		Object object = new Float(100f);
+		Object anotherObject = new Float(200f);
+
+		InjectorImpl injectorImpl = new InjectorImpl();
+		injectorImpl.bind("object", object);
+		injectorImpl.bind("anotherObject", anotherObject);
+		
+		Injector childInjector = injectorImpl.createChildInjector();
+
+		MyTemplate myTemplate = childInjector.getInstance(MyTemplate.class);
+
+		assertNotNull(myTemplate);
+		assertNotNull(myTemplate.object);
+		assertSame(object, myTemplate.object);
+		assertNotNull(myTemplate.anotherObject);
+		assertSame(anotherObject, myTemplate.anotherObject);
+	}
+	
+	@Test
+	public void childInjectorShouldNotModifyParentInjector() {
+		Object object = new Float(100f);
+		Object anotherObject = new Float(200f);
+		Object object2 = new Float(100f);
+
+		InjectorImpl injector = new InjectorImpl();
+		injector.bind("object", object);
+		injector.bind("anotherObject", anotherObject);
+		
+		Injector childInjector = injector.createChildInjector();
+		
+		childInjector.bind("object", object2);
+
+		MyTemplate myTemplate = injector.getInstance(MyTemplate.class);
+
+		assertNotNull(myTemplate);
+		assertNotNull(myTemplate.object);
+		assertSame(object, myTemplate.object);
+		assertNotSame(object2, myTemplate.object);
+	}
 }
