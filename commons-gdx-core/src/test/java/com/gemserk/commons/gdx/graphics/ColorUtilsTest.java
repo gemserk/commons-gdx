@@ -67,10 +67,21 @@ public class ColorUtilsTest {
 	public void testConvertRgb888() {
 		Color color = new Color();
 		int rgb888 = Color.rgb888(0.2f, 0.7f, 0.45f);
-		ColorUtils.rgba888ToColor(color, rgb888);
+		ColorUtils.rgb888ToColor(color, rgb888);
 		assertEquals(0.2f, color.r, 0.01f);
 		assertEquals(0.7f, color.g, 0.01f);
 		assertEquals(0.45f, color.b, 0.01f);
+	}
+	
+	@Test
+	public void testConvertRgba444() {
+		Color color = new Color();
+		int rgba4444 = Color.rgba4444(0.2f, 0.4f, 0.6f, 0.8f);
+		ColorUtils.rgba4444ToColor(color, rgba4444);
+		assertEquals(0.2f, color.r, 0.01f);
+		assertEquals(0.4f, color.g, 0.01f);
+		assertEquals(0.6f, color.b, 0.01f);
+		assertEquals(0.8f, color.a, 0.01f);
 	}
 
 }
