@@ -83,5 +83,15 @@ public class ColorUtilsTest {
 		assertEquals(0.6f, color.b, 0.01f);
 		assertEquals(0.8f, color.a, 0.01f);
 	}
+	
+	@Test
+	public void testConvertRgba565() {
+		Color color = new Color();
+		int rgb565 = Color.rgb565(0.2f, 0.4f, 0.6f);
+		ColorUtils.rgb565ToColor(color, rgb565);
+		assertEquals(0.2f, color.r, 0.025f);
+		assertEquals(0.4f, color.g, 0.025f);
+		assertEquals(0.6f, color.b, 0.025f);
+	}
 
 }
