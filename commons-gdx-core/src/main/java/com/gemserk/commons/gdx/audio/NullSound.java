@@ -5,13 +5,23 @@ import com.badlogic.gdx.audio.Sound;
 public class NullSound implements Sound {
 
 	@Override
-	public void play() {
-		
+	public long play() {
+		return 0;
 	}
 
 	@Override
-	public void play(float volume) {
-		
+	public long play(float volume) {
+		return 0;
+	}
+
+	@Override
+	public long loop() {
+		return 0;
+	}
+
+	@Override
+	public long loop(float volume) {
+		return 0;
 	}
 
 	@Override
@@ -21,6 +31,31 @@ public class NullSound implements Sound {
 
 	@Override
 	public void dispose() {
+		
+	}
+
+	@Override
+	public void stop(long soundId) {
+		
+	}
+
+	@Override
+	public void setLooping(long soundId, boolean looping) {
+		
+	}
+
+	@Override
+	public void setPitch(long soundId, float pitch) {
+		
+	}
+
+	@Override
+	public void setVolume(long soundId, float volume) {
+		
+	}
+
+	@Override
+	public void setPan(long soundId, float pan, float volume) {
 		
 	}
 

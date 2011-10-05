@@ -26,13 +26,14 @@ public class SoundPlayer {
 		setVolume(1f);
 	}
 	
-	public void play(Sound sound) {
-		this.play(sound, 1f);
+	public long play(Sound sound) {
+		return this.play(sound, 1f);
 	}
 	
-	public void play(Sound sound, float volume) {
+	public long play(Sound sound, float volume) {
 		if (this.volume > 0f)
-			sound.play(this.volume * volume);
+			return sound.play(this.volume * volume);
+		return 0;
 	}
 
 }
