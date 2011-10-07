@@ -10,6 +10,10 @@ public interface Control {
 	
 	float getY();
 	
+	void setX(float x);
+	
+	void setY(float y);
+	
 	void setPosition(float x, float y);
 	
 	void update();

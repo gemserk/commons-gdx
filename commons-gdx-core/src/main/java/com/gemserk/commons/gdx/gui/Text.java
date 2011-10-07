@@ -47,6 +47,16 @@ public class Text implements Control {
 		this.y = y;
 	}
 
+	@Override
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	@Override
+	public void setY(float y) {
+		this.y = y;
+	}
+	
 	/**
 	 * Used to center the text over (x,y) coordinates.
 	 * 

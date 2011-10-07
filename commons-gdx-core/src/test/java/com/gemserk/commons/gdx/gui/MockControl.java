@@ -45,4 +45,16 @@ public class MockControl implements Control {
 
 	}
 
+	@Override
+	public void setX(float x) {
+		// TODO Auto-generated function stub
+		
+	}
+
+	@Override
+	public void setY(float y) {
+		// TODO Auto-generated function stub
+		
+	}
+
 }

@@ -9,7 +9,7 @@ import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
 public class ImageButton implements Control {
-	
+
 	private String id;
 
 	ButtonHandler buttonHandler;
@@ -37,11 +37,23 @@ public class ImageButton implements Control {
 		this.bounds.set(x - w * cx, y - h * cy, w, h);
 	}
 
-	 public void setCenter(float cx, float cy) {
-		 this.cx = cx;
-		 this.cy = cy;
-		 this.bounds.set(x - w * cx, y - h * cy, w, h);
-	 }
+	@Override
+	public void setX(float x) {
+		this.x = x;
+		this.bounds.set(x - w * cx, y - h * cy, w, h);
+	}
+
+	@Override
+	public void setY(float y) {
+		this.y = y;
+		this.bounds.set(x - w * cx, y - h * cy, w, h);
+	}
+
+	public void setCenter(float cx, float cy) {
+		this.cx = cx;
+		this.cy = cy;
+		this.bounds.set(x - w * cx, y - h * cy, w, h);
+	}
 
 	public void setSize(float w, float h) {
 		this.w = w;
@@ -56,7 +68,7 @@ public class ImageButton implements Control {
 	public ImageButton(Sprite sprite) {
 		this("", sprite);
 	}
-	
+
 	public ImageButton(String id, Sprite sprite) {
 		this.id = id;
 		this.sprite = sprite;
@@ -100,7 +112,7 @@ public class ImageButton implements Control {
 	public String getId() {
 		return id;
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}

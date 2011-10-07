@@ -116,6 +116,18 @@ public class TextButton implements Control {
 		recalculateBounds();
 	}
 
+	@Override
+	public void setX(float x) {
+		this.x = x;
+		recalculateBounds();
+	}
+
+	@Override
+	public void setY(float y) {
+		this.y = y;
+		recalculateBounds();
+	}
+
 	public void setCenter(float cx, float cy) {
 		this.cx = cx;
 		this.cy = cy;
@@ -169,7 +181,7 @@ public class TextButton implements Control {
 	}
 
 	public void update() {
-
+		
 		libgdxPointer.update();
 
 		pressed = false;
@@ -177,10 +189,10 @@ public class TextButton implements Control {
 
 		boolean inside = MathUtils2.inside(bounds, libgdxPointer.getPosition());
 
-		if (wasInside && !inside) 
+		if (wasInside && !inside)
 			colorTransition.set(notOverColor, 0.25f);
 
-		if (!wasInside && inside) 
+		if (!wasInside && inside)
 			colorTransition.set(overColor, 0.25f);
 
 		wasInside = inside;
