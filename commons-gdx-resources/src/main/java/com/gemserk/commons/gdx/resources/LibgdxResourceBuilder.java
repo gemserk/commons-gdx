@@ -140,7 +140,7 @@ public class LibgdxResourceBuilder {
 					xOffset += w;
 
 					if (xOffset >= spriteSheet.getWidth()) {
-						yOffset += w;
+						yOffset += h;
 						xOffset = 0;
 					}
 				}
