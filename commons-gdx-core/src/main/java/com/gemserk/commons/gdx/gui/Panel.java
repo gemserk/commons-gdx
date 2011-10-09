@@ -12,6 +12,12 @@ public class Panel extends Container {
 		this.y = y;
 	}
 	
+	public Panel(String id, float x, float y) {
+		super(id);
+		this.x = x;
+		this.y = y;
+	}
+	
 	@Override
 	public float getX() {
 		return x;
@@ -56,6 +62,16 @@ public class Panel extends Container {
 			Control control = getControls().get(i);
 			control.setPosition(x + control.getX(), y + control.getY());
 		}
+	}
+	
+	@Override
+	public void setX(float x) {
+		setPosition(x, this.y);
+	}
+
+	@Override
+	public void setY(float y) {
+		setPosition(this.x, y);
 	}
 
 }

@@ -53,6 +53,7 @@ public class FadeInTransition extends GameTransitions.EnterTransition {
 	@Override
 	public void internalUpdate(float delta) {
 		super.internalUpdate(delta);
+		colorTransition.update(delta);
 		Color color = colorTransition.get();
 		Mesh2dUtils.setColor(fadeRectangle, color.r, color.g, color.b, color.a);
 	}

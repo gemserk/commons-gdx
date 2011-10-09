@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
+import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
@@ -181,6 +182,8 @@ public class TextButton implements Control {
 	}
 
 	public void update() {
+		
+		colorTransition.update(GlobalTime.getDelta());
 		
 		libgdxPointer.update();
 

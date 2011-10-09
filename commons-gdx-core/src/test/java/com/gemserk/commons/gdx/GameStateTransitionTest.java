@@ -58,6 +58,25 @@ public class GameStateTransitionTest {
 		public boolean isFinished() {
 			return finished;
 		}
+
+		@Override
+		public void update(float delta) {
+			// TODO Auto-generated function stub
+			
+		}
+
+		@Override
+		public float getSpeed() {
+			// TODO Auto-generated function stub
+			return 0;
+			
+		}
+
+		@Override
+		public void setSpeed(float speed) {
+			// TODO Auto-generated function stub
+			
+		}
 		
 	}
 
