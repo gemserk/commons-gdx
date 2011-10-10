@@ -21,32 +21,42 @@ public class NullControl implements Control {
 
 	@Override
 	public void setX(float x) {
-		
+
 	}
 
 	@Override
 	public void setY(float y) {
-		
+
 	}
 
 	@Override
 	public void setPosition(float x, float y) {
-		
+
 	}
 
 	@Override
 	public void update() {
-		
+
 	}
 
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
-		
+
 	}
 
 	@Override
 	public void setParent(Control parent) {
+
+	}
+
+	@Override
+	public void invalidate() {
 		
+	}
+
+	@Override
+	public void validate() {
+
 	}
 
 }

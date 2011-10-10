@@ -63,4 +63,14 @@ public class MockControl implements Control {
 		
 	}
 
+	@Override
+	public void invalidate() {
+		
+	}
+
+	@Override
+	public void validate() {
+		
+	}
+
 }

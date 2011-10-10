@@ -73,5 +73,14 @@ public class Panel extends Container {
 	public void setY(float y) {
 		setPosition(this.x, y);
 	}
+	
+	@Override
+	public void invalidate() {
+		super.invalidate();
+		for (int i = 0; i < getControls().size(); i++) {
+			Control control = getControls().get(i);
+			control.setPosition(x + control.getX(), y + control.getY());
+		}
+	}
 
 }

@@ -12,10 +12,8 @@ import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
-public class TextButton implements Control {
+public class TextButton extends ControlImpl {
 
-	private String id;
-	private float x, y;
 	private float cx, cy;
 	private float w, h;
 	private float offsetX, offsetY;
@@ -32,16 +30,6 @@ public class TextButton implements Control {
 	private HAlignment alignment = HAlignment.LEFT;
 	private ButtonHandler buttonHandler = new ButtonHandler();
 	private Transition<Color> colorTransition;
-	
-	Control parent = new NullControl();
-
-	public float getX() {
-		return x;
-	}
-
-	public float getY() {
-		return y;
-	}
 
 	public TextButton setColor(Color color) {
 		if (colorTransition != null)
@@ -73,17 +61,18 @@ public class TextButton implements Control {
 
 	public TextButton setText(CharSequence text) {
 		this.text = text;
-		recalculateBoundsSize(text);
-		recalculateBounds();
+		invalidate();
+		// recalculateBoundsSize(text);
+		// recalculateBounds();
 		return this;
 	}
 
 	private void recalculateBounds() {
-		this.bounds.set(x - w * cx - offsetX * 0.5f, y - h * cy - offsetY * 0.5f, w + offsetX, h + offsetY);
+		this.bounds.set(getX() - w * cx - offsetX * 0.5f, getY() - h * cy - offsetY * 0.5f, w + offsetX, h + offsetY);
 	}
 
 	private void recalculateBoundsSize(CharSequence text) {
-		Rectangle textBounds = SpriteBatchUtils.getBounds(font, text, x, y);
+		Rectangle textBounds = SpriteBatchUtils.getBounds(font, text, getX(), getY());
 		w = textBounds.getWidth();
 		h = textBounds.getHeight();
 	}
@@ -103,38 +92,43 @@ public class TextButton implements Control {
 	public TextButton setBoundsOffset(float offsetX, float offsetY) {
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
-		recalculateBounds();
+		invalidate();
+		// recalculateBounds();
 		return this;
 	}
 
 	public void setFont(BitmapFont font) {
 		this.font = font;
-		recalculateBoundsSize(text);
-		recalculateBounds();
+		invalidate();
+		// recalculateBoundsSize(text);
+		// recalculateBounds();
 	}
 
-	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
-		recalculateBounds();
-	}
-
-	@Override
-	public void setX(float x) {
-		this.x = x;
-		recalculateBounds();
-	}
-
-	@Override
-	public void setY(float y) {
-		this.y = y;
-		recalculateBounds();
-	}
+	// public void setPosition(float x, float y) {
+	// super.setPosition(x, y);
+	// // recalculateBounds();
+	// invalidate();
+	// }
+	//
+	// @Override
+	// public void setX(float x) {
+	// super.setX(x);
+	// // recalculateBounds();
+	// invalidate();
+	// }
+	//
+	// @Override
+	// public void setY(float y) {
+	// super.setY(y);
+	// // recalculateBounds();
+	// invalidate();
+	// }
 
 	public void setCenter(float cx, float cy) {
 		this.cx = cx;
 		this.cy = cy;
-		recalculateBounds();
+		// recalculateBounds();
+		invalidate();
 	}
 
 	public Color getOverColor() {
@@ -148,8 +142,9 @@ public class TextButton implements Control {
 	public TextButton() {
 		this.cx = 0.5f;
 		this.cy = 0.5f;
-		recalculateBounds();
+		// recalculateBounds();
 		this.id = "";
+		invalidate();
 	}
 
 	public TextButton(BitmapFont font, CharSequence text, float x, float y) {
@@ -160,8 +155,10 @@ public class TextButton implements Control {
 		colorTransition = Transitions.transitionBuilder(notOverColor).build();
 		this.cx = 0.5f;
 		this.cy = 0.5f;
-		recalculateBounds();
 		this.id = "";
+
+		invalidate();
+		// recalculateBounds();
 	}
 
 	public TextButton setAlignment(HAlignment alignment) {
@@ -171,7 +168,7 @@ public class TextButton implements Control {
 
 	public void draw(SpriteBatch spriteBatch) {
 		font.setColor(colorTransition.get());
-		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, alignment);
+		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, getX(), getY(), cx, cy, alignment);
 		// ImmediateModeRendererUtils.drawRectangle(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, Color.GREEN);
 	}
 
@@ -184,9 +181,15 @@ public class TextButton implements Control {
 	}
 
 	public void update() {
-		
+
+		if (isDirty()) {
+			recalculateBounds();
+			recalculateBoundsSize(text);
+			validate();
+		}
+
 		colorTransition.update(GlobalTime.getDelta());
-		
+
 		libgdxPointer.update();
 
 		pressed = false;
@@ -218,17 +221,4 @@ public class TextButton implements Control {
 
 	}
 
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@Override
-	public void setParent(Control parent) {
-		this.parent = parent;
-	}
 }

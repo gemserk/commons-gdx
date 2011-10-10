@@ -4,13 +4,10 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Container implements Control {
+public class Container extends ControlImpl {
 
-	private final String id;
 	private ArrayList<Control> controls;
 	
-	Control parent = new NullControl();
-
 	public ArrayList<Control> getControls() {
 		return controls;
 	}
@@ -21,7 +18,7 @@ public class Container implements Control {
 
 	public Container(String id) {
 		controls = new ArrayList<Control>();
-		this.id = id;
+		setId(id);
 	}
 
 	@Override
@@ -38,25 +35,12 @@ public class Container implements Control {
 
 	public void add(Control control) {
 		controls.add(control);
+		control.setParent(this);
 	}
 
 	public void remove(Control control) {
 		controls.remove(control);
-	}
-
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	@Override
-	public float getX() {
-		return 0;
-	}
-
-	@Override
-	public float getY() {
-		return 0;
+		control.setParent(new NullControl());
 	}
 
 	public <T extends Control> T findControl(String id) {
@@ -73,25 +57,12 @@ public class Container implements Control {
 		}
 		return null;
 	}
-
+	
 	@Override
-	public void setPosition(float x, float y) {
-		
-	}
-
-	@Override
-	public void setX(float x) {
-		
-	}
-
-	@Override
-	public void setY(float y) {
-		
-	}
-
-	@Override
-	public void setParent(Control parent) {
-		this.parent = parent;
+	public void invalidate() {
+		super.invalidate();
+		for (int i = 0; i < getControls().size(); i++) 
+			getControls().get(i).invalidate();
 	}
 
 }

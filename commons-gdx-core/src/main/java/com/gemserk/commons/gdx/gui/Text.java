@@ -91,7 +91,7 @@ public class Text extends ControlImpl {
 		if (!isVisible())
 			return;
 		font.setColor(color);
-		SpriteBatchUtils.drawMultilineText(spriteBatch, font, text, x, y, cx, cy);
+		SpriteBatchUtils.drawMultilineText(spriteBatch, font, text, getX(), getY(), cx, cy);
 	}
 
 	@Override

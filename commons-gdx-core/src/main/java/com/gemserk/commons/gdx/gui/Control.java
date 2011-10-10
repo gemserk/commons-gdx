@@ -21,5 +21,9 @@ public interface Control {
 	void draw(SpriteBatch spriteBatch);
 	
 	void setParent(Control parent);
+	
+	void invalidate();
+	
+	void validate();
 
 }

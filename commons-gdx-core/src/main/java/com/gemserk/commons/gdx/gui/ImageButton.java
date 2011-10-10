@@ -8,22 +8,17 @@ import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
-public class ImageButton implements Control {
-
-	private String id;
+public class ImageButton extends ControlImpl {
 
 	ButtonHandler buttonHandler;
 	Sprite sprite;
 	LibgdxPointer libgdxPointer;
 	Color color;
 
-	float x, y;
 	float w, h;
 	float cx, cy;
 
 	Rectangle bounds;
-
-	Control parent = new NullControl();
 
 	public void setColor(Color color) {
 		this.color.set(color);
@@ -33,34 +28,38 @@ public class ImageButton implements Control {
 		this.color.set(r, g, b, a);
 	}
 
-	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
-		this.bounds.set(x - w * cx, y - h * cy, w, h);
-	}
-
-	@Override
-	public void setX(float x) {
-		this.x = x;
-		this.bounds.set(x - w * cx, y - h * cy, w, h);
-	}
-
-	@Override
-	public void setY(float y) {
-		this.y = y;
-		this.bounds.set(x - w * cx, y - h * cy, w, h);
-	}
+	// public void setPosition(float x, float y) {
+	// super.setPosition(x, y);
+	// invalidate();
+	// // this.bounds.set(x - w * cx, y - h * cy, w, h);
+	// }
+	//
+	// @Override
+	// public void setX(float x) {
+	// super.setX(x);
+	// invalidate();
+	// // this.bounds.set(x - w * cx, y - h * cy, w, h);
+	// }
+	//
+	// @Override
+	// public void setY(float y) {
+	// super.setY(y);
+	// invalidate();
+	// // this.bounds.set(x - w * cx, y - h * cy, w, h);
+	// }
 
 	public void setCenter(float cx, float cy) {
 		this.cx = cx;
 		this.cy = cy;
-		this.bounds.set(x - w * cx, y - h * cy, w, h);
+		invalidate();
+		// this.bounds.set(x - w * cx, y - h * cy, w, h);
 	}
 
 	public void setSize(float w, float h) {
 		this.w = w;
 		this.h = h;
-		this.bounds.set(x - w * cx, y - h * cy, w, h);
+		invalidate();
+		// this.bounds.set(x - w * cx, y - h * cy, w, h);
 	}
 
 	public void setButtonHandler(ButtonHandler buttonHandler) {
@@ -91,6 +90,12 @@ public class ImageButton implements Control {
 	}
 
 	public void update() {
+
+		if (isDirty()) {
+			this.bounds.set(x - w * cx, y - h * cy, w, h);
+			validate();
+		}
+
 		libgdxPointer.update();
 
 		boolean pressed = false;
@@ -108,30 +113,6 @@ public class ImageButton implements Control {
 		if (released)
 			buttonHandler.onReleased(this);
 
-	}
-
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@Override
-	public float getX() {
-		return x;
-	}
-
-	@Override
-	public float getY() {
-		return y;
-	}
-
-	@Override
-	public void setParent(Control parent) {
-		this.parent = parent;
 	}
 
 }
