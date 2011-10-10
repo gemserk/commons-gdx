@@ -28,38 +28,16 @@ public class ImageButton extends ControlImpl {
 		this.color.set(r, g, b, a);
 	}
 
-	// public void setPosition(float x, float y) {
-	// super.setPosition(x, y);
-	// invalidate();
-	// // this.bounds.set(x - w * cx, y - h * cy, w, h);
-	// }
-	//
-	// @Override
-	// public void setX(float x) {
-	// super.setX(x);
-	// invalidate();
-	// // this.bounds.set(x - w * cx, y - h * cy, w, h);
-	// }
-	//
-	// @Override
-	// public void setY(float y) {
-	// super.setY(y);
-	// invalidate();
-	// // this.bounds.set(x - w * cx, y - h * cy, w, h);
-	// }
-
 	public void setCenter(float cx, float cy) {
 		this.cx = cx;
 		this.cy = cy;
 		invalidate();
-		// this.bounds.set(x - w * cx, y - h * cy, w, h);
 	}
 
 	public void setSize(float w, float h) {
 		this.w = w;
 		this.h = h;
 		invalidate();
-		// this.bounds.set(x - w * cx, y - h * cy, w, h);
 	}
 
 	public void setButtonHandler(ButtonHandler buttonHandler) {
@@ -86,13 +64,13 @@ public class ImageButton extends ControlImpl {
 	public void draw(SpriteBatch spriteBatch) {
 		sprite.setColor(color);
 		sprite.setSize(w, h);
-		SpriteBatchUtils.drawCentered(spriteBatch, sprite, x, y, w, h, 0f, cx, cy);
+		SpriteBatchUtils.drawCentered(spriteBatch, sprite, getX(), getY(), w, h, 0f, cx, cy);
 	}
 
 	public void update() {
 
 		if (isDirty()) {
-			this.bounds.set(x - w * cx, y - h * cy, w, h);
+			recalculateBounds();
 			validate();
 		}
 
@@ -113,6 +91,10 @@ public class ImageButton extends ControlImpl {
 		if (released)
 			buttonHandler.onReleased(this);
 
+	}
+
+	public void recalculateBounds() {
+		this.bounds.set(getX() - w * cx, getY() - h * cy, w, h);
 	}
 
 }
