@@ -62,8 +62,6 @@ public class TextButton extends ControlImpl {
 	public TextButton setText(CharSequence text) {
 		this.text = text;
 		invalidate();
-		// recalculateBoundsSize(text);
-		// recalculateBounds();
 		return this;
 	}
 
@@ -93,41 +91,17 @@ public class TextButton extends ControlImpl {
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
 		invalidate();
-		// recalculateBounds();
 		return this;
 	}
 
 	public void setFont(BitmapFont font) {
 		this.font = font;
 		invalidate();
-		// recalculateBoundsSize(text);
-		// recalculateBounds();
 	}
-
-	// public void setPosition(float x, float y) {
-	// super.setPosition(x, y);
-	// // recalculateBounds();
-	// invalidate();
-	// }
-	//
-	// @Override
-	// public void setX(float x) {
-	// super.setX(x);
-	// // recalculateBounds();
-	// invalidate();
-	// }
-	//
-	// @Override
-	// public void setY(float y) {
-	// super.setY(y);
-	// // recalculateBounds();
-	// invalidate();
-	// }
 
 	public void setCenter(float cx, float cy) {
 		this.cx = cx;
 		this.cy = cy;
-		// recalculateBounds();
 		invalidate();
 	}
 
@@ -142,7 +116,6 @@ public class TextButton extends ControlImpl {
 	public TextButton() {
 		this.cx = 0.5f;
 		this.cy = 0.5f;
-		// recalculateBounds();
 		this.id = "";
 		invalidate();
 	}
@@ -158,7 +131,6 @@ public class TextButton extends ControlImpl {
 		this.id = "";
 
 		invalidate();
-		// recalculateBounds();
 	}
 
 	public TextButton setAlignment(HAlignment alignment) {

@@ -19,13 +19,17 @@ public class ImageButton extends ControlImpl {
 	float cx, cy;
 
 	Rectangle bounds;
-
+	
 	public void setColor(Color color) {
 		this.color.set(color);
 	}
 
 	public void setColor(float r, float g, float b, float a) {
 		this.color.set(r, g, b, a);
+	}
+	
+	public Color getColor() {
+		return color;
 	}
 
 	public void setCenter(float cx, float cy) {
@@ -66,6 +70,8 @@ public class ImageButton extends ControlImpl {
 		sprite.setSize(w, h);
 		SpriteBatchUtils.drawCentered(spriteBatch, sprite, getX(), getY(), w, h, 0f, cx, cy);
 	}
+	
+	boolean wasInside;
 
 	public void update() {
 
@@ -78,6 +84,16 @@ public class ImageButton extends ControlImpl {
 
 		boolean pressed = false;
 		boolean released = false;
+		
+		boolean inside = MathUtils2.inside(bounds, libgdxPointer.getPosition());
+		
+		if (inside && !wasInside) {
+			buttonHandler.onOver(this);
+			wasInside = true;
+		} else if (!inside && wasInside) {
+			buttonHandler.onLeave(this);
+			wasInside = false;
+		}
 
 		if (libgdxPointer.wasPressed)
 			pressed = MathUtils2.inside(bounds, libgdxPointer.getPressedPosition());
