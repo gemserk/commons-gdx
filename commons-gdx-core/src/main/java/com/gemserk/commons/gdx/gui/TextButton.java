@@ -155,8 +155,8 @@ public class TextButton extends ControlImpl {
 	public void update() {
 
 		if (!isValid()) {
-			recalculateBounds();
 			recalculateBoundsSize(text);
+			recalculateBounds();
 			validate();
 		}
 

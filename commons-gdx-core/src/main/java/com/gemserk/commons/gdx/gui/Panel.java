@@ -1,7 +1,5 @@
 package com.gemserk.commons.gdx.gui;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 public class Panel extends Container {
 
 	private float width, height;
@@ -31,11 +29,6 @@ public class Panel extends Container {
 
 	public float getHeight() {
 		return height;
-	}
-
-	@Override
-	public void draw(SpriteBatch spriteBatch) {
-		super.draw(spriteBatch);
 	}
 
 }
