@@ -150,8 +150,8 @@ public class TextButton extends ControlImpl {
 	public TextButton(BitmapFont font, CharSequence text, float x, float y) {
 		this.font = font;
 		this.text = text;
-		this.x = x;
-		this.y = y;
+		setX(x);
+		setY(y);
 		colorTransition = Transitions.transitionBuilder(notOverColor).build();
 		this.cx = 0.5f;
 		this.cy = 0.5f;
@@ -182,7 +182,7 @@ public class TextButton extends ControlImpl {
 
 	public void update() {
 
-		if (isDirty()) {
+		if (!isValid()) {
 			recalculateBounds();
 			recalculateBoundsSize(text);
 			validate();

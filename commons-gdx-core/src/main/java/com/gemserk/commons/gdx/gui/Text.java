@@ -80,8 +80,8 @@ public class Text extends ControlImpl {
 	public Text(String id, CharSequence text, float x, float y, float cx, float cy) {
 		setId(id);
 		this.text = text;
-		this.x = x;
-		this.y = y;
+		setX(x);
+		setY(y);
 		this.cx = cx;
 		this.cy = cy;
 	}

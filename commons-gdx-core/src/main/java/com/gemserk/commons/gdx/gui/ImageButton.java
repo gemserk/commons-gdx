@@ -69,7 +69,7 @@ public class ImageButton extends ControlImpl {
 
 	public void update() {
 
-		if (isDirty()) {
+		if (!isValid()) {
 			recalculateBounds();
 			validate();
 		}

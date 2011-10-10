@@ -3,12 +3,12 @@ package com.gemserk.commons.gdx.gui;
 public abstract class ControlImpl implements Control {
 	
 	String id;
-	float x,y;
+	private float x,y;
 	Control parent = new NullControl();
 	boolean dirty = false;
 	
-	public boolean isDirty() {
-		return dirty;
+	public boolean isValid() {
+		return !dirty;
 	}
 	
 	public void setId(String id) {
