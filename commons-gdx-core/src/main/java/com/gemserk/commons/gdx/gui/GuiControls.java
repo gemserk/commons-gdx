@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.gemserk.commons.gdx.gui.ToggleableImageButton.ToggleHandler;
 
 public class GuiControls {
 
@@ -194,10 +195,54 @@ public class GuiControls {
 		}
 
 	}
+	
+	public static class ToggleableImageButtonBuilder implements Builder<ToggleableImageButton> {
+
+		ToggleableImageButton imageButton;
+
+		private ToggleableImageButtonBuilder newButton(Sprite enabledSprite, Sprite disabledSprite) {
+			imageButton = new ToggleableImageButton();
+			imageButton.setEnabledSprite(enabledSprite);
+			imageButton.setDisabledSprite(disabledSprite);
+			return this;
+		}
+
+		public ToggleableImageButtonBuilder id(String id) {
+			imageButton.setId(id);
+			return this;
+		}
+
+		public ToggleableImageButtonBuilder position(float x, float y) {
+			imageButton.setPosition(x, y);
+			return this;
+		}
+
+		public ToggleableImageButtonBuilder center(float cx, float cy) {
+			imageButton.setCenter(cx, cy);
+			return this;
+		}
+		
+		public ToggleableImageButtonBuilder enabled(boolean enabled) {
+			imageButton.setEnabled(enabled);
+			return this;
+		}
+
+		public ToggleableImageButtonBuilder handler(ToggleHandler toggleHandler) {
+			imageButton.setToggleHandler(toggleHandler);
+			return this;
+		}
+
+		@Override
+		public ToggleableImageButton build() {
+			return imageButton;
+		}
+
+	}
 
 	private static TextButtonBuilder textButtonBuilder = new TextButtonBuilder();
 	private static ImageButtonBuilder imageButtonBuilder = new ImageButtonBuilder();
 	private static LabelBuilder labelBuilder = new LabelBuilder();
+	private static ToggleableImageButtonBuilder toggleableImageButtonBuilder = new ToggleableImageButtonBuilder();
 
 	public static TextButtonBuilder textButton() {
 		return textButtonBuilder;
@@ -211,4 +256,7 @@ public class GuiControls {
 		return labelBuilder.newText(text);
 	}
 
+	public static ToggleableImageButtonBuilder toggleImageButton(Sprite enabledSprite, Sprite disabledSprite) {
+		return toggleableImageButtonBuilder.newButton(enabledSprite, disabledSprite);
+	}
 }

@@ -3,99 +3,116 @@ package com.gemserk.commons.gdx.gui;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.input.Pointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
 
-public class ToggleableImageButton {
-	
-	public static class ToggleHandler {
-		
-		public void onToggle(boolean value) {}
-		
-	}
-	
-	float x,y;
-	
-	boolean enabled;
-	
-	Sprite enabledSprite;
-	
-	Sprite disabledSprite;
-	
-	Rectangle bounds;
-	
-	Pointer pointer;
-	
-	ToggleHandler toggleHandler = new ToggleHandler();
+public class ToggleableImageButton extends ControlImpl {
 
-	public ToggleableImageButton setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
-		return this;
+	public static class ToggleHandler {
+
+		public void onToggle(boolean value) {
+		}
+
+	}
+
+	boolean enabled;
+
+	Sprite enabledSprite;
+	Sprite disabledSprite;
+
+	Rectangle bounds;
+	Pointer pointer;
+
+	float cx, cy;
+	float width, height;
+
+	ToggleHandler toggleHandler = new ToggleHandler();
+	
+	public void setCenter(float cx, float cy) {
+		this.cx = cx;
+		this.cy = cy;
+		invalidate();
 	}
 	
-	public ToggleableImageButton setEnabledSprite(Sprite enabledSprite) {
+	public void setEnabledSprite(Sprite enabledSprite) {
 		this.enabledSprite = enabledSprite;
-		return this;
+		invalidate();
 	}
-	
-	public ToggleableImageButton setDisabledSprite(Sprite disabledSprite) {
+
+	public void setDisabledSprite(Sprite disabledSprite) {
 		this.disabledSprite = disabledSprite;
-		return this;
+		invalidate();
 	}
-	
-	public ToggleableImageButton setEnabled(boolean enabled) {
+
+	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-		return this;
+		invalidate();
 	}
-	
-	public ToggleableImageButton setBounds(Rectangle bounds) {
+
+	void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
-		return this;
 	}
-	
+
 	public void setPointer(Pointer pointer) {
 		this.pointer = pointer;
 	}
-	
+
 	public ToggleableImageButton setToggleHandler(ToggleHandler toggleHandler) {
 		this.toggleHandler = toggleHandler;
 		return this;
 	}
-	
+
 	public ToggleableImageButton() {
 		pointer = new LibgdxPointer(0);
+		bounds = new Rectangle();
 	}
-	
+
 	private void toggle() {
 		enabled = !enabled;
 		toggleHandler.onToggle(enabled);
+		invalidate();
 	}
-	
+
 	public void draw(SpriteBatch spriteBatch) {
-		if (enabled) 
-			SpriteBatchUtils.drawCentered(spriteBatch, enabledSprite, x, y, 0f);
+		if (enabled)
+			SpriteBatchUtils.drawCentered(spriteBatch, enabledSprite, getX(), getY(), 0f);
 		else
-			SpriteBatchUtils.drawCentered(spriteBatch, disabledSprite, x, y, 0f);
+			SpriteBatchUtils.drawCentered(spriteBatch, disabledSprite, getX(), getY(), 0f);
 	}
-	
-	public void udpate(int delta) {
-		
+
+	@Override
+	public void update() {
+
+		if (!isValid()) {
+			recalculateBounds();
+			validate();
+		}
+
 		pointer.update();
-		
+
 		if (!pointer.wasReleased())
 			return;
-		
-		Vector2 p = pointer.getReleasedPosition();
-		
-		if (!MathUtils2.inside(bounds, p.x - x, p.y - y)) 
+
+		if (!MathUtils2.inside(bounds, pointer.getReleasedPosition()))
 			return;
-		
+
 		toggle();
-		
+
+	}
+
+	protected void recalculateBounds() {
+
+		if (enabled) {
+			this.width = enabledSprite.getWidth();
+			this.height = enabledSprite.getHeight();
+		} else {
+			this.width = disabledSprite.getWidth();
+			this.height = disabledSprite.getHeight();
+		}
+
+		this.bounds.set(getX() - width * cx, getY() - height * cy, width, height);
 	}
 
 }

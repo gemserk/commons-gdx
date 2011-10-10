@@ -16,7 +16,12 @@ public class ToggleableImageButtonTest {
 		MockPointer pointer = new MockPointer();
 		MockToggleHandler toggleHandler = new MockToggleHandler();
 		
-		ToggleableImageButton toggleableImageButton = new ToggleableImageButton();
+		ToggleableImageButton toggleableImageButton = new ToggleableImageButton() {
+			@Override
+			protected void recalculateBounds() {
+				
+			}
+		};
 		toggleableImageButton.setPointer(pointer);
 		toggleableImageButton.setToggleHandler(toggleHandler);
 		toggleableImageButton.setPosition(0f, 0f);
@@ -24,7 +29,7 @@ public class ToggleableImageButtonTest {
 		
 		pointer.wasReleased = false;
 		
-		toggleableImageButton.udpate(100);
+		toggleableImageButton.update();
 		
 		assertThat(toggleHandler.toggleCalled, IsEqual.equalTo(false));
 	}
@@ -34,7 +39,12 @@ public class ToggleableImageButtonTest {
 		MockPointer pointer = new MockPointer();
 		MockToggleHandler toggleHandler = new MockToggleHandler();
 		
-		ToggleableImageButton toggleableImageButton = new ToggleableImageButton();
+		ToggleableImageButton toggleableImageButton = new ToggleableImageButton() {
+			@Override
+			protected void recalculateBounds() {
+				
+			}
+		};
 		toggleableImageButton.setPointer(pointer);
 		toggleableImageButton.setToggleHandler(toggleHandler);
 		toggleableImageButton.setPosition(0f, 0f);
@@ -43,7 +53,7 @@ public class ToggleableImageButtonTest {
 		pointer.wasReleased = true;
 		pointer.releasedPosition.set(-20, -20);
 		
-		toggleableImageButton.udpate(100);
+		toggleableImageButton.update();
 		
 		assertThat(toggleHandler.toggleCalled, IsEqual.equalTo(false));
 	}
@@ -53,7 +63,12 @@ public class ToggleableImageButtonTest {
 		MockPointer pointer = new MockPointer();
 		MockToggleHandler toggleHandler = new MockToggleHandler();
 		
-		ToggleableImageButton toggleableImageButton = new ToggleableImageButton();
+		ToggleableImageButton toggleableImageButton = new ToggleableImageButton() {
+			@Override
+			protected void recalculateBounds() {
+				
+			}
+		};
 		toggleableImageButton.setPointer(pointer);
 		toggleableImageButton.setToggleHandler(toggleHandler);
 		toggleableImageButton.setPosition(0f, 0f);
@@ -62,7 +77,7 @@ public class ToggleableImageButtonTest {
 		pointer.wasReleased = true;
 		pointer.releasedPosition.set(25, 25);
 		
-		toggleableImageButton.udpate(100);
+		toggleableImageButton.update();
 		
 		assertThat(toggleHandler.toggleCalled, IsEqual.equalTo(true));
 	}
@@ -72,7 +87,12 @@ public class ToggleableImageButtonTest {
 		MockPointer pointer = new MockPointer();
 		MockToggleHandler toggleHandler = new MockToggleHandler();
 		
-		ToggleableImageButton toggleableImageButton = new ToggleableImageButton();
+		ToggleableImageButton toggleableImageButton = new ToggleableImageButton() {
+			@Override
+			protected void recalculateBounds() {
+				
+			}
+		};
 		toggleableImageButton.setPointer(pointer);
 		toggleableImageButton.setToggleHandler(toggleHandler);
 		toggleableImageButton.setPosition(0f, 0f);
@@ -81,13 +101,13 @@ public class ToggleableImageButtonTest {
 		pointer.wasReleased = true;
 		pointer.releasedPosition.set(25, 25);
 		
-		toggleableImageButton.udpate(100);
+		toggleableImageButton.update();
 		assertThat(toggleHandler.toggleCalled, IsEqual.equalTo(true));
 
 		pointer.wasReleased = false;
 		toggleHandler.toggleCalled = false;
 
-		toggleableImageButton.udpate(100);
+		toggleableImageButton.update();
 		assertThat(toggleHandler.toggleCalled, IsEqual.equalTo(false));
 	}
 
