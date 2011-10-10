@@ -57,4 +57,10 @@ public class MockControl implements Control {
 		
 	}
 
+	@Override
+	public void setParent(Control parent) {
+		// TODO Auto-generated function stub
+		
+	}
+
 }

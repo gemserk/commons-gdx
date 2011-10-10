@@ -8,6 +8,8 @@ public class Container implements Control {
 
 	private final String id;
 	private ArrayList<Control> controls;
+	
+	Control parent = new NullControl();
 
 	public ArrayList<Control> getControls() {
 		return controls;
@@ -85,6 +87,11 @@ public class Container implements Control {
 	@Override
 	public void setY(float y) {
 		
+	}
+
+	@Override
+	public void setParent(Control parent) {
+		this.parent = parent;
 	}
 
 }

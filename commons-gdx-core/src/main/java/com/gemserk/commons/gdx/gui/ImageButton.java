@@ -23,6 +23,8 @@ public class ImageButton implements Control {
 
 	Rectangle bounds;
 
+	Control parent = new NullControl();
+
 	public void setColor(Color color) {
 		this.color.set(color);
 	}
@@ -125,6 +127,11 @@ public class ImageButton implements Control {
 	@Override
 	public float getY() {
 		return y;
+	}
+
+	@Override
+	public void setParent(Control parent) {
+		this.parent = parent;
 	}
 
 }

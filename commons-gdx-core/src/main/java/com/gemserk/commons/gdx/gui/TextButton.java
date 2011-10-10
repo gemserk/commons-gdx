@@ -32,6 +32,8 @@ public class TextButton implements Control {
 	private HAlignment alignment = HAlignment.LEFT;
 	private ButtonHandler buttonHandler = new ButtonHandler();
 	private Transition<Color> colorTransition;
+	
+	Control parent = new NullControl();
 
 	public float getX() {
 		return x;
@@ -223,5 +225,10 @@ public class TextButton implements Control {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	@Override
+	public void setParent(Control parent) {
+		this.parent = parent;
 	}
 }

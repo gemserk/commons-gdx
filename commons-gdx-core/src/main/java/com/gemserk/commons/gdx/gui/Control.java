@@ -19,5 +19,7 @@ public interface Control {
 	void update();
 
 	void draw(SpriteBatch spriteBatch);
+	
+	void setParent(Control parent);
 
 }

@@ -5,16 +5,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 
-public class Text implements Control {
+public class Text extends ControlImpl {
 
-	private String id;
-	private float x, y;
 	private CharSequence text;
 	private float cx, cy;
 	private boolean visible = true;
 	private Color color = new Color(Color.WHITE);
 	private BitmapFont font;
-
+	
 	public Text setVisible(boolean visible) {
 		this.visible = visible;
 		return this;
@@ -42,21 +40,6 @@ public class Text implements Control {
 		this.font = font;
 	}
 
-	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
-	}
-
-	@Override
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	@Override
-	public void setY(float y) {
-		this.y = y;
-	}
-	
 	/**
 	 * Used to center the text over (x,y) coordinates.
 	 * 
@@ -95,7 +78,7 @@ public class Text implements Control {
 	}
 	
 	public Text(String id, CharSequence text, float x, float y, float cx, float cy) {
-		this.id = id;
+		setId(id);
 		this.text = text;
 		this.x = x;
 		this.y = y;
@@ -122,22 +105,8 @@ public class Text implements Control {
 	}
 
 	@Override
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	@Override
-	public float getX() {
-		return x;
-	}
-
-	@Override
-	public float getY() {
-		return y;
+	public void setParent(Control parent) {
+		this.parent = parent;
 	}
 
 }
