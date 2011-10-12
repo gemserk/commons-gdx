@@ -91,4 +91,11 @@ public class FrameAnimationImpl implements FrameAnimation {
 			currentFrame = 0;
 
 	}
+
+	@Override
+	public boolean isFinished() {
+		if (loop)
+			return false;
+		return currentFrame == getFramesCount() - 1;
+	}
 }

@@ -8,5 +8,7 @@ public interface FrameAnimation {
 	int getCurrentFrame();
 
 	void update(float delta);
+	
+	boolean isFinished();
 
 }

@@ -29,5 +29,9 @@ public class Animation  {
 	public void update(float delta) {
 		frameAnimation.update(delta);
 	}
+	
+	public boolean isFinished() {
+		return frameAnimation.isFinished();
+	}
 
 }
