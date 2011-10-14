@@ -21,6 +21,8 @@ public class Components {
 
 	public static final Class<SoundSpawnerComponent> soundSpawnerComponentClass = SoundSpawnerComponent.class;
 	public static final Class<MovementComponent> movementComponentClass = MovementComponent.class;
+	
+	public static final Class<AnimationComponent> animationComponentClass = AnimationComponent.class;
 
 	public static SpatialComponent spatialComponent(Entity e) {
 		return e.getComponent(spatialComponentClass);
@@ -61,5 +63,10 @@ public class Components {
 	public static MovementComponent getMovementComponent(Entity e) {
 		return e.getComponent(movementComponentClass);
 	}
+	
+	public static AnimationComponent getAnimationComponent(Entity e) {
+		return e.getComponent(animationComponentClass);
+	}
 
 }
+
