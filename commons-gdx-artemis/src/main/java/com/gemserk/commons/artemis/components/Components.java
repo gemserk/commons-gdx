@@ -20,6 +20,7 @@ public class Components {
 	public static final Class<TextComponent> textComponentClass = TextComponent.class;
 
 	public static final Class<SoundSpawnerComponent> soundSpawnerComponentClass = SoundSpawnerComponent.class;
+	public static final Class<MovementComponent> movementComponentClass = MovementComponent.class;
 
 	public static SpatialComponent spatialComponent(Entity e) {
 		return e.getComponent(spatialComponentClass);
@@ -55,6 +56,10 @@ public class Components {
 
 	public static SoundSpawnerComponent getSoundSpawnerComponent(Entity e) {
 		return e.getComponent(soundSpawnerComponentClass);
+	}
+
+	public static MovementComponent getMovementComponent(Entity e) {
+		return e.getComponent(movementComponentClass);
 	}
 
 }

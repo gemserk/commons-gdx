@@ -52,6 +52,7 @@
 			<groupId>com.adwhirl.adwhirl</groupId>
 			<artifactId>adwhirl</artifactId>
 			<version>${adwhirl.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android</groupId>
