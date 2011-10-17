@@ -4,18 +4,18 @@ import com.artemis.Component;
 
 public class AliveComponent extends Component {
 	
-	private int aliveTime;
+	private float time;
 	
-	public int getAliveTime() {
-		return aliveTime;
+	public float getTime() {
+		return time;
 	}
 	
-	public void setAliveTime(int aliveTime) {
-		this.aliveTime = aliveTime;
+	public void setTime(float time) {
+		this.time = time;
 	}
 
-	public AliveComponent(int time) {
-		this.aliveTime = time;
+	public AliveComponent(float time) {
+		this.time = time;
 	}
 
 }
