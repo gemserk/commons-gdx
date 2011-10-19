@@ -15,7 +15,7 @@ import com.gemserk.commons.gdx.math.MathUtils2;
 public class TextButton extends ControlImpl {
 
 	private float cx, cy;
-	private float w, h;
+	private float width, height;
 	private float offsetX, offsetY;
 
 	private BitmapFont font;
@@ -66,13 +66,13 @@ public class TextButton extends ControlImpl {
 	}
 
 	private void recalculateBounds() {
-		this.bounds.set(getX() - w * cx - offsetX * 0.5f, getY() - h * cy - offsetY * 0.5f, w + offsetX, h + offsetY);
+		this.bounds.set(getX() - width * cx - offsetX * 0.5f, getY() - height * cy - offsetY * 0.5f, width + offsetX, height + offsetY);
 	}
 
 	private void recalculateBoundsSize(CharSequence text) {
 		Rectangle textBounds = SpriteBatchUtils.getBounds(font, text, getX(), getY());
-		w = textBounds.getWidth();
-		h = textBounds.getHeight();
+		width = textBounds.getWidth();
+		height = textBounds.getHeight();
 	}
 
 	public TextButton setButtonHandler(ButtonHandler buttonHandler) {
