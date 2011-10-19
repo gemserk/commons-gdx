@@ -15,7 +15,7 @@ public class ImageButton extends ControlImpl {
 	LibgdxPointer libgdxPointer;
 	Color color;
 
-	float w, h;
+	float width, height;
 	float cx, cy;
 
 	Rectangle bounds;
@@ -37,10 +37,18 @@ public class ImageButton extends ControlImpl {
 		this.cy = cy;
 		invalidate();
 	}
+	
+	public float getWidth() {
+		return width;
+	}
+	
+	public float getHeight() {
+		return height;
+	}
 
 	public void setSize(float w, float h) {
-		this.w = w;
-		this.h = h;
+		this.width = w;
+		this.height = h;
 		invalidate();
 	}
 
@@ -58,17 +66,17 @@ public class ImageButton extends ControlImpl {
 		this.buttonHandler = new ButtonHandler();
 		this.color = new Color(1f, 1f, 1f, 1f);
 		this.libgdxPointer = new LibgdxPointer(0);
-		this.w = sprite.getWidth();
-		this.h = sprite.getHeight();
-		this.bounds = new Rectangle(0, 0, w, h);
+		this.width = sprite.getWidth();
+		this.height = sprite.getHeight();
+		this.bounds = new Rectangle(0, 0, width, height);
 		this.cx = 0.5f;
 		this.cy = 0.5f;
 	}
 
 	public void draw(SpriteBatch spriteBatch) {
 		sprite.setColor(color);
-		sprite.setSize(w, h);
-		SpriteBatchUtils.drawCentered(spriteBatch, sprite, getX(), getY(), w, h, 0f, cx, cy);
+		sprite.setSize(width, height);
+		SpriteBatchUtils.drawCentered(spriteBatch, sprite, getX(), getY(), width, height, 0f, cx, cy);
 	}
 	
 	boolean wasInside;
@@ -110,7 +118,7 @@ public class ImageButton extends ControlImpl {
 	}
 
 	public void recalculateBounds() {
-		this.bounds.set(getX() - w * cx, getY() - h * cy, w, h);
+		this.bounds.set(getX() - width * cx, getY() - height * cy, width, height);
 	}
 
 }
