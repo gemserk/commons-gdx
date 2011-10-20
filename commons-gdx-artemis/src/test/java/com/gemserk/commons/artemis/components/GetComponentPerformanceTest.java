@@ -21,10 +21,10 @@ public class GetComponentPerformanceTest {
 		// some vm warm up
 
 		for (int i = 0; i < 100; i++) {
-			testTimeWithGetComponentFromClassWithClassCache(1000);
-			testTimeWithGetComponentFromClass(1000);
-			testTimeWithGetComponentFromMapper(1000);
-			testTimeWithGetComponentUsingTypeAndClass(1000);
+			testTimeWithGetComponentFromClassWithClassCache(10000);
+			testTimeWithGetComponentFromClass(10000);
+			testTimeWithGetComponentFromMapper(10000);
+			testTimeWithGetComponentUsingTypeAndClass(10000);
 		}
 
 		int iterations = 50000;
