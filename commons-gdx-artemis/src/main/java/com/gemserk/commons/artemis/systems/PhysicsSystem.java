@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
-import com.gemserk.commons.artemis.components.AntiGravityComponent;
 import com.gemserk.commons.artemis.components.LinearVelocityLimitComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.gdx.GlobalTime;
@@ -44,14 +43,14 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
 		Body body = physicsComponent.getBody();
 
-		AntiGravityComponent antiGravityComponent = e.getComponent(AntiGravityComponent.class);
-		if (antiGravityComponent != null) {
-
-			bodyAntiGravity.set(antiGravity);
-			bodyAntiGravity.mul(body.getMass());
-
-			body.applyForce(bodyAntiGravity, body.getTransform().getPosition());
-		}
+		// AntiGravityComponent antiGravityComponent = e.getComponent(AntiGravityComponent.class);
+		// if (antiGravityComponent != null) {
+		//
+		// bodyAntiGravity.set(antiGravity);
+		// bodyAntiGravity.mul(body.getMass());
+		//
+		// body.applyForce(bodyAntiGravity, body.getTransform().getPosition());
+		// }
 
 		LinearVelocityLimitComponent limitComponent = e.getComponent(LinearVelocityLimitComponent.class);
 		if (limitComponent != null) {
@@ -103,7 +102,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 				continue;
 
 			PhysicsComponent otherPhyiscsComponent = otherEntity.getComponent(PhysicsComponent.class);
-			otherPhyiscsComponent.getContact().removeContact(contact.getOtherFixture(),contact.getMyFixture());
+			otherPhyiscsComponent.getContact().removeContact(contact.getOtherFixture(), contact.getMyFixture());
 		}
 
 		physicsWorld.destroyBody(body);
