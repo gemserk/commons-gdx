@@ -101,6 +101,11 @@ public class GuiControls {
 
 		ImageButton imageButton;
 
+		private ImageButtonBuilder newButton(ImageButton imageButton) {
+			this.imageButton = imageButton;
+			return this;
+		}
+
 		private ImageButtonBuilder newButton(Sprite sprite) {
 			imageButton = new ImageButton(sprite);
 			return this;
@@ -250,6 +255,10 @@ public class GuiControls {
 
 	public static ImageButtonBuilder imageButton(Sprite sprite) {
 		return imageButtonBuilder.newButton(sprite);
+	}
+	
+	public static ImageButtonBuilder imageButton(ImageButton imageButton) {
+		return imageButtonBuilder.newButton(imageButton);
 	}
 
 	public static LabelBuilder label(CharSequence text) {

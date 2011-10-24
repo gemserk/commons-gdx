@@ -45,6 +45,10 @@ public class ImageButton extends ControlImpl {
 	public float getHeight() {
 		return height;
 	}
+	
+	public Rectangle getBounds() {
+		return bounds;
+	}
 
 	public void setSize(float w, float h) {
 		this.width = w;
