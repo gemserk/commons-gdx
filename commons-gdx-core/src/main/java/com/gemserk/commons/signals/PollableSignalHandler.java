@@ -2,27 +2,21 @@ package com.gemserk.commons.signals;
 
 /**
  * Implementation of SignalHandler to be polled to know if one specific signal was sent.
+ * 
+ * @author acoppes
  */
-public class PollableSignalHandler implements SignalHandler {
+public class PollableSignalHandler implements SignalHandler, PollableSignal {
 
 	boolean signalSent;
 	Signal signal;
 	Object source;
 
-	/**
-	 * If signalSent returned true, this method returns the Signal instance.
-	 * 
-	 * @return The Signal instance for the last signal sent.
-	 */
+	@Override
 	public Signal getSignal() {
 		return signal;
 	}
 
-	/**
-	 * If signalSent returned true, this method returns the source Object instance.
-	 * 
-	 * @return The Object which originated the signal.
-	 */
+	@Override
 	public Object getSource() {
 		return source;
 	}
@@ -34,9 +28,7 @@ public class PollableSignalHandler implements SignalHandler {
 		signalSent = true;
 	}
 
-	/**
-	 * Returns true, only once, if onSignal() method was called by the SignalSender, false otherwise.
-	 */
+	@Override
 	public boolean signalSent() {
 		if (signalSent) {
 			signalSent = false;

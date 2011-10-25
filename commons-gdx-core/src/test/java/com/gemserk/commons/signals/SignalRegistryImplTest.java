@@ -6,7 +6,7 @@ import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 /**
- * This test provides some classes for events system copied from the entry <a href=http://altdevblogaday.com/2011/08/17/scripting-with-no-scripts/>scripting with no scripts</a>
+ * This test provides some classes for events system copied from the article <a href=http://altdevblogaday.com/2011/08/17/scripting-with-no-scripts/>scripting with no scripts</a>
  * 
  * To avoid problems with the other event system I changed the concept Event to Signal.
  * 
@@ -66,6 +66,21 @@ public class SignalRegistryImplTest {
 		
 		signalSender.signal("a");
 		assertThat(mySignalHandler.wasCalled, IsEqual.equalTo(false));
+	}
+	
+	@Test
+	public void testPollableSignalHandler() {
+		SignalRegistry signalRegistry = new SignalRegistryImpl();
+
+		SignalSender signalSender = signalRegistry.register("event1");
+
+		PollableSignalHandler pollableSignalHandler = new PollableSignalHandler();
+
+		signalRegistry.subscribe("event1", pollableSignalHandler);
+		
+		assertThat(pollableSignalHandler.signalSent(), IsEqual.equalTo(false));
+		signalSender.signal("source");
+		assertThat(pollableSignalHandler.signalSent(), IsEqual.equalTo(true));
 	}
 
 }
