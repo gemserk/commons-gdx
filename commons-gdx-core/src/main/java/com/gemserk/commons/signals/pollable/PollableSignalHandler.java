@@ -1,4 +1,7 @@
-package com.gemserk.commons.signals;
+package com.gemserk.commons.signals.pollable;
+
+import com.gemserk.commons.signals.Signal;
+import com.gemserk.commons.signals.SignalHandler;
 
 /**
  * Implementation of SignalHandler to be polled to know if one specific signal was sent.
@@ -7,7 +10,7 @@ package com.gemserk.commons.signals;
  */
 public class PollableSignalHandler implements SignalHandler, PollableSignal {
 
-	boolean signalSent;
+	int signalCount;
 	Signal signal;
 	Object source;
 
@@ -23,18 +26,22 @@ public class PollableSignalHandler implements SignalHandler, PollableSignal {
 
 	@Override
 	public void onSignal(Signal signal, Object source) {
+		// don't accept more than one signal for now until the signal was consumed, also it should conserve the same signal/source isntances
+		if (signalCount > 0)
+			return;
 		this.signal = signal;
 		this.source = source;
-		signalSent = true;
+		signalCount++;
 	}
 
 	@Override
 	public boolean signalSent() {
-		if (signalSent) {
-			signalSent = false;
+		if (signalCount > 0) {
+			// consumes the signal 
+			signalCount--;
 			return true;
 		}
-		return signalSent;
+		return false;
 	}
 
 }

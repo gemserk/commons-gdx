@@ -1,4 +1,6 @@
-package com.gemserk.commons.signals;
+package com.gemserk.commons.signals.pollable;
+
+import com.gemserk.commons.signals.Signal;
 
 /**
  * Provides an interface to poll to know if a signal was sent or not.

@@ -13,3 +13,5 @@ Artemis - RFE
 - Artemis system which process in each update independent of entities and components/
 
 - Add nanotime to World to be used optionally? (if you fix your time step this should not be needed though) 
+
+- Multiple components of the same type? restrictions to allow only one in some cases? (a workaround could be having children entities with each component)

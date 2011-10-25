@@ -7,8 +7,8 @@ import com.gemserk.commons.artemis.events.EventListener;
 
 public class InvokeMethodEventListener extends EventListener {
 
-	private Object owner;
-	private Method method;
+	protected Object owner;
+	protected Method method;
 
 	public void setMethod(Method method) {
 		this.method = method;

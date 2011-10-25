@@ -41,10 +41,10 @@ public class EventListenerReflectionRegistrator {
 	// this doesn't allows multiple event listeners per method
 	private final Map<Object, Map<Method, InvokeMethodEventListener>> createdMethodEventListeners = new HashMap<Object, Map<Method, InvokeMethodEventListener>>();
 
-	private final EventManager eventListenerManager;
+	private final EventManager eventManager;
 	
-	public EventListenerReflectionRegistrator(EventManager eventListenerManager) {
-		this.eventListenerManager = eventListenerManager;
+	public EventListenerReflectionRegistrator(EventManager eventManager) {
+		this.eventManager = eventManager;
 	}
 	
 	private Map<String, Method> getClassCachedMethods(Class<?> clazz) {
@@ -84,10 +84,12 @@ public class EventListenerReflectionRegistrator {
 
 	private void registerEventListenerForMethod(String eventId, final Object o, final Method method) {
 		method.setAccessible(true);
+		
 		InvokeMethodEventListener invokeMethodEventListener = invokeMethodEventListenerPool.newObject();
 		invokeMethodEventListener.setOwner(o);
 		invokeMethodEventListener.setMethod(method);
-		eventListenerManager.register(eventId, invokeMethodEventListener);
+		
+		eventManager.register(eventId, invokeMethodEventListener);
 
 		// used to be returned to the pool later.
 		Map<Method, InvokeMethodEventListener> cachedMethodEventListeners = getCachedMethodEventListenersForObject(o);
@@ -103,7 +105,7 @@ public class EventListenerReflectionRegistrator {
 	private void unregisterEventListenerForMethod(String eventId, final Object o, final Method method) {
 		Map<Method, InvokeMethodEventListener> cachedMethodEventListeners = getCachedMethodEventListenersForObject(o);
 		InvokeMethodEventListener invokeMethodEventListener = cachedMethodEventListeners.get(method);
-		eventListenerManager.unregister(eventId, invokeMethodEventListener);
+		eventManager.unregister(eventId, invokeMethodEventListener);
 		invokeMethodEventListenerPool.free(invokeMethodEventListener);
 		cachedMethodEventListeners.remove(method);
 	}
@@ -113,7 +115,7 @@ public class EventListenerReflectionRegistrator {
 	 * 
 	 * @param o
 	 *            The object to register the methods as event listeners.
-	 * @param eventListenerManager
+	 * @param eventManager
 	 *            The EventListenerManager to register the event listeners to.
 	 */
 	public void registerEventListeners(Object o) {
@@ -141,7 +143,7 @@ public class EventListenerReflectionRegistrator {
 	 * 
 	 * @param o
 	 *            The object to unregister the methods as event listeners from.
-	 * @param eventListenerManager
+	 * @param eventManager
 	 *            The EventListenerManager to unregister the event listeners from.
 	 */
 	public void unregisterEventListeners(Object o) {

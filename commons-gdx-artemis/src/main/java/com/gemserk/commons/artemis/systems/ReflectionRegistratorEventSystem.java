@@ -31,6 +31,7 @@ public class ReflectionRegistratorEventSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void removed(Entity e) {
+		super.removed(e);
 		ArrayList<Script> scripts = e.getComponent(scriptComponentClass).getScripts();
 		for (int i = 0; i < scripts.size(); i++) {
 			Script script = scripts.get(i);

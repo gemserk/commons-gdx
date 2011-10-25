@@ -5,6 +5,8 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
+import com.gemserk.commons.signals.pollable.PollableSignalHandler;
+
 /**
  * This test provides some classes for events system copied from the article <a href=http://altdevblogaday.com/2011/08/17/scripting-with-no-scripts/>scripting with no scripts</a>
  * 
@@ -69,7 +71,7 @@ public class SignalRegistryImplTest {
 	}
 	
 	@Test
-	public void testPollableSignalHandler() {
+	public void testPollableSignalHandlerOnlyOneSignal() {
 		SignalRegistry signalRegistry = new SignalRegistryImpl();
 
 		SignalSender signalSender = signalRegistry.register("event1");
@@ -81,6 +83,25 @@ public class SignalRegistryImplTest {
 		assertThat(pollableSignalHandler.signalSent(), IsEqual.equalTo(false));
 		signalSender.signal("source");
 		assertThat(pollableSignalHandler.signalSent(), IsEqual.equalTo(true));
+		assertThat(pollableSignalHandler.signalSent(), IsEqual.equalTo(false));
+	}
+	
+	@Test
+	public void testPollableSignalHandlerMoreThanOneSignal() {
+		SignalRegistry signalRegistry = new SignalRegistryImpl();
+
+		SignalSender signalSender = signalRegistry.register("event1");
+
+		PollableSignalHandler pollableSignalHandler = new PollableSignalHandler();
+
+		signalRegistry.subscribe("event1", pollableSignalHandler);
+		
+		assertThat(pollableSignalHandler.signalSent(), IsEqual.equalTo(false));
+		signalSender.signal("source");
+		signalSender.signal("source");
+		assertThat(pollableSignalHandler.signalSent(), IsEqual.equalTo(true));
+		assertThat(pollableSignalHandler.signalSent(), IsEqual.equalTo(true));
+		assertThat(pollableSignalHandler.signalSent(), IsEqual.equalTo(false));
 	}
 
 }
