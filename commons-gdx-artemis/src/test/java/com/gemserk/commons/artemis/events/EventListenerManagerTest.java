@@ -2,7 +2,6 @@ package com.gemserk.commons.artemis.events;
 
 import static org.junit.Assert.assertThat;
 
-
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
@@ -23,13 +22,13 @@ public class EventListenerManagerTest {
 	@Test
 	public void testRegisterListenerForEventAndProcess() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventManager eventListenerManagerImpl = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");
 
-		eventListenerManagerImpl.register(event.getId(), eventListener);
-		eventListenerManagerImpl.process(event);
+		eventManager.register(event.getId(), eventListener);
+		eventManager.process(event);
 
 		assertThat(eventListener.wasCalled, IsEqual.equalTo(true));
 	}
@@ -37,13 +36,13 @@ public class EventListenerManagerTest {
 	@Test
 	public void shouldNotCallListenerIfEventIdDontMatch() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");
 
-		eventListenerManager.register("anotherEvent", eventListener);
-		eventListenerManager.process(event);
+		eventManager.register("anotherEvent", eventListener);
+		eventManager.process(event);
 
 		assertThat(eventListener.wasCalled, IsEqual.equalTo(false));
 	}
@@ -51,14 +50,14 @@ public class EventListenerManagerTest {
 	@Test
 	public void shouldNotCallListenerIfItWasUnregisteredForThatEvent() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");
 
-		eventListenerManager.register(event.getId(), eventListener);
-		eventListenerManager.unregister(event.getId(), eventListener);
-		eventListenerManager.process(event);
+		eventManager.register(event.getId(), eventListener);
+		eventManager.unregister(event.getId(), eventListener);
+		eventManager.process(event);
 
 		assertThat(eventListener.wasCalled, IsEqual.equalTo(false));
 	}
@@ -66,15 +65,15 @@ public class EventListenerManagerTest {
 	@Test
 	public void shouldRegisterOnlyOnceForAnEvent() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");
 
-		eventListenerManager.register(event.getId(), eventListener);
-		eventListenerManager.register(event.getId(), eventListener);
-		eventListenerManager.unregister(event.getId(), eventListener);
-		eventListenerManager.process(event);
+		eventManager.register(event.getId(), eventListener);
+		eventManager.register(event.getId(), eventListener);
+		eventManager.unregister(event.getId(), eventListener);
+		eventManager.process(event);
 
 		assertThat(eventListener.wasCalled, IsEqual.equalTo(false));
 	}
@@ -82,14 +81,14 @@ public class EventListenerManagerTest {
 	@Test
 	public void shouldNotCallListenerIfItWasUnregisteredForAllEvents() {
 		EventListenerMock eventListener = new EventListenerMock();
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 
 		Event event = new Event();
 		event.setId("eventId");
 
-		eventListenerManager.register(event.getId(), eventListener);
-		eventListenerManager.unregister(eventListener);
-		eventListenerManager.process(event);
+		eventManager.register(event.getId(), eventListener);
+		eventManager.unregister(eventListener);
+		eventManager.process(event);
 
 		assertThat(eventListener.wasCalled, IsEqual.equalTo(false));
 	}

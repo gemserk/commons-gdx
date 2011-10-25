@@ -32,9 +32,10 @@ public interface SignalRegistry {
 	SignalReceiver subscribe(String signalName, SignalHandler signalHandler);
 
 	/**
-	 * Un subscribes the Signal
+	 * Removes the SignalReceiver from the SignalRegistry.
 	 * 
 	 * @param signalReceiver
+	 *            The SignalReceiver to unsubscribe.
 	 */
 	void unsubscribe(SignalReceiver signalReceiver);
 

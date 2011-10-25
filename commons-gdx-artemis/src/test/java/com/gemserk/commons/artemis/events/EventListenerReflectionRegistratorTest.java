@@ -27,32 +27,32 @@ public class EventListenerReflectionRegistratorTest {
 
 	@Test
 	public void shouldRegisterEventListenerForMethodWithEventName() {
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 
 		MyScript myScript = new MyScript();
 
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 		eventListenerReflectionRegistrator.registerEventListener("customEvent", myScript);
 
 		Event event = new Event();
 		event.setId("customEvent");
-		eventListenerManager.process(event);
+		eventManager.process(event);
 
 		assertThat(myScript.wasCalled, IsEqual.equalTo(true));
 	}
 
 	@Test
 	public void shouldNotRegisterEventListenerIfNoMethodForEvent() {
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 
 		MyScript myScript = new MyScript();
 
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 		eventListenerReflectionRegistrator.registerEventListener("customEvent2", myScript);
 
 		Event event = new Event();
 		event.setId("customEvent");
-		eventListenerManager.process(event);
+		eventManager.process(event);
 
 		assertThat(myScript.wasCalled, IsEqual.equalTo(false));
 	}
@@ -61,7 +61,7 @@ public class EventListenerReflectionRegistratorTest {
 
 	@Test
 	public void shouldRegisterEventListenerForMethodWithEventNameOnAnonymousClass() {
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 
 		anonymousWasCalled = false;
 
@@ -71,12 +71,12 @@ public class EventListenerReflectionRegistratorTest {
 			}
 		};
 
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 		eventListenerReflectionRegistrator.registerEventListener("customEvent", myScript);
 
 		Event event = new Event();
 		event.setId("customEvent");
-		eventListenerManager.process(event);
+		eventManager.process(event);
 
 		assertThat(anonymousWasCalled, IsEqual.equalTo(true));
 	}
@@ -99,22 +99,22 @@ public class EventListenerReflectionRegistratorTest {
 	
 	@Test
 	public void shouldRegisterMethodWithAnnotation() {
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 		MyScript2 myScript2 = new MyScript2();
 		
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 		eventListenerReflectionRegistrator.registerEventListeners(myScript2);
 		
 		Event event = new Event();
 		event.setId("customEvent");
-		eventListenerManager.process(event);
+		eventManager.process(event);
 		
 		assertThat(myScript2.wasCalled, IsEqual.equalTo(false));
 		assertThat(myScript2.wasCalled2, IsEqual.equalTo(false));
 		
 		event = new Event();
 		event.setId("anotherEvent");
-		eventListenerManager.process(event);
+		eventManager.process(event);
 		
 		assertThat(myScript2.wasCalled, IsEqual.equalTo(true));
 		assertThat(myScript2.wasCalled2, IsEqual.equalTo(false));
@@ -122,17 +122,17 @@ public class EventListenerReflectionRegistratorTest {
 	
 	@Test
 	public void shouldUnregisterMethodWithAnnotation() {
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 		MyScript2 myScript2 = new MyScript2();
 		
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 		
 		eventListenerReflectionRegistrator.registerEventListeners(myScript2);
 		eventListenerReflectionRegistrator.unregisterEventListeners(myScript2);
 		
 		Event event = new Event();
 		event.setId("anotherEvent");
-		eventListenerManager.process(event);
+		eventManager.process(event);
 		
 		assertThat(myScript2.wasCalled, IsEqual.equalTo(false));
 		assertThat(myScript2.wasCalled2, IsEqual.equalTo(false));
@@ -151,33 +151,33 @@ public class EventListenerReflectionRegistratorTest {
 	
 	@Test
 	public void shouldRegisterMethodWithAnnotationForEventWithSameName() {
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 		MyScript3 o = new MyScript3();
 		
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 		
 		eventListenerReflectionRegistrator.registerEventListeners(o);
 		
 		Event event = new Event();
 		event.setId("customEvent");
-		eventListenerManager.process(event);
+		eventManager.process(event);
 		
 		assertThat(o.wasCalled, IsEqual.equalTo(true));
 	}
 	
 	@Test
 	public void shouldUnregisterMethodWithAnnotationForEventWithSameName() {
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManagerImpl eventManager = new EventManagerImpl();
 		MyScript3 o = new MyScript3();
 		
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 		
 		eventListenerReflectionRegistrator.registerEventListeners(o);
 		eventListenerReflectionRegistrator.unregisterEventListeners(o);
 		
 		Event event = new Event();
 		event.setId("customEvent");
-		eventListenerManager.process(event);
+		eventManager.process(event);
 		
 		assertThat(o.wasCalled, IsEqual.equalTo(false));
 	}
@@ -198,17 +198,17 @@ public class EventListenerReflectionRegistratorTest {
 	
 	@Test
 	public void bugArrayOutOfBoundsWhenRegisterOneIdsButMultipleMethodsWithHandes() {
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManager eventManager = new EventManagerImpl();
 		MyScript4 o = new MyScript4();
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 		eventListenerReflectionRegistrator.registerEventListeners(o);
 	}
 	
 	@Test
 	public void bugArrayOutOfBoundsWhenUnregisterOneIdsButMultipleMethodsWithHandes() {
-		EventManager eventListenerManager = new EventManagerImpl();
+		EventManager eventManager = new EventManagerImpl();
 		MyScript4 o = new MyScript4();
-		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventListenerManager);
+		EventListenerReflectionRegistrator eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);
 		eventListenerReflectionRegistrator.registerEventListeners(o);
 		eventListenerReflectionRegistrator.unregisterEventListeners(o);
 	}

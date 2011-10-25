@@ -38,7 +38,6 @@ public class EventManagerImpl implements EventManager {
 		return eventListeners.get(event);
 	}
 
-	@Override
 	public void process(Event event) {
 		// Don't know exactly if it should create the collection if it wasn't there, could be useful
 		// because it is preparing for a probable listener registration.

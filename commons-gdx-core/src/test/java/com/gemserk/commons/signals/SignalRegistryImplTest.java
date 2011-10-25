@@ -10,10 +10,8 @@ import org.junit.Test;
  * 
  * To avoid problems with the other event system I changed the concept Event to Signal.
  * 
- * @author acoppes
- * 
  */
-public class SignalSystemTest {
+public class SignalRegistryImplTest {
 
 	class MySignalHandler implements SignalHandler {
 
@@ -62,7 +60,7 @@ public class SignalSystemTest {
 
 		MySignalHandler mySignalHandler = new MySignalHandler();
 
-		SignalReceiver signalReceiver = signalRegistry.subscribe("event1", mySignalHandler);
+		signalRegistry.subscribe("event1", mySignalHandler);
 
 		signalRegistry.unregister(signalSender);
 		
