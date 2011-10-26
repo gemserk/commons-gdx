@@ -23,6 +23,8 @@ public class Components {
 	public static final Class<MovementComponent> movementComponentClass = MovementComponent.class;
 	
 	public static final Class<AnimationComponent> animationComponentClass = AnimationComponent.class;
+	
+	public static final Class<PropertiesComponent> propertiesComponentClass = PropertiesComponent.class;
 
 	public static SpatialComponent spatialComponent(Entity e) {
 		return e.getComponent(spatialComponentClass);
@@ -68,5 +70,8 @@ public class Components {
 		return e.getComponent(animationComponentClass);
 	}
 
+	public static PropertiesComponent getPropertiesComponent(Entity e) {
+		return e.getComponent(propertiesComponentClass);
+	}
 }
 
