@@ -8,8 +8,8 @@ import com.gemserk.commons.gdx.GameTransitions.TransitionScreen;
 import com.gemserk.commons.gdx.Screen;
 
 public class TransitionBuilder {
-	
-	// should be named ScreenTransitionBuilder
+
+	// should be named ScreenTransitionBuilder because it builds a ScreenTransition
 
 	private final Screen screen;
 	private final Game game;
@@ -21,6 +21,7 @@ public class TransitionBuilder {
 	boolean shouldRestartNextScreen;
 
 	TransitionHandler leaveTransitionHandler = new TransitionHandler();
+	TransitionHandler enterTransitionHandler = new TransitionHandler();
 
 	private boolean transitioning = false;
 
@@ -61,6 +62,11 @@ public class TransitionBuilder {
 		this.leaveTransitionHandler = transitionHandler;
 		return this;
 	}
+	
+	public TransitionBuilder enterTransitionHandler(TransitionHandler transitionHandler) {
+		this.enterTransitionHandler = transitionHandler;
+		return this;
+	}
 
 	public TransitionBuilder parameter(String key, Object value) {
 		screen.getParameters().put(key, value);
@@ -83,20 +89,43 @@ public class TransitionBuilder {
 
 		transitioning = true;
 
-		if (shouldRestartNextScreen)
-			screen.dispose();
-
 		final Screen currentScreen = game.getScreen();
 		game.setScreen(new TransitionScreen(new ScreenTransition( //
-				new FadeOutTransition(currentScreen, leaveTime, leaveTransitionHandler), //
-				new FadeInTransition(screen, enterTime, new TransitionHandler() {
+				new FadeOutTransition(currentScreen, leaveTime, new TransitionHandler() {
+					
+					@Override
+					public void onBegin() {
+						super.onBegin();
+						leaveTransitionHandler.onBegin();
+					}
+
+					@Override
 					public void onEnd() {
+						super.onEnd();
+						leaveTransitionHandler.onEnd();
+						if (shouldRestartNextScreen)
+							screen.dispose();
+					}
+					
+				}), //
+				new FadeInTransition(screen, enterTime, new TransitionHandler() {
+					
+					@Override
+					public void onBegin() {
+						super.onBegin();
+						enterTransitionHandler.onBegin();
+					}
+					
+					public void onEnd() {
+						super.onEnd();
+						enterTransitionHandler.onEnd();
 						game.setScreen(screen, true);
 						// disposes current transition screen, not previous screen.
 						if (shouldDisposeCurrentScreen)
 							currentScreen.dispose();
 						transitioning = false;
 					};
+					
 				}))) {
 			@Override
 			public void resume() {
