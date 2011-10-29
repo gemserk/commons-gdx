@@ -1,5 +1,7 @@
 package com.gemserk.commons.artemis.components;
 
+import com.artemis.ComponentType;
+import com.artemis.ComponentTypeManager;
 import com.artemis.Entity;
 
 /**
@@ -8,46 +10,46 @@ import com.artemis.Entity;
 public class Components {
 
 	public static final Class<SpriteComponent> spriteComponentClass = SpriteComponent.class;
+	public static final Class<SpatialComponent> spatialComponentClass = SpatialComponent.class;
 	public static final Class<ScriptComponent> scriptComponentClass = ScriptComponent.class;
 	public static final Class<PhysicsComponent> physicsComponentClass = PhysicsComponent.class;
-
-	public static final Class<SpatialComponent> spatialComponentClass = SpatialComponent.class;
-	public static final Class<PreviousStateSpatialComponent> previousStateSpatialComponentClass = PreviousStateSpatialComponent.class;
-
 	public static final Class<CameraComponent> cameraComponentClass = CameraComponent.class;
+	public static final Class<PreviousStateSpatialComponent> previousStateSpatialComponentClass = PreviousStateSpatialComponent.class;
 	public static final Class<PreviousStateCameraComponent> previousStateCameraComponentClass = PreviousStateCameraComponent.class;
-
 	public static final Class<TextComponent> textComponentClass = TextComponent.class;
-
 	public static final Class<SoundSpawnerComponent> soundSpawnerComponentClass = SoundSpawnerComponent.class;
 	public static final Class<MovementComponent> movementComponentClass = MovementComponent.class;
-	
 	public static final Class<AnimationComponent> animationComponentClass = AnimationComponent.class;
-	
 	public static final Class<PropertiesComponent> propertiesComponentClass = PropertiesComponent.class;
+	
+	public static final ComponentType spriteComponentType = ComponentTypeManager.getTypeFor(spriteComponentClass);
+	public static final ComponentType spatialComponentType = ComponentTypeManager.getTypeFor(spatialComponentClass);
+	public static final ComponentType scriptComponentType = ComponentTypeManager.getTypeFor(scriptComponentClass);
+	public static final ComponentType physicsComponentType = ComponentTypeManager.getTypeFor(physicsComponentClass);
+	public static final ComponentType cameraComponentType = ComponentTypeManager.getTypeFor(cameraComponentClass);
 
 	public static SpatialComponent spatialComponent(Entity e) {
-		return e.getComponent(spatialComponentClass);
+		return spatialComponentClass.cast(e.getComponent(spatialComponentType));
 	}
 
 	public static SpriteComponent spriteComponent(Entity e) {
-		return e.getComponent(spriteComponentClass);
+		return spriteComponentClass.cast(e.getComponent(spriteComponentType));
 	}
 
 	public static ScriptComponent scriptComponent(Entity e) {
-		return e.getComponent(scriptComponentClass);
+		return scriptComponentClass.cast(e.getComponent(scriptComponentType));
 	}
 
 	public static PhysicsComponent physicsComponent(Entity e) {
-		return e.getComponent(physicsComponentClass);
+		return physicsComponentClass.cast(e.getComponent(physicsComponentType));
+	}
+
+	public static CameraComponent getCameraComponent(Entity e) {
+		return cameraComponentClass.cast(e.getComponent(cameraComponentType));
 	}
 
 	public static PreviousStateSpatialComponent getPreviousStateSpatialComponent(Entity e) {
 		return e.getComponent(previousStateSpatialComponentClass);
-	}
-
-	public static CameraComponent getCameraComponent(Entity e) {
-		return e.getComponent(cameraComponentClass);
 	}
 
 	public static PreviousStateCameraComponent getPreviousStateCameraComponent(Entity e) {
@@ -65,7 +67,7 @@ public class Components {
 	public static MovementComponent getMovementComponent(Entity e) {
 		return e.getComponent(movementComponentClass);
 	}
-	
+
 	public static AnimationComponent getAnimationComponent(Entity e) {
 		return e.getComponent(animationComponentClass);
 	}
@@ -74,4 +76,3 @@ public class Components {
 		return e.getComponent(propertiesComponentClass);
 	}
 }
-
