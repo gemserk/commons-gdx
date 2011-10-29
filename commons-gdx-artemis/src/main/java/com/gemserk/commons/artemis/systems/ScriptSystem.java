@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
+import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.scripts.Script;
 
 public class ScriptSystem extends EntityProcessingSystem {
-
-	private static final Class<ScriptComponent> scriptComponentClass = ScriptComponent.class;
 
 	public ScriptSystem() {
 		super(ScriptComponent.class);
@@ -18,14 +17,14 @@ public class ScriptSystem extends EntityProcessingSystem {
 	@Override
 	protected void added(Entity e) {
 		super.added(e);
-		ArrayList<Script> scripts = e.getComponent(scriptComponentClass).getScripts();
+		ArrayList<Script> scripts = Components.scriptComponent(e).getScripts();
 		for (int i = 0; i < scripts.size(); i++) 
 			scripts.get(i).init(world, e);
 	}
 
 	@Override
 	protected void removed(Entity e) {
-		ArrayList<Script> scripts = e.getComponent(scriptComponentClass).getScripts();
+		ArrayList<Script> scripts = Components.scriptComponent(e).getScripts();
 		for (int i = 0; i < scripts.size(); i++) 
 			scripts.get(i).dispose(world, e);
 		super.removed(e);
@@ -33,7 +32,7 @@ public class ScriptSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(Entity e) {
-		ArrayList<Script> scripts = e.getComponent(scriptComponentClass).getScripts();
+		ArrayList<Script> scripts = Components.scriptComponent(e).getScripts();
 		for (int i = 0; i < scripts.size(); i++) 
 			scripts.get(i).update(world, e);
 	}
