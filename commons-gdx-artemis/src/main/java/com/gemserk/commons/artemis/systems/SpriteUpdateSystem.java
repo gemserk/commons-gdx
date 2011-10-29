@@ -29,6 +29,25 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 		super(Components.spatialComponentClass, Components.spriteComponentClass);
 		this.timeStepProvider = timeStepProvider;
 	}
+	
+	private boolean differ(Spatial a, Spatial b, float eps) {
+		if (Math.abs(a.getX() - b.getX()) > eps)
+			return true;
+
+		if (Math.abs(a.getY() - b.getY()) > eps)
+			return true;
+
+		if (Math.abs(a.getWidth() - b.getWidth()) > eps)
+			return true;
+
+		if (Math.abs(a.getHeight() - b.getHeight()) > eps)
+			return true;
+
+		if (Math.abs(a.getAngle() - b.getAngle()) > eps)
+			return true;
+
+		return false;
+	}
 
 	@Override
 	protected void process(Entity e) {
@@ -38,6 +57,10 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 		PreviousStateSpatialComponent previousStateSpatialComponent = Components.getPreviousStateSpatialComponent(e);
 
 		Spatial spatial = spatialComponent.getSpatial();
+
+		if (differ(spatial, spatialComponent.getPreviousSpatial(), 0.01f)) {
+			
+		}
 
 		float newX = spatial.getX();
 		float newY = spatial.getY();
@@ -62,5 +85,7 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 
 		sprite.setSize(spatial.getWidth(), spatial.getHeight());
 		sprite.setPosition(newX - sprite.getOriginX(), newY - sprite.getOriginY());
+		
+		spatialComponent.getPreviousSpatial().set(spatial);
 	}
 }
