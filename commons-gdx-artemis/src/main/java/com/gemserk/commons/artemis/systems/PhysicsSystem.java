@@ -2,11 +2,10 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
-import com.gemserk.commons.artemis.components.LinearVelocityLimitComponent;
+import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.box2d.Contacts;
@@ -14,11 +13,7 @@ import com.gemserk.commons.gdx.box2d.Contacts.Contact;
 
 public class PhysicsSystem extends EntityProcessingSystem implements ActivableSystem, Disposable {
 
-	private static final Vector2 antiGravity = new Vector2(0, 10f);
-
 	private ActivableSystem activableSystem = new ActivableSystemImpl();
-
-	private final Vector2 bodyAntiGravity = new Vector2(0, 10f);
 
 	World physicsWorld;
 
@@ -40,8 +35,8 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 		// synchronize sizes between spatial and physics components.
 
-		PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
-		Body body = physicsComponent.getBody();
+		// PhysicsComponent physicsComponent = Components.physicsComponent(e);
+		// Body body = physicsComponent.getBody();
 
 		// AntiGravityComponent antiGravityComponent = e.getComponent(AntiGravityComponent.class);
 		// if (antiGravityComponent != null) {
@@ -52,19 +47,19 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		// body.applyForce(bodyAntiGravity, body.getTransform().getPosition());
 		// }
 
-		LinearVelocityLimitComponent limitComponent = e.getComponent(LinearVelocityLimitComponent.class);
-		if (limitComponent != null) {
-			Vector2 linearVelocity = body.getLinearVelocity();
-
-			float speed = linearVelocity.len();
-			float maxSpeed = limitComponent.getLimit();
-
-			if (speed > maxSpeed) {
-				float factor = maxSpeed / speed;
-				linearVelocity.mul(factor);
-				body.setLinearVelocity(linearVelocity);
-			}
-		}
+		// LinearVelocityLimitComponent limitComponent = e.getComponent(LinearVelocityLimitComponent.class);
+		// if (limitComponent != null) {
+		// Vector2 linearVelocity = body.getLinearVelocity();
+		//
+		// float speed = linearVelocity.len();
+		// float maxSpeed = limitComponent.getLimit();
+		//
+		// if (speed > maxSpeed) {
+		// float factor = maxSpeed / speed;
+		// linearVelocity.mul(factor);
+		// body.setLinearVelocity(linearVelocity);
+		// }
+		// }
 
 	}
 
@@ -78,7 +73,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 		// on entity removed, we should remove body from physics world
 
-		PhysicsComponent component = e.getComponent(PhysicsComponent.class);
+		PhysicsComponent component = Components.physicsComponent(e);
 
 		if (component == null) {
 			return;
@@ -101,7 +96,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 			if (otherEntity == null)
 				continue;
 
-			PhysicsComponent otherPhyiscsComponent = otherEntity.getComponent(PhysicsComponent.class);
+			PhysicsComponent otherPhyiscsComponent = Components.physicsComponent(otherEntity);
 			otherPhyiscsComponent.getContact().removeContact(contact.getOtherFixture(), contact.getMyFixture());
 		}
 
