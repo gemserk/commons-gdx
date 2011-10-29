@@ -20,7 +20,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 	private PhysicsContactListener physicsContactListener;
 
 	public PhysicsSystem(World physicsWorld) {
-		super(PhysicsComponent.class);
+		super(Components.physicsComponentClass);
 		this.physicsWorld = physicsWorld;
 		physicsContactListener = new PhysicsContactListener();
 	}
@@ -32,35 +32,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 	@Override
 	protected void process(Entity e) {
-
-		// synchronize sizes between spatial and physics components.
-
-		// PhysicsComponent physicsComponent = Components.physicsComponent(e);
-		// Body body = physicsComponent.getBody();
-
-		// AntiGravityComponent antiGravityComponent = e.getComponent(AntiGravityComponent.class);
-		// if (antiGravityComponent != null) {
-		//
-		// bodyAntiGravity.set(antiGravity);
-		// bodyAntiGravity.mul(body.getMass());
-		//
-		// body.applyForce(bodyAntiGravity, body.getTransform().getPosition());
-		// }
-
-		// LinearVelocityLimitComponent limitComponent = e.getComponent(LinearVelocityLimitComponent.class);
-		// if (limitComponent != null) {
-		// Vector2 linearVelocity = body.getLinearVelocity();
-		//
-		// float speed = linearVelocity.len();
-		// float maxSpeed = limitComponent.getLimit();
-		//
-		// if (speed > maxSpeed) {
-		// float factor = maxSpeed / speed;
-		// linearVelocity.mul(factor);
-		// body.setLinearVelocity(linearVelocity);
-		// }
-		// }
-
+		
 	}
 
 	@Override
@@ -107,10 +79,6 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 	@Override
 	public void initialize() {
 		physicsWorld.setContactListener(physicsContactListener);
-	}
-
-	public World getPhysicsWorld() {
-		return physicsWorld;
 	}
 
 	public void toggle() {
