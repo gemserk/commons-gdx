@@ -25,12 +25,14 @@ public class GetComponentPerformanceTest {
 			testTimeWithGetComponentFromClass(10000);
 			testTimeWithGetComponentFromMapper(10000);
 			testTimeWithGetComponentUsingTypeAndClass(10000);
+			testTimeWithGetComponentUsingTypeAndCacheClass(10000);
 		}
 
 		int iterations = 50000;
 
 		long testTimeWithGetComponentFromMapperNs = testTimeWithGetComponentFromMapper(iterations);
 		long testTimeWithGetComponentUsingTypeAndClassNs = testTimeWithGetComponentUsingTypeAndClass(iterations);
+		long testTimeWithGetComponentUsingTypeAndCacheClassNs = testTimeWithGetComponentUsingTypeAndCacheClass(iterations);
 		long testTimeWithGetComponentFromClassWithClassCacheNs = testTimeWithGetComponentFromClassWithClassCache(iterations);
 		long testTimeWithGetComponentFromClassNs = testTimeWithGetComponentFromClass(iterations);
 
@@ -38,16 +40,20 @@ public class GetComponentPerformanceTest {
 		System.out.println("Time with e.getComponent(class) = " + testTimeWithGetComponentFromClassNs + "ns");
 		System.out.println("Time with componentMapper.get(e) = " + testTimeWithGetComponentFromMapperNs + "ns");
 		System.out.println("Time with cast(e.getComponent(type)) = " + testTimeWithGetComponentUsingTypeAndClassNs + "ns");
+		System.out.println("Time with cast(e.getComponent(type)) (with class cache) = " + testTimeWithGetComponentUsingTypeAndCacheClassNs + "ns");
 
 		System.out.println("Time with e.getComponent(class) with class cache = " + testTimeWithGetComponentFromClassWithClassCacheNs / iterations + "ns (average)");
 		System.out.println("Time with e.getComponent(class) = " + testTimeWithGetComponentFromClassNs / iterations + "ns (average)");
 		System.out.println("Time with componentMapper.get(e) = " + testTimeWithGetComponentFromMapperNs / iterations + "ns (average)");
 		System.out.println("Time with cast(e.getComponent(type)) = " + testTimeWithGetComponentUsingTypeAndClassNs / iterations + "ns (average)");
+		System.out.println("Time with cast(e.getComponent(type)) (with class cache) = " + testTimeWithGetComponentUsingTypeAndCacheClassNs / iterations + "ns (average)");
 
 		System.out.println("Time with e.getComponent(class) with class cache = " + testTimeWithGetComponentFromClassWithClassCacheNs / 1000000 + "ms");
 		System.out.println("Time with e.getComponent(class) = " + testTimeWithGetComponentFromClassNs / 1000000 + "ms");
 		System.out.println("Time with componentMapper.get(e) = " + testTimeWithGetComponentFromMapperNs / 1000000 + "ms");
 		System.out.println("Time with cast(e.getComponent(type)) = " + testTimeWithGetComponentUsingTypeAndClassNs / 1000000 + "ms");
+		System.out.println("Time with cast(e.getComponent(type)) (with class cache) = " + testTimeWithGetComponentUsingTypeAndCacheClassNs / 1000000 + "ms");
+		
 	}
 
 	public long testTimeWithGetComponentFromMapper(int iterations) {
@@ -67,8 +73,26 @@ public class GetComponentPerformanceTest {
 
 		return System.nanoTime() - startNanoTime;
 	}
-
+	
 	public long testTimeWithGetComponentUsingTypeAndClass(int iterations) {
+
+		World world = new World();
+		Entity e = world.createEntity();
+		e.addComponent(new MyTestComponent());
+		e.refresh();
+
+		ComponentType myTestComponentType = ComponentTypeManager.getTypeFor(MyTestComponent.class);
+
+		long startNanoTime = System.nanoTime();
+
+		for (int i = 0; i < iterations; i++) {
+			MyTestComponent myTestComponent = MyTestComponent.class.cast(e.getComponent(myTestComponentType));
+		}
+
+		return System.nanoTime() - startNanoTime;
+	}
+
+	public long testTimeWithGetComponentUsingTypeAndCacheClass(int iterations) {
 
 		World world = new World();
 		Entity e = world.createEntity();
@@ -86,7 +110,7 @@ public class GetComponentPerformanceTest {
 
 		return System.nanoTime() - startNanoTime;
 	}
-
+	
 	public long testTimeWithGetComponentFromClassWithClassCache(int iterations) {
 
 		World world = new World();
