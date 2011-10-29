@@ -12,6 +12,8 @@ public class SpriteComponent extends Component {
 	private Vector2 center; // x and y values between 0,1
 	private boolean updateRotation = true;
 	
+	public boolean shouldUpdate = true;
+	
 	public void setUpdateRotation(boolean updateRotation) {
 		this.updateRotation = updateRotation;
 	}
