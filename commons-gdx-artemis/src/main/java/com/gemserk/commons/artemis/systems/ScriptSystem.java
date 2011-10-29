@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
 import com.gemserk.commons.artemis.components.Components;
-import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.scripts.Script;
 
 public class ScriptSystem extends EntityProcessingSystem {
 
 	public ScriptSystem() {
-		super(ScriptComponent.class);
+		super(Components.scriptComponentClass);
 	}
 
 	@Override

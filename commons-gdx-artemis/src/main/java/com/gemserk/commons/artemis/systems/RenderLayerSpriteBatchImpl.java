@@ -12,9 +12,6 @@ import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 
 public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
-	private static final Class<RenderableComponent> renderableComponentClass = RenderableComponent.class;
-	private static final Class<SpriteComponent> spriteComponentClass = SpriteComponent.class;
-
 	private final SpriteBatch spriteBatch;
 	private final OrderedByLayerEntities orderedByLayerEntities;
 	private final Libgdx2dCamera camera;
@@ -42,8 +39,8 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	}
 
 	@Override
-	public boolean belongs(Entity entity) {
-		RenderableComponent renderableComponent = entity.getComponent(renderableComponentClass);
+	public boolean belongs(Entity e) {
+		RenderableComponent renderableComponent = Components.getRenderableComponent(e);
 		return orderedByLayerEntities.belongs(renderableComponent.getLayer());
 	}
 
@@ -62,17 +59,17 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		camera.apply(spriteBatch);
 		spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerEntities.size(); i++) {
-			Entity entity = orderedByLayerEntities.get(i);
-			RenderableComponent renderableComponent = entity.getComponent(renderableComponentClass);
+			Entity e = orderedByLayerEntities.get(i);
+			RenderableComponent renderableComponent = Components.getRenderableComponent(e);
 			if (!renderableComponent.isVisible())
 				continue;
-			SpriteComponent spriteComponent = entity.getComponent(spriteComponentClass);
+			SpriteComponent spriteComponent = Components.spriteComponent(e);
 			if (spriteComponent != null) {
 				Sprite sprite = spriteComponent.getSprite();
 				sprite.setColor(spriteComponent.getColor());
 				sprite.draw(spriteBatch);
 			}
-			TextComponent textComponent = Components.getTextComponent(entity);
+			TextComponent textComponent = Components.getTextComponent(e);
 			if (textComponent != null) {
 				textComponent.font.setColor(textComponent.color);
 				SpriteBatchUtils.drawMultilineText(spriteBatch, textComponent.font, //
