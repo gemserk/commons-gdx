@@ -19,7 +19,7 @@ public class PreviousStateSpatialSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(Entity e) {
-		SpatialComponent spatialComponent = Components.spatialComponent(e);
+		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 		Spatial spatial = spatialComponent.getSpatial();
 		PreviousStateSpatialComponent previousStateSpatialComponent = Components.getPreviousStateSpatialComponent(e);
 		Spatial previousSpatial = previousStateSpatialComponent.getSpatial();
