@@ -16,14 +16,14 @@ public class ScriptSystem extends EntityProcessingSystem {
 	@Override
 	protected void added(Entity e) {
 		super.added(e);
-		ArrayList<Script> scripts = Components.scriptComponent(e).getScripts();
+		ArrayList<Script> scripts = Components.getScriptComponent(e).getScripts();
 		for (int i = 0; i < scripts.size(); i++) 
 			scripts.get(i).init(world, e);
 	}
 
 	@Override
 	protected void removed(Entity e) {
-		ArrayList<Script> scripts = Components.scriptComponent(e).getScripts();
+		ArrayList<Script> scripts = Components.getScriptComponent(e).getScripts();
 		for (int i = 0; i < scripts.size(); i++) 
 			scripts.get(i).dispose(world, e);
 		super.removed(e);
@@ -31,7 +31,7 @@ public class ScriptSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(Entity e) {
-		ArrayList<Script> scripts = Components.scriptComponent(e).getScripts();
+		ArrayList<Script> scripts = Components.getScriptComponent(e).getScripts();
 		for (int i = 0; i < scripts.size(); i++) 
 			scripts.get(i).update(world, e);
 	}

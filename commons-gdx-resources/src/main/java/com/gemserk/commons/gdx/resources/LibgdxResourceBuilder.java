@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.gdx.resources.dataloaders.DisposableDataLoader;
@@ -114,10 +115,15 @@ public class LibgdxResourceBuilder {
 	 */
 	public void spriteAtlas(final String id, final String textureAtlasId, final String regionId) {
 		resourceManager.addVolatile(id, new DataLoader<Sprite>() {
+			
+			private AtlasRegion region = null;
+
 			@Override
 			public Sprite load() {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
-				return new Sprite(textureAtlas.findRegion(regionId));
+				if (region == null)
+					region = textureAtlas.findRegion(regionId);
+				return new Sprite(region);
 			}
 		});
 	}

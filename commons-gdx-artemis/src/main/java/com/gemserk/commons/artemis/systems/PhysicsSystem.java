@@ -45,7 +45,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 		// on entity removed, we should remove body from physics world
 
-		PhysicsComponent component = Components.physicsComponent(e);
+		PhysicsComponent component = Components.getPhysicsComponent(e);
 
 		if (component == null) {
 			return;
@@ -68,7 +68,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 			if (otherEntity == null)
 				continue;
 
-			PhysicsComponent otherPhyiscsComponent = Components.physicsComponent(otherEntity);
+			PhysicsComponent otherPhyiscsComponent = Components.getPhysicsComponent(otherEntity);
 			otherPhyiscsComponent.getContact().removeContact(contact.getOtherFixture(), contact.getMyFixture());
 		}
 

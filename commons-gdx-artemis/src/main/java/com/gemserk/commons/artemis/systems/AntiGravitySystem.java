@@ -18,7 +18,7 @@ public class AntiGravitySystem extends EntityProcessingSystem {
 	
 	@Override
 	protected void process(Entity e) {
-		PhysicsComponent physicsComponent = Components.physicsComponent(e);
+		PhysicsComponent physicsComponent = Components.getPhysicsComponent(e);
 		Body body = physicsComponent.getPhysics().getBody();
 		
 		Vector2 gravity = body.getWorld().getGravity();

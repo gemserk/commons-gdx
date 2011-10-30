@@ -32,8 +32,8 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(Entity e) {
-		SpatialComponent spatialComponent = Components.spatialComponent(e);
-		SpriteComponent spriteComponent = Components.spriteComponent(e);
+		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
+		SpriteComponent spriteComponent = Components.getSpriteComponent(e);
 
 		if (!spriteComponent.shouldUpdate)
 			return;

@@ -19,7 +19,7 @@ public class TextLocationUpdateSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(Entity e) {
-		SpatialComponent spatialComponent = Components.spatialComponent(e);
+		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 		TextComponent textComponent = Components.getTextComponent(e);
 		Spatial spatial = spatialComponent.getSpatial();
 		textComponent.x = spatial.getX();

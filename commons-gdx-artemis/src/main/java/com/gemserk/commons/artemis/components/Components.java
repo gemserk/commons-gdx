@@ -48,7 +48,7 @@ public class Components {
 	public static final Class<PropertiesComponent> propertiesComponentClass = PropertiesComponent.class;
 	public static final ComponentType propertiesComponentType = ComponentTypeManager.getTypeFor(propertiesComponentClass);
 
-	public static SpatialComponent spatialComponent(Entity e) {
+	public static SpatialComponent getSpatialComponent(Entity e) {
 		return spatialComponentClass.cast(e.getComponent(spatialComponentType));
 	}
 	
@@ -56,15 +56,15 @@ public class Components {
 		return renderableComponentClass.cast(e.getComponent(renderableComponentType));
 	}
 
-	public static SpriteComponent spriteComponent(Entity e) {
+	public static SpriteComponent getSpriteComponent(Entity e) {
 		return spriteComponentClass.cast(e.getComponent(spriteComponentType));
 	}
 
-	public static ScriptComponent scriptComponent(Entity e) {
+	public static ScriptComponent getScriptComponent(Entity e) {
 		return scriptComponentClass.cast(e.getComponent(scriptComponentType));
 	}
 
-	public static PhysicsComponent physicsComponent(Entity e) {
+	public static PhysicsComponent getPhysicsComponent(Entity e) {
 		return physicsComponentClass.cast(e.getComponent(physicsComponentType));
 	}
 

@@ -63,7 +63,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			RenderableComponent renderableComponent = Components.getRenderableComponent(e);
 			if (!renderableComponent.isVisible())
 				continue;
-			SpriteComponent spriteComponent = Components.spriteComponent(e);
+			SpriteComponent spriteComponent = Components.getSpriteComponent(e);
 			if (spriteComponent != null) {
 				Sprite sprite = spriteComponent.getSprite();
 				sprite.setColor(spriteComponent.getColor());
