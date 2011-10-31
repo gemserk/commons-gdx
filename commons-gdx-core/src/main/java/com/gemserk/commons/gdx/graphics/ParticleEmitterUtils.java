@@ -21,6 +21,9 @@ public class ParticleEmitterUtils {
 		scaleValue(emitter.getVelocity(), s);
 		scaleValue(emitter.getGravity(), s);
 		scaleValue(emitter.getWind(), s);
+		scaleValue(emitter.getSpawnHeight(), s);
+		scaleValue(emitter.getSpawnWidth(), s);
+		emitter.getSprite().setScale(s);
 	}
 
 }

@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
+import com.gemserk.commons.gdx.graphics.ParticleEmitterUtils;
 import com.gemserk.commons.gdx.resources.dataloaders.DisposableDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
@@ -241,6 +242,10 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void particleEmitter(String id, final String particleEffectId, final String particleEmitterId) {
+		this.particleEmitter(id, particleEffectId, particleEmitterId, 1f);
+	}
+	
+	public void particleEmitter(String id, final String particleEffectId, final String particleEmitterId, final float scale) {
 		resourceManager.addVolatile(id, new DataLoader<ParticleEmitter>() {
 			
 			private ParticleEmitter cachedEmitter;
@@ -248,8 +253,10 @@ public class LibgdxResourceBuilder {
 			@Override
 			public ParticleEmitter load() {
 				ParticleEffect particleEffect = resourceManager.getResourceValue(particleEffectId);
-				if (cachedEmitter == null)
+				if (cachedEmitter == null) {
 					cachedEmitter = particleEffect.findEmitter(particleEmitterId);
+					ParticleEmitterUtils.scaleEmitter(cachedEmitter, scale);
+				}
 				return new ParticleEmitter(cachedEmitter);
 			}
 		});
