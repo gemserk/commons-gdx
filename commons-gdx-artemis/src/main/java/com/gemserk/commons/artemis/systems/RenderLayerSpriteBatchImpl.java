@@ -70,6 +70,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 				sprite.setColor(spriteComponent.getColor());
 				sprite.draw(spriteBatch);
 			}
+			// don't like it will be asking for components all the time.
 			TextComponent textComponent = Components.getTextComponent(e);
 			if (textComponent != null) {
 				textComponent.font.setColor(textComponent.color);
