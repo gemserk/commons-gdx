@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gemserk.commons.artemis.components.Components;
+import com.gemserk.commons.artemis.components.ParticleEmitterComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
@@ -74,6 +75,10 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 				textComponent.font.setColor(textComponent.color);
 				SpriteBatchUtils.drawMultilineText(spriteBatch, textComponent.font, //
 						textComponent.text, textComponent.x, textComponent.y, textComponent.cx, textComponent.cy);
+			}
+			ParticleEmitterComponent particleEmitterComponent = Components.getParticleEmitterComponent(e);
+			if (particleEmitterComponent != null) {
+				particleEmitterComponent.particleEmitter.draw(spriteBatch);
 			}
 		}
 		spriteBatch.end();

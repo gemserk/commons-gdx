@@ -48,6 +48,9 @@ public class Components {
 	public static final Class<PropertiesComponent> propertiesComponentClass = PropertiesComponent.class;
 	public static final ComponentType propertiesComponentType = ComponentTypeManager.getTypeFor(propertiesComponentClass);
 
+	public static final Class<ParticleEmitterComponent> particleEmitterComponentClass = ParticleEmitterComponent.class;
+	public static final ComponentType particleEmitterComponentType = ComponentTypeManager.getTypeFor(particleEmitterComponentClass);
+
 	public static SpatialComponent getSpatialComponent(Entity e) {
 		return spatialComponentClass.cast(e.getComponent(spatialComponentType));
 	}
@@ -98,6 +101,10 @@ public class Components {
 
 	public static PropertiesComponent getPropertiesComponent(Entity e) {
 		return propertiesComponentClass.cast(e.getComponent(propertiesComponentType));
+	}
+	
+	public static ParticleEmitterComponent getParticleEmitterComponent(Entity e) {
+		return particleEmitterComponentClass.cast(e.getComponent(particleEmitterComponentType));
 	}
 	
 }
