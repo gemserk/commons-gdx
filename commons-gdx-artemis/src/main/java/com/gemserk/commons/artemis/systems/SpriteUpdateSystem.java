@@ -35,9 +35,6 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
 		SpriteComponent spriteComponent = Components.getSpriteComponent(e);
 
-		if (!spriteComponent.shouldUpdate)
-			return;
-		
 		PreviousStateSpatialComponent previousStateSpatialComponent = Components.getPreviousStateSpatialComponent(e);
 
 		Spatial spatial = spatialComponent.getSpatial();
@@ -58,12 +55,24 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 		Sprite sprite = spriteComponent.getSprite();
 		Vector2 center = spriteComponent.getCenter();
 
-		if (spriteComponent.isUpdateRotation())
-			sprite.setRotation(angle);
+		if (spriteComponent.isUpdateRotation()) {
+			if (sprite.getRotation() != angle)
+				sprite.setRotation(angle);
+		}
+		
+		float ox = spatial.getWidth() * center.x;
+		float oy = spatial.getHeight() * center.y;
+		
+		if (ox != sprite.getOriginX() || oy != sprite.getOriginY())
+			sprite.setOrigin(ox, oy);
 
-		sprite.setOrigin(spatial.getWidth() * center.x, spatial.getHeight() * center.y);
-
-		sprite.setSize(spatial.getWidth(), spatial.getHeight());
-		sprite.setPosition(newX - sprite.getOriginX(), newY - sprite.getOriginY());
+		if (sprite.getWidth() != spatial.getWidth() || sprite.getHeight() != spatial.getHeight())
+			sprite.setSize(spatial.getWidth(), spatial.getHeight());
+		
+		float x = newX - sprite.getOriginX();
+		float y = newY - sprite.getOriginY();
+		
+		if (x != sprite.getX() || y != sprite.getY())
+			sprite.setPosition(x, y);
 	}
 }
