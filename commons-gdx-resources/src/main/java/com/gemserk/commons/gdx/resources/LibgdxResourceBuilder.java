@@ -242,10 +242,15 @@ public class LibgdxResourceBuilder {
 
 	public void particleEmitter(String id, final String particleEffectId, final String particleEmitterId) {
 		resourceManager.addVolatile(id, new DataLoader<ParticleEmitter>() {
+			
+			private ParticleEmitter cachedEmitter;
+
 			@Override
 			public ParticleEmitter load() {
 				ParticleEffect particleEffect = resourceManager.getResourceValue(particleEffectId);
-				return new ParticleEmitter(particleEffect.findEmitter(particleEmitterId));
+				if (cachedEmitter == null)
+					cachedEmitter = particleEffect.findEmitter(particleEmitterId);
+				return new ParticleEmitter(cachedEmitter);
 			}
 		});
 	}

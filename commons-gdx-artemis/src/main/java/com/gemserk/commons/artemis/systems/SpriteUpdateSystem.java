@@ -41,7 +41,6 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 
 		float newX = spatial.getX();
 		float newY = spatial.getY();
-
 		float angle = spatial.getAngle();
 
 		if (previousStateSpatialComponent != null) {
