@@ -1,5 +1,10 @@
 package com.gemserk.commons.gdx.resources;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.w3c.dom.Document;
 
 import com.badlogic.gdx.Files.FileType;
@@ -128,6 +133,51 @@ public class LibgdxResourceBuilder {
 			}
 		});
 	}
+	
+	public void animation(String id, final String textureAtlasId, final String prefix, final boolean loop, final int time, final int... times) {
+		resourceManager.addVolatile(id, new DataLoader<Animation>(){
+
+			List<Sprite> sprites = null;
+			
+			@Override
+			public Animation load() {
+				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
+
+				
+				if(sprites==null){
+					sprites = textureAtlas.createSprites(prefix);
+				}
+				
+				Sprite[] frames = new Sprite[sprites.size()];
+				for (int i = 0; i < frames.length; i++) {
+					frames[i] = new Sprite(sprites.get(i));
+				}
+				
+				int framesCount = frames.length;
+				
+				float[] newTimes = new float[framesCount - 1];
+				int lastTime = time;
+
+				// added convert from int time in milliseconds to float time in seconds
+
+				for (int i = 0; i < framesCount - 1; i++) {
+					if (i < times.length) {
+						newTimes[i] = ((float) times[i]) * 0.001f;
+						lastTime = times[i];
+					} else
+						newTimes[i] = ((float) lastTime) * 0.001f;
+				}
+
+				FrameAnimationImpl frameAnimation = new FrameAnimationImpl(0.001f * (float) time, newTimes);
+				frameAnimation.setLoop(loop);
+
+				return new Animation(frames, frameAnimation);
+				
+			}
+			
+		});
+	}
+	
 
 	public void animation(String id, final String spriteSheetId, final int x, final int y, final int w, final int h, final int framesCount, //
 			final boolean loop, final int time, final int... times) {
