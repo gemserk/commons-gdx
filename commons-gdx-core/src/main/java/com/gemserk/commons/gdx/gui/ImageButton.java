@@ -56,6 +56,10 @@ public class ImageButton extends ControlImpl {
 		invalidate();
 	}
 
+	public ButtonHandler getButtonHandler() {
+		return buttonHandler;
+	}
+	
 	public void setButtonHandler(ButtonHandler buttonHandler) {
 		this.buttonHandler = buttonHandler;
 	}
