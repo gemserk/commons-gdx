@@ -1,6 +1,7 @@
 package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gemserk.commons.artemis.components.Components;
@@ -73,8 +74,14 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			// don't like it will be asking for components all the time.
 			TextComponent textComponent = Components.getTextComponent(e);
 			if (textComponent != null) {
-				textComponent.font.setColor(textComponent.color);
-				SpriteBatchUtils.drawMultilineText(spriteBatch, textComponent.font, //
+				BitmapFont font = textComponent.font;
+				
+				if (font.getScaleX() != textComponent.scale) {
+					font.setScale(textComponent.scale);
+				}
+				
+				font.setColor(textComponent.color);
+				SpriteBatchUtils.drawMultilineText(spriteBatch, font, //
 						textComponent.text, textComponent.x, textComponent.y, textComponent.cx, textComponent.cy);
 			}
 			ParticleEmitterComponent particleEmitterComponent = Components.getParticleEmitterComponent(e);

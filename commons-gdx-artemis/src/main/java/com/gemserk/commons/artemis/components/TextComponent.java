@@ -10,6 +10,7 @@ public class TextComponent extends Component {
 	
 	public float x,y;
 	public float cx, cy;
+	public float scale = 1f;
 	
 	public CharSequence text;
 	public BitmapFont font;
