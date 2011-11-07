@@ -1,8 +1,5 @@
 package com.gemserk.commons.gdx.resources;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.w3c.dom.Document;
@@ -342,6 +339,10 @@ public class LibgdxResourceBuilder {
 
 	public XmlDocumentDeclaration xmlDocument(String file) {
 		return new XmlDocumentDeclaration(file);
+	}
+	
+	public FontResourceBuilder font2(String imageFile, String fontFile) {
+		return new FontResourceBuilder(internal(imageFile), internal(fontFile));
 	}
 
 	public static class XmlDocumentDeclaration implements ResourceBuilder<Document> {
