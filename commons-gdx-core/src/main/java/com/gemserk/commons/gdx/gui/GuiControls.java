@@ -186,6 +186,11 @@ public class GuiControls {
 			text.setColor(r, g, b, a);
 			return this;
 		}
+		
+		public LabelBuilder scale(float scale) {
+			text.setScale(scale);
+			return this;
+		}
 
 		public LabelBuilder color(Color color) {
 			text.setColor(color);

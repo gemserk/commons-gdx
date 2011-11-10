@@ -12,6 +12,7 @@ public class Text extends ControlImpl {
 	private boolean visible = true;
 	private Color color = new Color(Color.WHITE);
 	private BitmapFont font;
+	private float scale = 1f;
 	
 	public Text setVisible(boolean visible) {
 		this.visible = visible;
@@ -38,6 +39,10 @@ public class Text extends ControlImpl {
 
 	public void setFont(BitmapFont font) {
 		this.font = font;
+	}
+	
+	public void setScale(float scale) {
+		this.scale = scale;
 	}
 
 	/**
@@ -101,6 +106,8 @@ public class Text extends ControlImpl {
 
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
+		if (font.getScaleX() != this.scale)
+			font.setScale(this.scale);
 		draw(spriteBatch, font);
 	}
 
