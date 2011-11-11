@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Container extends ControlImpl {
 
 	private ArrayList<Control> controls;
-	
+
 	public ArrayList<Control> getControls() {
 		return controls;
 	}
@@ -46,7 +46,7 @@ public class Container extends ControlImpl {
 	public <T extends Control> T findControl(String id) {
 		for (int i = 0; i < controls.size(); i++) {
 			Control control = controls.get(i);
-			if (control.getId().equals(id))
+			if (id.equals(control.getId()))
 				return (T) control;
 			if (control instanceof Container) {
 				Container container = (Container) control;
@@ -57,11 +57,11 @@ public class Container extends ControlImpl {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void invalidate() {
 		super.invalidate();
-		for (int i = 0; i < getControls().size(); i++) 
+		for (int i = 0; i < getControls().size(); i++)
 			getControls().get(i).invalidate();
 	}
 
