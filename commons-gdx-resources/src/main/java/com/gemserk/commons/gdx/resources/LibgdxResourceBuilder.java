@@ -328,9 +328,8 @@ public class LibgdxResourceBuilder {
 
 	}
 
-	public SpriteResourceBuilder sprite2(String textureId) {
-		Texture texture = resourceManager.getResourceValue(textureId);
-		return new SpriteResourceBuilder(texture);
+	public SpriteResourceBuilder sprite2() {
+		return new SpriteResourceBuilder(resourceManager);
 	}
 
 	public AnimationResourceBuilder animation2(String textureId) {

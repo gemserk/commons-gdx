@@ -232,6 +232,11 @@ public class GuiControls {
 			return this;
 		}
 		
+		public ToggleableImageButtonBuilder size(float w, float h) {
+			imageButton.setSize(w, h);
+			return this;
+		}
+		
 		public ToggleableImageButtonBuilder enabled(boolean enabled) {
 			imageButton.setEnabled(enabled);
 			return this;

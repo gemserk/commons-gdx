@@ -29,13 +29,19 @@ public class ToggleableImageButton extends ControlImpl {
 	float width, height;
 
 	ToggleHandler toggleHandler = new ToggleHandler();
-	
+
 	public void setCenter(float cx, float cy) {
 		this.cx = cx;
 		this.cy = cy;
 		invalidate();
 	}
-	
+
+	public void setSize(float width, float height) {
+		this.width = width;
+		this.height = height;
+		invalidate();
+	}
+
 	public void setEnabledSprite(Sprite enabledSprite) {
 		this.enabledSprite = enabledSprite;
 		invalidate();
@@ -77,9 +83,9 @@ public class ToggleableImageButton extends ControlImpl {
 
 	public void draw(SpriteBatch spriteBatch) {
 		if (enabled)
-			SpriteBatchUtils.drawCentered(spriteBatch, enabledSprite, getX(), getY(), 0f);
+			SpriteBatchUtils.drawCentered(spriteBatch, enabledSprite, getX(), getY(), width, height, 0f, cx, cy);
 		else
-			SpriteBatchUtils.drawCentered(spriteBatch, disabledSprite, getX(), getY(), 0f);
+			SpriteBatchUtils.drawCentered(spriteBatch, disabledSprite, getX(), getY(), width, height, 0f, cx, cy);
 	}
 
 	@Override
@@ -103,15 +109,6 @@ public class ToggleableImageButton extends ControlImpl {
 	}
 
 	protected void recalculateBounds() {
-
-		if (enabled) {
-			this.width = enabledSprite.getWidth();
-			this.height = enabledSprite.getHeight();
-		} else {
-			this.width = disabledSprite.getWidth();
-			this.height = disabledSprite.getHeight();
-		}
-
 		this.bounds.set(getX() - width * cx, getY() - height * cy, width, height);
 	}
 
