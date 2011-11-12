@@ -11,12 +11,25 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 	private final FileHandle imageFile;
 	private final FileHandle fontFile;
 
-	private TextureFilter filter = TextureFilter.Nearest;
+	private TextureFilter minFilter = TextureFilter.Nearest;
+	private TextureFilter magFilter = TextureFilter.Nearest;
+	
 	private boolean useIntegerPositions = true;
 	private CharSequence fixedWidthGlyphs = null;
 
 	public FontResourceBuilder filter(TextureFilter filter) {
-		this.filter = filter;
+		this.minFilter = filter;
+		this.magFilter = filter;
+		return this;
+	}
+	
+	public FontResourceBuilder minFilter(TextureFilter minFilter) {
+		this.minFilter = minFilter;
+		return this;
+	}
+
+	public FontResourceBuilder magFilter(TextureFilter magFilter) {
+		this.magFilter = magFilter;
 		return this;
 	}
 
@@ -38,7 +51,7 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 	@Override
 	public BitmapFont build() {
 		Texture texture = new Texture(imageFile);
-		texture.setFilter(filter, filter);
+		texture.setFilter(minFilter, magFilter);
 		BitmapFont bitmapFont = new BitmapFont(fontFile, new Sprite(texture), false);
 		bitmapFont.setUseIntegerPositions(useIntegerPositions);
 		if (fixedWidthGlyphs != null)
