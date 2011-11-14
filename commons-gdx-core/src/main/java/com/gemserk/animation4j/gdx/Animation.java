@@ -34,4 +34,7 @@ public class Animation  {
 		return frameAnimation.isFinished();
 	}
 
+	public void restart() {
+		frameAnimation.restart();
+	}
 }

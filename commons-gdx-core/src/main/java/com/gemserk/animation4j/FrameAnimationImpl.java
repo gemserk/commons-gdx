@@ -98,4 +98,9 @@ public class FrameAnimationImpl implements FrameAnimation {
 			return false;
 		return currentFrame == getFramesCount() - 1;
 	}
+
+	@Override
+	public void restart() {
+		currentFrame = 0;
+	}
 }
