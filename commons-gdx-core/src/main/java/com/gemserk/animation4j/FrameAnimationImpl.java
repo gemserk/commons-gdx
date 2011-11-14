@@ -73,14 +73,15 @@ public class FrameAnimationImpl implements FrameAnimation {
 	public void update(float delta) {
 		currentTime += delta;
 		float currentFrameTime = getCurrentFrameTime();
-		while (currentTime >= currentFrameTime) {
+		while (currentTime >= currentFrameTime && !isFinished()) {
 			nextFrame();
 			currentTime -= currentFrameTime;
+			currentFrameTime = getCurrentFrameTime();
 		}
 	}
 
 	private float getCurrentFrameTime() {
-		return framesTimes[getCurrentFrame()];
+		return framesTimes[currentFrame];
 	}
 
 	private void nextFrame() {
@@ -96,11 +97,14 @@ public class FrameAnimationImpl implements FrameAnimation {
 	public boolean isFinished() {
 		if (loop)
 			return false;
-		return currentFrame == getFramesCount() - 1;
+		if (currentFrame != getFramesCount() - 1)
+			return false;
+		return currentTime >= getCurrentFrameTime();
 	}
 
 	@Override
 	public void restart() {
 		currentFrame = 0;
+		currentTime = 0;
 	}
 }
