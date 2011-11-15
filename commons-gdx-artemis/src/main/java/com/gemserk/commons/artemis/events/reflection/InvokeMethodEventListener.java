@@ -9,6 +9,8 @@ public class InvokeMethodEventListener extends EventListener {
 
 	protected Object owner;
 	protected Method method;
+	
+	private Object[] args = new Object[1];
 
 	public void setMethod(Method method) {
 		this.method = method;
@@ -21,7 +23,8 @@ public class InvokeMethodEventListener extends EventListener {
 	@Override
 	public void onEvent(Event event) {
 		try {
-			method.invoke(owner, event);
+			args[0] = event;
+			method.invoke(owner, args);
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to invoke method " + method.getName() + " for event " + event.getId(), e);
 		}
