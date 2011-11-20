@@ -1,12 +1,21 @@
 package com.gemserk.commons.gdx.resources;
 
+/**
+ * Defines an API for Resource builders.
+ * 
+ * @author acoppes
+ * 
+ */
 public interface ResourceBuilder<T> {
 
 	/**
-	 * Returns true if a new Resource should be created each time the resourceManager is called, false if the same Resource should be returned.
+	 * Returns true if the Resource should be considered volatile and not cached, false otherwise.
 	 */
-	boolean isCached();
+	boolean isVolatile();
 
+	/**
+	 * Defines how to build the data to be used in the Resource.
+	 */
 	T build();
 
 }

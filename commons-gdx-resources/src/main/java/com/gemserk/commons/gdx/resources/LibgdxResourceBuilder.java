@@ -118,7 +118,7 @@ public class LibgdxResourceBuilder {
 	 */
 	public void spriteAtlas(final String id, final String textureAtlasId, final String regionId) {
 		resourceManager.addVolatile(id, new DataLoader<Sprite>() {
-			
+
 			private AtlasRegion region = null;
 
 			@Override
@@ -130,28 +130,27 @@ public class LibgdxResourceBuilder {
 			}
 		});
 	}
-	
+
 	public void animation(String id, final String textureAtlasId, final String prefix, final boolean loop, final int time, final int... times) {
-		resourceManager.addVolatile(id, new DataLoader<Animation>(){
+		resourceManager.addVolatile(id, new DataLoader<Animation>() {
 
 			List<Sprite> sprites = null;
-			
+
 			@Override
 			public Animation load() {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
 
-				
-				if(sprites==null){
+				if (sprites == null) {
 					sprites = textureAtlas.createSprites(prefix);
 				}
-				
+
 				Sprite[] frames = new Sprite[sprites.size()];
 				for (int i = 0; i < frames.length; i++) {
 					frames[i] = new Sprite(sprites.get(i));
 				}
-				
+
 				int framesCount = frames.length;
-				
+
 				float[] newTimes = new float[framesCount - 1];
 				int lastTime = time;
 
@@ -169,12 +168,11 @@ public class LibgdxResourceBuilder {
 				frameAnimation.setLoop(loop);
 
 				return new Animation(frames, frameAnimation);
-				
+
 			}
-			
+
 		});
 	}
-	
 
 	public void animation(String id, final String spriteSheetId, final int x, final int y, final int w, final int h, final int framesCount, //
 			final boolean loop, final int time, final int... times) {
@@ -291,10 +289,10 @@ public class LibgdxResourceBuilder {
 	public void particleEmitter(String id, final String particleEffectId, final String particleEmitterId) {
 		this.particleEmitter(id, particleEffectId, particleEmitterId, 1f);
 	}
-	
+
 	public void particleEmitter(String id, final String particleEffectId, final String particleEmitterId, final float scale) {
 		resourceManager.addVolatile(id, new DataLoader<ParticleEmitter>() {
-			
+
 			private ParticleEmitter cachedEmitter;
 
 			@Override
@@ -321,10 +319,10 @@ public class LibgdxResourceBuilder {
 			}
 		};
 
-		if (resourceBuilder.isCached())
-			resourceManager.add(id, dataLoader);
-		else
+		if (resourceBuilder.isVolatile())
 			resourceManager.addVolatile(id, dataLoader);
+		else
+			resourceManager.add(id, dataLoader);
 
 	}
 
@@ -339,7 +337,7 @@ public class LibgdxResourceBuilder {
 	public XmlDocumentDeclaration xmlDocument(String file) {
 		return new XmlDocumentDeclaration(file);
 	}
-	
+
 	public FontResourceBuilder font2(String imageFile, String fontFile) {
 		return new FontResourceBuilder(internal(imageFile), internal(fontFile));
 	}
@@ -372,7 +370,7 @@ public class LibgdxResourceBuilder {
 		}
 
 		@Override
-		public boolean isCached() {
+		public boolean isVolatile() {
 			return cached;
 		}
 

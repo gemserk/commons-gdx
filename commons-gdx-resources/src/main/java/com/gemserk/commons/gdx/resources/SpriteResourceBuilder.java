@@ -88,7 +88,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 	}
 
 	@Override
-	public boolean isCached() {
+	public boolean isVolatile() {
 		return false;
 	}
 

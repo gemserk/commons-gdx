@@ -67,7 +67,7 @@ public class AnimationResourceBuilder implements ResourceBuilder<Animation> {
 	}
 
 	@Override
-	public boolean isCached() {
+	public boolean isVolatile() {
 		return false;
 	}
 
