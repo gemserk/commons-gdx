@@ -15,8 +15,8 @@ public class BrowserUtilsAndroidImpl implements BrowserUtils {
 	
 	private final Activity activity;
 
-	public BrowserUtilsAndroidImpl(Activity androidApplication) {
-		this.activity = androidApplication;
+	public BrowserUtilsAndroidImpl(Activity activity) {
+		this.activity = activity;
 	}
 	
 	@Override
