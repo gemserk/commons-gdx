@@ -1,5 +1,6 @@
 package com.gemserk.commons.artemis.events.reflection;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,8 @@ public class EventListenerReflectionRegistrator {
 
 	private static final Map<Class<?>, Map<String, Method>> cachedMethodsPerClass = new HashMap<Class<?>, Map<String, Method>>();
 
+	private static final Map<Method, Annotation[]> cachedAnnotationsPerMethod = new HashMap<Method, Annotation[]>();
+
 	private static final PoolObjectFactory<InvokeMethodEventListener> invokeMethodEventListenerFactory = new PoolObjectFactory<InvokeMethodEventListener>() {
 
 		@Override
@@ -42,11 +45,11 @@ public class EventListenerReflectionRegistrator {
 	private final Map<Object, Map<Method, InvokeMethodEventListener>> createdMethodEventListeners = new HashMap<Object, Map<Method, InvokeMethodEventListener>>();
 
 	private final EventManager eventManager;
-	
+
 	public EventListenerReflectionRegistrator(EventManager eventManager) {
 		this.eventManager = eventManager;
 	}
-	
+
 	private Map<String, Method> getClassCachedMethods(Class<?> clazz) {
 		if (!cachedMethodsPerClass.containsKey(clazz))
 			cachedMethodsPerClass.put(clazz, new HashMap<String, Method>());
@@ -84,11 +87,11 @@ public class EventListenerReflectionRegistrator {
 
 	private void registerEventListenerForMethod(String eventId, final Object o, final Method method) {
 		method.setAccessible(true);
-		
+
 		InvokeMethodEventListener invokeMethodEventListener = invokeMethodEventListenerPool.newObject();
 		invokeMethodEventListener.setOwner(o);
 		invokeMethodEventListener.setMethod(method);
-		
+
 		eventManager.register(eventId, invokeMethodEventListener);
 
 		// used to be returned to the pool later.
@@ -123,7 +126,7 @@ public class EventListenerReflectionRegistrator {
 		Method[] methods = getCachedClassMethods(clazz);
 		for (int i = 0; i < methods.length; i++) {
 			Method method = methods[i];
-			Handles handlesAnnotation = method.getAnnotation(handlesClass);
+			Handles handlesAnnotation = getHandlesAnnotation(method);
 			if (handlesAnnotation == null)
 				continue;
 			String[] eventIds = handlesAnnotation.ids();
@@ -151,7 +154,7 @@ public class EventListenerReflectionRegistrator {
 		Method[] methods = getCachedClassMethods(clazz);
 		for (int i = 0; i < methods.length; i++) {
 			Method method = methods[i];
-			Handles handlesAnnotation = method.getAnnotation(handlesClass);
+			Handles handlesAnnotation = getHandlesAnnotation(method);
 			if (handlesAnnotation == null)
 				continue;
 			String[] eventIds = handlesAnnotation.ids();
@@ -165,6 +168,21 @@ public class EventListenerReflectionRegistrator {
 			}
 		}
 		createdMethodEventListeners.remove(o);
+	}
+
+	private Handles getHandlesAnnotation(Method method) {
+		Annotation[] annotations = getAnnotations(method);
+		for (int i = 0; i < annotations.length; i++) {
+			if (annotations[i] instanceof Handles)
+				return (Handles) annotations[i];
+		}
+		return null;
+	}
+
+	private Annotation[] getAnnotations(Method method) {
+		if (!cachedAnnotationsPerMethod.containsKey(method))
+			cachedAnnotationsPerMethod.put(method, method.getAnnotations());
+		return cachedAnnotationsPerMethod.get(method);
 	}
 
 	private static Method[] getCachedClassMethods(Class<?> clazz) {
