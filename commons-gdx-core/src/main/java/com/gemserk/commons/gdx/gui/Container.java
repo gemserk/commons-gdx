@@ -7,6 +7,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Container extends ControlImpl {
 
 	private ArrayList<Control> controls;
+	private float width, height;
+	
+	public void setWidth(float width) {
+		this.width = width;
+	}
+	
+	public void setHeight(float height) {
+		this.height = height;
+	}
+	
+	public float getWidth() {
+		return width;
+	}
+	
+	public float getHeight() {
+		return height;
+	}
 
 	public ArrayList<Control> getControls() {
 		return controls;
@@ -17,8 +34,14 @@ public class Container extends ControlImpl {
 	}
 
 	public Container(String id) {
+		this(id, 0f, 0f);
+	}
+	
+	public Container(String id, float width, float height) {
 		controls = new ArrayList<Control>();
 		setId(id);
+		this.width = width;
+		this.height = height;
 	}
 
 	@Override
