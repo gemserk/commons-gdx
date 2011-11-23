@@ -57,6 +57,11 @@ public class TransitionBuilder {
 		this.shouldRestartNextScreen = true;
 		return this;
 	}
+	
+	public TransitionBuilder restartScreen(boolean restart) {
+		this.shouldRestartNextScreen = restart;
+		return this;
+	}
 
 	public TransitionBuilder leaveTransitionHandler(TransitionHandler transitionHandler) {
 		this.leaveTransitionHandler = transitionHandler;
