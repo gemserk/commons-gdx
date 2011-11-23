@@ -65,6 +65,10 @@ public class Container extends ControlImpl {
 		controls.remove(control);
 		control.setParent(new NullControl());
 	}
+	
+	public void removeAll() {
+		controls.clear();
+	}
 
 	public <T extends Control> T findControl(String id) {
 		for (int i = 0; i < controls.size(); i++) {
