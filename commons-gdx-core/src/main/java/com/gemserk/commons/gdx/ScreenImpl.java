@@ -105,7 +105,7 @@ public class ScreenImpl implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		// call gamestate resize?
+		gameState.resize(width, height);
 	}
 
 	@Override

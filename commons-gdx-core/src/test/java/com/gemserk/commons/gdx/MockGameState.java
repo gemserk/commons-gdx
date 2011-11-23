@@ -67,4 +67,10 @@ class MockGameState implements GameState {
 		this.alpha = alpha;
 	}
 
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated function stub
+		
+	}
+
 }

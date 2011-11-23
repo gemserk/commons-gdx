@@ -36,4 +36,6 @@ public interface GameState {
 
 	Parameters getParameters();
 
+	void resize(int width, int height);
+	
 }

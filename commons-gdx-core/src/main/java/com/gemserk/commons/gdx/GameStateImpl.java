@@ -87,4 +87,9 @@ public class GameStateImpl implements GameState {
 		this.alpha = alpha;
 	}
 
+	@Override
+	public void resize(int width, int height) {
+		
+	}
+
 }
