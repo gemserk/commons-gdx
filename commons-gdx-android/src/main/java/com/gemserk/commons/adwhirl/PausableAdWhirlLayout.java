@@ -10,6 +10,8 @@ import com.badlogic.gdx.Gdx;
  * reference <a href="https://groups.google.com/forum/#!topic/adwhirl-users/VQdGs7ZrVN8">here</a>.
  */
 public class PausableAdWhirlLayout extends AdWhirlLayout {
+
+	private final String adWhirlTag = "AdWhirl SDK";
 	
 	boolean paused = false;
 
@@ -22,7 +24,7 @@ public class PausableAdWhirlLayout extends AdWhirlLayout {
 	 */
 	public void onPause() {
 		paused = true;
-		Gdx.app.log("AdWhirl SDK", "Ads request paused, should not be more requests until resume called");
+		Gdx.app.log(adWhirlTag, "Ads request paused, should not be more requests until resume called");
 		this.onWindowVisibilityChanged(INVISIBLE);
 	}
 
@@ -31,7 +33,7 @@ public class PausableAdWhirlLayout extends AdWhirlLayout {
 	 */
 	public void onResume() {
 		paused = false;
-		Gdx.app.log("AdWhirl SDK", "Ads request resumed.");
+		Gdx.app.log(adWhirlTag, "Ads request resumed.");
 		this.onWindowVisibilityChanged(VISIBLE);
 	}
 
@@ -44,6 +46,6 @@ public class PausableAdWhirlLayout extends AdWhirlLayout {
 		visibility = (paused == true) ? INVISIBLE : VISIBLE;
 		setVisibility(visibility);
 		super.onWindowVisibilityChanged(visibility);
-		Gdx.app.log("AdWhirl SDK", "window visibility changed: " + (visibility == INVISIBLE ? "invisible" : "visible"));
+		Gdx.app.log(adWhirlTag, "window visibility changed: " + (visibility == INVISIBLE ? "invisible" : "visible"));
 	}
 }
