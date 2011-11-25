@@ -37,7 +37,8 @@ public class FadeInTransition extends GameTransitions.EnterTransition {
 	@Override
 	public void init() {
 		super.init();
-		colorTransition = Transitions.transitionBuilder(startColor).end(endColor).time(time).build();
+//		colorTransition = Transitions.transitionBuilder(startColor).end(endColor).time(time).build();
+		colorTransition = Transitions.mutableTransition(startColor).endObject(time, endColor).build();
 		Color color = colorTransition.get();
 		Mesh2dUtils.setColor(fadeRectangle, color.r, color.g, color.b, color.a);
 	}

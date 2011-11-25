@@ -125,7 +125,8 @@ public class TextButton extends ControlImpl {
 		this.text = text;
 		setX(x);
 		setY(y);
-		colorTransition = Transitions.transitionBuilder(notOverColor).build();
+		// colorTransition = Transitions.transitionBuilder(notOverColor).build();
+		colorTransition = Transitions.mutableTransition(notOverColor).build();
 		this.cx = 0.5f;
 		this.cy = 0.5f;
 		this.id = "";
