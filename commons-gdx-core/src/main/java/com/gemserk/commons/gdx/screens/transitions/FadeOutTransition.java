@@ -38,7 +38,7 @@ public class FadeOutTransition extends GameTransitions.LeaveTransition {
 	public void init() {
 		super.init();
 //		colorTransition = Transitions.transitionBuilder(startColor).end(endColor).time(time).build();
-		colorTransition = Transitions.mutableTransition(startColor).endObject(time, endColor).build();
+		colorTransition = Transitions.transition(startColor).endObject(time, endColor).build();
 		Color color = colorTransition.get();
 		Mesh2dUtils.setColor(fadeRectangle, color.r, color.g, color.b, color.a);
 	}
