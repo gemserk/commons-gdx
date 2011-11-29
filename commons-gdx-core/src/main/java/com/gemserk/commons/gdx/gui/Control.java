@@ -25,5 +25,9 @@ public interface Control {
 	void invalidate();
 	
 	void validate();
+	
+	boolean isVisible();
+	
+	void setVisible(boolean visible);
 
 }

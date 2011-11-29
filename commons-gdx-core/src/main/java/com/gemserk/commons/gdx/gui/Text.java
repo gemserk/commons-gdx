@@ -9,20 +9,10 @@ public class Text extends ControlImpl {
 
 	private CharSequence text;
 	private float cx, cy;
-	private boolean visible = true;
 	private Color color = new Color(Color.WHITE);
 	private BitmapFont font;
 	private float scale = 1f;
 	
-	public Text setVisible(boolean visible) {
-		this.visible = visible;
-		return this;
-	}
-
-	public boolean isVisible() {
-		return visible;
-	}
-
 	public Text setText(CharSequence text) {
 		this.text = text;
 		return this;

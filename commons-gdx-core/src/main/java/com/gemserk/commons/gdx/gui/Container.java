@@ -8,19 +8,19 @@ public class Container extends ControlImpl {
 
 	private ArrayList<Control> controls;
 	private float width, height;
-	
+
 	public void setWidth(float width) {
 		this.width = width;
 	}
-	
+
 	public void setHeight(float height) {
 		this.height = height;
 	}
-	
+
 	public float getWidth() {
 		return width;
 	}
-	
+
 	public float getHeight() {
 		return height;
 	}
@@ -36,7 +36,7 @@ public class Container extends ControlImpl {
 	public Container(String id) {
 		this(id, 0f, 0f);
 	}
-	
+
 	public Container(String id, float width, float height) {
 		controls = new ArrayList<Control>();
 		setId(id);
@@ -52,6 +52,8 @@ public class Container extends ControlImpl {
 
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
+		if (!isVisible())
+			return;
 		for (int i = 0; i < controls.size(); i++)
 			controls.get(i).draw(spriteBatch);
 	}
@@ -65,7 +67,7 @@ public class Container extends ControlImpl {
 		controls.remove(control);
 		control.setParent(new NullControl());
 	}
-	
+
 	public void removeAll() {
 		controls.clear();
 	}

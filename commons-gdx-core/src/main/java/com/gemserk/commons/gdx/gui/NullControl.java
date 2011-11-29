@@ -59,4 +59,17 @@ public class NullControl implements Control {
 
 	}
 
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated function stub
+		return false;
+		
+	}
+
+	@Override
+	public void setVisible(boolean visible) {
+		// TODO Auto-generated function stub
+		
+	}
+
 }

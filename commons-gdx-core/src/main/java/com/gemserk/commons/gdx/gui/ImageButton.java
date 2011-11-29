@@ -82,6 +82,8 @@ public class ImageButton extends ControlImpl {
 	}
 
 	public void draw(SpriteBatch spriteBatch) {
+		if (!isVisible())
+			return;
 		sprite.setColor(color);
 		sprite.setSize(width, height);
 		SpriteBatchUtils.drawCentered(spriteBatch, sprite, getX(), getY(), width, height, 0f, cx, cy);

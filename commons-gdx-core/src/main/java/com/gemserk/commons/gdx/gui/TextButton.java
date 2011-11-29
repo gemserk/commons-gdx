@@ -140,6 +140,8 @@ public class TextButton extends ControlImpl {
 	}
 
 	public void draw(SpriteBatch spriteBatch) {
+		if (!isVisible())
+			return;
 		font.setColor(colorTransition.get());
 		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, getX(), getY(), cx, cy, alignment);
 		// ImmediateModeRendererUtils.drawRectangle(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, Color.GREEN);

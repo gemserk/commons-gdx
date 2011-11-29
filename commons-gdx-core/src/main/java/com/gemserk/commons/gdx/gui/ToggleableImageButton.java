@@ -82,6 +82,8 @@ public class ToggleableImageButton extends ControlImpl {
 	}
 
 	public void draw(SpriteBatch spriteBatch) {
+		if (!isVisible())
+			return;
 		if (enabled)
 			SpriteBatchUtils.drawCentered(spriteBatch, enabledSprite, getX(), getY(), width, height, 0f, cx, cy);
 		else
