@@ -68,7 +68,7 @@ public class AnimationResourceBuilder implements ResourceBuilder<Animation> {
 
 	@Override
 	public boolean isVolatile() {
-		return false;
+		return true;
 	}
 
 }

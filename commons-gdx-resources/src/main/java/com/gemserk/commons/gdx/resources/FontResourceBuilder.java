@@ -45,7 +45,7 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 
 	@Override
 	public boolean isVolatile() {
-		return true;
+		return false;
 	}
 
 	@Override
