@@ -27,7 +27,7 @@ public class InjectorImpl implements Injector {
 		this.configurationMap = new RandomAccessMap<String, Object>();
 		configurationMap.put("injector", this);
 	}
-	
+
 	@Override
 	public void injectMembers(Object object) {
 
@@ -42,7 +42,8 @@ public class InjectorImpl implements Injector {
 			Object value = configurationMap.get(fieldName);
 
 			if (value == null) {
-				logger.debug("Couldn't find value for field " + fieldName + " from " + clazz);
+				if (logger.isDebugEnabled())
+					logger.debug("Couldn't find value for field " + fieldName + " from " + clazz);
 				continue;
 			}
 
@@ -61,8 +62,10 @@ public class InjectorImpl implements Injector {
 
 			// try to access the field directly....
 
-			logger.debug(setterName + "() method not found in " + object.getClass());
-			logger.debug("trying access field...");
+			if (logger.isDebugEnabled()) {
+				logger.debug(setterName + "() method not found in " + object.getClass());
+				logger.debug("trying access field...");
+			}
 
 			try {
 				Field field = clazz.getDeclaredField(fieldName);
@@ -107,15 +110,15 @@ public class InjectorImpl implements Injector {
 
 	@Override
 	public Injector createChildInjector() {
-		
+
 		// for now, child injector is not related any more with parent after creation.
-		
+
 		InjectorImpl childInjector = new InjectorImpl();
 		childInjector.configurationMap.putAll(configurationMap);
 		childInjector.instances.putAll(instances);
-		
+
 		childInjector.configurationMap.put("injector", childInjector);
-		
+
 		return childInjector;
 	}
 
