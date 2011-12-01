@@ -89,7 +89,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 
 	@Override
 	public boolean isVolatile() {
-		return false;
+		return true;
 	}
 
 }
