@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.gdx.graphics.ParticleEmitterUtils;
@@ -131,7 +132,7 @@ public class LibgdxResourceBuilder {
 		});
 	}
 
-	public void animation(String id, final String textureAtlasId, final String prefix, final boolean loop, final int time, final int... times) {
+	public void animation(final String id, final String textureAtlasId, final String prefix, final boolean loop, final int time, final int... times) {
 		resourceManager.addVolatile(id, new DataLoader<Animation>() {
 
 			List<Sprite> sprites = null;
@@ -141,7 +142,11 @@ public class LibgdxResourceBuilder {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
 
 				if (sprites == null) {
-					sprites = textureAtlas.createSprites(prefix);
+					try {
+						sprites = textureAtlas.createSprites(prefix);
+					} catch (GdxRuntimeException e) {
+						throw new RuntimeException("Failed to create animation " + id + " from texture atlas " + textureAtlasId, e);
+					}
 				}
 
 				Sprite[] frames = new Sprite[sprites.size()];
