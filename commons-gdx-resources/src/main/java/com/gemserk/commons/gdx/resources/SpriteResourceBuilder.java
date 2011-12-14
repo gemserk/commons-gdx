@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.gemserk.resources.ResourceManager;
 
 public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
+	
+	static final int AtlasRegionNoIndex = -1;
 
 	private int x;
 	private int y;
@@ -18,10 +20,11 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 	private String regionId;
 
 	private AtlasRegion region;
-	
+
 	private boolean flip = false;
 	private boolean flop = false;
-
+	private int regionIndex;
+	
 	public SpriteResourceBuilder x(int x) {
 		this.x = x;
 		return this;
@@ -41,7 +44,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 		this.height = height;
 		return this;
 	}
-	
+
 	public SpriteResourceBuilder flip(boolean flop, boolean flip) {
 		this.flip = flip;
 		this.flop = flop;
@@ -54,8 +57,13 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 	}
 
 	public SpriteResourceBuilder textureAtlas(String textureAtlasId, String region) {
+		return textureAtlas(textureAtlasId, region, AtlasRegionNoIndex);
+	}
+
+	public SpriteResourceBuilder textureAtlas(String textureAtlasId, String region, int index) {
 		this.textureAtlasId = textureAtlasId;
 		this.regionId = region;
+		this.regionIndex = index;
 		return this;
 	}
 
@@ -77,7 +85,16 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 		} else if (textureAtlasId != null) {
 			if (region == null) {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
-				region = textureAtlas.findRegion(regionId);
+
+				try {
+					region = textureAtlas.findRegion(regionId, regionIndex);
+				} catch (Exception e) {
+					throw new RuntimeException("Failed to load AtlasRegion " + regionId + " with index " + regionIndex + " from TextureAtlas " + textureAtlasId, e);
+				}
+				
+				if (region == null) 
+					throw new RuntimeException("AtlasRegion " + regionId + " with index " + regionIndex + " from TextureAtlas " + textureAtlasId + " not found");
+				
 			}
 			// note that whis resource will not be updated if the resource of the texture atlas changed...
 			Sprite sprite = new Sprite(region);

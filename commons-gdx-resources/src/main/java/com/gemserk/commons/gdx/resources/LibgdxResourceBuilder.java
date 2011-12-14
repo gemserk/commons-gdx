@@ -315,12 +315,16 @@ public class LibgdxResourceBuilder {
 	// / TESTING STUFF
 
 	@SuppressWarnings({ "rawtypes" })
-	public void resource(String id, final ResourceBuilder resourceBuilder) {
+	public void resource(final String id, final ResourceBuilder resourceBuilder) {
 
 		DataLoader dataLoader = new DataLoader() {
 			@Override
 			public Object load() {
-				return resourceBuilder.build();
+				try {
+					return resourceBuilder.build();
+				} catch (Exception e) {
+					throw new RuntimeException("Failed to load resource " + id, e);
+				}
 			}
 		};
 
