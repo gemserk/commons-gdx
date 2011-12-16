@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -21,6 +20,7 @@ import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.gdx.graphics.ParticleEmitterUtils;
 import com.gemserk.commons.gdx.resources.dataloaders.DisposableDataLoader;
+import com.gemserk.commons.gdx.resources.dataloaders.MusicDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
 import com.gemserk.commons.svg.inkscape.DocumentParser;
@@ -251,19 +251,7 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void music(String id, String file) {
-		resourceManager.add(id, new DisposableDataLoader<Music>(internal(file)) {
-			@Override
-			public Music load() {
-				return Gdx.audio.newMusic(fileHandle);
-			}
-
-			@Override
-			public void unload(Music t) {
-				if (t.isPlaying())
-					t.stop();
-				super.unload(t);
-			}
-		});
+		resourceManager.add(id, new MusicDataLoader(internal(file)));
 	}
 
 	public void xmlDocument(String id, final String file) {
