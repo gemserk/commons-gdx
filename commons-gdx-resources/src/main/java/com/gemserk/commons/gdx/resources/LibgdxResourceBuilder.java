@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
@@ -314,6 +315,13 @@ public class LibgdxResourceBuilder {
 					throw new RuntimeException("Failed to load resource " + id, e);
 				}
 			}
+			
+			@Override
+			public void unload(Object data) {
+				if (data instanceof Disposable) {
+					((Disposable) data).dispose();
+				}
+			}
 		};
 
 		if (resourceBuilder.isVolatile())
@@ -325,6 +333,10 @@ public class LibgdxResourceBuilder {
 
 	public SpriteResourceBuilder sprite2() {
 		return new SpriteResourceBuilder(resourceManager);
+	}
+	
+	public TextureResourceBuilder texture2(FileHandle fileHandle) {
+		return new TextureResourceBuilder(fileHandle);
 	}
 
 	public AnimationResourceBuilder animation2(String textureId) {
