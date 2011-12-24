@@ -38,10 +38,15 @@ public class ScreenshotSaver {
 			return;
 
 		byte[] screenshotPixels = ScreenUtils.getFrameBufferPixels(true);
+
 		int width = Gdx.graphics.getWidth();
 		int height = Gdx.graphics.getHeight();
 
-		DataBufferByte dataBuffer = new DataBufferByte(screenshotPixels, screenshotPixels.length);
+		saveScreenshot(file, screenshotPixels, width, height, hasAlpha);
+	}
+
+	public static void saveScreenshot(File file, byte[] pixels, int width, int height, boolean hasAlpha) throws IOException {
+		DataBufferByte dataBuffer = new DataBufferByte(pixels, pixels.length);
 
 		PixelInterleavedSampleModel sampleModel = new PixelInterleavedSampleModel(DataBuffer.TYPE_BYTE, width, height, 4, 4 * width, getOffsets(hasAlpha));
 
