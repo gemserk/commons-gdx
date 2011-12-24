@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public abstract class Store<T> {
 
-	ArrayList<T> created = new ArrayList<T>();
-	ArrayList<T> free = new ArrayList<T>();
-
+	protected ArrayList<T> created = new ArrayList<T>();
+	protected ArrayList<T> free = new ArrayList<T>();
+	
 	public T get() {
 		if (free.isEmpty()) {
 			T t = createObject();
