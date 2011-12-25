@@ -9,7 +9,7 @@ public class PropertiesComponent extends Component {
 	
 	// TODO: should use a Parameters class? should Parameters API be named something like Properties?
 
-	Map<String, Object> properties;
+	public Map<String, Object> properties;
 
 	public PropertiesComponent(Map<String, Object> properties) {
 		this.properties = properties;
