@@ -23,7 +23,7 @@ public class ScreenImpl implements Screen {
 	 * */
 	private float dt = 0.01f;
 	private float maxFrameTime = 0.25f;
-	
+
 	private float accumulator;
 
 	protected float getDelta() {
@@ -69,10 +69,10 @@ public class ScreenImpl implements Screen {
 		if (paused)
 			return;
 
-		// float t = 0f;
 		float frameTime = getDelta();
 
 		// note: max frame time to avoid spiral of death
+
 		if (frameTime > maxFrameTime)
 			frameTime = maxFrameTime;
 
@@ -93,13 +93,11 @@ public class ScreenImpl implements Screen {
 
 		float alpha = accumulator / dt;
 		GlobalTime.setAlpha(alpha);
-		
+
 		gameState.setAlpha(alpha);
 
 		// const double alpha = accumulator / dt;
-		//
 		// State state = currentState*alpha + previousState * ( 1.0 - alpha );
-		//
 		// render( state );
 	}
 
