@@ -3,6 +3,7 @@ package com.gemserk.commons.gdx.camera;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
@@ -180,6 +181,7 @@ public class Libgdx2dCameraTransformImplTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void shouldReturnProjectedVectorWhenCameraNotMoved() {
 		Gdx.graphics = new MockGraphics();
@@ -197,6 +199,7 @@ public class Libgdx2dCameraTransformImplTest {
 		assertThat(position.y, IsEqual.equalTo(320f));
 	}
 	
+	@Ignore
 	@Test
 	public void shouldReturnProjectedVectorWhenCameraMoved() {
 		Libgdx2dCameraTransformImpl camera = new Libgdx2dCameraTransformImpl();
