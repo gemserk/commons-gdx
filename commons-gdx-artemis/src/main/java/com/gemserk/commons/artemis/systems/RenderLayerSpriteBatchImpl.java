@@ -80,10 +80,11 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 				Spatial spatial = Components.getSpatialComponent(e).getSpatial();
 				
 				entityBounds.set(frustumCullingComponent.bounds);
-				entityBounds.setX(spatial.getX());
-				entityBounds.setY(spatial.getY());
 				
-				if (!frustum.overlaps(entityBounds)) 
+				entityBounds.setX(entityBounds.getX() + spatial.getX());
+				entityBounds.setY(entityBounds.getY() + spatial.getY());
+				
+				if (!frustum.overlaps(entityBounds))
 					continue;
 			}
 			
