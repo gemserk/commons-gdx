@@ -20,17 +20,22 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	private final Vector2 center = new Vector2();
 	private final Vector3 tmp = new Vector3();
 
-	Matrix4 projectionMatrix = new Matrix4();
-	Matrix4 combinedMatrix = new Matrix4();
+	private final Matrix4 projectionMatrix = new Matrix4();
+	private final Matrix4 combinedMatrix = new Matrix4();
 
 	private boolean matrixDirty;
+
+	private float width;
+	private float height;
 
 	public Libgdx2dCameraTransformImpl() {
 		this(0, 0);
 	}
 
 	public Libgdx2dCameraTransformImpl(float centerX, float centerY) {
-		projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		width = Gdx.graphics.getWidth();
+		height = Gdx.graphics.getHeight();
+		projectionMatrix.setToOrtho2D(0, 0, width, height);
 		center(centerX, centerY);
 		matrixDirty = true;
 	}
@@ -63,9 +68,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	@Override
 	public void unproject(Vector2 position) {
-		calculateTransform(invertedTransform);
-
-		invertedTransform.inv();
+		recalculateMatrix();
 
 		tmp.set(position.x, position.y, 0f);
 		tmp.mul(invertedTransform);
@@ -115,7 +118,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	@Override
 	public void project(Vector2 position) {
-		calculateTransform(transform);
+		recalculateMatrix();
 
 		tmp.set(position.x, position.y, 0f);
 		tmp.mul(transform);
@@ -125,18 +128,57 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	@Override
 	public Matrix4 getCombinedMatrix() {
-		if (!matrixDirty)
-			return combinedMatrix;
-		combinedMatrix.set(projectionMatrix);
-		calculateTransform(transform);
-		Matrix4.mul(combinedMatrix.val, transform.val);
-		matrixDirty = false;
+		recalculateMatrix();
 		return combinedMatrix;
 	}
 
 	@Override
 	public void getFrustum(Rectangle frustum) {
-		
+		recalculateMatrix();
+
+		tmp.set(0f, 0f, 0f);
+		tmp.mul(invertedTransform);
+
+		float x0 = tmp.x;
+		float y0 = tmp.y;
+
+		tmp.set(width, 0f, 0f);
+		tmp.mul(invertedTransform);
+
+		float x1 = tmp.x;
+		float y1 = tmp.y;
+
+		tmp.set(0f, height, 0f);
+		tmp.mul(invertedTransform);
+
+		float x2 = tmp.x;
+		float y2 = tmp.y;
+
+		tmp.set(width, height, 0f);
+		tmp.mul(invertedTransform);
+
+		float x3 = tmp.x;
+		float y3 = tmp.y;
+
+		frustum.x = Math.min(Math.min(x0, x1), Math.min(x2, x3));
+		frustum.y = Math.min(Math.min(y0, y1), Math.min(y2, y3));
+
+		frustum.width = Math.max(Math.max(x0, x1), Math.max(x2, x3)) - frustum.x;
+		frustum.height = Math.max(Math.max(y0, y1), Math.max(y2, y3)) - frustum.y;
+
+	}
+
+	private void recalculateMatrix() {
+		if (matrixDirty) {
+			combinedMatrix.set(projectionMatrix);
+			calculateTransform(transform);
+			Matrix4.mul(combinedMatrix.val, transform.val);
+
+			calculateTransform(invertedTransform);
+			invertedTransform.inv();
+
+			matrixDirty = false;
+		}
 	}
 
 }
