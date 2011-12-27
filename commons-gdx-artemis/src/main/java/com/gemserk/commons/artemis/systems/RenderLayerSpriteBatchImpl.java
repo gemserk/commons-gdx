@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gemserk.commons.artemis.components.Components;
+import com.gemserk.commons.artemis.components.FrustumCullingComponent;
 import com.gemserk.commons.artemis.components.ParticleEmitterComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -65,6 +66,14 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			RenderableComponent renderableComponent = Components.getRenderableComponent(e);
 			if (!renderableComponent.isVisible())
 				continue;
+			
+			FrustumCullingComponent frustumCullingComponent = Components.getFrustumCullingComponent(e);
+			if (frustumCullingComponent != null) {
+				
+				
+				
+			}
+			
 			SpriteComponent spriteComponent = Components.getSpriteComponent(e);
 			if (spriteComponent != null) {
 				Sprite sprite = spriteComponent.getSprite();

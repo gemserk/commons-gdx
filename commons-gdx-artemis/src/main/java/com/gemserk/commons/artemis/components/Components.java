@@ -107,4 +107,11 @@ public class Components {
 		return particleEmitterComponentClass.cast(e.getComponent(particleEmitterComponentType));
 	}
 	
+	public static final Class<FrustumCullingComponent> frustumCullingComponentClass = FrustumCullingComponent.class;
+	public static final ComponentType frustumCullingComponentType = ComponentTypeManager.getTypeFor(frustumCullingComponentClass);
+
+	public static FrustumCullingComponent getFrustumCullingComponent(Entity e) {
+		return frustumCullingComponentClass.cast(e.getComponent(frustumCullingComponentType));
+	}
+	
 }
