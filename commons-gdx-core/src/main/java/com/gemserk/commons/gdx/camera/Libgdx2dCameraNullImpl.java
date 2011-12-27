@@ -2,6 +2,7 @@ package com.gemserk.commons.gdx.camera;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Libgdx2dCameraNullImpl implements Libgdx2dCamera {
@@ -51,6 +52,11 @@ public class Libgdx2dCameraNullImpl implements Libgdx2dCamera {
 	@Override
 	public Matrix4 getCombinedMatrix() {
 		return combinedMatrix;
+	}
+
+	@Override
+	public void getFrustum(Rectangle frustum) {
+		
 	}
 
 }

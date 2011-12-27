@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -131,6 +132,11 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		Matrix4.mul(combinedMatrix.val, transform.val);
 		matrixDirty = false;
 		return combinedMatrix;
+	}
+
+	@Override
+	public void getFrustum(Rectangle frustum) {
+		
 	}
 
 }

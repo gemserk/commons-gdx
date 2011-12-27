@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.FrustumCullingComponent;
 import com.gemserk.commons.artemis.components.ParticleEmitterComponent;
@@ -11,6 +12,7 @@ import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
+import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 
 public class RenderLayerSpriteBatchImpl implements RenderLayer {
@@ -20,6 +22,9 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	private final Libgdx2dCamera camera;
 	private boolean enabled;
 
+	private final Rectangle frustum = new Rectangle();
+	private final Rectangle entityBounds = new Rectangle();
+	
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch) {
 		this.camera = camera;
 		this.spriteBatch = spriteBatch;
@@ -59,6 +64,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
 	@Override
 	public void render() {
+		camera.getFrustum(frustum);
 		camera.apply(spriteBatch);
 		spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerEntities.size(); i++) {
@@ -67,11 +73,18 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			if (!renderableComponent.isVisible())
 				continue;
 			
+
 			FrustumCullingComponent frustumCullingComponent = Components.getFrustumCullingComponent(e);
 			if (frustumCullingComponent != null) {
+
+				Spatial spatial = Components.getSpatialComponent(e).getSpatial();
 				
+				entityBounds.set(frustumCullingComponent.bounds);
+				entityBounds.setX(spatial.getX());
+				entityBounds.setY(spatial.getY());
 				
-				
+				if (!frustum.overlaps(entityBounds))
+					continue;
 			}
 			
 			SpriteComponent spriteComponent = Components.getSpriteComponent(e);

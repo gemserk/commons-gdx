@@ -2,6 +2,7 @@ package com.gemserk.commons.gdx.camera;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public interface Libgdx2dCamera {
@@ -54,10 +55,18 @@ public interface Libgdx2dCamera {
 	 * Applies the camera transformations to current OpenGL viewport.
 	 */
 	void apply();
-	
+
 	/**
-	 * Returns the combined matrix between project and model view matrices. 
+	 * Returns the combined matrix between project and model view matrices.
 	 */
 	Matrix4 getCombinedMatrix();
+
+	/**
+	 * Returns the frustum of the camera in the rectangle.
+	 * 
+	 * @param frustum
+	 *            The Rectangle to be modified with the frustum values.
+	 */
+	void getFrustum(Rectangle frustum);
 
 }
