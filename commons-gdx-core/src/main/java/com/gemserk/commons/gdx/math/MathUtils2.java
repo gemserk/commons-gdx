@@ -47,4 +47,8 @@ public class MathUtils2 {
 		return (float) Math.sqrt(x_d * x_d + y_d * y_d);
 	}
 
+	public static float diagonal(float x, float y) {
+		return (float) Math.sqrt(x * x + y * y);
+	}
+
 }
