@@ -18,7 +18,7 @@ import com.gemserk.componentsengine.utils.RandomAccessMap;
 public class InjectorImpl implements Injector {
 
 	protected static final Logger logger = LoggerFactory.getLogger(InjectorImpl.class);
-
+	
 	private Map<Class<?>, Object> instances;
 	private RandomAccessMap<String, Object> configurationMap;
 
@@ -63,8 +63,8 @@ public class InjectorImpl implements Injector {
 			// try to access the field directly....
 
 			try {
-				Field field = clazz.getDeclaredField(fieldName);
-
+				Field field = ReflectionUtils.getClassField(clazz, fieldName);
+				
 				if (!field.isAccessible()) {
 					if (logger.isDebugEnabled()) {
 						logger.debug(setterName + "() method not found in " + object.getClass());
@@ -87,6 +87,8 @@ public class InjectorImpl implements Injector {
 			}
 		}
 	}
+
+
 
 	@Override
 	public void bind(String name, Object value) {
