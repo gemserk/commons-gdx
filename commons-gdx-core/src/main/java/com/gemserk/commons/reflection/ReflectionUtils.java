@@ -12,10 +12,11 @@ public class ReflectionUtils {
 	private static class ClassCache {
 
 		Map<String, Method> cachedMethods = new HashMap<String, Method>();
+		Map<String, Field> cachedFields = new HashMap<String, Field>();
 
 	}
 
-	private static Map<Class, ClassCache> classCache = new HashMap<Class, ClassCache>();
+	private static Map<Class, ClassCache> classCacheMap = new HashMap<Class, ClassCache>();
 	private static Map<String, String> cachedGettersMap = new HashMap<String, String>();
 	private static Map<String, String> cachedSettersMap = new HashMap<String, String>();
 
@@ -70,9 +71,9 @@ public class ReflectionUtils {
 	}
 
 	private static ClassCache getClassCache(Class clazz) {
-		if (!classCache.containsKey(clazz))
-			classCache.put(clazz, new ClassCache());
-		return classCache.get(clazz);
+		if (!classCacheMap.containsKey(clazz))
+			classCacheMap.put(clazz, new ClassCache());
+		return classCacheMap.get(clazz);
 	}
 
 	public static Object getFieldValue(Object object, String field) {
@@ -106,7 +107,11 @@ public class ReflectionUtils {
 	}
 
 	public static Field getClassField(Class<?> clazz, String fieldName) throws NoSuchFieldException {
-		return clazz.getDeclaredField(fieldName);
+		ClassCache classCache = getClassCache(clazz);
+		// one problem here is we are caching only declared field on this class, not parents or anything...
+		if (!classCache.cachedFields.containsKey(fieldName))
+			classCache.cachedFields.put(fieldName, clazz.getDeclaredField(fieldName));
+		return classCache.cachedFields.get(fieldName);
 	}
 	
 }
