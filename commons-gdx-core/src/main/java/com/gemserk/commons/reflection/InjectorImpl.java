@@ -41,11 +41,11 @@ public class InjectorImpl implements Injector {
 			String fieldName = field.getName();
 			Object value = configurationMap.get(fieldName);
 
-			if (value == null) {
-				if (logger.isDebugEnabled())
-					logger.debug("Couldn't find value for field " + fieldName + " from " + clazz);
+			if (value == null)
+				// if (logger.isDebugEnabled())
+				// logger.debug("Couldn't find value for field " + fieldName + " from " + clazz);
 				continue;
-			}
+			// }
 
 			setField(object, fieldName, value);
 		}
@@ -62,14 +62,17 @@ public class InjectorImpl implements Injector {
 
 			// try to access the field directly....
 
-			if (logger.isDebugEnabled()) {
-				logger.debug(setterName + "() method not found in " + object.getClass());
-				logger.debug("trying access field...");
-			}
-
 			try {
 				Field field = clazz.getDeclaredField(fieldName);
-				field.setAccessible(true);
+
+				if (!field.isAccessible()) {
+					if (logger.isDebugEnabled()) {
+						logger.debug(setterName + "() method not found in " + object.getClass());
+						logger.debug("making field public");
+					}
+					field.setAccessible(true);
+				}
+
 				field.set(object, value);
 			} catch (Exception e) {
 				throw new RuntimeException("Failed to set value to field " + fieldName, e);
