@@ -25,17 +25,31 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	private boolean matrixDirty;
 
-	private float width;
-	private float height;
+	private final Vector2 min = new Vector2();
+	private final Vector2 max = new Vector2();
 
 	public Libgdx2dCameraTransformImpl() {
 		this(0, 0);
 	}
 
 	public Libgdx2dCameraTransformImpl(float centerX, float centerY) {
-		width = Gdx.graphics.getWidth();
-		height = Gdx.graphics.getHeight();
-		projectionMatrix.setToOrtho2D(0, 0, width, height);
+		projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		invertedTransform.set(projectionMatrix);
+		invertedTransform.inv();
+		
+		tmp.set(-1, -1, 0f);
+		tmp.prj(invertedTransform);
+		
+		min.x = tmp.x;
+		min.y = tmp.y;
+		
+		tmp.set(1, 1, 0f);
+		tmp.prj(invertedTransform);
+		
+		max.x = tmp.x;
+		max.y = tmp.y;
+
 		center(centerX, centerY);
 		matrixDirty = true;
 	}
@@ -136,25 +150,25 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	public void getFrustum(Rectangle frustum) {
 		recalculateMatrix();
 
-		tmp.set(0f, 0f, 0f);
+		tmp.set(min.x, min.y, 0f);
 		tmp.mul(invertedTransform);
 
 		float x0 = tmp.x;
 		float y0 = tmp.y;
 
-		tmp.set(width, 0f, 0f);
+		tmp.set(max.x, min.y, 0f);
 		tmp.mul(invertedTransform);
 
 		float x1 = tmp.x;
 		float y1 = tmp.y;
 
-		tmp.set(0f, height, 0f);
+		tmp.set(min.x, max.y, 0f);
 		tmp.mul(invertedTransform);
 
 		float x2 = tmp.x;
 		float y2 = tmp.y;
 
-		tmp.set(width, height, 0f);
+		tmp.set(max.x, max.y, 0f);
 		tmp.mul(invertedTransform);
 
 		float x3 = tmp.x;

@@ -66,13 +66,13 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	public void render() {
 		camera.getFrustum(frustum);
 		camera.apply(spriteBatch);
+		
 		spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerEntities.size(); i++) {
 			Entity e = orderedByLayerEntities.get(i);
 			RenderableComponent renderableComponent = Components.getRenderableComponent(e);
 			if (!renderableComponent.isVisible())
 				continue;
-			
 
 			FrustumCullingComponent frustumCullingComponent = Components.getFrustumCullingComponent(e);
 			if (frustumCullingComponent != null) {
