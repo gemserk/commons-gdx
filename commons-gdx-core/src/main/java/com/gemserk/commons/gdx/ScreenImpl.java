@@ -75,7 +75,7 @@ public class ScreenImpl implements Screen {
 
 		if (frameTime > maxFrameTime)
 			frameTime = maxFrameTime;
-
+		
 		accumulator += frameTime;
 
 		while (accumulator >= dt) {
