@@ -8,14 +8,14 @@ import com.gemserk.componentsengine.utils.Parameters;
  */
 public class GameStateDelegateFixedTimestepImpl implements GameState {
 
-	float delta;
+	protected float delta;
 
-	float dt;
-	float maxFrameTime;
+	protected float dt;
+	protected float maxFrameTime;
 
-	float accumulator;
+	protected float accumulator;
 
-	GameState gameState;
+	protected GameState gameState;
 	
 	public GameStateDelegateFixedTimestepImpl(GameState gameState) {
 		this(gameState, 0.01f, 0.25f);
