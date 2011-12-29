@@ -3,6 +3,7 @@ package com.gemserk.commons.artemis.events.reflection;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class EventListenerReflectionRegistrator {
 
 	private static final Map<Class<?>, Map<String, Method>> cachedMethodsPerClass = new HashMap<Class<?>, Map<String, Method>>();
 
-	private static final Map<Method, Annotation[]> cachedAnnotationsPerMethod = new HashMap<Method, Annotation[]>();
+	private static final Map<Method, Annotation[]> cachedAnnotationsPerMethod = new IdentityHashMap<Method, Annotation[]>();
 
 	private static final PoolObjectFactory<InvokeMethodEventListener> invokeMethodEventListenerFactory = new PoolObjectFactory<InvokeMethodEventListener>() {
 
