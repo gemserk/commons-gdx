@@ -126,8 +126,11 @@ public class LibgdxResourceBuilder {
 			@Override
 			public Sprite load() {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
-				if (region == null)
+				if (region == null) {
 					region = textureAtlas.findRegion(regionId);
+					if (region == null)
+						throw new RuntimeException("Failed to create Sprite resource " + id + " from region " + regionId + " from texture atlas " + textureAtlasId);
+				}
 				return new Sprite(region);
 			}
 		});
@@ -315,7 +318,7 @@ public class LibgdxResourceBuilder {
 					throw new RuntimeException("Failed to load resource " + id, e);
 				}
 			}
-			
+
 			@Override
 			public void unload(Object data) {
 				if (data instanceof Disposable) {
@@ -334,7 +337,7 @@ public class LibgdxResourceBuilder {
 	public SpriteResourceBuilder sprite2() {
 		return new SpriteResourceBuilder(resourceManager);
 	}
-	
+
 	public TextureResourceBuilder texture2(FileHandle fileHandle) {
 		return new TextureResourceBuilder(fileHandle);
 	}
