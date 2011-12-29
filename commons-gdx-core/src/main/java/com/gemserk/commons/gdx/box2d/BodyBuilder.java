@@ -36,16 +36,16 @@ public class BodyBuilder {
 		this.fixtureDefBuilder = new FixtureDefBuilder();
 		this.fixtureDefs = new ArrayList<FixtureDef>();
 		this.fixtureUserDatas = new ArrayList<Object>();
-		reset();
+		reset(true);
 	}
 
 	public FixtureDefBuilder fixtureDefBuilder() {
 		return fixtureDefBuilder;
 	}
 
-	private void reset() {
+	private void reset(boolean disposeShapes) {
 
-		if (fixtureDefs != null) {
+		if (fixtureDefs != null && disposeShapes) {
 			for (int i = 0; i < fixtureDefs.size(); i++) {
 				FixtureDef fixtureDef = fixtureDefs.get(i);
 				fixtureDef.shape.dispose();
@@ -76,10 +76,10 @@ public class BodyBuilder {
 		return this;
 	}
 
-	private void addUserDataToLastFixture(Object fixtureUserData) {
-		fixtureUserDatas.ensureCapacity(fixtureDefs.size());
-		fixtureUserDatas.add(fixtureDefs.size() - 1, fixtureUserData);
-	}
+	// private void addUserDataToLastFixture(Object fixtureUserData) {
+	// fixtureUserDatas.ensureCapacity(fixtureDefs.size());
+	// fixtureUserDatas.add(fixtureDefs.size() - 1, fixtureUserData);
+	// }
 
 	public BodyBuilder fixture(FixtureDefBuilder fixtureDef) {
 		return fixture(fixtureDef, null);
@@ -148,6 +148,10 @@ public class BodyBuilder {
 	}
 
 	public Body build() {
+		return build(true);
+	}
+
+	public Body build(boolean disposeShapes) {
 		Body body = world.createBody(bodyDef);
 
 		for (int i = 0; i < fixtureDefs.size(); i++) {
@@ -172,7 +176,7 @@ public class BodyBuilder {
 		body.setUserData(userData);
 		body.setTransform(position, angle);
 
-		reset();
+		reset(disposeShapes);
 		return body;
 	}
 
