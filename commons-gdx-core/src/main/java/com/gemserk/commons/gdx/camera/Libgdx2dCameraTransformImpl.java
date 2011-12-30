@@ -145,6 +145,19 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		recalculateMatrix();
 		return combinedMatrix;
 	}
+	
+
+	@Override
+	public Matrix4 getModelViewMatrix() {
+		recalculateMatrix();
+		return transform;
+	}
+
+	@Override
+	public Matrix4 getProjectionMatrix() {
+		recalculateMatrix();
+		return projectionMatrix;
+	}
 
 	@Override
 	public void getFrustum(Rectangle frustum) {
@@ -194,5 +207,6 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 			matrixDirty = false;
 		}
 	}
+
 
 }

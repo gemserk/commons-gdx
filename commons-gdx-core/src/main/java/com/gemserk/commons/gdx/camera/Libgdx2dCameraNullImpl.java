@@ -59,4 +59,14 @@ public class Libgdx2dCameraNullImpl implements Libgdx2dCamera {
 		
 	}
 
+	@Override
+	public Matrix4 getModelViewMatrix() {
+		return combinedMatrix;
+	}
+
+	@Override
+	public Matrix4 getProjectionMatrix() {
+		return combinedMatrix;
+	}
+
 }

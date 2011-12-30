@@ -62,6 +62,16 @@ public interface Libgdx2dCamera {
 	Matrix4 getCombinedMatrix();
 
 	/**
+	 * Returns the model view matrix used for this camera.
+	 */
+	Matrix4 getModelViewMatrix();
+
+	/**
+	 * Returns the projection view matrix used for this camera.
+	 */
+	Matrix4 getProjectionMatrix();
+
+	/**
 	 * Returns the frustum of the camera in the rectangle.
 	 * 
 	 * @param frustum
