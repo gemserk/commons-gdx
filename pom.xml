@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gemserk.commons.gdx</groupId>
 	<artifactId>commons-gdx</artifactId>
-	<version>0.0.7</version>
+	<version>0.0.8-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Common Gdx - Parent</name>
 	<description>Common utitilites to be used with libgdx</description>
@@ -61,7 +61,7 @@
 		<compiler.version>1.6</compiler.version>
 		<adwhirl.version>3.0.0</adwhirl.version>
 		<android.version>2.2.1</android.version>
-		<animation4j.version>0.2.0</animation4j.version>
+		<animation4j.version>0.2.1-SNAPSHOT</animation4j.version>
 		<artemis.version>0.0.1-GEMSERK-SNAPSHOT</artemis.version>
 		<gdx.version>0.9.3-SNAPSHOT</gdx.version>
 		<resourcesmanager.version>0.1.1-SNAPSHOT</resourcesmanager.version>
