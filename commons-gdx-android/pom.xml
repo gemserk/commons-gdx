@@ -4,11 +4,11 @@
 	<parent>
 		<groupId>com.gemserk.commons.gdx</groupId>
 		<artifactId>commons-gdx</artifactId>
-		<version>0.0.7-SNAPSHOT</version>
+		<version>0.0.7</version>
 	</parent>
 	<groupId>com.gemserk.commons.gdx</groupId>
 	<artifactId>commons-gdx-android</artifactId>
-	<version>0.0.7-SNAPSHOT</version>
+	<version>0.0.7</version>
 	<packaging>jar</packaging>
 	<name>Common Gdx - Core - Android module</name>
 	<description>Common Gdx - Core - Android module</description>
