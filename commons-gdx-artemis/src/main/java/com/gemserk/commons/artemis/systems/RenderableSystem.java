@@ -37,7 +37,7 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	}
 
 	@Override
-	protected void added(Entity entity) {
+	protected void enabled(Entity entity) {
 		// order the entity in the Layer, probably the same inside the layer
 		for (int i = 0; i < renderLayers.size(); i++) {
 			RenderLayer renderLayer = renderLayers.get(i);
@@ -49,7 +49,7 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	}
 
 	@Override
-	protected void removed(Entity entity) {
+	protected void disabled(Entity entity) {
 		// remove the order
 		for (int i = 0; i < renderLayers.size(); i++) {
 			RenderLayer renderLayer = renderLayers.get(i);
