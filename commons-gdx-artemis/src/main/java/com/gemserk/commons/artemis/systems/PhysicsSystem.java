@@ -39,23 +39,37 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 	protected boolean checkProcessing() {
 		return isEnabled();
 	}
+	
+	@Override
+	protected void disabled(Entity e) {
+		PhysicsComponent physicsComponent = Components.getPhysicsComponent(e);
+		physicsComponent.getBody().setActive(false);	
+		releaseContacts(physicsComponent.getContact());
+	}
+	
+	@Override
+	protected void enabled(Entity e) {
+		PhysicsComponent physicsComponent = Components.getPhysicsComponent(e);
+		physicsComponent.getBody().setActive(true);			
+	}
 
 	@Override
 	protected void removed(Entity e) {
+		PhysicsComponent physicsComponent = Components.getPhysicsComponent(e);
 
-		// on entity removed, we should remove body from physics world
-
-		PhysicsComponent component = Components.getPhysicsComponent(e);
-
-		if (component == null) {
+		if (physicsComponent == null) 
 			return;
-		}
 
-		Body body = component.getBody();
+		Body body = physicsComponent.getBody();
 		body.setUserData(null);
 
-		Contacts contacts = component.getContact();
+		// removes contact from the other entity
+		releaseContacts(physicsComponent.getContact());
 
+		physicsWorld.destroyBody(body);
+	}
+	
+	private void releaseContacts(Contacts contacts) {
 		// removes contact from the other entity
 		for (int i = 0; i < contacts.getContactCount(); i++) {
 			Contact contact = contacts.getContact(i);
@@ -71,9 +85,6 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 			PhysicsComponent otherPhyiscsComponent = Components.getPhysicsComponent(otherEntity);
 			otherPhyiscsComponent.getContact().removeContact(contact.getOtherFixture(), contact.getMyFixture());
 		}
-
-		physicsWorld.destroyBody(body);
-
 	}
 
 	@Override
