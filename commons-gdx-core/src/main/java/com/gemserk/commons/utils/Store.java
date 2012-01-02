@@ -42,5 +42,10 @@ public abstract class Store<T> {
 	public T get(int index) {
 		return created.get(index);
 	}
+	
+	public void preCreate(int count) {
+		for (int i = 0; i < count; i++)
+			free(createObject());
+	}
 
 }
