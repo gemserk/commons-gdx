@@ -2,10 +2,16 @@ package com.gemserk.commons.utils;
 
 import java.util.ArrayList;
 
-public abstract class Store<T> {
-
+public class Store<T> {
+	
 	protected ArrayList<T> created = new ArrayList<T>();
 	protected ArrayList<T> free = new ArrayList<T>();
+	
+	StoreFactory<T> storeFactory;
+	
+	public Store(StoreFactory<T> storeFactory) {
+		this.storeFactory = storeFactory;
+	}
 
 	public T get() {
 		if (free.isEmpty())
@@ -22,12 +28,10 @@ public abstract class Store<T> {
 	}
 
 	protected T newObject() {
-		T t = createObject();
+		T t = storeFactory.createObject();
 		created.add(t);
 		return t;
 	}
-
-	protected abstract T createObject();
 
 	public void free(T t) {
 		// entities keep being in the world with this.
@@ -38,6 +42,10 @@ public abstract class Store<T> {
 	public int size() {
 		return created.size();
 	}
+	
+	public int getTotalSize() {
+		return created.size() + free.size();
+	}
 
 	public T get(int index) {
 		return created.get(index);
@@ -45,7 +53,7 @@ public abstract class Store<T> {
 	
 	public void preCreate(int count) {
 		for (int i = 0; i < count; i++)
-			free(createObject());
+			free(storeFactory.createObject());
 	}
 
 }
