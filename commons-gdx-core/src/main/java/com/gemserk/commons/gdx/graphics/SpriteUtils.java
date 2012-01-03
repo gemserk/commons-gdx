@@ -46,13 +46,28 @@ public class SpriteUtils {
 	public static void centerOn(Sprite sprite, float x, float y) {
 		centerOn(sprite, x, y, 0.5f, 0.5f);
 	}
-	
+
 	/**
 	 * Centers the sprite on the given position.
 	 */
 	public static void centerOn(Sprite sprite, float x, float y, float cx, float cy) {
-		sprite.setOrigin(sprite.getWidth() * cx, sprite.getHeight() * cy);
+		// sprite.setOrigin(sprite.getWidth() * cx, sprite.getHeight() * cy);
+		center(sprite, cx, cy);
 		sprite.setPosition(x - sprite.getOriginX(), y - sprite.getOriginY());
+	}
+
+	/**
+	 * Sets the center of the sprite.
+	 * 
+	 * @param sprite
+	 *            The Sprite to be centered.
+	 * @param cx
+	 *            A normalized value of the x coordinate of the center of the sprite (normally between [0,1])
+	 * @param cy
+	 *            A normalized value of the y coordinate of the center of the sprite (normally between [0,1])
+	 */
+	public static void center(Sprite sprite, float cx, float cy) {
+		sprite.setOrigin(sprite.getWidth() * cx, sprite.getHeight() * cy);
 	}
 
 }
