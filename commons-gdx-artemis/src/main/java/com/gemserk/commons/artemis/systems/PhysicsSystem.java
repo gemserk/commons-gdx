@@ -27,6 +27,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 	@Override
 	protected void begin() {
+		// make the velocity and position steps variable
 		physicsWorld.step(GlobalTime.getDelta(), 6, 2);
 	}
 

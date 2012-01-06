@@ -41,6 +41,21 @@ public class MathUtils2 {
 		return a;
 	}
 
+	/**
+	 * Converts the coordinates of the vector to inside the rectangle at the other side, don't know the correct name of this method.
+	 */
+	public static void truncate(Vector2 v, Rectangle r) {
+		if (v.x > r.x + r.width)
+			v.x = r.x;
+		else if (v.x < r.x)
+			v.x = r.x + r.width;
+
+		if (v.y > r.y + r.height)
+			v.y = r.y;
+		else if (v.y < r.y)
+			v.y = r.y + r.height;
+	}
+
 	public static float distance(float x1, float y1, float x2, float y2) {
 		final float x_d = x2 - x1;
 		final float y_d = y2 - y1;
