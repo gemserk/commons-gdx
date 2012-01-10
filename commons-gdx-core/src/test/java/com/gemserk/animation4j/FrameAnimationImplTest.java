@@ -54,5 +54,17 @@ public class FrameAnimationImplTest {
 		assertThat(frameAnimationImpl.getCurrentFrame(), IsEqual.equalTo(0));
 		
 	}
+	
+	@Test
+	public void testClone() {
+		FrameAnimationImpl source = new FrameAnimationImpl(true, 10f, 50f, 40f);
+		source.update(5f);
+		FrameAnimationImpl clone = source.clone();
+		assertThat(clone.getFramesCount(), IsEqual.equalTo(source.getFramesCount()));
+		assertThat(clone.getCurrentFrame(), IsEqual.equalTo(source.getCurrentFrame()));
+		assertThat(clone.getCurrentFrame(), IsEqual.equalTo(0));
+		clone.update(6f);
+		assertThat(clone.getCurrentFrame(), IsEqual.equalTo(1));
+	}
 
 }

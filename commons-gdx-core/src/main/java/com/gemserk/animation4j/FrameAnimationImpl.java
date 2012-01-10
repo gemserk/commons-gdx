@@ -8,17 +8,24 @@ public class FrameAnimationImpl implements FrameAnimation {
 	/**
 	 * Represents each frame time
 	 */
-	private float[] framesTimes;
+	float[] framesTimes;
 	
-	private int currentFrame;
-	private float currentTime;
+	int currentFrame;
+	float currentTime;
 
 	// add all play/stop/pause/etc?
 
-	private boolean loop;
+	boolean loop;
 
 	public void setLoop(boolean loop) {
 		this.loop = loop;
+	}
+	
+	public FrameAnimationImpl(FrameAnimationImpl frameAnimationImpl) {
+		this.framesTimes = new float[frameAnimationImpl.framesTimes.length];
+		System.arraycopy(frameAnimationImpl.framesTimes, 0, this.framesTimes, 0, frameAnimationImpl.framesTimes.length);
+		this.currentFrame = frameAnimationImpl.currentFrame;
+		this.currentTime = frameAnimationImpl.currentTime; 
 	}
 
 	public FrameAnimationImpl(float f0, float... framesTimes) {
@@ -35,6 +42,10 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.currentTime = 0;
 		this.loop = loop;
 		set(framesTimes);
+	}
+
+	public FrameAnimationImpl clone() {
+		return new FrameAnimationImpl(this);
 	}
 
 	private void set(float f0, float... frames) {
