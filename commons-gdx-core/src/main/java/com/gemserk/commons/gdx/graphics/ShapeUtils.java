@@ -6,8 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.Shape.Type;
+import com.gemserk.commons.gdx.box2d.Box2dUtils;
 
 public class ShapeUtils {
 
@@ -103,14 +102,7 @@ public class ShapeUtils {
 	 *            The translation in y coordinate.
 	 */
 	public static void translateFixtures(ArrayList<Fixture> fixtures, float tx, float ty) {
-		for (int i = 0; i < fixtures.size(); i++) {
-			Fixture fixture = fixtures.get(i);
-			Shape shape = fixture.getShape();
-
-			if (shape.getType() == Type.Polygon)
-				translatePolygonShape((PolygonShape) shape, tx, ty);
-			else if (shape.getType() == Type.Circle)
-				translateCircleShape((CircleShape) shape, tx, ty);
-		}
+		Box2dUtils.translateFixtures(fixtures, tx, ty);
+		// TODO: remove this method by inlining...
 	}
 }
