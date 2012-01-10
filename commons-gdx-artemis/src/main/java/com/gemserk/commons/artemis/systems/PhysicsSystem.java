@@ -7,9 +7,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
+import com.gemserk.commons.artemis.utils.PhysicsUtils;
 import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.box2d.Contacts;
-import com.gemserk.commons.gdx.box2d.Contacts.Contact;
 
 public class PhysicsSystem extends EntityProcessingSystem implements ActivableSystem, Disposable {
 
@@ -33,59 +33,41 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 
 	@Override
 	protected void process(Entity e) {
-		
+
 	}
 
 	@Override
 	protected boolean checkProcessing() {
 		return isEnabled();
 	}
-	
+
 	@Override
 	protected void disabled(Entity e) {
 		PhysicsComponent physicsComponent = Components.getPhysicsComponent(e);
-		physicsComponent.getBody().setActive(false);	
-		releaseContacts(physicsComponent.getContact());
+		physicsComponent.getBody().setActive(false);
+		PhysicsUtils.releaseContacts(physicsComponent.getContact());
 	}
-	
+
 	@Override
 	protected void enabled(Entity e) {
 		PhysicsComponent physicsComponent = Components.getPhysicsComponent(e);
-		physicsComponent.getBody().setActive(true);			
+		physicsComponent.getBody().setActive(true);
 	}
 
 	@Override
 	protected void removed(Entity e) {
 		PhysicsComponent physicsComponent = Components.getPhysicsComponent(e);
 
-		if (physicsComponent == null) 
+		if (physicsComponent == null)
 			return;
 
 		Body body = physicsComponent.getBody();
 		body.setUserData(null);
 
 		// removes contact from the other entity
-		releaseContacts(physicsComponent.getContact());
+		PhysicsUtils.releaseContacts(physicsComponent.getContact());
 
 		physicsWorld.destroyBody(body);
-	}
-	
-	private void releaseContacts(Contacts contacts) {
-		// removes contact from the other entity
-		for (int i = 0; i < contacts.getContactCount(); i++) {
-			Contact contact = contacts.getContact(i);
-
-			Body otherBody = contact.getOtherFixture().getBody();
-			if (otherBody == null)
-				continue;
-
-			Entity otherEntity = (Entity) otherBody.getUserData();
-			if (otherEntity == null)
-				continue;
-
-			PhysicsComponent otherPhyiscsComponent = Components.getPhysicsComponent(otherEntity);
-			otherPhyiscsComponent.getContact().removeContact(contact.getOtherFixture(), contact.getMyFixture());
-		}
 	}
 
 	@Override

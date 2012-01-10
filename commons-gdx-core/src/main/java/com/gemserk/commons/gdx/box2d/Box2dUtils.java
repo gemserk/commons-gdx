@@ -75,4 +75,5 @@ public class Box2dUtils {
 		filter.groupIndex = groupIndex;
 		setFilter(body, filter);
 	}
+	
 }
