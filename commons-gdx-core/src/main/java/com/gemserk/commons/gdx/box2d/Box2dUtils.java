@@ -18,7 +18,7 @@ public class Box2dUtils {
 	
 	static final Vector2[] triangleVertices = new Vector2[3];
 
-	{
+	static {
 		for (int i = 0; i < triangleVertices.length; i++)
 			triangleVertices[i] = new Vector2();
 	}
