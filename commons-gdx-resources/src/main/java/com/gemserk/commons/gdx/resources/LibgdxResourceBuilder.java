@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.w3c.dom.Document;
 
-import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -338,7 +337,7 @@ public class LibgdxResourceBuilder {
 		return new SpriteResourceBuilder(resourceManager);
 	}
 
-	public TextureResourceBuilder texture2(FileHandle fileHandle) {
+	public static TextureResourceBuilder texture2(FileHandle fileHandle) {
 		return new TextureResourceBuilder(fileHandle);
 	}
 
@@ -346,46 +345,12 @@ public class LibgdxResourceBuilder {
 		return new AnimationResourceBuilder(resourceManager, textureId);
 	}
 
-	public XmlDocumentDeclaration xmlDocument(String file) {
-		return new XmlDocumentDeclaration(file);
+	public static XmlDocumentResourceBuilder xmlDocument(String file) {
+		return new XmlDocumentResourceBuilder(file);
 	}
 
 	public FontResourceBuilder font2(String imageFile, String fontFile) {
 		return new FontResourceBuilder(internal(imageFile), internal(fontFile));
-	}
-
-	public static class XmlDocumentDeclaration implements ResourceBuilder<Document> {
-
-		private final String file;
-
-		private boolean cached = false;
-
-		private FileType fileType = FileType.Internal;
-
-		public XmlDocumentDeclaration fileType(FileType fileType) {
-			this.fileType = fileType;
-			return this;
-		}
-
-		public XmlDocumentDeclaration cached() {
-			this.cached = true;
-			return this;
-		}
-
-		public XmlDocumentDeclaration(String file) {
-			this.file = file;
-		}
-
-		@Override
-		public Document build() {
-			return new DocumentParser().parse(Gdx.files.getFileHandle(file, fileType).read());
-		}
-
-		@Override
-		public boolean isVolatile() {
-			return cached;
-		}
-
 	}
 
 }

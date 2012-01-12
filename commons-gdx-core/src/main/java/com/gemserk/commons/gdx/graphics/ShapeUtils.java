@@ -2,6 +2,7 @@ package com.gemserk.commons.gdx.graphics;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -26,6 +27,51 @@ public class ShapeUtils {
 		return triangulator;
 	}
 
+	public static void calculateCenter(Vector2[] vertices, Vector2 center) {
+		center.x = 0f;
+		center.y = 0f;
+		for (int i = 0; i < vertices.length; i++) {
+			center.x += vertices[i].x;
+			center.y += vertices[i].y;
+		}
+		center.x /= vertices.length;
+		center.y /= vertices.length;
+	}
+
+	public static void translateVertices(Vector2[] vertices, Vector2 tx) {
+		for (int i = 0; i < vertices.length; i++) 
+			vertices[i].add(tx.x, tx.y);
+	}
+	
+	public static void calculateBounds(Vector2[] vertices, Rectangle bounds) {
+		bounds.x = Float.MAX_VALUE;
+		bounds.y = Float.MAX_VALUE;
+		
+		bounds.width = -Float.MAX_VALUE;
+		bounds.height = -Float.MAX_VALUE;
+		
+		for (int i = 0; i < vertices.length; i++) { 
+			Vector2 v = vertices[i];
+			
+			if (v.x < bounds.x)
+				bounds.x = v.x;
+
+			if (v.y < bounds.y)
+				bounds.y = v.y;
+			
+			if (v.x > bounds.x + bounds.width) 
+				bounds.width = v.x - bounds.x;
+
+			if (v.y > bounds.y + bounds.height) 
+				bounds.height = v.y - bounds.y;
+		}
+	}
+	
+	public void rotate(Vector2[] vertices, float angle) {
+		for (int i = 0; i < vertices.length; i++) 
+			vertices[i].rotate(angle);
+	}
+	
 	/**
 	 * Returns the center of a given PolygonShape.
 	 * 

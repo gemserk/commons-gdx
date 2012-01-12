@@ -7,12 +7,21 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.Shape.Type;
 import com.gemserk.commons.gdx.graphics.ShapeUtils;
+import com.gemserk.commons.gdx.graphics.Triangulator;
 
 public class Box2dUtils {
+	
+	static final Vector2[] triangleVertices = new Vector2[3];
+
+	{
+		for (int i = 0; i < triangleVertices.length; i++)
+			triangleVertices[i] = new Vector2();
+	}
 
 	public static Vector2[] initArray(int count) {
 		return initArray(new Vector2[count]);
@@ -75,5 +84,25 @@ public class Box2dUtils {
 		filter.groupIndex = groupIndex;
 		setFilter(body, filter);
 	}
-	
+
+	public static FixtureDef[] fixturesFromTriangulator(Triangulator triangulator) {
+		FixtureDef[] fixtureDefs = new FixtureDef[triangulator.getTriangleCount()];
+		FixtureDefBuilder fixtureDefBuilder = new FixtureDefBuilder();
+
+		for (int j = 0; j < triangulator.getTriangleCount(); j++) {
+
+			for (int p = 0; p < 3; p++) {
+				float[] pt = triangulator.getTrianglePoint(j, p);
+				triangleVertices[p].set(pt[0], pt[1]);
+			}
+
+			fixtureDefs[j] = fixtureDefBuilder //
+					.polygonShape(triangleVertices) //
+					.restitution(0f) //
+					.build();
+
+		}
+		
+		return fixtureDefs;
+	}
 }

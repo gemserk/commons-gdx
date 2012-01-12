@@ -1,5 +1,6 @@
 package com.gemserk.commons.vecmath;
 
+import com.badlogic.gdx.math.Vector2;
 import com.gemserk.vecmath.Matrix3f;
 import com.gemserk.vecmath.Vector2f;
 import com.gemserk.vecmath.Vector3f;
@@ -28,4 +29,12 @@ public class VecmathUtils {
 		v.set(tmp.x, tmp.y);
 	}
 
+	public static void copyTo(Vector2f[] v, Vector2[] out) {
+		for (int i = 0; i < v.length; i++) { 
+			if (out[i] == null)
+				out[i] = new Vector2();
+			out[i].set(v[i].x, v[i].y);
+		}
+	}
+	
 }

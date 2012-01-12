@@ -17,5 +17,8 @@ public interface ResourceBuilder<T> {
 	 * Defines how to build the data to be used in the Resource.
 	 */
 	T build();
+	
+	// could receive the resource manager as a parameter to the build if the resource builder need it to get other resources
+	// T build(ResourceManager resourceManager) 
 
 }
