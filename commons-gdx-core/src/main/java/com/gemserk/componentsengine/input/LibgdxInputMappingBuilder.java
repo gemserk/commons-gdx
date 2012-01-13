@@ -16,7 +16,7 @@ public class LibgdxInputMappingBuilder<K> {
 	public void monitorKey(K id, final int keyCode) {
 		inputDevicesMonitor.button(id, keyButtonMonitor(input, keyCode));
 	}
-	
+
 	public void monitorKeys(K id, final int... keyCodes) {
 		inputDevicesMonitor.button(id, keyButtonMonitor(input, keyCodes));
 	}
@@ -58,7 +58,7 @@ public class LibgdxInputMappingBuilder<K> {
 	public static ButtonMonitor rightMouseButtonMonitor(final Input input) {
 		return mouseButtonMonitor(input, Input.Buttons.RIGHT);
 	}
-	
+
 	public static ButtonMonitor keyButtonMonitor(final Input input, final int keyCode) {
 		return new ButtonMonitor() {
 			@Override
@@ -67,8 +67,8 @@ public class LibgdxInputMappingBuilder<K> {
 			}
 		};
 	}
-	
-	public static ButtonMonitor keyButtonMonitor(final Input input, final int...keyCodes) {
+
+	public static ButtonMonitor keyButtonMonitor(final Input input, final int... keyCodes) {
 		return new ButtonMonitor() {
 			@Override
 			protected boolean isDown() {
@@ -107,7 +107,7 @@ public class LibgdxInputMappingBuilder<K> {
 			}
 		};
 	}
-	
+
 	public static ButtonMonitor pointerDownButtonMonitor(final Input input, final int pointer) {
 		return new ButtonMonitor() {
 			@Override
@@ -118,28 +118,44 @@ public class LibgdxInputMappingBuilder<K> {
 	}
 
 	public static ButtonMonitor anyPointerButtonMonitor(final Input input) {
-		final int maxPointers = 5;
 		return new ButtonMonitor() {
+			final int maxPointers = 5;
+			int lastPointer = 0;
+
 			@Override
 			protected boolean isDown() {
-				for (int i = 0; i < maxPointers; i++) {
-					if (input.isTouched(i))
-						return true;
-				}
+				int i = lastPointer;
+
+				do {
+					if (input.isTouched(i)) {
+						lastPointer = i;
+						return input.isTouched(i);
+					}
+					i = (i + 1) % maxPointers;
+				} while (i != lastPointer);
+
 				return false;
 			}
 		};
 	}
-	
+
 	public static AnalogInputMonitor anyPointerXCoordinateMonitor(final Input input) {
 		return new AnalogInputMonitor() {
 			final int maxPointers = 5;
+			int lastPointer = 0;
+
 			@Override
 			protected float newValue() {
-				for (int i = 0; i < maxPointers; i++) {
-					if (input.isTouched(i))
+				int i = lastPointer;
+
+				do {
+					if (input.isTouched(i)) {
+						lastPointer = i;
 						return input.getX(i);
-				}
+					}
+					i = (i + 1) % maxPointers;
+				} while (i != lastPointer);
+
 				return input.getX(0);
 			}
 		};
@@ -148,15 +164,23 @@ public class LibgdxInputMappingBuilder<K> {
 	public static AnalogInputMonitor anyPointerYCoordinateMonitor(final Input input) {
 		return new AnalogInputMonitor() {
 			final int maxPointers = 5;
+			int lastPointer = 0;
+
 			@Override
 			protected float newValue() {
-				for (int i = 0; i < maxPointers; i++) {
-					if (input.isTouched(i))
+				int i = lastPointer;
+
+				do {
+					if (input.isTouched(i)) {
+						lastPointer = i;
 						return input.getY(i);
-				}
+					}
+					i = (i + 1) % maxPointers;
+				} while (i != lastPointer);
+
 				return input.getY(0);
 			}
 		};
 	}
-	
+
 }
