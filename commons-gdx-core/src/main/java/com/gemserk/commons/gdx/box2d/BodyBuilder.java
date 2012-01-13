@@ -76,11 +76,6 @@ public class BodyBuilder {
 		return this;
 	}
 
-	// private void addUserDataToLastFixture(Object fixtureUserData) {
-	// fixtureUserDatas.ensureCapacity(fixtureDefs.size());
-	// fixtureUserDatas.add(fixtureDefs.size() - 1, fixtureUserData);
-	// }
-
 	public BodyBuilder fixture(FixtureDefBuilder fixtureDef) {
 		return fixture(fixtureDef, null);
 	}

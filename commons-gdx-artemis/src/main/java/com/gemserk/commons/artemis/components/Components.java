@@ -114,4 +114,10 @@ public class Components {
 		return frustumCullingComponentClass.cast(e.getComponent(frustumCullingComponentType));
 	}
 	
+	public static final Class<GroupComponent> groupComponentClass = GroupComponent.class;
+	public static final ComponentType groupComponentType = ComponentTypeManager.getTypeFor(groupComponentClass);
+	
+	public static GroupComponent getGroupComponent(Entity e) {
+		return groupComponentClass.cast(e.getComponent(groupComponentType));
+	}
 }
