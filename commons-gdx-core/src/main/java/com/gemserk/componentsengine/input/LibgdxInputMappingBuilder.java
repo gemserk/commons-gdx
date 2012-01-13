@@ -130,4 +130,33 @@ public class LibgdxInputMappingBuilder<K> {
 			}
 		};
 	}
+	
+	public static AnalogInputMonitor anyPointerXCoordinateMonitor(final Input input) {
+		return new AnalogInputMonitor() {
+			final int maxPointers = 5;
+			@Override
+			protected float newValue() {
+				for (int i = 0; i < maxPointers; i++) {
+					if (input.isTouched(i))
+						return input.getX(i);
+				}
+				return input.getX(0);
+			}
+		};
+	}
+
+	public static AnalogInputMonitor anyPointerYCoordinateMonitor(final Input input) {
+		return new AnalogInputMonitor() {
+			final int maxPointers = 5;
+			@Override
+			protected float newValue() {
+				for (int i = 0; i < maxPointers; i++) {
+					if (input.isTouched(i))
+						return input.getY(i);
+				}
+				return input.getY(0);
+			}
+		};
+	}
+	
 }
