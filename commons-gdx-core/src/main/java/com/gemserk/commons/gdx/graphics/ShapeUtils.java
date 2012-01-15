@@ -158,12 +158,10 @@ public class ShapeUtils {
 	 * 
 	 * @param points
 	 *            An array with the points to be used when building the Convex Hull
-	 * @param convexHull
+	 * @param convexHullPoints
 	 *            An array where the Convex Hull points will be stored.
 	 */
-	public static void calculateConvexHull(Array<Vector2> points, Array<Vector2> convexHull) {
-
-		convexHull.clear();
+	public static void calculateConvexHull(Array<Vector2> points, Array<Vector2> convexHullPoints) {
 
 		if (points.size <= 1)
 			return;
@@ -177,7 +175,7 @@ public class ShapeUtils {
 				bot = point;
 		}
 
-		convexHull.add(bot);
+		convexHullPoints.add(bot);
 
 		p = bot;
 
@@ -192,7 +190,7 @@ public class ShapeUtils {
 					cand = points.get(i);
 			}
 
-			convexHull.add(cand);
+			convexHullPoints.add(cand);
 			p = cand;
 		} while (p != bot);
 
