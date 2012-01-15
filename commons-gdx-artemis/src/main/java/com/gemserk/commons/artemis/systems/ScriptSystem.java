@@ -14,19 +14,19 @@ public class ScriptSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void added(Entity e) {
-		super.added(e);
+	protected void enabled(Entity e) {
+		super.enabled(e);
 		ArrayList<Script> scripts = Components.getScriptComponent(e).getScripts();
 		for (int i = 0; i < scripts.size(); i++) 
 			scripts.get(i).init(world, e);
 	}
 
 	@Override
-	protected void removed(Entity e) {
+	protected void disabled(Entity e) {
 		ArrayList<Script> scripts = Components.getScriptComponent(e).getScripts();
 		for (int i = 0; i < scripts.size(); i++) 
 			scripts.get(i).dispose(world, e);
-		super.removed(e);
+		super.disabled(e);
 	}
 
 	@Override
