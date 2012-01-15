@@ -120,4 +120,11 @@ public class Components {
 	public static GroupComponent getGroupComponent(Entity e) {
 		return groupComponentClass.cast(e.getComponent(groupComponentType));
 	}
+	
+	public static final Class<LinearVelocityLimitComponent> linearVelocityComponentClass = LinearVelocityLimitComponent.class;
+	public static final ComponentType linearVelocityComponentType = ComponentTypeManager.getTypeFor(linearVelocityComponentClass);
+	
+	public static LinearVelocityLimitComponent getLinearVelocityComponent(Entity e) {
+		return linearVelocityComponentClass.cast(e.getComponent(linearVelocityComponentType));
+	}
 }
