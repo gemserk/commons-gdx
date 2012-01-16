@@ -14,8 +14,10 @@ public interface ConvexHull2d {
 
 	/**
 	 * Recalculates the ConvexHull for the all the given points specified with the add method and resets the calculation to prepare for the next calculation.
+	 * 
+	 * @return true if the the Convex Hull was calculated correctly, false otherwise.
 	 */
-	void recalculate();
+	boolean recalculate();
 
 	/**
 	 * Returns the quantity of points of the last calculated Convex Hull.

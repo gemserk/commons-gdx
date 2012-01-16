@@ -6,14 +6,14 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Basic implementation of a Convex Hull calculation based on <a href="http://www.cse.unsw.edu.au/~lambert/java/3d/ConvexHull.html">here</a>.
  */
-public class ConvexHull2dCalculationImpl implements ConvexHull2d {
+public class ConvexHull2dImpl implements ConvexHull2d {
 
 	Array<Vector2> points;
 	Array<Vector2> convexHullPoints;
 
 	int size;
 
-	public ConvexHull2dCalculationImpl(int initialCapacity) {
+	public ConvexHull2dImpl(int initialCapacity) {
 		points = new Array<Vector2>(initialCapacity);
 		for (int i = 0; i < initialCapacity; i++)
 			points.add(new Vector2());
@@ -29,13 +29,13 @@ public class ConvexHull2dCalculationImpl implements ConvexHull2d {
 	}
 
 	@Override
-	public void recalculate() {
+	public boolean recalculate() {
 
 		convexHullPoints.clear();
 
-		if (size <= 1) {
+		if (size < 2) {
 			size = 0;
-			return;
+			return false;
 		}
 
 		Vector2 p;
@@ -67,6 +67,8 @@ public class ConvexHull2dCalculationImpl implements ConvexHull2d {
 		} while (p != bot);
 
 		size = 0;
+
+		return true;
 	}
 
 	private float area(Vector2 a, Vector2 b, Vector2 c) {
@@ -90,25 +92,25 @@ public class ConvexHull2dCalculationImpl implements ConvexHull2d {
 
 	@Override
 	public boolean inside(float x, float y) {
-		
+
 		// using algorithm from here -> http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-		
+
 		int pointsCount = getPointsCount();
 		boolean c = false;
-		
+
 		for (int i = 0, j = pointsCount - 1; i < pointsCount; j = i++) {
-			
+
 			float x0 = getX(i);
 			float y0 = getY(i);
 
 			float x1 = getX(j);
 			float y1 = getY(j);
 
-			if ( (y0 > y) != (y1 > y) && (x < (x1 - x0) * (y - y0) / (y1-y0) + x0 ) )
+			if ((y0 > y) != (y1 > y) && (x < (x1 - x0) * (y - y0) / (y1 - y0) + x0))
 				c = !c;
-			
+
 		}
-		
+
 		return c;
 	}
 }
