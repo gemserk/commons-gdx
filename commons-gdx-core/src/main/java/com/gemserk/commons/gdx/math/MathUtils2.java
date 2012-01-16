@@ -44,7 +44,7 @@ public class MathUtils2 {
 	/**
 	 * Converts the coordinates of the vector to inside the rectangle at the other side, don't know the correct name of this method.
 	 */
-	public static void truncate(Vector2 v, Rectangle r) {
+	public static void truncateWithModule(Vector2 v, Rectangle r) {
 		if (v.x > r.x + r.width)
 			v.x = r.x;
 		else if (v.x < r.x)
@@ -54,6 +54,17 @@ public class MathUtils2 {
 			v.y = r.y;
 		else if (v.y < r.y)
 			v.y = r.y + r.height;
+	}
+	
+	public static void truncate(Vector2 v, Rectangle r) {
+		if (v.x > r.x + r.width)
+			v.x = r.x + r.width;
+		else if (v.x < r.x)
+			v.x = r.x;
+		if (v.y > r.y + r.height)
+			v.y = r.y + r.height;
+		else if (v.y < r.y)
+			v.y = r.y;
 	}
 
 	public static float distance(float x1, float y1, float x2, float y2) {
