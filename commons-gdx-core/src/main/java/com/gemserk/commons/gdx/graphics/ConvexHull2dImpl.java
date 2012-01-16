@@ -50,6 +50,8 @@ public class ConvexHull2dImpl implements ConvexHull2d {
 		convexHullPoints.add(bot);
 
 		p = bot;
+		
+		// if the points are aligned I believe it fails....
 
 		do {
 			int i;
@@ -64,6 +66,11 @@ public class ConvexHull2dImpl implements ConvexHull2d {
 
 			convexHullPoints.add(cand);
 			p = cand;
+
+			// worst case scenario the convex hull should have the same size as the original points array.
+			if (convexHullPoints.size == size)
+				break;
+
 		} while (p != bot);
 
 		size = 0;
