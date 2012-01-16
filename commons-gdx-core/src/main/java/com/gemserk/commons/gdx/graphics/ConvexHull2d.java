@@ -32,4 +32,14 @@ public interface ConvexHull2d {
 	 */
 	float getY(int index);
 
+	/**
+	 * Returns true if the point is inside in the Convex Hull and false otherwise.
+	 * 
+	 * @param x
+	 *            The x coordinate of the point.
+	 * @param y
+	 *            The y coordinate of the point.
+	 */
+	boolean inside(float x, float y);
+
 }

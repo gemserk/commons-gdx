@@ -88,4 +88,27 @@ public class ConvexHull2dCalculationImpl implements ConvexHull2d {
 		return convexHullPoints.get(index).y;
 	}
 
+	@Override
+	public boolean inside(float x, float y) {
+		
+		// using algorithm from here -> http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+		
+		int pointsCount = getPointsCount();
+		boolean c = false;
+		
+		for (int i = 0, j = pointsCount - 1; i < pointsCount; j = i++) {
+			
+			float x0 = getX(i);
+			float y0 = getY(i);
+
+			float x1 = getX(j);
+			float y1 = getY(j);
+
+			if ( (y0 > y) != (y1 > y) && (x < (x1 - x0) * (y - y0) / (y1-y0) + x0 ) )
+				c = !c;
+			
+		}
+		
+		return c;
+	}
 }
