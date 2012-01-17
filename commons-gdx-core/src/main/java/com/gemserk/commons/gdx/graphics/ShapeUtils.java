@@ -196,8 +196,16 @@ public class ShapeUtils {
 
 	}
 
-	/* signed area of a triangle */
+	/* signed area of a triangle, 0 if aligned */
+
+	/**
+	 * Returns the signed area of a triangle, 0 if vertices are aligned.
+	 */
 	public static float area(Vector2 a, Vector2 b, Vector2 c) {
-		return b.x * c.y - b.y * c.x + c.x * a.y - c.y * a.x + a.x * b.y - a.y * b.x;
+		return area(a.x, a.y, b.x, b.y, c.x, c.y);
+	}
+
+	public static float area(float x0, float y0, float x1, float y1, float x2, float y2) {
+		return x1 * y2 - y1 * x2 + x2 * y0 - y2 * x0 + x0 * y1 - y0 * x1;
 	}
 }
