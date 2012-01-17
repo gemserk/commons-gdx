@@ -55,7 +55,7 @@ public class MathUtils2 {
 		else if (v.y < r.y)
 			v.y = r.y + r.height;
 	}
-	
+
 	public static void truncate(Vector2 v, Rectangle r) {
 		if (v.x > r.x + r.width)
 			v.x = r.x + r.width;
@@ -75,6 +75,27 @@ public class MathUtils2 {
 
 	public static float diagonal(float x, float y) {
 		return (float) Math.sqrt(x * x + y * y);
+	}
+
+	/**
+	 * Grow the rectangle by the specified amount.
+	 * 
+	 * @param r
+	 *            The Rectangle to be modified.
+	 * @param width
+	 *            The amount to grow in the x axis;
+	 * @param height
+	 *            The amount to grow in the y axis;
+	 */
+	public static void growRectangle(Rectangle r, float width, float height) {
+		r.x -= width * 0.5f;
+		r.y -= height * 0.5f;
+		r.width += width;
+		r.height += height;
+	}
+	
+	public static void shrinkRectangle(Rectangle r, float width, float height) {
+		growRectangle(r, -width, -height);
 	}
 
 }
