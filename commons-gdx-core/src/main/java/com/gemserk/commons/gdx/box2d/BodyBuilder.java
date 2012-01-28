@@ -75,6 +75,16 @@ public class BodyBuilder {
 		bodyDef.fixedRotation = true;
 		return this;
 	}
+	
+	public BodyBuilder linearDamping(float linearDamping) {
+		bodyDef.linearDamping = linearDamping;
+		return this;
+	}
+
+	public BodyBuilder angularDamping(float angularDamping) {
+		bodyDef.angularDamping = angularDamping;
+		return this;
+	}
 
 	public BodyBuilder fixture(FixtureDefBuilder fixtureDef) {
 		return fixture(fixtureDef, null);
