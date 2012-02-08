@@ -21,7 +21,8 @@ public class ShapeUtils {
 	}
 
 	public static Triangulator triangulate(Vector2[] vertices) {
-		return triangulate(new BasicTriangulator(), vertices);
+//		return triangulate(new BasicTriangulator(), vertices);
+		return triangulate(new EfficientPolygonTriangulator(), vertices);
 	}
 
 	public static Triangulator triangulate(Triangulator triangulator, Vector2[] vertices) {
