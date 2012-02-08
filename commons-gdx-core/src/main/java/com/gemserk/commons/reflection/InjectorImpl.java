@@ -29,7 +29,7 @@ public class InjectorImpl implements Injector {
 	}
 
 	@Override
-	public void injectMembers(Object object) {
+	public Object injectMembers(Object object) {
 
 		// For now, it will only work for the declared fields of the object class, it will not try to set fields from its super classes.
 
@@ -49,7 +49,8 @@ public class InjectorImpl implements Injector {
 
 			setField(object, fieldName, value);
 		}
-
+		
+		return object;
 	}
 
 	protected void setField(Object object, String fieldName, Object value) {
