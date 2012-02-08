@@ -10,6 +10,10 @@ public class OwnerComponent extends Component {
 	public Entity getOwner() {
 		return owner;
 	}
+	
+	public void setOwner(Entity owner) {
+		this.owner = owner;
+	}
 
 	public OwnerComponent(Entity owner) {
 		this.owner = owner;
