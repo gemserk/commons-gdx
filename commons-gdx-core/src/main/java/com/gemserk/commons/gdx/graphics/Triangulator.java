@@ -24,5 +24,9 @@ public interface Triangulator {
 	int getTriangleCount();
 
 	float[] getTrianglePoint(int tri, int i);
+	
+	float getTrianglePointX(int tri, int i);
+	
+	float getTrianglePointY(int tri, int i);
 
 }

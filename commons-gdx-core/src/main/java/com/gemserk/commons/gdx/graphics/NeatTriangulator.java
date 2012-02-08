@@ -445,4 +445,14 @@ public class NeatTriangulator implements Triangulator {
 	 */
 	public void startHole() {
 	}
+
+	@Override
+	public float getTrianglePointX(int tri, int i) {
+		return pointsX[triangles[tri].v[i]];
+	}
+
+	@Override
+	public float getTrianglePointY(int tri, int i) {
+		return pointsY[triangles[tri].v[i]];
+	}
 }

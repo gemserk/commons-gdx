@@ -21,7 +21,10 @@ public class ShapeUtils {
 	}
 
 	public static Triangulator triangulate(Vector2[] vertices) {
-		NeatTriangulator triangulator = new NeatTriangulator();
+		return triangulate(new BasicTriangulator(), vertices);
+	}
+
+	public static Triangulator triangulate(Triangulator triangulator, Vector2[] vertices) {
 		for (int i = 0; i < vertices.length; i++)
 			triangulator.addPolyPoint(vertices[i].x, vertices[i].y);
 		triangulator.triangulate();
