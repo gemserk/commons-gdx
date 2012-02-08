@@ -14,7 +14,7 @@ public interface Injector {
 	 *            The object to be injected.
 	 * @return The injected instance.
 	 */
-	Object injectMembers(Object instance);
+	<T> T injectMembers(T instance);
 
 	/**
 	 * Instantiates a new instance of the specified class, configures it and internally caches it.

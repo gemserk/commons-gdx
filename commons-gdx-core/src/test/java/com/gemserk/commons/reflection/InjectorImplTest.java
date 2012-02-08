@@ -131,7 +131,7 @@ public class InjectorImplTest {
 
 		Injector injectorImpl = new InjectorImpl() {
 			@Override
-			public Object injectMembers(Object object) {
+			public <T> T injectMembers(T object) {
 				super.injectMembers(object);
 				setField(object, "object", someValue);
 				return object;

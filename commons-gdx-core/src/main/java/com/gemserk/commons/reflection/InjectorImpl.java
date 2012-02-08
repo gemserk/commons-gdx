@@ -29,7 +29,7 @@ public class InjectorImpl implements Injector {
 	}
 
 	@Override
-	public Object injectMembers(Object object) {
+	public <T> T injectMembers(T object) {
 
 		// For now, it will only work for the declared fields of the object class, it will not try to set fields from its super classes.
 
