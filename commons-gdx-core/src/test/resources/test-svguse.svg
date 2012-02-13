@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="44.8"
-     inkscape:cx="8.5652883"
-     inkscape:cy="66.248247"
+     inkscape:zoom="31.678384"
+     inkscape:cx="12.723095"
+     inkscape:cy="60.334207"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -65,12 +65,27 @@ WAOwBxloAtGyVG4aAAAAAElFTkSuQmCC
        id="image3029"
        x="0"
        y="0" />
+    <rect
+       style="fill:#6c5353;fill-opacity:1;stroke:none"
+       id="rect3035"
+       width="1"
+       height="1"
+       x="4"
+       y="4" />
     <use
-       x="0"
+       x="10"
        y="0"
        xlink:href="#image3029"
        id="use3031"
-       transform="matrix(0.76400748,-0.64520739,0.64520739,0.76400748,3.5639994,4.5865571)"
+       width="0"
+       height="0"
+       transform="translate(6.2677207,7.6211718)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use3031"
+       id="use3041"
+       transform="translate(-6.1856642,6.6100433)"
        width="50"
        height="70" />
   </g>

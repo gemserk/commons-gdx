@@ -123,6 +123,10 @@ public class SvgInkscapeUtils {
 		}
 		return m;
 	}
+	
+	public static String transformToAttribute(Matrix3f m) {
+		return "matrix(" + m.m00 + "," + m.m10 + "," + m.m01 + "," + m.m11 + "," + m.m02 + "," + m.m12 + ")";
+	}
 
 	public static boolean isFlipped(Matrix3f matrix) {
 		return matrix.getM00() != matrix.getM11();

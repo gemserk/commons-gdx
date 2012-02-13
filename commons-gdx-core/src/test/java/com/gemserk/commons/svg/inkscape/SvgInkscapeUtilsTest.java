@@ -67,4 +67,21 @@ public class SvgInkscapeUtilsTest {
 		assertThat(SvgInkscapeUtils.isFlipped(matrix), IsEqual.equalTo(true));
 	}
 	
+	@Test
+	public void testMatrixToSvgAttribute() {
+		Matrix3f matrix = new Matrix3f();
+		matrix.setIdentity();
+		
+		matrix.m00 = 1f;
+		matrix.m10 = 2f;
+		matrix.m01 = 3f;
+		matrix.m11 = 4f;
+		matrix.m02 = 5f;
+		matrix.m12 = 6f;
+		
+		String transformToAttribute = SvgInkscapeUtils.transformToAttribute(matrix);
+		
+		assertThat(transformToAttribute , IsEqual.equalTo("matrix(1.0,2.0,3.0,4.0,5.0,6.0)"));
+	}
+	
 }
