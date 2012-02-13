@@ -65,13 +65,6 @@ WAOwBxloAtGyVG4aAAAAAElFTkSuQmCC
        id="image3029"
        x="0"
        y="0" />
-    <rect
-       style="fill:#6c5353;fill-opacity:1;stroke:none"
-       id="rect3035"
-       width="1"
-       height="1"
-       x="4"
-       y="4" />
     <use
        x="10"
        y="0"
@@ -88,5 +81,25 @@ WAOwBxloAtGyVG4aAAAAAElFTkSuQmCC
        transform="translate(-6.1856642,6.6100433)"
        width="50"
        height="70" />
+    <g
+       id="g3082"
+       transform="translate(0.91545079,-3.3461303)">
+      <g
+         transform="translate(2.4306796,2.1465742)"
+         id="g3077">
+        <rect
+           style="fill:#6c5353;fill-opacity:1;stroke:none"
+           id="rect3035"
+           width="1"
+           height="1"
+           x="4"
+           y="4" />
+        <path
+           id="rect3075"
+           d="m 5.7993345,2.3585021 1,0 0,1 -1,0 z"
+           style="fill:#6c5353;fill-opacity:1;stroke:none"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
   </g>
 </svg>

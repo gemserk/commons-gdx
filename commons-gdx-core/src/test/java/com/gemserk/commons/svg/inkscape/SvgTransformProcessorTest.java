@@ -82,8 +82,6 @@ public class SvgTransformProcessorTest {
 
 	}
 
-	public static final String GemserkNamespace = "gemserk";
-
 	public class SvgTransformProcessor extends SvgProcessor {
 
 		protected Stack<Matrix3f> transformStack;
@@ -109,7 +107,7 @@ public class SvgTransformProcessorTest {
 
 			transformStack.push(transform);
 
-			element.setAttributeNS(GemserkNamespace, "absoluteTransform", SvgInkscapeUtils.transformToAttribute(transform));
+			element.setAttributeNS(GemserkNamespace.Name, GemserkNamespace.AbsoluteTransform, SvgInkscapeUtils.transformToAttribute(transform));
 		}
 
 	}
@@ -120,7 +118,7 @@ public class SvgTransformProcessorTest {
 		protected void processElement(Element element) {
 			System.out.println("id: " + SvgNamespace.getId(element));
 			System.out.println("local: " + element.getAttribute("transform"));
-			System.out.println("absolute: " + element.getAttributeNS(GemserkNamespace, "absoluteTransform"));
+			System.out.println("absolute: " + element.getAttributeNS(GemserkNamespace.Name, GemserkNamespace.AbsoluteTransform));
 		}
 
 	}
@@ -133,7 +131,7 @@ public class SvgTransformProcessorTest {
 		SvgProcessor svgProcessor = new SvgTransformProcessor();
 		svgProcessor.process(document);
 
-		new SvgLogProcessor().process(document);
-
+		SvgLogProcessor svgLogProcessor = new SvgLogProcessor();
+		svgLogProcessor.process(document);
 	}
 }
