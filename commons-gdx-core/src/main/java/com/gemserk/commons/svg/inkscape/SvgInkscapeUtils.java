@@ -1,7 +1,5 @@
 package com.gemserk.commons.svg.inkscape;
 
-import java.util.StringTokenizer;
-
 import org.w3c.dom.Element;
 
 import com.gemserk.vecmath.Matrix3f;
@@ -64,70 +62,22 @@ public class SvgInkscapeUtils {
 	}
 
 	/**
-	 * Parses a SVG Element transform attribute and applies each transform to the specified matrix.
-	 * 
-	 * @param transformAttribute
-	 *            The SVG Element transform attribute.
-	 * @param m
-	 *            The matrix to be modified.
-	 * @return The matrix with all transforms applied.
+	 * @deprecated Use SvgTransformUtils instead.
 	 */
 	public static Matrix3f parseTransformAttribute(String transformAttribute, Matrix3f m) {
-
-		transformAttribute = transformAttribute.replace(" ", "");
-
-		if (transformAttribute.startsWith("scale")) {
-			transformAttribute = transformAttribute.substring(0, transformAttribute.length() - 1);
-			transformAttribute = transformAttribute.substring("scale(".length());
-			StringTokenizer tokens = new StringTokenizer(transformAttribute, ", ");
-
-			float sx = Float.parseFloat(tokens.nextToken());
-			float sy = sx;
-
-			if (tokens.hasMoreTokens())
-				sy = Float.parseFloat(tokens.nextToken());
-
-			m.setM00(sx);
-			m.setM11(sy);
-		} else if (transformAttribute.startsWith("matrix")) {
-
-			transformAttribute = transformAttribute.substring(0, transformAttribute.length() - 1);
-			transformAttribute = transformAttribute.substring("matrix(".length());
-
-			StringTokenizer tokens = new StringTokenizer(transformAttribute, ", ");
-
-			float[] tr = new float[6];
-
-			for (int j = 0; j < tr.length; j++) {
-				tr[j] = Float.parseFloat(tokens.nextToken());
-			}
-
-			m.setM00(tr[0]);
-			m.setM10(tr[1]);
-
-			m.setM01(tr[2]);
-			m.setM11(tr[3]);
-
-			m.setM02(tr[4]);
-			m.setM12(tr[5]);
-		} else if (transformAttribute.startsWith("translate")) {
-			transformAttribute = transformAttribute.substring(0, transformAttribute.length() - 1);
-			transformAttribute = transformAttribute.substring("translate(".length());
-			StringTokenizer tokens = new StringTokenizer(transformAttribute, ", ");
-
-			float tx = Float.parseFloat(tokens.nextToken());
-			float ty = Float.parseFloat(tokens.nextToken());
-
-			m.setM02(tx);
-			m.setM12(ty);
-		}
-		return m;
+		return SvgTransformUtils.parseTransform(transformAttribute, m);
 	}
-	
+
+	/**
+	 * @deprecated Use SvgTransformUtils instead.
+	 */
 	public static String transformToAttribute(Matrix3f m) {
-		return "matrix(" + m.m00 + "," + m.m10 + "," + m.m01 + "," + m.m11 + "," + m.m02 + "," + m.m12 + ")";
+		return SvgTransformUtils.serializeTransform(m);
 	}
 
+	/**
+	 * @deprecated Use SvgTransformUtils isntead.
+	 */
 	public static boolean isFlipped(Matrix3f matrix) {
 		return matrix.getM00() != matrix.getM11();
 	}
