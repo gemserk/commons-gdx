@@ -1,4 +1,4 @@
-package com.gemserk.commons.svg.inkscape;
+package com.gemserk.commons.svg.processors;
 
 import java.io.InputStream;
 
@@ -6,14 +6,12 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.gemserk.commons.svg.processors.SvgConfigureIdProcessor;
-import com.gemserk.commons.svg.processors.SvgDocumentProcessor;
-import com.gemserk.commons.svg.processors.SvgElementProcessor;
-import com.gemserk.commons.svg.processors.SvgTransformProcessor;
-import com.gemserk.commons.svg.processors.SvgUseProcessor;
+import com.gemserk.commons.svg.inkscape.DocumentParser;
+import com.gemserk.commons.svg.inkscape.GemserkNamespace;
+import com.gemserk.commons.svg.inkscape.SvgNamespace;
 
 
-public class SvgTransformProcessorTest {
+public class SvgDocumentProcessorTest {
 
 	public class SvgLogProcessor extends SvgElementProcessor {
 

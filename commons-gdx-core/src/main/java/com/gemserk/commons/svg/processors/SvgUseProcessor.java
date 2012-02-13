@@ -1,5 +1,6 @@
 package com.gemserk.commons.svg.processors;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -30,18 +31,21 @@ public class SvgUseProcessor extends SvgElementProcessor {
 
 			Element clonedSourceElement = (Element) sourceElement.cloneNode(true);
 
-			clonedSourceElement.setAttribute(SvgNamespace.attributeId, SvgNamespace.getId(element));
+			Attr attributeNode = clonedSourceElement.getAttributeNode(SvgNamespace.attributeId);
+			attributeNode.setValue(SvgNamespace.getId(element) + "-instance");
 
-			// Matrix3f clonedElementTransform = GemserkNamespace.getAbsoluteTransform(clonedSourceElement);
+			Attr attributeNode2 = sourceElement.getAttributeNode(SvgNamespace.attributeId);
+			sourceElement.setIdAttributeNode(attributeNode2, true);
+
+			// clonedSourceElement.setIdAttributeNode(attributeNode, false);
+			// clonedSourceElement.removeAttributeNode(attributeNode);
+			// clonedSourceElement.setAttribute(SvgNamespace.attributeId, SvgNamespace.getId(element));
+
 			Matrix3f useAbsoluteTransform = GemserkNamespace.getAbsoluteTransform(element);
-
 			clonedSourceElement.setAttribute(SvgNamespace.attributeTransform, SvgTransformUtils.serializeTransform(useAbsoluteTransform));
 
-			// clonedElementTransform.mul(useTransform);
-			// clonedSourceElement.setAttribute(GemserkNamespace.attributeAbsoluteTransform, SvgInkscapeUtils.transformToAttribute(clonedElementTransform));
-
 			Node parentNode = element.getParentNode();
-			parentNode.removeChild(element);
+			// parentNode.removeChild(element);
 			parentNode.appendChild(clonedSourceElement);
 
 			return false;
