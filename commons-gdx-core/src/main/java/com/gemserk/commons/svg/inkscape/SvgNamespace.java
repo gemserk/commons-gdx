@@ -6,13 +6,15 @@ import com.gemserk.vecmath.Matrix3f;
 
 public class SvgNamespace {
 
-	public static final String svgElement = "svg";
-	public static final String imageElement = "image";
+	public static final String svgElement = "svg:svg";
+	public static final String imageElement = "svg:image";
+	public static final String useElement = "svg:use";
 
 	public static final String attributeId = "id";
 	public static final String attributeWidth = "width";
 	public static final String attributeHeight = "height";
 	public static final String attributeTransform = "transform";
+	public static final String attributeXlinkHref = "xlink:href";
 
 	public static boolean isSvg(Element element) {
 		return isType(svgElement, element);
@@ -20,6 +22,10 @@ public class SvgNamespace {
 	
 	public static boolean isImage(Element element) {
 		return isType(imageElement, element);
+	}
+	
+	public static boolean isUse(Element element) {
+		return isType(useElement, element);
 	}
 
 	public static boolean isType(String type, Element element) {
@@ -45,6 +51,10 @@ public class SvgNamespace {
 		Matrix3f m = new Matrix3f();
 		m.setIdentity();
 		return SvgInkscapeUtils.parseTransformAttribute(transformAttribute, m);
+	}
+	
+	public static String getXlinkHref(Element element) {
+		return element.getAttribute(attributeXlinkHref);
 	}
 
 }
