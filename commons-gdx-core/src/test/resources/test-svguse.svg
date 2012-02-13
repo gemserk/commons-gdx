@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg:svg
+<svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -15,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.2 r9819"
    sodipodi:docname="test-svguse.svg">
-  <svg:defs
+  <defs
      id="defs4" />
   <sodipodi:namedview
      id="base"
@@ -35,7 +36,7 @@
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1" />
-  <svg:metadata
+  <metadata
      id="metadata7">
     <rdf:RDF>
       <cc:Work
@@ -46,12 +47,12 @@
         <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
-  </svg:metadata>
-  <svg:g
+  </metadata>
+  <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <svg:image
+    <image
        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABHNCSVQICAgIfAhkiAAAAOxJREFU
 eJzt0TENACAAwDDAIjbw/4KMHqwKlmyeve8Is3TA7xqANQBrANYArAFYA7AGYA3AGoA1AGsA1gCs
 AVgDsAZgDcAagDUAawDWAKwBWAOwBmANwBqANQBrANYArAFYA7AGYA3AGoA1AGsA1gCsAVgDsAZg
@@ -63,37 +64,34 @@ WAOwBxloAtGyVG4aAAAAAElFTkSuQmCC
        height="2"
        id="image3029"
        x="0"
-       y="0">
-      <health
-         max="100" />
-    </svg:image>
-    <svg:use
-       x="10"
-       y="0"
-       xlink:href="#image3029"
-       id="use3031"
-       width="0"
-       height="0"
-       transform="translate(6.2677207,7.6211718)" />
-    <svg:g
+       y="0" />
+    <g
        id="g3082"
-       transform="translate(0.91545079,-3.3461303)">
-      <svg:g
+       transform="translate(1.6730652,-3.7249375)">
+      <g
          transform="translate(2.4306796,2.1465742)"
          id="g3077">
-        <svg:rect
+        <rect
            style="fill:#6c5353;fill-opacity:1;stroke:none"
            id="rect3035"
            width="1"
            height="1"
            x="4"
            y="4" />
-        <svg:path
+        <path
            id="rect3075"
            d="m 5.7993345,2.3585021 1,0 0,1 -1,0 z"
            style="fill:#6c5353;fill-opacity:1;stroke:none"
            inkscape:connector-curvature="0" />
-      </svg:g>
-    </svg:g>
-  </svg:g>
-</svg:svg>
+      </g>
+    </g>
+    <use
+       x="0"
+       y="0"
+       xlink:href="#image3029"
+       id="use3089"
+       transform="translate(5.4295697,4.9876283)"
+       width="0"
+       height="0" />
+  </g>
+</svg>

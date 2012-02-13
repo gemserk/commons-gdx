@@ -6,9 +6,9 @@ import com.gemserk.vecmath.Matrix3f;
 
 public class SvgNamespace {
 
-	public static final String svgElement = "svg:svg";
-	public static final String imageElement = "svg:image";
-	public static final String useElement = "svg:use";
+	public static final String svgElement = "svg";
+	public static final String imageElement = "image";
+	public static final String useElement = "use";
 
 	public static final String attributeId = "id";
 	public static final String attributeWidth = "width";

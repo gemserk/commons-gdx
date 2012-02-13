@@ -90,7 +90,7 @@ public class SvgTransformProcessorTest {
 
 			transformStack.push(transform);
 
-			element.setAttributeNS(GemserkNamespace.Name, GemserkNamespace.AbsoluteTransform, SvgInkscapeUtils.transformToAttribute(transform));
+			element.setAttributeNS(GemserkNamespace.Name, GemserkNamespace.attributeAbsoluteTransform, SvgInkscapeUtils.transformToAttribute(transform));
 			return true;
 		}
 
@@ -117,8 +117,9 @@ public class SvgTransformProcessorTest {
 				return true;
 
 			System.out.println("id: " + SvgNamespace.getId(element));
+			System.out.println("type: " + element.getNodeName());
 			System.out.println("local: " + element.getAttribute("transform"));
-			System.out.println("absolute: " + element.getAttributeNS(GemserkNamespace.Name, GemserkNamespace.AbsoluteTransform));
+			System.out.println("absolute: " + element.getAttributeNS(GemserkNamespace.Name, GemserkNamespace.attributeAbsoluteTransform));
 
 			return true;
 		}
@@ -148,6 +149,13 @@ public class SvgTransformProcessorTest {
 				Element clonedSourceElement = (Element) sourceElement.cloneNode(true);
 
 				clonedSourceElement.setAttribute(SvgNamespace.attributeId, SvgNamespace.getId(element));
+
+				Matrix3f clonedElementTransform = GemserkNamespace.getAbsoluteTransform(clonedSourceElement);
+				Matrix3f useTransform = GemserkNamespace.getAbsoluteTransform(element);
+
+				clonedElementTransform.mul(useTransform);
+
+				clonedSourceElement.setAttribute(GemserkNamespace.attributeAbsoluteTransform, SvgInkscapeUtils.transformToAttribute(clonedElementTransform));
 
 				Node parentNode = element.getParentNode();
 				parentNode.removeChild(element);
