@@ -10,15 +10,9 @@ public class SvgConfigureIdProcessor extends SvgElementProcessor {
 	@Override
 	public boolean processElement(Element element) {
 		Attr attributeNode = element.getAttributeNode(SvgNamespace.attributeId);
-		if (attributeNode == null) {
-			System.out.println("attr is null " + SvgNamespace.getId(element));
+		if (attributeNode == null) 
 			return true;
-		}
-		// element.setIdAttribute(SvgNamespace.attributeId, true);
 		element.setIdAttributeNode(attributeNode, true);
-		// element.setIdAttributeNS("svg", "id", true);
-		// element.getAttributeNode(name)
-		System.out.println(attributeNode.getValue());
 		return true;
 	}
 
