@@ -15,18 +15,21 @@ public class SvgDocumentProcessor {
 		internalProcessElement(root);
 	}
 
-	void internalProcessElement(Element element) {
+	void internalProcessChildren(Element element) {
 		NodeList list = element.getChildNodes();
 		for (int i = 0; i < list.getLength(); i++) {
 			if (list.item(i) instanceof Element) {
 				Element childElement = (Element) list.item(i);
-
-				handler.preProcess(childElement);
-				if (handler.processElement(childElement))
-					internalProcessElement(childElement);
-				handler.postProcessElement(childElement);
+				internalProcessElement(childElement);
 			}
 		}
+	}
+
+	private void internalProcessElement(Element element) {
+		handler.preProcess(element);
+		if (handler.processElement(element))
+			internalProcessChildren(element);
+		handler.postProcessElement(element);
 	}
 
 }

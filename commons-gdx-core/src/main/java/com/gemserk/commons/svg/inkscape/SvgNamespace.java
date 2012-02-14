@@ -50,7 +50,7 @@ public class SvgNamespace {
 		String transformAttribute = element.getAttribute(attributeTransform);
 		Matrix3f m = new Matrix3f();
 		m.setIdentity();
-		return SvgInkscapeUtils.parseTransformAttribute(transformAttribute, m);
+		return SvgTransformUtils.parseTransform(transformAttribute, m);
 	}
 	
 	public static String getXlinkHref(Element element) {
