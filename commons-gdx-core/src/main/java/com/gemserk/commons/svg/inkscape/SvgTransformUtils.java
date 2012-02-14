@@ -16,7 +16,8 @@ public class SvgTransformUtils {
 	 * @return The matrix with all transforms applied.
 	 */
 	public static Matrix3f parseTransform(String transform, Matrix3f matrix) {
-
+		matrix.setIdentity();
+		
 		transform = transform.replace(" ", "");
 
 		if (transform.startsWith("scale")) {

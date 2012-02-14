@@ -71,9 +71,7 @@ public class SvgNamespace {
 	}
 
 	public static Matrix3f getTransform(Element element) {
-		Matrix3f matrix = new Matrix3f();
-		matrix.setIdentity();
-		return getTransform(element, matrix);
+		return getTransform(element, new Matrix3f());
 	}
 	
 	public static Matrix3f getTransform(Element element, Matrix3f matrix) {

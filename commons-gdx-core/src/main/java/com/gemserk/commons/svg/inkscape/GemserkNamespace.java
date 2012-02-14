@@ -18,9 +18,7 @@ public class GemserkNamespace {
 	 * Returns a new Matrix3f with the values of the absoluteTransform from the element.
 	 */
 	public static Matrix3f getAbsoluteTransform(Element element) {
-		Matrix3f matrix = new Matrix3f();
-		matrix.setIdentity();
-		return getAbsoluteTransform(element, matrix);
+		return getAbsoluteTransform(element, new Matrix3f());
 	}
 
 	/**
