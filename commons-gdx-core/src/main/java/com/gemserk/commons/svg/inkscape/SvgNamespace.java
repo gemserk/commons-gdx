@@ -11,6 +11,10 @@ public class SvgNamespace {
 	public static final String useElement = "use";
 
 	public static final String attributeId = "id";
+
+	public static final String attributeX = "x";
+	public static final String attributeY = "y";
+
 	public static final String attributeWidth = "width";
 	public static final String attributeHeight = "height";
 	public static final String attributeTransform = "transform";
@@ -19,11 +23,11 @@ public class SvgNamespace {
 	public static boolean isSvg(Element element) {
 		return isType(svgElement, element);
 	}
-	
+
 	public static boolean isImage(Element element) {
 		return isType(imageElement, element);
 	}
-	
+
 	public static boolean isUse(Element element) {
 		return isType(useElement, element);
 	}
@@ -34,8 +38,28 @@ public class SvgNamespace {
 		return type.equalsIgnoreCase(element.getNodeName());
 	}
 
+	public static boolean hasAttribute(Element element, String attribute) {
+		return element.getAttributeNode(attribute) != null;
+	}
+
 	public static String getId(Element element) {
 		return element.getAttribute(attributeId);
+	}
+
+	public static float getX(Element element) {
+		return Float.parseFloat(element.getAttribute(attributeX));
+	}
+
+	public static float getY(Element element) {
+		return Float.parseFloat(element.getAttribute(attributeY));
+	}
+
+	public static void setX(Element element, float x) {
+		element.setAttribute(attributeX, Float.toString(x));
+	}
+
+	public static void setY(Element element, float y) {
+		element.setAttribute(attributeY, Float.toString(y));
 	}
 
 	public static float getWidth(Element element) {
@@ -45,14 +69,18 @@ public class SvgNamespace {
 	public static float getHeight(Element element) {
 		return Float.parseFloat(element.getAttribute(attributeHeight));
 	}
-	
+
 	public static Matrix3f getTransform(Element element) {
-		String transformAttribute = element.getAttribute(attributeTransform);
-		Matrix3f m = new Matrix3f();
-		m.setIdentity();
-		return SvgTransformUtils.parseTransform(transformAttribute, m);
+		Matrix3f matrix = new Matrix3f();
+		matrix.setIdentity();
+		return getTransform(element, matrix);
 	}
 	
+	public static Matrix3f getTransform(Element element, Matrix3f matrix) {
+		String transformAttribute = element.getAttribute(attributeTransform);
+		return SvgTransformUtils.parseTransform(transformAttribute, matrix);
+	}
+
 	public static String getXlinkHref(Element element) {
 		return element.getAttribute(attributeXlinkHref);
 	}
