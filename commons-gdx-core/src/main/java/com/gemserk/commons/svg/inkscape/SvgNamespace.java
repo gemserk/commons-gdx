@@ -80,6 +80,10 @@ public class SvgNamespace {
 		String transformAttribute = element.getAttribute(attributeTransform);
 		return SvgTransformUtils.parseTransform(transformAttribute, matrix);
 	}
+	
+	public static void setTransform(Element element, Matrix3f matrix) {
+		element.setAttribute(attributeTransform, SvgTransformUtils.serializeTransform(matrix));
+	}
 
 	public static String getXlinkHref(Element element) {
 		return element.getAttribute(attributeXlinkHref);
