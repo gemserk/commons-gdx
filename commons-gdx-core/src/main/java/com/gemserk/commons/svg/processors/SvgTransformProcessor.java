@@ -6,12 +6,14 @@ import org.w3c.dom.Element;
 
 import com.gemserk.commons.svg.inkscape.GemserkNamespace;
 import com.gemserk.commons.svg.inkscape.SvgNamespace;
-import com.gemserk.commons.svg.inkscape.SvgTransformUtils;
 import com.gemserk.vecmath.Matrix3f;
 
 public class SvgTransformProcessor extends SvgElementProcessor {
 
 	protected Stack<Matrix3f> transformStack;
+	
+	final Matrix3f localTransform = new Matrix3f();
+	final Matrix3f absoluteTransform = new Matrix3f();
 
 	public SvgTransformProcessor() {
 		transformStack = new Stack<Matrix3f>();
@@ -27,14 +29,16 @@ public class SvgTransformProcessor extends SvgElementProcessor {
 
 	@Override
 	public boolean processElement(Element element) {
-		Matrix3f transform = SvgNamespace.getTransform(element);
 		Matrix3f parentTransform = transformStack.peek();
+		
+		SvgNamespace.getTransform(element, localTransform);
+		absoluteTransform.set(parentTransform);
+		absoluteTransform.mul(localTransform);
+		
+		transformStack.push(absoluteTransform);
 
-		transform.mul(parentTransform);
-
-		transformStack.push(transform);
-
-		element.setAttributeNS(GemserkNamespace.namespace, GemserkNamespace.attributeAbsoluteTransform, SvgTransformUtils.serializeTransform(transform));
+		GemserkNamespace.setAbsoluteTransform(element, absoluteTransform);
+		
 		return true;
 	}
 
