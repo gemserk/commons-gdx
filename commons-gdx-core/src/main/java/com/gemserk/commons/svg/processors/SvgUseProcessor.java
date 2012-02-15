@@ -6,13 +6,15 @@ import org.w3c.dom.Node;
 
 import com.gemserk.commons.svg.inkscape.GemserkNamespace;
 import com.gemserk.commons.svg.inkscape.SvgNamespace;
-import com.gemserk.commons.svg.inkscape.SvgTransformUtils;
 import com.gemserk.vecmath.Matrix3f;
 
 public class SvgUseProcessor extends SvgElementProcessor {
 
+	private final Matrix3f useAbsoluteTransform = new Matrix3f(); 
+
 	@Override
 	public boolean processElement(Element element) {
+		
 
 		if (!SvgNamespace.isUse(element))
 			return true;
@@ -41,8 +43,8 @@ public class SvgUseProcessor extends SvgElementProcessor {
 			// clonedSourceElement.removeAttributeNode(attributeNode);
 			// clonedSourceElement.setAttribute(SvgNamespace.attributeId, SvgNamespace.getId(element));
 
-			Matrix3f useAbsoluteTransform = GemserkNamespace.getAbsoluteTransform(element);
-			clonedSourceElement.setAttribute(SvgNamespace.attributeTransform, SvgTransformUtils.serializeTransform(useAbsoluteTransform));
+			GemserkNamespace.getAbsoluteTransform(element, useAbsoluteTransform);
+			SvgNamespace.setTransform(clonedSourceElement, useAbsoluteTransform);
 
 			Node parentNode = element.getParentNode();
 			// parentNode.removeChild(element);
