@@ -9,6 +9,7 @@ public class SvgNamespace {
 	public static final String svgElement = "svg";
 	public static final String imageElement = "image";
 	public static final String useElement = "use";
+	public static final String groupElement = "g";
 
 	public static final String attributeId = "id";
 
@@ -30,6 +31,10 @@ public class SvgNamespace {
 
 	public static boolean isUse(Element element) {
 		return isType(useElement, element);
+	}
+	
+	public static boolean isGroup(Element element) {
+		return isType(groupElement, element);
 	}
 
 	public static boolean isType(String type, Element element) {

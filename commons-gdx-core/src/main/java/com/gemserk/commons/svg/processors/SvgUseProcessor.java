@@ -43,9 +43,9 @@ public class SvgUseProcessor extends SvgElementProcessor {
 			// clonedSourceElement.removeAttributeNode(attributeNode);
 			// clonedSourceElement.setAttribute(SvgNamespace.attributeId, SvgNamespace.getId(element));
 
-			// GemserkNamespace.getAbsoluteTransform(element, useAbsoluteTransform);
+			// SvgNamespace.getTransform(element, useAbsoluteTransform);
 
-			SvgNamespace.getTransform(element, useAbsoluteTransform);
+			GemserkNamespace.getAbsoluteTransform(element, useAbsoluteTransform);
 			GemserkNamespace.getAbsoluteTransform(clonedSourceElement, sourceAbsoluteTransform);
 
 			useAbsoluteTransform.mul(sourceAbsoluteTransform);
