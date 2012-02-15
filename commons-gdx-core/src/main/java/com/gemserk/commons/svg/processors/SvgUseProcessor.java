@@ -10,11 +10,11 @@ import com.gemserk.vecmath.Matrix3f;
 
 public class SvgUseProcessor extends SvgElementProcessor {
 
-	private final Matrix3f useAbsoluteTransform = new Matrix3f(); 
+	private final Matrix3f useAbsoluteTransform = new Matrix3f();
+	private final Matrix3f sourceAbsoluteTransform = new Matrix3f();
 
 	@Override
 	public boolean processElement(Element element) {
-		
 
 		if (!SvgNamespace.isUse(element))
 			return true;
@@ -43,8 +43,17 @@ public class SvgUseProcessor extends SvgElementProcessor {
 			// clonedSourceElement.removeAttributeNode(attributeNode);
 			// clonedSourceElement.setAttribute(SvgNamespace.attributeId, SvgNamespace.getId(element));
 
-			GemserkNamespace.getAbsoluteTransform(element, useAbsoluteTransform);
-			SvgNamespace.setTransform(clonedSourceElement, useAbsoluteTransform);
+			// GemserkNamespace.getAbsoluteTransform(element, useAbsoluteTransform);
+
+			SvgNamespace.getTransform(element, useAbsoluteTransform);
+			GemserkNamespace.getAbsoluteTransform(clonedSourceElement, sourceAbsoluteTransform);
+
+			useAbsoluteTransform.mul(sourceAbsoluteTransform);
+
+			GemserkNamespace.setAbsoluteTransform(clonedSourceElement, useAbsoluteTransform);
+
+			// useAbsoluteTransform.setIdentity();
+			// SvgNamespace.setTransform(clonedSourceElement, useAbsoluteTransform);
 
 			Node parentNode = element.getParentNode();
 			// parentNode.removeChild(element);

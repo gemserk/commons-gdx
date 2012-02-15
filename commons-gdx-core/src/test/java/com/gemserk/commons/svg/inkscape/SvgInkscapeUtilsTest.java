@@ -84,4 +84,14 @@ public class SvgInkscapeUtilsTest {
 		assertThat(transformToAttribute , IsEqual.equalTo("matrix(1.0,2.0,3.0,4.0,5.0,6.0)"));
 	}
 	
+	// translate(-25,18.9375)
+	
+	@Test
+	public void testParseTranslate() {
+		Matrix3f matrix = new Matrix3f();
+		matrix.setIdentity();
+		SvgTransformUtils.parseTransform("translate(-25,18.9375)", matrix);
+		System.out.println(matrix);
+	}
+	
 }

@@ -13,7 +13,6 @@ public class SvgTransformProcessor extends SvgElementProcessor {
 	protected Stack<Matrix3f> transformStack;
 	
 	final Matrix3f localTransform = new Matrix3f();
-	final Matrix3f absoluteTransform = new Matrix3f();
 
 	public SvgTransformProcessor() {
 		transformStack = new Stack<Matrix3f>();
@@ -32,6 +31,8 @@ public class SvgTransformProcessor extends SvgElementProcessor {
 		Matrix3f parentTransform = transformStack.peek();
 		
 		SvgNamespace.getTransform(element, localTransform);
+		
+		Matrix3f absoluteTransform = new Matrix3f(); 
 		absoluteTransform.set(parentTransform);
 		absoluteTransform.mul(localTransform);
 		
