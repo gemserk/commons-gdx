@@ -2,6 +2,7 @@ package com.gemserk.commons.gdx;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 
 /**
  * Implementation of ApplicationListener based different game states using the GameState class.
@@ -40,16 +41,16 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 		if (gameState == null)
 			return;
 		// should set the global time
-		
+
 		float delta = Gdx.graphics.getDeltaTime();
 		float alpha = 1f;
-		
+
 		GlobalTime.setDelta(delta);
 		GlobalTime.setAlpha(alpha);
-		
+
 		gameState.setDelta(delta);
 		gameState.setAlpha(alpha);
-		
+
 		gameState.update();
 		gameState.render();
 	}
@@ -86,8 +87,97 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 		gameState.show();
 	}
 
+	public void setGameStateAsync(final GameState gameState, final boolean disposeCurrent) {
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+				setGameState(gameState, disposeCurrent);
+			}
+		});
+	}
+	
+	public GameStateTransitionBuilder transition(GameState next) {
+		return new GameStateTransitionBuilder(this, gameState, next);
+	}
+
 	@Override
 	public void create() {
+
+	}
+
+	public class GameStateTransitionBuilder {
+
+		final Color transparentColor = new Color(0f, 0f, 0f, 0f);
+		final Color blackColor = new Color(0f, 0f, 0f, 1f);
+
+		ApplicationListenerGameStateBasedImpl applicationListenerGameStateBasedImpl;
+		GameState current;
+		GameState next;
+		
+		float leaveTime = 1f;
+		float enterTime = 1f;
+		
+		boolean disposeCurrent = false;
+		boolean restartNext = false;
+
+		public GameStateTransitionBuilder(ApplicationListenerGameStateBasedImpl applicationListenerGameStateBasedImpl, GameState current, GameState next) {
+			this.applicationListenerGameStateBasedImpl = applicationListenerGameStateBasedImpl;
+			this.current = current;
+			this.next = next;
+		}
+		
+		public GameStateTransitionBuilder leaveTime(float leaveTime) {
+			this.leaveTime = leaveTime;
+			return this;
+		}
+
+		public GameStateTransitionBuilder enterTime(float enterTime) {
+			this.enterTime = enterTime;
+			return this;
+		}
+
+		public GameStateTransitionBuilder disposeCurrent(boolean disposeCurrent) {
+			this.disposeCurrent = disposeCurrent;
+			return this;
+		}
+
+		public GameStateTransitionBuilder restartNext(boolean restartNext) {
+			this.restartNext = restartNext;
+			return this;
+		}
+
+		public void start() {
+			GameStateTransitionFadeImpl fadeOutGameState = new GameStateTransitionFadeImpl(current, leaveTime, transparentColor, blackColor) {
+				@Override
+				protected void onTransitionFinished() {
+					
+					current.pause();
+					current.hide();
+					
+					if (disposeCurrent)
+						current.dispose();
+					
+					if (restartNext) 
+						next.dispose();
+					
+					next.init();
+					next.resume();
+					next.show();
+					
+					GameStateTransitionFadeImpl fadeInGameState = new GameStateTransitionFadeImpl(next, enterTime, blackColor, transparentColor) {
+						@Override
+						protected void onTransitionFinished() {
+							setGameStateAsync(next, true);
+						}
+					};
+					
+					setGameStateAsync(fadeInGameState, true);
+				}
+			};
+
+			setGameStateAsync(fadeOutGameState, false);
+
+		}
 
 	}
 
