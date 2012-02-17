@@ -353,4 +353,10 @@ public class LibgdxResourceBuilder {
 		return new FontResourceBuilder(internal(imageFile), internal(fontFile));
 	}
 
+	public SkinResourceBuilder skin(String skinFile, String textureFile) {
+		return new SkinResourceBuilder() //
+				.skinFile(internal(skinFile)) //
+				.textureFile(internal(textureFile));
+	}
+
 }
