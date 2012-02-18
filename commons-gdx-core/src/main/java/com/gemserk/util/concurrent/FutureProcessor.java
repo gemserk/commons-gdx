@@ -5,7 +5,7 @@ import java.util.concurrent.Future;
 
 public class FutureProcessor<T> {
 
-	private final FutureHandler<T> futureHandler;
+	private FutureHandler<T> futureHandler;
 
 	private Future<T> future;
 
@@ -44,6 +44,14 @@ public class FutureProcessor<T> {
 		}
 
 		future = null;
+	}
+	
+	public void setFutureHandler(FutureHandler<T> futureHandler) {
+		this.futureHandler = futureHandler;
+	}
+	
+	public boolean isWorking(){
+		return future!=null;
 	}
 
 }
