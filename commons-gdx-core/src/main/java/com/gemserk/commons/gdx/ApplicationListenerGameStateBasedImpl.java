@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 public class ApplicationListenerGameStateBasedImpl implements ApplicationListener {
 
 	protected GameState gameState;
+	protected boolean transitioning;
 
 	public GameState getGameState() {
 		return gameState;
@@ -147,6 +148,11 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 		}
 
 		public void start() {
+			if (transitioning)
+				return;
+			
+			transitioning = true;
+			
 			GameStateTransitionFadeImpl fadeOutGameState = new GameStateTransitionFadeImpl(current, leaveTime, transparentColor, blackColor) {
 				@Override
 				protected void onTransitionFinished() {
@@ -168,6 +174,7 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 						@Override
 						protected void onTransitionFinished() {
 							setGameStateAsync(next, true);
+							transitioning = false;
 						}
 					};
 					
