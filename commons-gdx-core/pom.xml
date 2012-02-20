@@ -11,7 +11,7 @@
 	<version>0.0.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Common Gdx - Core module</name>
-	<description>Common utitilites to be used with libgdx</description>
+	<description>Common utilities to be used with LibGDX</description>
 
 	<dependencies>
 		<dependency>
@@ -29,12 +29,18 @@
 			<artifactId>vecmath</artifactId>
 			<version>${vecmath.version}</version>
 		</dependency>
- 		<dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.1</version>
 			<scope>provided</scope>
-		</dependency> 
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.1.1</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
