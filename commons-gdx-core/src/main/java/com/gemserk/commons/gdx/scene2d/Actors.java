@@ -123,6 +123,62 @@ public class Actors {
 
 		return scrollPane;
 	}
+	
+	public static Actor threeOptionsDialog(String[] texts, final DialogListener dialogListener, String titleText, String firstOption, String secondOption, String thirdOption, Skin skin) {
+		Window window = new Window(titleText, skin);
+
+		window.setMovable(false);
+
+		TextButton firstOptionButton = new TextButton(firstOption, skin);
+		TextButton secondOptionButton = new TextButton(secondOption, skin);
+		TextButton thirdOptionButton = new TextButton(thirdOption, skin);
+
+		firstOptionButton.setClickListener(new ClickListener() {
+			@Override
+			public void click(Actor actor, float x, float y) {
+				dialogListener.optionSelected(0);
+			}
+		});
+
+		secondOptionButton.setClickListener(new ClickListener() {
+			@Override
+			public void click(Actor actor, float x, float y) {
+				dialogListener.optionSelected(1);
+			}
+		});
+		
+		thirdOptionButton.setClickListener(new ClickListener() {
+			@Override
+			public void click(Actor actor, float x, float y) {
+				dialogListener.optionSelected(2);
+			}
+		});
+
+		window.defaults().spaceBottom(10);
+		window.row().fill().expandX();
+
+		for (int i = 0; i < texts.length; i++) {
+			window.row().padLeft(50);
+			Label label = new Label(texts[i], skin);
+			window.add(label).align(Align.LEFT).colspan(2);
+		}
+
+		window.row().fill().expandX().padTop(30);
+		window.add(firstOptionButton).align(Align.CENTER).padLeft(30).padRight(30);
+		window.row().fill().expandX();
+		window.add(secondOptionButton).align(Align.CENTER).padLeft(30).padRight(30);
+		window.row().fill().expandX();
+		window.add(thirdOptionButton).align(Align.CENTER).padLeft(30).padRight(30);
+
+		FlickScrollPane scrollPane = new FlickScrollPane(window);
+
+		scrollPane.width = Gdx.graphics.getWidth() * 0.95f;
+		scrollPane.height = Gdx.graphics.getHeight() * 0.95f;
+		scrollPane.x = Gdx.graphics.getWidth() * 0.5f - scrollPane.width * 0.5f;
+		scrollPane.y = Gdx.graphics.getHeight() * 0.5f - scrollPane.height * 0.5f;
+
+		return scrollPane;
+	}
 
 
 }
