@@ -107,7 +107,8 @@ public class Actors {
 		for (int i = 0; i < texts.length; i++) {
 			window.row().padLeft(20);
 			Label label = new Label(texts[i], skin);
-			window.add(label).align(Align.LEFT).colspan(2);
+			label.setWrap(true);
+			window.add(label).align(Align.LEFT).colspan(2).fillX();
 		}
 
 		window.row().fill().expandX();
@@ -158,12 +159,13 @@ public class Actors {
 		window.row().fill().expandX();
 
 		for (int i = 0; i < texts.length; i++) {
-			window.row().padLeft(50);
+			window.row().padLeft(20);
 			Label label = new Label(texts[i], skin);
-			window.add(label).align(Align.LEFT).colspan(2);
+			label.setWrap(true);
+			window.add(label).align(Align.LEFT).colspan(2).fillX();
 		}
 
-		window.row().fill().expandX().padTop(30);
+		window.row().fill().expandX().padTop(10);
 		window.add(firstOptionButton).align(Align.CENTER).padLeft(30).padRight(30);
 		window.row().fill().expandX();
 		window.add(secondOptionButton).align(Align.CENTER).padLeft(30).padRight(30);
@@ -176,7 +178,7 @@ public class Actors {
 		scrollPane.height = Gdx.graphics.getHeight() * 0.95f;
 		scrollPane.x = Gdx.graphics.getWidth() * 0.5f - scrollPane.width * 0.5f;
 		scrollPane.y = Gdx.graphics.getHeight() * 0.5f - scrollPane.height * 0.5f;
-
+		
 		return scrollPane;
 	}
 
