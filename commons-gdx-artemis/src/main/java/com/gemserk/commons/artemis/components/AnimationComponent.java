@@ -8,6 +8,14 @@ public class AnimationComponent extends Component {
 	private final Animation[] animations;
 
 	private int currentAnimation;
+	
+	public int getAnimationCount() {
+		return animations.length;
+	}
+	
+	public Animation getAnimation(int index) {
+		return animations[index];
+	}
 
 	public Animation getCurrentAnimation() {
 		return animations[currentAnimation];
