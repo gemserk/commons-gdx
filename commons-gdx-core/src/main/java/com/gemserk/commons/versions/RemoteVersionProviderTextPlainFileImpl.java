@@ -2,13 +2,19 @@ package com.gemserk.commons.versions;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +34,19 @@ public class RemoteVersionProviderTextPlainFileImpl implements RemoteVersionProv
 	}
 
 	@Override
-	public ApplicationVersion getLatestVersion() {
+	public ApplicationVersion getLatestVersion(String currentVersionNumber) {
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
+			
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-			HttpGet httpget = new HttpGet(versionUri);
+			params.add(new BasicNameValuePair("currentVersion", currentVersionNumber));
+
+			String encodedParams = URLEncodedUtils.format(params, "UTF-8");
+
+			URI uri = URIUtils.resolve(versionUri, "?" + encodedParams);
+
+			HttpGet httpget = new HttpGet(uri);
 
 			if (logger.isDebugEnabled())
 				logger.debug("Fetching latest version");
@@ -65,6 +79,11 @@ public class RemoteVersionProviderTextPlainFileImpl implements RemoteVersionProv
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public ApplicationVersion getLatestVersion() {
+		return getLatestVersion("undefined");
 	}
 
 }
