@@ -24,6 +24,7 @@ public class RemoteVersionProviderTextPlainFileImpl implements RemoteVersionProv
 	protected static final Logger logger = LoggerFactory.getLogger(RemoteVersionProviderTextPlainFileImpl.class);
 
 	URI versionUri;
+	String latestVersionKey = "latest.txt";
 
 	public RemoteVersionProviderTextPlainFileImpl(String versionUrl) {
 		try {
@@ -44,7 +45,7 @@ public class RemoteVersionProviderTextPlainFileImpl implements RemoteVersionProv
 
 			String encodedParams = URLEncodedUtils.format(params, "UTF-8");
 
-			URI uri = URIUtils.resolve(versionUri, "?" + encodedParams);
+			URI uri = URIUtils.resolve(versionUri, latestVersionKey + "?" + encodedParams);
 
 			HttpGet httpget = new HttpGet(uri);
 
