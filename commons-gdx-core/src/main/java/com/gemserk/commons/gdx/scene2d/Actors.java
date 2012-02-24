@@ -28,14 +28,18 @@ public class Actors {
 				defaults().spaceBottom(5);
 
 				Label toastLabel = new Label(text, skin);
+				toastLabel.setAlignment(Align.LEFT);
+				toastLabel.setWrap(true);
 
+				row().fillX().expandX();
+				add(toastLabel).fillX().padLeft(10);
+				
+				invalidate();
+				
 				width = Gdx.graphics.getWidth() * 0.95f;
 				height = toastLabel.getTextBounds().height + 20 + getStyle().titleFont.getLineHeight();
 
 				x = Gdx.graphics.getWidth() * 0.5f - width * 0.5f;
-
-				row().fill().expandX();
-				add(toastLabel).align(Align.LEFT).fill(0f, 0f).padLeft(20);
 
 				float outsideY = Gdx.graphics.getHeight() + height;
 				float insideY = Gdx.graphics.getHeight() - height + getStyle().titleFont.getLineHeight();
