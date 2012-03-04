@@ -17,64 +17,59 @@ import com.gemserk.animation4j.timeline.TimelineAnimation;
 public class Actors {
 	
 	public static Actor topToast(final String text, final float time, final Skin skin) {
+		final Window window = new Window("", skin);
+		
+		window.setMovable(false);
 
-		return new Window("", skin) {
+		window.defaults().spaceBottom(5);
 
-			TimelineAnimation timelineAnimation;
+		Label toastLabel = new Label(text, skin);
+		toastLabel.setAlignment(Align.LEFT);
+		toastLabel.setWrap(true);
 
-			{
-				setMovable(false);
+		window.row().fillX().expandX();
+		window.add(toastLabel).fillX().padLeft(10);
+		
+		window.invalidate();
+		
+		window.width = Gdx.graphics.getWidth() * 0.95f;
+		window.height = toastLabel.getTextBounds().height + 20 + window.getStyle().titleFont.getLineHeight();
 
-				defaults().spaceBottom(5);
+		window.x = Gdx.graphics.getWidth() * 0.5f - window.width * 0.5f;
 
-				Label toastLabel = new Label(text, skin);
-				toastLabel.setAlignment(Align.LEFT);
-				toastLabel.setWrap(true);
+		float outsideY = Gdx.graphics.getHeight() + window.height;
+		float insideY = Gdx.graphics.getHeight() - window.height + window.getStyle().titleFont.getLineHeight();
 
-				row().fillX().expandX();
-				add(toastLabel).fillX().padLeft(10);
-				
-				invalidate();
-				
-				width = Gdx.graphics.getWidth() * 0.95f;
-				height = toastLabel.getTextBounds().height + 20 + getStyle().titleFont.getLineHeight();
-
-				x = Gdx.graphics.getWidth() * 0.5f - width * 0.5f;
-
-				float outsideY = Gdx.graphics.getHeight() + height;
-				float insideY = Gdx.graphics.getHeight() - height + getStyle().titleFont.getLineHeight();
-
-				y = outsideY;
-
-				timelineAnimation = Builders.animation( //
-						Builders.timeline() //
-								.value(Builders.timelineValue(this, Scene2dConverters.actorPositionTypeConverter) //
-										.keyFrame(0f, new float[] { x, outsideY }, //
-												InterpolationFunctions.linear(), InterpolationFunctions.easeIn()) //
-										.keyFrame(1f, new float[] { x, insideY }) //
-										.keyFrame(4f, new float[] { x, insideY }, //
-												InterpolationFunctions.linear(), InterpolationFunctions.easeOut()) //
-										.keyFrame(5f, new float[] { x, outsideY }) //
-								) //
+		window.y = outsideY;
+		
+		final TimelineAnimation timelineAnimation = Builders.animation( //
+				Builders.timeline() //
+						.value(Builders.timelineValue(window, Scene2dConverters.actorPositionTypeConverter) //
+								.keyFrame(0f, new float[] { window.x, outsideY }, //
+										InterpolationFunctions.linear(), InterpolationFunctions.easeIn()) //
+								.keyFrame(1f, new float[] { window.x, insideY }) //
+								.keyFrame(4f, new float[] { window.x, insideY }, //
+										InterpolationFunctions.linear(), InterpolationFunctions.easeOut()) //
+								.keyFrame(5f, new float[] { window.x, outsideY }) //
 						) //
-						.started(true) //
-						.delay(0f) //
-						.speed(5f / time) //
-						.build();
-			}
-
+				) //
+				.started(true) //
+				.delay(0f) //
+				.speed(5f / time) //
+				.build();
+		
+		window.action(new ActionAdapter(){ 
 			@Override
 			public void act(float delta) {
-				super.act(delta);
 				timelineAnimation.update(delta);
 
 				if (timelineAnimation.isFinished()) {
-					getStage().removeActor(this);
+					window.getStage().removeActor(window);
 				}
 			}
-
-		};
-
+		});
+		
+		return window;
 	}
 	
 	public static interface DialogListener {
