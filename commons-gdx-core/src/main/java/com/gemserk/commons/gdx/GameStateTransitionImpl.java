@@ -1,5 +1,7 @@
 package com.gemserk.commons.gdx;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -10,7 +12,7 @@ public class GameStateTransitionImpl extends GameStateImpl {
 
 	public static class TransitionEffect {
 
-		TimeTransition timeTransition;
+		private TimeTransition timeTransition;
 
 		protected float getAlpha() {
 			return timeTransition.get();
@@ -86,10 +88,10 @@ public class GameStateTransitionImpl extends GameStateImpl {
 	GameState current;
 	GameState next;
 
-	TransitionEffect[] transitionEffects;
 	int currentTransitionEffect;
+	ArrayList<TransitionEffect> transitionEffects;
 
-	public GameStateTransitionImpl(GameState current, GameState next, TransitionEffect... transitionEffects) {
+	public GameStateTransitionImpl(GameState current, GameState next, ArrayList<TransitionEffect> transitionEffects) {
 		this.current = current;
 		this.next = next;
 		this.transitionEffects = transitionEffects;
@@ -104,13 +106,13 @@ public class GameStateTransitionImpl extends GameStateImpl {
 	@Override
 	public void update() {
 
-		if (currentTransitionEffect >= transitionEffects.length) {
+		if (currentTransitionEffect >= transitionEffects.size()) {
 			onTransitionFinished();
 			return;
 		}
 
-		transitionEffects[currentTransitionEffect].update(getDelta());
-		if (transitionEffects[currentTransitionEffect].isFinished())
+		transitionEffects.get(currentTransitionEffect).update(getDelta());
+		if (transitionEffects.get(currentTransitionEffect).isFinished())
 			currentTransitionEffect++;
 
 	}
@@ -121,9 +123,9 @@ public class GameStateTransitionImpl extends GameStateImpl {
 
 	@Override
 	public void render() {
-		if (currentTransitionEffect >= transitionEffects.length)
+		if (currentTransitionEffect >= transitionEffects.size())
 			return;
-		transitionEffects[currentTransitionEffect].render(current, next);
+		transitionEffects.get(currentTransitionEffect).render(current, next);
 	}
 
 	@Override

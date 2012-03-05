@@ -1,5 +1,7 @@
 package com.gemserk.commons.gdx;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -111,9 +113,6 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 	public class GameStateTransitionBuilder {
 
-		final Color transparentColor = new Color(0f, 0f, 0f, 0f);
-		final Color blackColor = new Color(0f, 0f, 0f, 1f);
-
 		ApplicationListenerGameStateBasedImpl applicationListenerGameStateBasedImpl;
 		GameState current;
 		GameState next;
@@ -123,11 +122,14 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 		boolean disposeCurrent = false;
 		boolean restartNext = false;
-
+		
+		ArrayList<TransitionEffect> transitionEffects;
+		
 		public GameStateTransitionBuilder(ApplicationListenerGameStateBasedImpl applicationListenerGameStateBasedImpl, GameState current, GameState next) {
 			this.applicationListenerGameStateBasedImpl = applicationListenerGameStateBasedImpl;
 			this.current = current;
 			this.next = next;
+			transitionEffects = new ArrayList<TransitionEffect>();
 		}
 
 		public GameStateTransitionBuilder leaveTime(float leaveTime) {
@@ -156,8 +158,6 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 			transitioning = true;
 
-			// FadeOutInTransitionEffect transitionEffect = new FadeOutInTransitionEffect();
-
 			if (restartNext)
 				next.dispose();
 
@@ -167,8 +167,11 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 			TransitionEffect fadeOutTransitionEffect = new FadeOutTransitionEffect(leaveTime);
 			TransitionEffect fadeInTransitionEffect = new FadeInTransitionEffect(enterTime);
+			
+			transitionEffects.add(fadeOutTransitionEffect);
+			transitionEffects.add(fadeInTransitionEffect);
 
-			final GameState transitionGameState = new GameStateTransitionImpl(current, next, fadeOutTransitionEffect, fadeInTransitionEffect) {
+			final GameState transitionGameState = new GameStateTransitionImpl(current, next, transitionEffects) {
 				@Override
 				protected void onTransitionFinished() {
 					current.pause();
