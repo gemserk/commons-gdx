@@ -3,8 +3,9 @@ package com.gemserk.commons.gdx;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.gemserk.commons.gdx.GameStateTransitionImpl.FadeOutInTransitionEffect;
+import com.gemserk.commons.gdx.GameStateTransitionImpl.FadeInTransitionEffect;
+import com.gemserk.commons.gdx.GameStateTransitionImpl.FadeOutTransitionEffect;
+import com.gemserk.commons.gdx.GameStateTransitionImpl.TransitionEffect;
 
 /**
  * Implementation of ApplicationListener based different game states using the GameState class.
@@ -155,7 +156,7 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 			transitioning = true;
 
-			FadeOutInTransitionEffect transitionEffect = new FadeOutInTransitionEffect();
+			// FadeOutInTransitionEffect transitionEffect = new FadeOutInTransitionEffect();
 
 			if (restartNext)
 				next.dispose();
@@ -164,7 +165,10 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			next.resume();
 			next.show();
 
-			final GameState transitionGameState = new GameStateTransitionImpl(current, next, leaveTime + enterTime, transitionEffect) {
+			TransitionEffect fadeOutTransitionEffect = new FadeOutTransitionEffect(leaveTime);
+			TransitionEffect fadeInTransitionEffect = new FadeInTransitionEffect(enterTime);
+
+			final GameState transitionGameState = new GameStateTransitionImpl(current, next, fadeOutTransitionEffect, fadeInTransitionEffect) {
 				@Override
 				protected void onTransitionFinished() {
 					current.pause();
@@ -188,39 +192,6 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 					gameState.show();
 				}
 			});
-
-			// setGameStateAsync(transitionGameState, false);
-
-			// GameStateTransitionFadeImpl fadeOutGameState = new GameStateTransitionFadeImpl(current, leaveTime, transparentColor, blackColor) {
-			// @Override
-			// protected void onTransitionFinished() {
-			//
-			// current.pause();
-			// current.hide();
-			//
-			// if (disposeCurrent)
-			// current.dispose();
-			//
-			// if (restartNext)
-			// next.dispose();
-			//
-			// next.init();
-			// next.resume();
-			// next.show();
-			//
-			// GameStateTransitionFadeImpl fadeInGameState = new GameStateTransitionFadeImpl(next, enterTime, blackColor, transparentColor) {
-			// @Override
-			// protected void onTransitionFinished() {
-			// setGameStateAsync(next, true);
-			// transitioning = false;
-			// }
-			// };
-			//
-			// setGameStateAsync(fadeInGameState, true);
-			// }
-			// };
-			//
-			// setGameStateAsync(fadeOutGameState, false);
 
 		}
 

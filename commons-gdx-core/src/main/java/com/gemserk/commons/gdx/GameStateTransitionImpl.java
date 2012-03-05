@@ -8,42 +8,77 @@ import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 
 public class GameStateTransitionImpl extends GameStateImpl {
 
-	public static interface TransitionEffect {
+	public static class TransitionEffect {
+
+		TimeTransition timeTransition;
+
+		protected float getAlpha() {
+			return timeTransition.get();
+		}
+
+		public TransitionEffect(float duration) {
+			timeTransition = new TimeTransition();
+			timeTransition.start(duration);
+		}
+
+		public void update(float delta) {
+			timeTransition.update(delta);
+		}
 
 		/**
 		 * @param current
 		 *            The current game state.
 		 * @param next
 		 *            The next game state.
-		 * @param alpha
-		 *            A value from 0 to 1 representing the interpolation between one state and the other.
 		 */
-		void render(GameState current, GameState next, float alpha);
+		public void render(GameState current, GameState next) {
+
+		}
+
+		public boolean isFinished() {
+			return timeTransition.isFinished();
+		}
 
 	}
 
-	public static class FadeOutInTransitionEffect implements TransitionEffect {
+	public static class FadeOutTransitionEffect extends TransitionEffect {
 
 		Color color = new Color();
 
+		public FadeOutTransitionEffect(float duration) {
+			super(duration);
+		}
+
 		@Override
-		public void render(GameState current, GameState next, float alpha) {
+		public void render(GameState current, GameState next) {
+			current.render();
+			color.set(0f, 0f, 0f, getAlpha());
 
-			if (alpha < 0.5f) {
-				current.render();
-				color.set(0f, 0f, 0f, alpha * 2f);
-			} else {
-				next.render();
-				color.set(0f, 0f, 0f, (1f - alpha) * 2f);
-			}
+			Gdx.gl10.glEnable(GL10.GL_BLEND);
+			ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			ImmediateModeRendererUtils.fillRectangle(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), color);
+			Gdx.gl10.glDisable(GL10.GL_BLEND);
+		}
 
-			if (Gdx.graphics.getGL10() != null) {
-				Gdx.gl10.glEnable(GL10.GL_BLEND);
-				ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-				ImmediateModeRendererUtils.fillRectangle(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), color);
-				Gdx.gl10.glDisable(GL10.GL_BLEND);
-			}
-			
+	}
+
+	public static class FadeInTransitionEffect extends TransitionEffect {
+
+		Color color = new Color();
+
+		public FadeInTransitionEffect(float duration) {
+			super(duration);
+		}
+
+		@Override
+		public void render(GameState current, GameState next) {
+			next.render();
+			color.set(0f, 0f, 0f, 1f - getAlpha());
+
+			Gdx.gl10.glEnable(GL10.GL_BLEND);
+			ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			ImmediateModeRendererUtils.fillRectangle(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), color);
+			Gdx.gl10.glDisable(GL10.GL_BLEND);
 		}
 
 	}
@@ -51,16 +86,14 @@ public class GameStateTransitionImpl extends GameStateImpl {
 	GameState current;
 	GameState next;
 
-	TransitionEffect transitionEffect;
+	TransitionEffect[] transitionEffects;
+	int currentTransitionEffect;
 
-	TimeTransition timeTransition;
-
-	public GameStateTransitionImpl(GameState current, GameState next, float duration, TransitionEffect transitionEffect) {
+	public GameStateTransitionImpl(GameState current, GameState next, TransitionEffect... transitionEffects) {
 		this.current = current;
 		this.next = next;
-		this.transitionEffect = transitionEffect;
-		this.timeTransition = new TimeTransition();
-		this.timeTransition.start(duration);
+		this.transitionEffects = transitionEffects;
+		this.currentTransitionEffect = 0;
 	}
 
 	@Override
@@ -70,9 +103,16 @@ public class GameStateTransitionImpl extends GameStateImpl {
 
 	@Override
 	public void update() {
-		timeTransition.update(getDelta());
-		if (timeTransition.isFinished())
+
+		if (currentTransitionEffect >= transitionEffects.length) {
 			onTransitionFinished();
+			return;
+		}
+
+		transitionEffects[currentTransitionEffect].update(getDelta());
+		if (transitionEffects[currentTransitionEffect].isFinished())
+			currentTransitionEffect++;
+
 	}
 
 	protected void onTransitionFinished() {
@@ -81,7 +121,9 @@ public class GameStateTransitionImpl extends GameStateImpl {
 
 	@Override
 	public void render() {
-		transitionEffect.render(current, next, timeTransition.get());
+		if (currentTransitionEffect >= transitionEffects.length)
+			return;
+		transitionEffects[currentTransitionEffect].render(current, next);
 	}
 
 	@Override
