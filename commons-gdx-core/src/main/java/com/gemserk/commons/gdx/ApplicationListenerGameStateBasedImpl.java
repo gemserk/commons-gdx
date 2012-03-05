@@ -190,7 +190,13 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 					if (disposeCurrent)
 						current.dispose();
 
-					setGameStateAsync(next, true);
+					Gdx.app.postRunnable(new Runnable() {
+						@Override
+						public void run() {
+							gameState = next;
+						}
+					});
+
 					transitioning = false;
 				}
 
