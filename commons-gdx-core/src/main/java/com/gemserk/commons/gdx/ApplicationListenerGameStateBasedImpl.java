@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.gemserk.commons.gdx.GameStateTransitionImpl.FadeInTransitionEffect;
 import com.gemserk.commons.gdx.GameStateTransitionImpl.FadeOutTransitionEffect;
 import com.gemserk.commons.gdx.GameStateTransitionImpl.TransitionEffect;
@@ -114,31 +113,48 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 	public class GameStateTransitionBuilder {
 
 		ApplicationListenerGameStateBasedImpl applicationListenerGameStateBasedImpl;
+
 		GameState current;
 		GameState next;
 
-		float leaveTime = 1f;
-		float enterTime = 1f;
-
 		boolean disposeCurrent = false;
 		boolean restartNext = false;
-		
+
 		ArrayList<TransitionEffect> transitionEffects;
-		
+
 		public GameStateTransitionBuilder(ApplicationListenerGameStateBasedImpl applicationListenerGameStateBasedImpl, GameState current, GameState next) {
 			this.applicationListenerGameStateBasedImpl = applicationListenerGameStateBasedImpl;
 			this.current = current;
 			this.next = next;
-			transitionEffects = new ArrayList<TransitionEffect>();
+			this.transitionEffects = new ArrayList<TransitionEffect>();
+			// we add by default the null transition effect.
+			this.transitionEffects.add(new TransitionEffect(0f));
 		}
 
-		public GameStateTransitionBuilder leaveTime(float leaveTime) {
-			this.leaveTime = leaveTime;
+		/**
+		 * Adds a new fade out effect to the transition effects list using the specified duration.
+		 * 
+		 * @param duration
+		 *            The duration of the fade out effect.
+		 */
+		public GameStateTransitionBuilder fadeOut(float duration) {
+			this.transitionEffects.add(new FadeOutTransitionEffect(duration));
 			return this;
 		}
 
-		public GameStateTransitionBuilder enterTime(float enterTime) {
-			this.enterTime = enterTime;
+		/**
+		 * Adds a new fade in effect to the transition effects list using the specified duration.
+		 * 
+		 * @param duration
+		 *            The duration of the fade in effect.
+		 */
+		public GameStateTransitionBuilder fadeIn(float duration) {
+			this.transitionEffects.add(new FadeInTransitionEffect(duration));
+			return this;
+		}
+
+		public GameStateTransitionBuilder customEffect(TransitionEffect transitionEffect) {
+			this.transitionEffects.add(transitionEffect);
 			return this;
 		}
 
@@ -164,12 +180,6 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			next.init();
 			next.resume();
 			next.show();
-
-			TransitionEffect fadeOutTransitionEffect = new FadeOutTransitionEffect(leaveTime);
-			TransitionEffect fadeInTransitionEffect = new FadeInTransitionEffect(enterTime);
-			
-			transitionEffects.add(fadeOutTransitionEffect);
-			transitionEffects.add(fadeInTransitionEffect);
 
 			final GameState transitionGameState = new GameStateTransitionImpl(current, next, transitionEffects) {
 				@Override

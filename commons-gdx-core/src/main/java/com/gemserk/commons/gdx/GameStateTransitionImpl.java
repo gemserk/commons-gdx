@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.GL10;
 import com.gemserk.animation4j.transitions.TimeTransition;
 import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 
+/**
+ * Implements a transition between game states given a list of effects to be used.
+ * 
+ * @author acoppes
+ * 
+ */
 public class GameStateTransitionImpl extends GameStateImpl {
 
 	public static class TransitionEffect {
