@@ -173,6 +173,8 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 				return;
 
 			transitioning = true;
+			
+			// not sure what to do in case current game state == next...
 
 			if (restartNext)
 				next.dispose();
@@ -193,6 +195,9 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 					Gdx.app.postRunnable(new Runnable() {
 						@Override
 						public void run() {
+							next.init();
+							next.resume();
+							next.show();
 							gameState = next;
 						}
 					});
