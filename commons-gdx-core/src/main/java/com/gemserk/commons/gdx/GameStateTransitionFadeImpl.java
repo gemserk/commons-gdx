@@ -17,6 +17,8 @@ public class GameStateTransitionFadeImpl extends GameStateImpl {
 	private Transition<Color> colorTransition;
 
 	private Color color = new Color();
+	
+	// TODO: use shape renderer instead mesh2d stuff.
 
 	public GameStateTransitionFadeImpl(GameState currentGameState, float time, Color fromColor, Color toColor) {
 		this.currentGameState = currentGameState;
