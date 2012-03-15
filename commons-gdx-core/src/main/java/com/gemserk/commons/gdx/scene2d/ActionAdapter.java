@@ -34,7 +34,10 @@ public class ActionAdapter extends Action {
 
 	@Override
 	public Action copy() {
-		throw new UnsupportedOperationException("not implemented");
+		ActionAdapter actionAdapter = new ActionAdapter();
+		actionAdapter.target = this.target;
+		actionAdapter.done = this.done;
+		return actionAdapter;
 	}
 
 }
