@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.gemserk.resources.ResourceManager;
 
 public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
-	
+
 	static final int AtlasRegionNoIndex = -1;
 
 	private int x;
 	private int y;
 	private int width;
 	private int height;
+	private float scale = 1f;
 	private ResourceManager<String> resourceManager;
 	private String textureId;
 	private String textureAtlasId;
@@ -24,7 +25,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 	private boolean flip = false;
 	private boolean flop = false;
 	private int regionIndex;
-	
+
 	public SpriteResourceBuilder x(int x) {
 		this.x = x;
 		return this;
@@ -42,6 +43,11 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 
 	public SpriteResourceBuilder height(int height) {
 		this.height = height;
+		return this;
+	}
+
+	public SpriteResourceBuilder scale(float scale) {
+		this.scale = scale;
 		return this;
 	}
 
@@ -79,7 +85,12 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 	public Sprite build() {
 		if (textureId != null) {
 			Texture texture = resourceManager.getResourceValue(textureId);
-			Sprite sprite = new Sprite(texture, x, y, width != 0 ? width : texture.getWidth(), height != 0 ? height : texture.getHeight());
+
+			int w = width != 0 ? width : texture.getWidth();
+			int h = height != 0 ? height : texture.getHeight();
+
+			Sprite sprite = new Sprite(texture, x, y, w, h);
+			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
 			sprite.flip(flop, flip);
 			return sprite;
 		} else if (textureAtlasId != null) {
@@ -91,14 +102,15 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 				} catch (Exception e) {
 					throw new RuntimeException("Failed to load AtlasRegion " + regionId + " with index " + regionIndex + " from TextureAtlas " + textureAtlasId, e);
 				}
-				
-				if (region == null) 
+
+				if (region == null)
 					throw new RuntimeException("AtlasRegion " + regionId + " with index " + regionIndex + " from TextureAtlas " + textureAtlasId + " not found");
-				
+
 			}
 			// note that whis resource will not be updated if the resource of the texture atlas changed...
 			Sprite sprite = new Sprite(region);
 			sprite.flip(flop, flip);
+			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
 			return sprite;
 		}
 		throw new RuntimeException("failed to create sprite neither textureId nor textureAtlasId specified");
