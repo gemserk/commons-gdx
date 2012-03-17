@@ -10,5 +10,7 @@ public class CommonConverters {
 	public static TypeConverter<FloatValue> floatValue() {
 		return floatValueConverter;
 	}
+	
+	public static final SpatialSizeTypeConverter spatialSizeTypeConverter = new SpatialSizeTypeConverter();
 
 }
