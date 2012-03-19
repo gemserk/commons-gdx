@@ -2,6 +2,7 @@ package com.gemserk.commons.gdx.resources;
 
 import java.util.List;
 
+import org.omg.CORBA.INTERNAL;
 import org.w3c.dom.Document;
 
 import com.badlogic.gdx.Gdx;
@@ -44,11 +45,11 @@ public class LibgdxResourceBuilder {
 		this.resourceManager = resourceManager;
 	}
 
-	public FileHandle internal(String file) {
+	public static FileHandle internal(String file) {
 		return Gdx.files.internal(file);
 	}
 
-	public FileHandle absolute(String file) {
+	public static FileHandle absolute(String file) {
 		return Gdx.files.absolute(file);
 	}
 
@@ -346,7 +347,11 @@ public class LibgdxResourceBuilder {
 	}
 
 	public static XmlDocumentResourceBuilder xmlDocument(String file) {
-		return new XmlDocumentResourceBuilder(file);
+		return xmlDocument(internal(file));
+	}
+	
+	public static XmlDocumentResourceBuilder xmlDocument(FileHandle file) {
+		return new XmlDocumentResourceBuilder().file(file);
 	}
 
 	public FontResourceBuilder font2(String imageFile, String fontFile) {

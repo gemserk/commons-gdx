@@ -2,40 +2,34 @@ package com.gemserk.commons.gdx.resources;
 
 import org.w3c.dom.Document;
 
-import com.badlogic.gdx.Files.FileType;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.gemserk.commons.svg.inkscape.DocumentParser;
 
 public class XmlDocumentResourceBuilder implements ResourceBuilder<Document> {
 
-	private final String file;
-
 	private boolean cached = true;
 
-	private FileType fileType = FileType.Internal;
+	FileHandle file;
 
-	public XmlDocumentResourceBuilder fileType(FileType fileType) {
-		this.fileType = fileType;
+	public XmlDocumentResourceBuilder file(FileHandle file) {
+		this.file = file;
 		return this;
 	}
 
 	public XmlDocumentResourceBuilder cached() {
 		return cached(true);
 	}
-	
+
 	public XmlDocumentResourceBuilder cached(boolean cached) {
 		this.cached = cached;
 		return this;
 	}
 
-
-	public XmlDocumentResourceBuilder(String file) {
-		this.file = file;
-	}
-
 	@Override
 	public Document build() {
-		return new DocumentParser().parse(Gdx.files.getFileHandle(file, fileType).read());
+		if (file == null)
+			throw new IllegalStateException("Can't create an XML Document if no file handle is specified");
+		return new DocumentParser().parse(file.read());
 	}
 
 	@Override
