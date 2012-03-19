@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.animation4j.transitions.TimeTransition;
 import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 
@@ -16,7 +17,7 @@ import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
  */
 public class GameStateTransitionImpl extends GameStateImpl {
 
-	public static class TransitionEffect {
+	public static class TransitionEffect implements Disposable {
 
 		private TimeTransition timeTransition;
 
@@ -47,6 +48,11 @@ public class GameStateTransitionImpl extends GameStateImpl {
 			return timeTransition.isFinished();
 		}
 
+		@Override
+		public void dispose() {
+			
+		}
+		
 	}
 
 	public static class FadeOutTransitionEffect extends TransitionEffect {
@@ -61,7 +67,7 @@ public class GameStateTransitionImpl extends GameStateImpl {
 		public void render(GameState current, GameState next) {
 			current.render();
 			color.set(0f, 0f, 0f, getAlpha());
-
+			
 			Gdx.gl10.glEnable(GL10.GL_BLEND);
 			ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			ImmediateModeRendererUtils.fillRectangle(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), color);
@@ -94,14 +100,14 @@ public class GameStateTransitionImpl extends GameStateImpl {
 	GameState current;
 	GameState next;
 
-	int currentTransitionEffect;
+	int currentTransitionEffectIndex;
 	ArrayList<TransitionEffect> transitionEffects;
 
 	public GameStateTransitionImpl(GameState current, GameState next, ArrayList<TransitionEffect> transitionEffects) {
 		this.current = current;
 		this.next = next;
 		this.transitionEffects = transitionEffects;
-		this.currentTransitionEffect = 0;
+		this.currentTransitionEffectIndex = 0;
 	}
 
 	@Override
@@ -112,14 +118,18 @@ public class GameStateTransitionImpl extends GameStateImpl {
 	@Override
 	public void update() {
 
-		if (currentTransitionEffect >= transitionEffects.size()) {
+		if (currentTransitionEffectIndex >= transitionEffects.size()) {
 			onTransitionFinished();
 			return;
 		}
 
-		transitionEffects.get(currentTransitionEffect).update(getDelta());
-		if (transitionEffects.get(currentTransitionEffect).isFinished())
-			currentTransitionEffect++;
+		TransitionEffect currentTransitionEffect = transitionEffects.get(currentTransitionEffectIndex);
+		
+		currentTransitionEffect.update(getDelta());
+		if (currentTransitionEffect.isFinished()) {
+			currentTransitionEffect.dispose();
+			currentTransitionEffectIndex++;
+		}
 
 	}
 
@@ -129,9 +139,9 @@ public class GameStateTransitionImpl extends GameStateImpl {
 
 	@Override
 	public void render() {
-		if (currentTransitionEffect >= transitionEffects.size())
+		if (currentTransitionEffectIndex >= transitionEffects.size())
 			return;
-		transitionEffects.get(currentTransitionEffect).render(current, next);
+		transitionEffects.get(currentTransitionEffectIndex).render(current, next);
 	}
 
 	@Override
