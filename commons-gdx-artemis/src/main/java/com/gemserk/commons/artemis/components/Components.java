@@ -52,79 +52,79 @@ public class Components {
 	public static final ComponentType particleEmitterComponentType = ComponentTypeManager.getTypeFor(particleEmitterComponentClass);
 
 	public static SpatialComponent getSpatialComponent(Entity e) {
-		return spatialComponentClass.cast(e.getComponent(spatialComponentType));
+		return (SpatialComponent) e.getComponent(spatialComponentType);
 	}
 	
 	public static RenderableComponent getRenderableComponent(Entity e) {
-		return renderableComponentClass.cast(e.getComponent(renderableComponentType));
+		return (RenderableComponent) e.getComponent(renderableComponentType);
 	}
 
 	public static SpriteComponent getSpriteComponent(Entity e) {
-		return spriteComponentClass.cast(e.getComponent(spriteComponentType));
+		return (SpriteComponent) e.getComponent(spriteComponentType);
 	}
 
 	public static ScriptComponent getScriptComponent(Entity e) {
-		return scriptComponentClass.cast(e.getComponent(scriptComponentType));
+		return (ScriptComponent) e.getComponent(scriptComponentType);
 	}
 
 	public static PhysicsComponent getPhysicsComponent(Entity e) {
-		return physicsComponentClass.cast(e.getComponent(physicsComponentType));
+		return (PhysicsComponent) e.getComponent(physicsComponentType);
 	}
 
 	public static CameraComponent getCameraComponent(Entity e) {
-		return cameraComponentClass.cast(e.getComponent(cameraComponentType));
+		return (CameraComponent) e.getComponent(cameraComponentType);
 	}
 
 	public static PreviousStateCameraComponent getPreviousStateCameraComponent(Entity e) {
-		return previousStateCameraComponentClass.cast(e.getComponent(previousStateCameraComponentType));
+		return (PreviousStateCameraComponent) e.getComponent(previousStateCameraComponentType);
 	}
 	
 	public static TextComponent getTextComponent(Entity e) {
-		return textComponentClass.cast(e.getComponent(textComponentType));
+		return (TextComponent) e.getComponent(textComponentType);
 	}
 
 	public static PreviousStateSpatialComponent getPreviousStateSpatialComponent(Entity e) {
-		return previousStateSpatialComponentClass.cast(e.getComponent(previousStateSpatialComponentType));
+		return (PreviousStateSpatialComponent) e.getComponent(previousStateSpatialComponentType);
 	}
 
 	public static SoundSpawnerComponent getSoundSpawnerComponent(Entity e) {
-		return soundSpawnerComponentClass.cast(e.getComponent(soundSpawnerComponentClass));
+		return (SoundSpawnerComponent) e.getComponent(soundSpawnerComponentType);
 	}
 
 	public static MovementComponent getMovementComponent(Entity e) {
-		return movementComponentClass.cast(e.getComponent(movementComponentType));
+		return (MovementComponent) e.getComponent(movementComponentType);
 	}
 
 	public static AnimationComponent getAnimationComponent(Entity e) {
-		return animationComponentClass.cast(e.getComponent(animationComponentType));
+		return (AnimationComponent) e.getComponent(animationComponentType);
 	}
 
 	public static PropertiesComponent getPropertiesComponent(Entity e) {
-		return propertiesComponentClass.cast(e.getComponent(propertiesComponentType));
+		return (PropertiesComponent) e.getComponent(propertiesComponentType);
 	}
 	
 	public static ParticleEmitterComponent getParticleEmitterComponent(Entity e) {
-		return particleEmitterComponentClass.cast(e.getComponent(particleEmitterComponentType));
+		return (ParticleEmitterComponent) e.getComponent(particleEmitterComponentType);
 	}
 	
 	public static final Class<FrustumCullingComponent> frustumCullingComponentClass = FrustumCullingComponent.class;
 	public static final ComponentType frustumCullingComponentType = ComponentTypeManager.getTypeFor(frustumCullingComponentClass);
 
 	public static FrustumCullingComponent getFrustumCullingComponent(Entity e) {
-		return frustumCullingComponentClass.cast(e.getComponent(frustumCullingComponentType));
+		return (FrustumCullingComponent) e.getComponent(frustumCullingComponentType);
 	}
 	
 	public static final Class<GroupComponent> groupComponentClass = GroupComponent.class;
 	public static final ComponentType groupComponentType = ComponentTypeManager.getTypeFor(groupComponentClass);
 	
 	public static GroupComponent getGroupComponent(Entity e) {
-		return groupComponentClass.cast(e.getComponent(groupComponentType));
+		return (GroupComponent) e.getComponent(groupComponentType);
 	}
 	
 	public static final Class<LinearVelocityLimitComponent> linearVelocityComponentClass = LinearVelocityLimitComponent.class;
 	public static final ComponentType linearVelocityComponentType = ComponentTypeManager.getTypeFor(linearVelocityComponentClass);
 	
 	public static LinearVelocityLimitComponent getLinearVelocityComponent(Entity e) {
-		return linearVelocityComponentClass.cast(e.getComponent(linearVelocityComponentType));
+		return (LinearVelocityLimitComponent) e.getComponent(linearVelocityComponentType);
 	}
 }
