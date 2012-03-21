@@ -10,12 +10,10 @@ public class MusicDataLoader extends DisposableDataLoader<Music> {
 		super(fileHandle);
 	}
 
-	@Override
 	public Music load() {
 		return Gdx.audio.newMusic(fileHandle);
 	}
 
-	@Override
 	public void unload(Music t) {
 		if (t.isPlaying())
 			t.stop();

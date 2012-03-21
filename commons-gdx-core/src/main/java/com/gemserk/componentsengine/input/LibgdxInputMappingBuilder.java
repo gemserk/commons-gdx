@@ -25,12 +25,24 @@ public class LibgdxInputMappingBuilder<K> {
 		inputDevicesMonitor.button(id, pointerDownButtonMonitor(input, pointer));
 	}
 
+	public void monitorAnyPointerDown(K id) {
+		inputDevicesMonitor.button(id, anyPointerButtonMonitor(input));
+	}
+
 	public void monitorPointerX(K id, final int pointer) {
 		inputDevicesMonitor.analog(id, pointerXCoordinateMonitor(input, pointer));
 	}
 
+	public void monitorAnyPointerX(K id) {
+		inputDevicesMonitor.analog(id, anyPointerXCoordinateMonitor(input));
+	}
+
 	public void monitorPointerY(K id, final int pointer) {
 		inputDevicesMonitor.analog(id, pointerYCoordinateMonitor(input, pointer));
+	}
+
+	public void monitorAnyPointerY(K id) {
+		inputDevicesMonitor.analog(id, anyPointerYCoordinateMonitor(input));
 	}
 
 	public void monitorMouseLeftButton(K id) {
