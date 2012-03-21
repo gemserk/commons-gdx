@@ -10,11 +10,14 @@ public class SvgNamespace {
 	public static final String imageElement = "image";
 	public static final String useElement = "use";
 	public static final String groupElement = "g";
+	public static final String pathElement = "path";
 
 	public static final String attributeId = "id";
 
 	public static final String attributeX = "x";
 	public static final String attributeY = "y";
+	
+	public static final String attributePathData = "d";
 
 	public static final String attributeWidth = "width";
 	public static final String attributeHeight = "height";
@@ -37,6 +40,10 @@ public class SvgNamespace {
 		return isType(groupElement, element);
 	}
 
+	public static boolean isPath(Element element) {
+		return isType(pathElement, element);
+	}
+	
 	public static boolean isType(String type, Element element) {
 		if (element == null)
 			return false;
@@ -57,6 +64,10 @@ public class SvgNamespace {
 
 	public static float getY(Element element) {
 		return Float.parseFloat(element.getAttribute(attributeY));
+	}
+	
+	public static String getPathData(Element element) {
+		return element.getAttribute(attributePathData);
 	}
 
 	public static void setX(Element element, float x) {

@@ -76,6 +76,15 @@ public class SvgConvertUtils {
 //		String label = SvgInkscapeUtils.getLabel(element);
 		String d = element.getAttribute("d");
 
+		Vector2f[] points = pathDataToVector2fList(d);
+
+		SvgPathImpl svgPath = new SvgPathImpl();
+		svgPath.setId(id);
+		svgPath.setPoints(points);
+		return svgPath;
+	}
+
+	public static Vector2f[] pathDataToVector2fList(String d) {
 		StringTokenizer tokens = new StringTokenizer(d, ", ");
 
 		ArrayList<Vector2f> pointList = new ArrayList<Vector2f>();
@@ -133,11 +142,7 @@ public class SvgConvertUtils {
 
 		Vector2f[] points = new Vector2f[pointList.size()];
 		pointList.toArray(points);
-
-		SvgPathImpl svgPath = new SvgPathImpl();
-		svgPath.setId(id);
-		svgPath.setPoints(points);
-		return svgPath;
+		return points;
 	}
 
 	/**
