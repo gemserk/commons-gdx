@@ -73,7 +73,7 @@ public class SvgConvertUtils {
 	public static SvgPath getSvgPath(Element element) {
 
 		String id = element.getAttribute("id");
-//		String label = SvgInkscapeUtils.getLabel(element);
+		// String label = SvgInkscapeUtils.getLabel(element);
 		String d = element.getAttribute("d");
 
 		Vector2f[] points = pathDataToVector2fList(d);
@@ -84,6 +84,9 @@ public class SvgConvertUtils {
 		return svgPath;
 	}
 
+	/**
+	 * Returns a list of Vector2f[] built using an SVG path data, it only supports basic stuff.
+	 */
 	public static Vector2f[] pathDataToVector2fList(String d) {
 		StringTokenizer tokens = new StringTokenizer(d, ", ");
 
