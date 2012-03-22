@@ -1,0 +1,22 @@
+
+Automatic Event Manager Reflection 
+
+	support multiple event ids for the handle (right now it fails if you delete an entity with a method handling multiple events)
+
+Injector 
+   
+	add bind method which works with the class (it doesn't need the field name)
+
+	bind in singleton or in instance
+
+	don't allow null values for dependencies required?
+
+	reuse binded stuff when getInstance(..)
+
+	automatically bind fields of a being binded instance?
+
+Parameters
+
+	add a putAll(Parameters params) method, it requires a way to iterate between Parameters items.
+
+	a way to iterate between Parameters keys (for what??, TODO: add examples the next time)
