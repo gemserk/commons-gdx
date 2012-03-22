@@ -13,7 +13,8 @@ import com.gemserk.vecmath.Vector2f;
 public class SvgConvertUtils {
 
 	private static enum Command {
-		None, AbsoluteMoveTo, RelativeMoveTo, AbsoluteLineTo, RelativeLineTo, AbsoluteElipticalArc, RelativeElipticalArc, ClosePath,
+		None, AbsoluteMoveTo, RelativeMoveTo, AbsoluteLineTo, RelativeLineTo, AbsoluteElipticalArc, RelativeElipticalArc, ClosePath, //
+		AbsoluteCurveTo, RelativeCurveTo, AbsoluteSmoothCurveTo, RelativeSmoothCurveTo
 	}
 
 	@SuppressWarnings("serial")
@@ -27,6 +28,10 @@ public class SvgConvertUtils {
 			put("Z", Command.ClosePath);
 			put("A", Command.AbsoluteElipticalArc);
 			put("a", Command.RelativeElipticalArc);
+			put("C", Command.AbsoluteCurveTo);
+			put("c", Command.RelativeCurveTo);
+			put("S", Command.AbsoluteSmoothCurveTo);
+			put("s", Command.RelativeSmoothCurveTo);
 		}
 	};
 
@@ -92,7 +97,7 @@ public class SvgConvertUtils {
 
 		ArrayList<Vector2f> pointList = new ArrayList<Vector2f>();
 
-		Vector2f relativePoint = null;
+		Vector2f currentLocation = new Vector2f(0f, 0f);
 
 		Command currentCommand = Command.None;
 
@@ -103,40 +108,31 @@ public class SvgConvertUtils {
 
 			if (command != null) {
 				currentCommand = command;
-				relativePoint = null;
 				continue;
 			}
 
 			if (currentCommand == Command.None)
 				continue;
 
+			// http://www.w3.org/TR/SVG/paths.html#PathData
+
 			if (currentCommand == Command.RelativeMoveTo || currentCommand == Command.RelativeLineTo) {
-				float x = Float.parseFloat(token);
-				float y = Float.parseFloat(tokens.nextToken());
+				float xr = Float.parseFloat(token);
+				float yr = Float.parseFloat(tokens.nextToken());
 
-				Vector2f newPoint = new Vector2f(x, y);
+				float x = xr + currentLocation.x;
+				float y = yr + currentLocation.y;
 
-				if (relativePoint != null)
-					newPoint.add(relativePoint);
+				pointList.add(new Vector2f(x, y));
 
-				pointList.add(newPoint);
-
-				relativePoint = new Vector2f(newPoint);
+				currentLocation.set(x, y);
 			} else if (currentCommand == Command.AbsoluteMoveTo || currentCommand == Command.AbsoluteLineTo) {
 				float x = Float.parseFloat(token);
 				float y = Float.parseFloat(tokens.nextToken());
 				pointList.add(new Vector2f(x, y));
-			} else if (currentCommand == Command.AbsoluteElipticalArc) {
-
-				float rx = Float.parseFloat(token);
-				float ry = Float.parseFloat(tokens.nextToken());
-
-				// TODO: ...
-
-				// (rx ry x-axis-rotation large-arc-flag sweep-flag x y)+
-
-			} else if (currentCommand == Command.RelativeElipticalArc) {
-
+				currentLocation.set(x, y);
+			} else {
+				throw new UnsupportedOperationException(currentCommand.toString() + " not supported yet");
 			}
 
 			// other commands?
