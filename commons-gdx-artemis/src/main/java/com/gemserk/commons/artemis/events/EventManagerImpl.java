@@ -59,7 +59,7 @@ public class EventManagerImpl implements EventManager {
 	}
 
 	@Override
-	public void registerEvent(String id, Object source) {
+	public void submit(String id, Object source) {
 		eventManager.registerEvent(id, source);
 	}
 

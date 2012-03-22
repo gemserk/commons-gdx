@@ -6,14 +6,14 @@ package com.gemserk.commons.artemis.events;
 public interface EventManager {
 
 	/**
-	 * Registers a new event specifying the id and the object which generated the event.
+	 * Submits a new event specifying the id and the object which generated the event.
 	 * 
-	 * @param id
-	 *            The id of the event to be registered.
-	 * @param source
-	 *            The object which generated the event.
+	 * @param eventId
+	 *            The identifier of the event to be registered.
+	 * @param eventSource
+	 *            The object which generated the event (or another data to send with the event).
 	 */
-	void registerEvent(String id, Object source);
+	void submit(String eventId, Object eventSource);
 
 	/**
 	 * Registers a new EventListener to listen the specified eventId.
