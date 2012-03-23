@@ -23,6 +23,8 @@ public class SvgNamespace {
 	public static final String attributeHeight = "height";
 	public static final String attributeTransform = "transform";
 	public static final String attributeXlinkHref = "xlink:href";
+	
+	public static final String attributeStyle = "style";
 
 	public static boolean isSvg(Element element) {
 		return isType(svgElement, element);
@@ -68,6 +70,10 @@ public class SvgNamespace {
 	
 	public static String getPathData(Element element) {
 		return element.getAttribute(attributePathData);
+	}
+	
+	public static String getStyle(Element element) {
+		return element.getAttribute(attributeStyle);
 	}
 
 	public static void setX(Element element, float x) {

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.w3c.dom.Element;
 
+import com.badlogic.gdx.graphics.Color;
 import com.gemserk.vecmath.Matrix3f;
 import com.gemserk.vecmath.Vector2f;
 
@@ -142,6 +145,95 @@ public class SvgConvertUtils {
 		Vector2f[] points = new Vector2f[pointList.size()];
 		pointList.toArray(points);
 		return points;
+	}
+
+	public static Color fillColorFromStyle(String style) {
+		return fillColorFromStyle(new Color(), style);
+	}
+
+	public static Color fillColorFromStyle(Color color, String style) {
+		String fillColorStr = getFillFromStyle(style);
+
+		if (fillColorStr != null)
+			colorValue(color, fillColorStr);
+
+		String fillOpacityStr = getFillOpacityFromStyle(style);
+
+		if (fillOpacityStr != null)
+			color.a = Float.valueOf(fillOpacityStr);
+
+		return color;
+	}
+
+	private static Pattern fillStylePattern = Pattern.compile("fill:(.[^;]*)");
+	private static Pattern fillOpacityStylePattern = Pattern.compile("fill\\-opacity:(.[^;]*)");
+
+	public static String getFillFromStyle(String style) {
+		Matcher matcher = fillStylePattern.matcher(style.trim());
+
+		while (matcher.find()) {
+			if (matcher.groupCount() == 0)
+				continue;
+			String fill = matcher.group(1);
+			return fill;
+		}
+
+		return null;
+	}
+
+	public static String getFillOpacityFromStyle(String style) {
+		Matcher matcher = fillOpacityStylePattern.matcher(style.trim());
+
+		while (matcher.find()) {
+			if (matcher.groupCount() == 0)
+				continue;
+			String fill = matcher.group(1);
+			return fill;
+		}
+
+		return null;
+	}
+
+	public static String replicateHexNotation(CharSequence hexColor) {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(hexColor.charAt(0));
+		stringBuilder.append(hexColor.charAt(0));
+		stringBuilder.append(hexColor.charAt(1));
+		stringBuilder.append(hexColor.charAt(1));
+		stringBuilder.append(hexColor.charAt(2));
+		stringBuilder.append(hexColor.charAt(2));
+		return stringBuilder.toString();
+	}
+
+	public static Color colorValue(String colorValue) {
+		return colorValue(new Color(), colorValue);
+	}
+
+	public static Color colorValue(Color color, String colorValue) {
+		String hexNotationPrefix = "#";
+		String rgbNotationPrefix = "rgb";
+		int hexRadix = 16;
+
+		if (colorValue.startsWith(hexNotationPrefix)) {
+			String colorHexValue = colorValue.trim().substring(1);
+			if (colorHexValue.length() == 3)
+				colorHexValue = replicateHexNotation(colorHexValue);
+			Color.rgb888ToColor(color, Integer.valueOf(colorHexValue, hexRadix));
+			return color;
+		} else if (colorValue.startsWith(rgbNotationPrefix)) {
+			throw new UnsupportedOperationException("color from rgb() format not supported yet");
+		} else {
+			throw new UnsupportedOperationException("color style format not supported yet");
+		}
+	}
+
+	public static float opacityValue(String opacityValue) {
+		float opacity = Float.parseFloat(opacityValue);
+		if (opacity < 0f)
+			opacity = 0f;
+		else if (opacity > 1f)
+			opacity = 1f;
+		return opacity;
 	}
 
 	/**
