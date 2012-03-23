@@ -1,5 +1,6 @@
 package com.gemserk.commons.artemis.templates;
 
+import com.artemis.Entity;
 import com.gemserk.componentsengine.utils.Parameters;
 
 /**
@@ -18,6 +19,12 @@ public abstract class EntityTemplateImpl implements EntityTemplate {
 	@Override
 	public void setParameters(Parameters parameters) {
 		this.parameters.setParameters(parameters);
+	}
+	
+	@Override
+	public void apply(Entity entity, Parameters parameters) {
+		setParameters(parameters);
+		apply(entity);
 	}
 
 }
