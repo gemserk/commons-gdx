@@ -18,7 +18,7 @@ public class SceneTemplateImpl implements SceneTemplate {
 	}
 
 	@Override
-	public void apply(WorldWrapper worldWrapper) {
+	public void apply(WorldWrapper scene) {
 		
 	}
 

@@ -14,9 +14,9 @@ public interface SceneTemplate {
 	/**
 	 * Applies the scene template to the Artemis World stored in the WorldWrapper.
 	 * 
-	 * @param worldWrapper
+	 * @param scene
 	 */
-	void apply(WorldWrapper worldWrapper);
+	void apply(WorldWrapper scene);
 
 	/**
 	 * Returns an instance of Parameters to configure the needed parameters to apply the template.
