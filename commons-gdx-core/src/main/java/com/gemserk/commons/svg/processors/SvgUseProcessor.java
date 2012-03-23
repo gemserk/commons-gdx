@@ -29,21 +29,24 @@ public class SvgUseProcessor extends SvgElementProcessor {
 			Element sourceElement = document.getElementById(sourceElementId);
 
 			if (sourceElement == null)
-				throw new RuntimeException("There is no element with id=" + sourceElementId);
+				throw new RuntimeException("Can'f find element with id=" + sourceElementId + " for svg:use processor");
 
 			Element clonedSourceElement = (Element) sourceElement.cloneNode(true);
+
+			// for now, we only override the style if it is not null and it is not "display:inline" (default style in inkscape)
+			// it should process both styles
+			
+			Attr styleAttr = element.getAttributeNode(SvgNamespace.attributeStyle);
+			if (styleAttr != null) {
+				if (!"display:inline".equals(styleAttr.getValue().trim()))
+					clonedSourceElement.setAttribute(SvgNamespace.attributeStyle, styleAttr.getValue());
+			}
 
 			Attr attributeNode = clonedSourceElement.getAttributeNode(SvgNamespace.attributeId);
 			attributeNode.setValue(SvgNamespace.getId(element) + "-instance");
 
 			Attr attributeNode2 = sourceElement.getAttributeNode(SvgNamespace.attributeId);
 			sourceElement.setIdAttributeNode(attributeNode2, true);
-
-			// clonedSourceElement.setIdAttributeNode(attributeNode, false);
-			// clonedSourceElement.removeAttributeNode(attributeNode);
-			// clonedSourceElement.setAttribute(SvgNamespace.attributeId, SvgNamespace.getId(element));
-
-			// SvgNamespace.getTransform(element, useAbsoluteTransform);
 
 			GemserkNamespace.getAbsoluteTransform(element, useAbsoluteTransform);
 			GemserkNamespace.getAbsoluteTransform(clonedSourceElement, sourceAbsoluteTransform);
