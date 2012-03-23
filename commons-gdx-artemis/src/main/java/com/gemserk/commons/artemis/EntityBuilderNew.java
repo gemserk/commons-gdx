@@ -36,7 +36,7 @@ public class EntityBuilderNew {
 
 	private void checkEntityCreated() {
 		if (entity == null)
-			world.createEntity();
+			entity = world.createEntity();
 	}
 
 	public Entity build() {
