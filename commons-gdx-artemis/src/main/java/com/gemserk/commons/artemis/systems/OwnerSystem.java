@@ -7,41 +7,32 @@ import com.gemserk.commons.artemis.components.OwnerComponent;
 
 public class OwnerSystem extends EntityProcessingSystem {
 
-	// protected static final Logger logger = LoggerFactory.getLogger(OwnerSystem.class);
-	private static final Class<OwnerComponent> ownerComponentClass = OwnerComponent.class;
-	private static final Class<ContainerComponent> containerComponentClass = ContainerComponent.class;
-
+	@SuppressWarnings("unchecked")
 	public OwnerSystem() {
 		super(OwnerComponent.class);
 	}
 
 	@Override
 	protected void added(Entity e) {
-		OwnerComponent ownerComponent = e.getComponent(ownerComponentClass);
+		OwnerComponent ownerComponent = OwnerComponent.get(e);
 		if (ownerComponent.getOwner() == null)
 			return;
 
-		ContainerComponent containerComponent = ownerComponent.getOwner().getComponent(containerComponentClass);
+		ContainerComponent containerComponent = ContainerComponent.get(ownerComponent.getOwner());
 		if (containerComponent == null)
 			return;
 		containerComponent.getChildren().add(e);
-
-		// if (logger.isDebugEnabled())
-		// logger.debug("Added entity " + e.getUniqueId() + " as child of " + ownerComponent.getOwner().getUniqueId());
 	}
 
 	protected void removed(Entity e) {
-		OwnerComponent ownerComponent = e.getComponent(ownerComponentClass);
+		OwnerComponent ownerComponent = OwnerComponent.get(e);
 		if (ownerComponent.getOwner() == null)
 			return;
 
-		ContainerComponent containerComponent = ownerComponent.getOwner().getComponent(containerComponentClass);
+		ContainerComponent containerComponent = ContainerComponent.get(ownerComponent.getOwner());
 		if (containerComponent == null)
 			return;
 		containerComponent.getChildren().remove(e);
-
-		// if (logger.isDebugEnabled())
-		// logger.debug("Removed entity " + e.getUniqueId() + " from children of " + ownerComponent.getOwner().getUniqueId());
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import com.gemserk.commons.artemis.scripts.Script;
 
 public class ScriptSystem extends EntityProcessingSystem {
 
+	@SuppressWarnings("unchecked")
 	public ScriptSystem() {
 		super(Components.scriptComponentClass);
 	}
