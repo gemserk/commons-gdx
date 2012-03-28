@@ -5,9 +5,12 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.gemserk.commons.artemis.templates.EntityTemplate;
 import com.gemserk.componentsengine.utils.Parameters;
+import com.gemserk.componentsengine.utils.ParametersWrapper;
 
 public class EntityBuilderNew {
 
+	private final Parameters parameters = new ParametersWrapper();
+	
 	private final World world;
 
 	private Entity entity;
@@ -23,9 +26,7 @@ public class EntityBuilderNew {
 	}
 
 	public EntityBuilderNew template(EntityTemplate template) {
-		checkEntityCreated();
-		template.apply(entity);
-		return this;
+		return template(template, parameters);
 	}
 
 	public EntityBuilderNew template(EntityTemplate template, Parameters parameters) {

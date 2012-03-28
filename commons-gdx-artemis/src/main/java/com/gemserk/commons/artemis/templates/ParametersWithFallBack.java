@@ -25,6 +25,8 @@ public class ParametersWithFallBack implements Parameters {
 	 * @param parameters
 	 */
 	public void setParameters(Parameters parameters) {
+		if (parameters == null)
+			throw new IllegalArgumentException("fallback parameters can't be null");
 		this.parameters = parameters;
 	}
 
