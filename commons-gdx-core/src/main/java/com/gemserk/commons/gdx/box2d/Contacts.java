@@ -14,6 +14,8 @@ public class Contacts {
 		boolean inContact = false;
 
 		Vector2 normal = new Vector2();
+		
+		// no contact points?
 
 		public void setContact(Fixture myFixture, Fixture otherFixture, Vector2 normal) {
 			this.myFixture = myFixture;
