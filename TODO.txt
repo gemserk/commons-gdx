@@ -24,3 +24,7 @@ Parameters
 Svg
 
 	Apply styles correctly in order when using svg:use, for example, if we have a svg:image with style "display:inline;fill:RED;fill-opacity:0.5" and we have a svg:use of that image with style "fill:BLUE" then the result should "display:inline;fill:BLUE;fill-opacity:0.5"
+
+Others
+
+	SpriteUtils.resize(sprite, width) should be named resizeKeepingAspectRatio or something that tells what the method does in its name. 
