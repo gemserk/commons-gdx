@@ -4,17 +4,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.resources.ResourceManager;
 
 public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 
 	static final int AtlasRegionNoIndex = -1;
 
-	private int x;
-	private int y;
-	private int width;
-	private int height;
+	private int x, y, width, height;
+
+	private float cx, cy;
 	private float scale = 1f;
+	
 	private ResourceManager<String> resourceManager;
 	private String textureId;
 	private String textureAtlasId;
@@ -51,6 +52,15 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 		return this;
 	}
 
+	/**
+	 * Sets the relative center of the Sprite.
+	 */
+	public SpriteResourceBuilder center(float cx, float cy) {
+		this.cx = cx;
+		this.cy = cy;
+		return this;
+	}
+
 	public SpriteResourceBuilder flip(boolean flop, boolean flip) {
 		this.flip = flip;
 		this.flop = flop;
@@ -79,6 +89,8 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 		this.y = 0;
 		this.width = 0;
 		this.height = 0;
+		this.cx = 0.5f;
+		this.cy = 0.5f;
 	}
 
 	@Override
@@ -91,6 +103,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 
 			Sprite sprite = new Sprite(texture, x, y, w, h);
 			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+			SpriteUtils.center(sprite, cx, cy);
 			sprite.flip(flop, flip);
 			return sprite;
 		} else if (textureAtlasId != null) {
@@ -111,6 +124,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 			Sprite sprite = new Sprite(region);
 			sprite.flip(flop, flip);
 			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+			SpriteUtils.center(sprite, cx, cy);
 			return sprite;
 		}
 		throw new RuntimeException("failed to create sprite neither textureId nor textureAtlasId specified");

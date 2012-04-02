@@ -1,6 +1,8 @@
 package com.gemserk.animation4j.gdx.converters;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.converters.TypeConverter;
@@ -20,7 +22,7 @@ public class LibgdxConverters {
 	public static TypeConverter<Vector2> vector2() {
 		return vector2Converter;
 	}
-
+	
 	public static final TypeConverter<Sprite> spriteColorConverter = new TypeConverter<Sprite>() {
 
 		@Override
@@ -159,6 +161,54 @@ public class LibgdxConverters {
 		@Override
 		public Sprite copyToObject(Sprite object, float[] x) {
 			object.setRotation(x[0]);
+			return object;
+		}
+
+		@Override
+		public int variables() {
+			return 1;
+		}
+
+	};
+
+	public static final TypeConverter<OrthographicCamera> orthographicCameraPositionConverter = new TypeConverter<OrthographicCamera>() {
+
+		@Override
+		public float[] copyFromObject(OrthographicCamera object, float[] x) {
+			if (x == null)
+				x = new float[variables()];
+			x[0] = object.position.x;
+			x[1] = object.position.y;
+			return x;
+		}
+
+		@Override
+		public OrthographicCamera copyToObject(OrthographicCamera object, float[] x) {
+			object.position.x = x[0];
+			object.position.y = x[1];
+			return object;
+		}
+
+		@Override
+		public int variables() {
+			return 2;
+		}
+
+	};
+	
+	public static final TypeConverter<OrthographicCamera> orthographicCameraZoomConverter = new TypeConverter<OrthographicCamera>() {
+
+		@Override
+		public float[] copyFromObject(OrthographicCamera object, float[] x) {
+			if (x == null)
+				x = new float[variables()];
+			x[0] = object.zoom;
+			return x;
+		}
+
+		@Override
+		public OrthographicCamera copyToObject(OrthographicCamera object, float[] x) {
+			object.zoom = x[0];
 			return object;
 		}
 
