@@ -92,6 +92,8 @@ public class LibgdxResourceBuilder {
 			@Override
 			public Sprite load() {
 				Resource<Texture> texture = resourceManager.get(textureId);
+				if (texture == null)
+					throw new RuntimeException("Failed to create Sprite from missing Texture resource " + textureId);
 				return new Sprite(texture.get());
 			}
 		});

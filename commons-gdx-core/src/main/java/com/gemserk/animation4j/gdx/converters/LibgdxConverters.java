@@ -47,6 +47,31 @@ public class LibgdxConverters {
 		}
 
 	};
+	
+	public static final TypeConverter<Sprite> spriteOpacityConverter = new TypeConverter<Sprite>() {
+
+		@Override
+		public float[] copyFromObject(Sprite object, float[] x) {
+			if (x == null)
+				x = new float[variables()];
+			Color color = object.getColor();
+			x[0] = color.a;
+			return x;
+		}
+
+		@Override
+		public Sprite copyToObject(Sprite object, float[] x) {
+			Color color = object.getColor();
+			object.setColor(color.r, color.g, color.b, x[0]);
+			return object;
+		}
+
+		@Override
+		public int variables() {
+			return 1;
+		}
+
+	};
 
 	public static final TypeConverter<Sprite> spritePositionConverter = new TypeConverter<Sprite>() {
 
