@@ -64,7 +64,7 @@
 		<animation4j.version>0.2.2-SNAPSHOT</animation4j.version>
 		<artemis.version>0.0.1-GEMSERK-SNAPSHOT</artemis.version>
 		<gdx.version>0.9.3-a-SNAPSHOT</gdx.version>
-		<resourcesmanager.version>0.1.1-SNAPSHOT</resourcesmanager.version>
+		<resourcesmanager.version>0.2.0-SNAPSHOT</resourcesmanager.version>
 		<vecmath.version>1.5.3-GEMSERK</vecmath.version>
 	</properties>
 
