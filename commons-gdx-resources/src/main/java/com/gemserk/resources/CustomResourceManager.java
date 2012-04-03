@@ -18,6 +18,11 @@ public class CustomResourceManager<K> extends ResourceManagerImpl<K> {
 		registeredResources.add(id);
 	}
 	
+	public void addVolatile(K id, DataLoader dataLoader) {
+		super.addVolatile(id, dataLoader);
+		registeredResources.add(id);
+	}
+	
 	@Override
 	public void unloadAll() {
 		super.unloadAll();
