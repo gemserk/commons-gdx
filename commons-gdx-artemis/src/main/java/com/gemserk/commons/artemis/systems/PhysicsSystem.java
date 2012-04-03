@@ -9,7 +9,6 @@ import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.utils.PhysicsUtils;
 import com.gemserk.commons.gdx.GlobalTime;
-import com.gemserk.commons.gdx.box2d.Contacts;
 
 public class PhysicsSystem extends EntityProcessingSystem implements ActivableSystem, Disposable {
 
