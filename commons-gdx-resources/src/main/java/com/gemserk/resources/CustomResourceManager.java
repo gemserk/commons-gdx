@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.gemserk.resources.dataloaders.DataLoader;
 
+@Deprecated
 public class CustomResourceManager<K> extends ResourceManagerImpl<K> {
 
 	private ArrayList<K> registeredResources = new ArrayList<K>();
@@ -26,6 +27,7 @@ public class CustomResourceManager<K> extends ResourceManagerImpl<K> {
 	@Override
 	public void unloadAll() {
 		super.unloadAll();
+		// this is wrong, unloadAll doesn't remove the declarations...
 		registeredResources.clear();
 	}
 
