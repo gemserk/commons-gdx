@@ -33,7 +33,7 @@ public class TextButton extends ControlImpl {
 
 	public TextButton setColor(Color color) {
 		if (colorTransition != null)
-			colorTransition.set(color, 0.25f);
+			colorTransition.start(0.25f, color);
 		return this;
 	}
 
@@ -173,10 +173,10 @@ public class TextButton extends ControlImpl {
 		boolean inside = MathUtils2.inside(bounds, libgdxPointer.getPosition());
 
 		if (wasInside && !inside)
-			colorTransition.set(notOverColor, 0.25f);
+			colorTransition.start(0.25f, notOverColor);
 
 		if (!wasInside && inside)
-			colorTransition.set(overColor, 0.25f);
+			colorTransition.start(0.25f, overColor);
 
 		wasInside = inside;
 

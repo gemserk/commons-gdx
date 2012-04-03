@@ -61,7 +61,7 @@
 		<compiler.version>1.6</compiler.version>
 		<adwhirl.version>3.0.0</adwhirl.version>
 		<android.version>2.2.1</android.version>
-		<animation4j.version>0.2.1-SNAPSHOT</animation4j.version>
+		<animation4j.version>0.2.2-SNAPSHOT</animation4j.version>
 		<artemis.version>0.0.1-GEMSERK-SNAPSHOT</artemis.version>
 		<gdx.version>0.9.3-a-SNAPSHOT</gdx.version>
 		<resourcesmanager.version>0.1.1-SNAPSHOT</resourcesmanager.version>
