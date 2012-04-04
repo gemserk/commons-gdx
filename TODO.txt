@@ -28,3 +28,5 @@ Svg
 Others
 
 	SpriteUtils.resize(sprite, width) should be named resizeKeepingAspectRatio or something that tells what the method does in its name. 
+	
+	BUG: when calling setAngle() over SpatialPhysicsImpl and position wasn't updated, it doesn't use the current body position but a local zero vector  

@@ -70,6 +70,14 @@ public class Box2dUtils {
 
 	private static final Filter filter = new Filter();
 
+	/**
+	 * Sets the filter data for all the fixtures of the Body.
+	 * 
+	 * @param body
+	 *            The Body to set the filters to.
+	 * @param filter
+	 *            The Filter data to set to the body fixtures.
+	 */
 	public static void setFilter(Body body, Filter filter) {
 		ArrayList<Fixture> fixtureList = body.getFixtureList();
 		for (int i = 0; i < fixtureList.size(); i++) {
@@ -78,6 +86,72 @@ public class Box2dUtils {
 		}
 	}
 
+	/**
+	 * Sets the specified filter to the Fixture with the specified userData.
+	 * 
+	 * @param body
+	 *            The Body to get the Fixture from.
+	 * @param fixtureUserData
+	 *            The Fixture userData to identify the Fixture.
+	 * @param filter
+	 *            The new filter data to be set on the Fixture.
+	 */
+	public static void setFilter(Body body, Object fixtureUserData, Filter filter) {
+		Fixture fixture = getFixture(body, fixtureUserData);
+		if (fixture != null)
+			fixture.setFilterData(filter);
+	}
+
+	/**
+	 * Sets the filter data to the Fixture identified by the specified fixtureUserData.
+	 * 
+	 * @param body
+	 *            The Box2d Body to set the filters to.
+	 * @param categoryBits
+	 *            The category bits for all the fixtures.
+	 * @param maskBits
+	 *            The mask bits for all the all fixtures.
+	 * @param groupIndex
+	 *            The groupIndex for the all fixtures.
+	 */
+	public static void setFilter(Body body, Object fixtureUserData, short categoryBits, short maskBits, short groupIndex) {
+		filter.categoryBits = categoryBits;
+		filter.maskBits = maskBits;
+		filter.groupIndex = groupIndex;
+		setFilter(body, fixtureUserData, filter);
+	}
+
+	/**
+	 * Returns a Fixture from a Body given the fixtureUserData.
+	 * 
+	 * @param body
+	 *            The Body to get the Fixture from.
+	 * @param fixtureUserData
+	 *            The Fixture userData to identify the Fixture.
+	 */
+	public static Fixture getFixture(Body body, Object fixtureUserData) {
+		ArrayList<Fixture> fixtureList = body.getFixtureList();
+		for (int i = 0; i < fixtureList.size(); i++) {
+			Fixture fixture = fixtureList.get(i);
+			Object userData = fixture.getUserData();
+			if (userData == fixtureUserData || fixtureUserData.equals(userData))
+				return fixture;
+		}
+		return null;
+	}
+
+	/**
+	 * Sets the filter data for all the fixtures of the Box2D Body.
+	 * 
+	 * @param body
+	 *            The Box2d Body to set the filters to.
+	 * @param categoryBits
+	 *            The category bits for all the fixtures.
+	 * @param maskBits
+	 *            The mask bits for all the all fixtures.
+	 * @param groupIndex
+	 *            The groupIndex for the all fixtures.
+	 */
 	public static void setFilter(Body body, short categoryBits, short maskBits, short groupIndex) {
 		filter.categoryBits = categoryBits;
 		filter.maskBits = maskBits;
