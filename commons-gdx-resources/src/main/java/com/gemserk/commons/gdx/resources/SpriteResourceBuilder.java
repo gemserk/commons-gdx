@@ -15,7 +15,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 
 	private float cx, cy;
 	private float scale = 1f;
-	
+
 	private ResourceManager<String> resourceManager;
 	private String textureId;
 	private String textureAtlasId;
@@ -25,6 +25,10 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 
 	private boolean flip = false;
 	private boolean flop = false;
+
+	private boolean rotate90 = false;
+	private boolean clockwise = false;
+
 	private int regionIndex;
 
 	public SpriteResourceBuilder x(int x) {
@@ -67,6 +71,12 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 		return this;
 	}
 
+	public SpriteResourceBuilder rotate90(boolean clockwise) {
+		this.rotate90 = true;
+		this.clockwise = clockwise;
+		return this;
+	}
+
 	public SpriteResourceBuilder texture(String textureId) {
 		this.textureId = textureId;
 		return this;
@@ -105,6 +115,10 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
 			SpriteUtils.center(sprite, cx, cy);
 			sprite.flip(flop, flip);
+
+			if (rotate90)
+				sprite.rotate90(clockwise);
+
 			return sprite;
 		} else if (textureAtlasId != null) {
 			if (region == null) {
@@ -125,6 +139,10 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 			sprite.flip(flop, flip);
 			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
 			SpriteUtils.center(sprite, cx, cy);
+
+			if (rotate90)
+				sprite.rotate90(clockwise);
+
 			return sprite;
 		}
 		throw new RuntimeException("failed to create sprite neither textureId nor textureAtlasId specified");
