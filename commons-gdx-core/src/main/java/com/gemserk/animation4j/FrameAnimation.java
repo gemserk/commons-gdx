@@ -11,6 +11,11 @@ public interface FrameAnimation {
 	int getCurrentFrame();
 
 	/**
+	 * Sets the current frame.
+	 */
+	void setFrame(int frame);
+
+	/**
 	 * Internally updates the animation, changing frames.
 	 * 
 	 * @param delta

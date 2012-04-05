@@ -9,7 +9,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 	 * Represents each frame time
 	 */
 	float[] framesTimes;
-	
+
 	int currentFrame;
 	float currentTime;
 
@@ -20,12 +20,12 @@ public class FrameAnimationImpl implements FrameAnimation {
 	public void setLoop(boolean loop) {
 		this.loop = loop;
 	}
-	
+
 	public FrameAnimationImpl(FrameAnimationImpl frameAnimationImpl) {
 		this.framesTimes = new float[frameAnimationImpl.framesTimes.length];
 		System.arraycopy(frameAnimationImpl.framesTimes, 0, this.framesTimes, 0, frameAnimationImpl.framesTimes.length);
 		this.currentFrame = frameAnimationImpl.currentFrame;
-		this.currentTime = frameAnimationImpl.currentTime; 
+		this.currentTime = frameAnimationImpl.currentTime;
 	}
 
 	public FrameAnimationImpl(float f0, float... framesTimes) {
@@ -73,6 +73,13 @@ public class FrameAnimationImpl implements FrameAnimation {
 	@Override
 	public int getCurrentFrame() {
 		return currentFrame;
+	}
+
+	@Override
+	public void setFrame(int frame) {
+		if (currentFrame < 0 || currentFrame >= framesTimes.length)
+			throw new IllegalStateException("Frame animation with index " + frame + " not found.");
+		currentFrame = frame;
 	}
 
 	/*
