@@ -26,6 +26,10 @@ public class Animation  {
 		frameAnimation.setFrame(index);
 	}
 	
+	public int getCurrentFrameIndex() {
+		return frameAnimation.getCurrentFrame();
+	}
+	
 	public Sprite getCurrentFrame() {
 		return getFrame(frameAnimation.getCurrentFrame());
 	}
