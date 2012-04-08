@@ -6,7 +6,9 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.gemserk.animation4j.gdx.converters.CommonGdxConverters;
 import com.gemserk.animation4j.gdx.converters.LibgdxConverters;
+import com.gemserk.commons.gdx.camera.Camera;
 
 public class TimelineConfigurator {
 
@@ -77,10 +79,12 @@ public class TimelineConfigurator {
 
 				switch (tweenType) {
 				case 1:
-					timelineValues.put(propertyId, new TimelineValueImpl<OrthographicCamera>(LibgdxConverters.orthographicCameraPositionConverter));
+					// timelineValues.put(propertyId, new TimelineValueImpl<OrthographicCamera>(LibgdxConverters.orthographicCameraPositionConverter));
+					timelineValues.put(propertyId, new TimelineValueImpl<Camera>(CommonGdxConverters.cameraPositionConverter));
 					break;
 				case 2:
-					timelineValues.put(propertyId, new TimelineValueImpl<OrthographicCamera>(LibgdxConverters.orthographicCameraZoomConverter));
+					// timelineValues.put(propertyId, new TimelineValueImpl<OrthographicCamera>(LibgdxConverters.orthographicCameraZoomConverter));
+					timelineValues.put(propertyId, new TimelineValueImpl<Camera>(CommonGdxConverters.cameraZoomConverter));
 					break;
 				default:
 					throw new IllegalArgumentException("tweenType not supported yet");
