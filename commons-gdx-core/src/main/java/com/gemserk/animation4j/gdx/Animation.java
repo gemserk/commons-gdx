@@ -30,6 +30,10 @@ public class Animation  {
 		return frameAnimation.getCurrentFrame();
 	}
 	
+	public int getIteration() {
+		return frameAnimation.getIteration();
+	}
+	
 	public Sprite getCurrentFrame() {
 		return getFrame(frameAnimation.getCurrentFrame());
 	}

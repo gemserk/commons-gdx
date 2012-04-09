@@ -11,6 +11,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 	float[] framesTimes;
 
 	int currentFrame;
+	int currentIteration;
 	float currentTime;
 
 	// add all play/stop/pause/etc?
@@ -26,11 +27,13 @@ public class FrameAnimationImpl implements FrameAnimation {
 		System.arraycopy(frameAnimationImpl.framesTimes, 0, this.framesTimes, 0, frameAnimationImpl.framesTimes.length);
 		this.currentFrame = frameAnimationImpl.currentFrame;
 		this.currentTime = frameAnimationImpl.currentTime;
+		this.currentIteration = frameAnimationImpl.currentIteration;
 	}
 
 	public FrameAnimationImpl(float f0, float... framesTimes) {
 		this.currentFrame = 0;
 		this.currentTime = 0;
+		this.currentIteration = 1;
 		this.loop = false;
 		set(f0, framesTimes);
 	}
@@ -40,6 +43,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		assert (framesTimes.length > 0);
 		this.currentFrame = 0;
 		this.currentTime = 0;
+		this.currentIteration = 1;
 		this.loop = loop;
 		set(framesTimes);
 	}
@@ -106,8 +110,10 @@ public class FrameAnimationImpl implements FrameAnimation {
 
 		if (currentFrame < getFramesCount() - 1)
 			currentFrame++;
-		else if (loop)
+		else if (loop) {
 			currentFrame = 0;
+			currentIteration++;
+		}
 
 	}
 
@@ -124,5 +130,11 @@ public class FrameAnimationImpl implements FrameAnimation {
 	public void restart() {
 		currentFrame = 0;
 		currentTime = 0;
+		currentIteration++;
+	}
+
+	@Override
+	public int getIteration() {
+		return currentIteration;
 	}
 }

@@ -1,5 +1,6 @@
 package com.gemserk.animation4j;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
@@ -65,6 +66,26 @@ public class FrameAnimationImplTest {
 		assertThat(clone.getCurrentFrame(), IsEqual.equalTo(0));
 		clone.update(6f);
 		assertThat(clone.getCurrentFrame(), IsEqual.equalTo(1));
+	}
+	
+	@Test
+	public void testIterationCount() {
+		FrameAnimationImpl source = new FrameAnimationImpl(true, 10f);
+		source.update(5f);
+		assertEquals(1, source.getIteration());
+		source.update(5.1f);
+		assertEquals(2, source.getIteration());
+	}
+	
+	@Test
+	public void testIterationCountForNoLoopAnimation() {
+		FrameAnimationImpl source = new FrameAnimationImpl(false, 10f);
+		source.update(5f);
+		assertEquals(1, source.getIteration());
+		source.update(5.1f);
+		assertEquals(1, source.getIteration());
+		source.restart();
+		assertEquals(2, source.getIteration());
 	}
 
 }
