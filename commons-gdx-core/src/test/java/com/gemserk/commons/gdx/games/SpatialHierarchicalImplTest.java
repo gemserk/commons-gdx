@@ -126,5 +126,19 @@ public class SpatialHierarchicalImplTest {
 		assertEquals(0f, third.getX(), 0.1f);
 		assertEquals(30f, third.getY(), 0.1f);
 	}
+	
+	@Test
+	public void shouldModifyLocalPosition() {
+		Spatial parent = new SpatialImpl(50f, 50f, 1f, 1f, 0f);
+		SpatialHierarchicalImpl child = new SpatialHierarchicalImpl(parent, 1f, 1f);
+		
+		assertEquals(50f, child.getX(), 0.1f);
+		assertEquals(50f, child.getY(), 0.1f);
+		
+		child.setLocalPosition(2f, 5f);
+		
+		assertEquals(52f, child.getX(), 0.1f);
+		assertEquals(55f, child.getY(), 0.1f);
+	}
 
 }

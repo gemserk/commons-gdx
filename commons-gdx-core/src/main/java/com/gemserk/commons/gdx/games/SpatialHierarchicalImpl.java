@@ -48,10 +48,18 @@ public class SpatialHierarchicalImpl implements Spatial {
 	public void setPosition(float x, float y) {
 		localPosition.set(x - parent.getX(), y - parent.getY());
 	}
+	
+	public void setLocalPosition(float x, float y) {
+		localPosition.set(x, y);
+	}
 
 	@Override
 	public float getAngle() {
 		return localAngle + parent.getAngle();
+	}
+	
+	public void setLocalAngle(float angle) {
+		this.localAngle = angle;
 	}
 
 	@Override
