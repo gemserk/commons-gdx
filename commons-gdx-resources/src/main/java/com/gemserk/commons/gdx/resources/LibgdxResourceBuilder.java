@@ -128,13 +128,13 @@ public class LibgdxResourceBuilder {
 			@Override
 			public Sprite load() {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
-				
+
 				if (sprite == null) {
 					sprite = textureAtlas.createSprite(regionId);
 					if (sprite == null)
 						throw new RuntimeException("Failed to create Sprite resource " + id + " from region " + regionId + " from texture atlas " + textureAtlasId);
 				}
-				
+
 				if (sprite instanceof AtlasSprite)
 					return new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
 				else
@@ -144,6 +144,10 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void animation(final String id, final String textureAtlasId, final String prefix, final boolean loop, final int time, final int... times) {
+		animation(id, textureAtlasId, prefix, -1, -1, loop, time, times);
+	}
+
+	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final int time, final int... times) {
 		resourceManager.addVolatile(id, new DataLoader<Animation>() {
 
 			List<Sprite> sprites = null;
@@ -160,14 +164,25 @@ public class LibgdxResourceBuilder {
 					}
 				}
 
-				Sprite[] frames = new Sprite[sprites.size()];
+				int endFrame = ef;
+				int startFrame = sf;
+
+				if (endFrame == -1)
+					endFrame = sprites.size() - 1;
+
+				if (startFrame == -1)
+					startFrame = 0;
+
+				Sprite[] frames = new Sprite[endFrame - startFrame + 1];
+				int frameNumber = startFrame;
+
 				for (int i = 0; i < frames.length; i++) {
-					Sprite sprite = sprites.get(i);
+					Sprite sprite = sprites.get(frameNumber);
 					if (sprite instanceof AtlasSprite)
 						frames[i] = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
 					else
 						frames[i] = new Sprite(sprite);
-
+					frameNumber++;
 				}
 
 				int framesCount = frames.length;
@@ -189,7 +204,6 @@ public class LibgdxResourceBuilder {
 				frameAnimation.setLoop(loop);
 
 				return new Animation(frames, frameAnimation);
-
 			}
 
 		});
