@@ -147,12 +147,13 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 			else
 				sprite = new Sprite(spriteRegion);
 
-			sprite.flip(flop, flip);
 			if (!rotate90)
 				sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
 			else
 				sprite.setSize(sprite.getHeight() * scale, sprite.getWidth() * scale);
+			
 			SpriteUtils.center(sprite, cx, cy);
+			sprite.flip(flop, flip);
 
 			if (rotate90)
 				sprite.rotate90(clockwise);

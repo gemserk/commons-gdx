@@ -45,6 +45,8 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 		if (!playing)
 			return;
 		frameAnimation.update(delta);
+		if (frameAnimation.isFinished())
+			playing = false;
 	}
 
 	public boolean isFinished() {
@@ -52,13 +54,13 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 	}
 
 	public void restart() {
-		playing = true;
-		frameAnimation.restart();
+		start();
 	}
 
 	@Override
 	public void start() {
 		playing = true;
+		started = true;
 		frameAnimation.restart();
 	}
 
@@ -75,6 +77,7 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 	@Override
 	public void stop() {
 		playing = false;
+		started = false;
 		frameAnimation.restart();
 	}
 
@@ -86,6 +89,10 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 	@Override
 	public void resume() {
 		playing = true;
+	}
+	
+	public boolean isPlaying() {
+		return playing;
 	}
 
 	@Override
