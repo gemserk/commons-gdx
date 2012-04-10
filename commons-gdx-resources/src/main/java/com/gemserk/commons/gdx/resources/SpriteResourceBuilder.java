@@ -3,7 +3,7 @@ package com.gemserk.commons.gdx.resources;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.resources.ResourceManager;
 
@@ -21,7 +21,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 	private String textureAtlasId;
 	private String regionId;
 
-	private AtlasRegion region;
+	private Sprite spriteRegion = null;
 
 	private boolean flip = false;
 	private boolean flop = false;
@@ -121,21 +121,28 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 
 			return sprite;
 		} else if (textureAtlasId != null) {
-			if (region == null) {
+			if (spriteRegion == null) {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
 
 				try {
-					region = textureAtlas.findRegion(regionId, regionIndex);
+					// region = textureAtlas.findRegion(regionId, regionIndex);
+					spriteRegion = textureAtlas.createSprite(regionId, regionIndex);
 				} catch (Exception e) {
 					throw new RuntimeException("Failed to load AtlasRegion " + regionId + " with index " + regionIndex + " from TextureAtlas " + textureAtlasId, e);
 				}
 
-				if (region == null)
+				if (spriteRegion == null)
 					throw new RuntimeException("AtlasRegion " + regionId + " with index " + regionIndex + " from TextureAtlas " + textureAtlasId + " not found");
 
 			}
 			// note that whis resource will not be updated if the resource of the texture atlas changed...
-			Sprite sprite = new Sprite(region);
+			Sprite sprite = null;
+			
+			if (sprite instanceof AtlasSprite)
+				sprite = new AtlasSprite(((AtlasSprite) spriteRegion).getAtlasRegion());
+			else
+				sprite = new Sprite(spriteRegion);
+			
 			sprite.flip(flop, flip);
 			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
 			SpriteUtils.center(sprite, cx, cy);

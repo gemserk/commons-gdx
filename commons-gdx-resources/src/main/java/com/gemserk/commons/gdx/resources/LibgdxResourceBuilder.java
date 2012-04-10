@@ -2,7 +2,6 @@ package com.gemserk.commons.gdx.resources;
 
 import java.util.List;
 
-import org.omg.CORBA.INTERNAL;
 import org.w3c.dom.Document;
 
 import com.badlogic.gdx.Gdx;
@@ -15,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.gemserk.animation4j.FrameAnimationImpl;
@@ -123,17 +123,22 @@ public class LibgdxResourceBuilder {
 	public void spriteAtlas(final String id, final String textureAtlasId, final String regionId) {
 		resourceManager.addVolatile(id, new DataLoader<Sprite>() {
 
-			private AtlasRegion region = null;
+			private Sprite sprite = null;
 
 			@Override
 			public Sprite load() {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
-				if (region == null) {
-					region = textureAtlas.findRegion(regionId);
-					if (region == null)
+				
+				if (sprite == null) {
+					sprite = textureAtlas.createSprite(regionId);
+					if (sprite == null)
 						throw new RuntimeException("Failed to create Sprite resource " + id + " from region " + regionId + " from texture atlas " + textureAtlasId);
 				}
-				return new Sprite(region);
+				
+				if (sprite instanceof AtlasSprite)
+					return new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
+				else
+					return new Sprite(sprite);
 			}
 		});
 	}
@@ -157,7 +162,12 @@ public class LibgdxResourceBuilder {
 
 				Sprite[] frames = new Sprite[sprites.size()];
 				for (int i = 0; i < frames.length; i++) {
-					frames[i] = new Sprite(sprites.get(i));
+					Sprite sprite = sprites.get(i);
+					if (sprite instanceof AtlasSprite)
+						frames[i] = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
+					else
+						frames[i] = new Sprite(sprite);
+
 				}
 
 				int framesCount = frames.length;
@@ -351,7 +361,7 @@ public class LibgdxResourceBuilder {
 	public static XmlDocumentResourceBuilder xmlDocument(String file) {
 		return xmlDocument(internal(file));
 	}
-	
+
 	public static XmlDocumentResourceBuilder xmlDocument(FileHandle file) {
 		return new XmlDocumentResourceBuilder().file(file);
 	}
