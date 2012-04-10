@@ -112,7 +112,12 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 			int h = height != 0 ? height : texture.getHeight();
 
 			Sprite sprite = new Sprite(texture, x, y, w, h);
-			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+
+			if (!rotate90)
+				sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+			else
+				sprite.setSize(sprite.getHeight() * scale, sprite.getWidth() * scale);
+
 			SpriteUtils.center(sprite, cx, cy);
 			sprite.flip(flop, flip);
 
@@ -125,7 +130,6 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
 
 				try {
-					// region = textureAtlas.findRegion(regionId, regionIndex);
 					spriteRegion = textureAtlas.createSprite(regionId, regionIndex);
 				} catch (Exception e) {
 					throw new RuntimeException("Failed to load AtlasRegion " + regionId + " with index " + regionIndex + " from TextureAtlas " + textureAtlasId, e);
@@ -137,14 +141,17 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 			}
 			// note that whis resource will not be updated if the resource of the texture atlas changed...
 			Sprite sprite = null;
-			
+
 			if (sprite instanceof AtlasSprite)
 				sprite = new AtlasSprite(((AtlasSprite) spriteRegion).getAtlasRegion());
 			else
 				sprite = new Sprite(spriteRegion);
-			
+
 			sprite.flip(flop, flip);
-			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+			if (!rotate90)
+				sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+			else
+				sprite.setSize(sprite.getHeight() * scale, sprite.getWidth() * scale);
 			SpriteUtils.center(sprite, cx, cy);
 
 			if (rotate90)
