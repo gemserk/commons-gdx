@@ -1,6 +1,7 @@
 package com.gemserk.commons.gdx.graphics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 
 /**
  * Libgdx Sprite utils
@@ -112,6 +113,19 @@ public class SpriteUtils {
 
 		if (rotate90)
 			sprite.rotate90(clockwise);
+	}
+
+	/**
+	 * Returns a clone of a Sprite based on the type of the sprite.
+	 */
+	public static Sprite cloneSprite(Sprite sprite) {
+		if (sprite instanceof AtlasSprite) {
+			AtlasSprite atlasSprite = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
+			atlasSprite.set(sprite);
+			return atlasSprite;
+		} else {
+			return new Sprite(sprite);
+		}
 	}
 
 }
