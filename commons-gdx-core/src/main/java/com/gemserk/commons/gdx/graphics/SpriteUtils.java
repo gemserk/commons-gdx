@@ -44,7 +44,7 @@ public class SpriteUtils {
 		float height = width * aspect;
 		sprite.setSize(width, height);
 	}
-	
+
 	public static void resizeUsingHeightKeepAspectRatio(Sprite sprite, float height) {
 		float aspect = (float) sprite.getHeight() / (float) sprite.getWidth();
 		float width = height / aspect;
@@ -79,6 +79,39 @@ public class SpriteUtils {
 	 */
 	public static void center(Sprite sprite, float cx, float cy) {
 		sprite.setOrigin(sprite.getWidth() * cx, sprite.getHeight() * cy);
+	}
+
+	/**
+	 * Transform the specified sprite given the scale, center, flip and flop, and if the sprite should be rotated 90 clockwise or counterclockwise. Used mainly by the resource builders.
+	 * 
+	 * @param sprite
+	 *            The sprite to transform.
+	 * @param scale
+	 *            The scale the sprite should be scaled by.
+	 * @param cx
+	 *            The center of x coordinate.
+	 * @param cy
+	 *            The center of the y coordinate.
+	 * @param flop
+	 *            If the sprite should be mirrored horizontally or not.
+	 * @param flip
+	 *            If the sprite should be mirrored vertically or not.
+	 * @param rotate90
+	 *            If it should be rotated 90 degrees or not.
+	 * @param clockwise
+	 *            The direciton of the rotation if it should be rotated.
+	 */
+	public static void transformSprite(Sprite sprite, float scale, float cx, float cy, boolean flop, boolean flip, boolean rotate90, boolean clockwise) {
+		if (!rotate90)
+			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+		else
+			sprite.setSize(sprite.getHeight() * scale, sprite.getWidth() * scale);
+
+		SpriteUtils.center(sprite, cx, cy);
+		sprite.flip(flop, flip);
+
+		if (rotate90)
+			sprite.rotate90(clockwise);
 	}
 
 }

@@ -371,6 +371,10 @@ public class LibgdxResourceBuilder {
 	public AnimationResourceBuilder animation2(String textureId) {
 		return new AnimationResourceBuilder(resourceManager, textureId);
 	}
+	
+	public AnimationFromTextureAtlasResourceBuilder animationFromTextureAtlas(String textureAtlasId) {
+		return new AnimationFromTextureAtlasResourceBuilder(resourceManager, textureAtlasId);
+	}
 
 	public static XmlDocumentResourceBuilder xmlDocument(String file) {
 		return xmlDocument(internal(file));

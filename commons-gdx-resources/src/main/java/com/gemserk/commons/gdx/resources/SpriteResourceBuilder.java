@@ -113,16 +113,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 
 			Sprite sprite = new Sprite(texture, x, y, w, h);
 
-			if (!rotate90)
-				sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
-			else
-				sprite.setSize(sprite.getHeight() * scale, sprite.getWidth() * scale);
-
-			SpriteUtils.center(sprite, cx, cy);
-			sprite.flip(flop, flip);
-
-			if (rotate90)
-				sprite.rotate90(clockwise);
+			SpriteUtils.transformSprite(sprite, scale, cx, cy, flop, flip, rotate90, clockwise);
 
 			return sprite;
 		} else if (textureAtlasId != null) {
@@ -147,16 +138,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 			else
 				sprite = new Sprite(spriteRegion);
 
-			if (!rotate90)
-				sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
-			else
-				sprite.setSize(sprite.getHeight() * scale, sprite.getWidth() * scale);
-			
-			SpriteUtils.center(sprite, cx, cy);
-			sprite.flip(flop, flip);
-
-			if (rotate90)
-				sprite.rotate90(clockwise);
+			SpriteUtils.transformSprite(sprite, scale, cx, cy, flop, flip, rotate90, clockwise);
 
 			return sprite;
 		}
