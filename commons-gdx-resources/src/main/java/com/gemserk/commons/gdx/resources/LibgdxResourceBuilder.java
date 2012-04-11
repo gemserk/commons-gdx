@@ -163,6 +163,10 @@ public class LibgdxResourceBuilder {
 						throw new RuntimeException("Failed to create animation " + id + " from texture atlas " + textureAtlasId, e);
 					}
 				}
+				
+				if (sprites.size() == 0) { 
+					throw new IllegalArgumentException("Failed to create animation " + id + ", no regions found for prefix " + prefix);
+				}
 
 				int endFrame = ef;
 				int startFrame = sf;
@@ -175,6 +179,10 @@ public class LibgdxResourceBuilder {
 
 				Sprite[] frames = new Sprite[endFrame - startFrame + 1];
 				int frameNumber = startFrame;
+				
+				if (endFrame >= sprites.size()) { 
+					throw new IllegalArgumentException("Failed to create animation " + id + ", end frame " + endFrame + " couldn't be greater than sprites quantity " + sprites.size());
+				}
 
 				for (int i = 0; i < frames.length; i++) {
 					Sprite sprite = sprites.get(frameNumber);
