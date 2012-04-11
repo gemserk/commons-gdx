@@ -87,5 +87,12 @@ public class FrameAnimationImplTest {
 		source.restart();
 		assertEquals(2, source.getIteration());
 	}
+	
+	@Test
+	public void testAnimationWithOneFrame() {
+		FrameAnimationImpl animation = new FrameAnimationImpl(false, 10f);
+		animation.update(20f);
+		assertEquals(true, animation.isFinished());
+	}
 
 }

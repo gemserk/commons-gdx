@@ -25,6 +25,10 @@ public class AnimationComponent extends Component {
 	public Animation getAnimation(int index) {
 		return animations[index];
 	}
+	
+	public int getCurrentAnimationIndex() {
+		return currentAnimation;
+	}
 
 	public Animation getCurrentAnimation() {
 		return animations[currentAnimation];

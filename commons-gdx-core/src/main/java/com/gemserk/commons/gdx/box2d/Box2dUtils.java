@@ -166,7 +166,6 @@ public class Box2dUtils {
 		for (int j = 0; j < triangulator.getTriangleCount(); j++) {
 
 			for (int p = 0; p < 3; p++) {
-				// float[] pt = triangulator.getTrianglePoint(j, p);
 				float x = triangulator.getTrianglePointX(j, p);
 				float y = triangulator.getTrianglePointY(j, p);
 				triangleVertices[p].set(x, y);
