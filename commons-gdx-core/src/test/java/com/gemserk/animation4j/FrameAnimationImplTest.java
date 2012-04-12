@@ -85,7 +85,7 @@ public class FrameAnimationImplTest {
 		source.update(5.1f);
 		assertEquals(1, source.getIteration());
 		source.restart();
-		assertEquals(2, source.getIteration());
+		assertEquals(1, source.getIteration());
 	}
 	
 	@Test

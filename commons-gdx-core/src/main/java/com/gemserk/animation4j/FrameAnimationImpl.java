@@ -27,7 +27,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		System.arraycopy(frameAnimationImpl.framesTimes, 0, this.framesTimes, 0, frameAnimationImpl.framesTimes.length);
 		this.currentFrame = frameAnimationImpl.currentFrame;
 		this.currentTime = frameAnimationImpl.currentTime;
-		this.currentIteration = frameAnimationImpl.currentIteration;
+		this.currentIteration = 1;
 	}
 
 	public FrameAnimationImpl(float f0, float... framesTimes) {
@@ -130,7 +130,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 	public void restart() {
 		currentFrame = 0;
 		currentTime = 0;
-		currentIteration++;
+		currentIteration = 1;
 	}
 
 	@Override
