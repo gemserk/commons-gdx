@@ -108,6 +108,24 @@ public class RenderableComponentComparatorTest {
 		assertEquals(true, firstEntityBeforeSecondEntity(e3, e2));
 		assertEquals(false, firstEntityBeforeSecondEntity(e2, e3));
 	}
+	
+	@Test
+	public void testSubEntitiesAfterAnotherEntityIfParentIsAfter() {
+		World world = new World();
+
+		Entity e1 = world.createEntity();
+		Entity e2 = world.createEntity();
+		Entity e3 = world.createEntity();
+
+		e1.addComponent(new RenderableComponent(6, 0));
+		e2.addComponent(new RenderableComponent(5));
+		e3.addComponent(new RenderableComponent(6, 1, true));
+		
+		e3.addComponent(new OwnerComponent(e1));
+
+		assertEquals(true, firstEntityBeforeSecondEntity(e2, e3));
+		assertEquals(false, firstEntityBeforeSecondEntity(e3, e2));
+	}
 
 	@Test
 	public void shouldReturnSubEntityBeforeAnotherEntityIfParentEntityBeforeThatOne2() {
