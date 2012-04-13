@@ -14,7 +14,7 @@ public class RenderableComponentComparatorTest {
 	RenderableComponentComparator renderableComponentComparator = new RenderableComponentComparator();
 
 	@Test
-	public void test() {
+	public void shouldReturnEntityFirstIfLesserLayer() {
 		World world = new World();
 		Entity e1 = world.createEntity();
 		Entity e2 = world.createEntity();
@@ -26,7 +26,7 @@ public class RenderableComponentComparatorTest {
 	}
 	
 	@Test
-	public void test11() {
+	public void shouldReturnEntitySecondIfGreaterLayer() {
 		World world = new World();
 		Entity e1 = world.createEntity();
 		Entity e2 = world.createEntity();
@@ -38,7 +38,7 @@ public class RenderableComponentComparatorTest {
 	}
 
 	@Test
-	public void test2() {
+	public void shouldReturnEntityFirstIfGreaterLayerInverted() {
 		World world = new World();
 		Entity e1 = world.createEntity();
 		Entity e2 = world.createEntity();
@@ -50,7 +50,7 @@ public class RenderableComponentComparatorTest {
 	}
 
 	@Test
-	public void test3() {
+	public void shouldReturnBothEntitiesInSameLayer() {
 		World world = new World();
 		Entity e1 = world.createEntity();
 		Entity e2 = world.createEntity();
@@ -62,7 +62,7 @@ public class RenderableComponentComparatorTest {
 	}
 
 	@Test
-	public void test4() {
+	public void shouldReturnSubEntityBeforeParentEntityIfLesserSubLayer() {
 		World world = new World();
 
 		Entity e1 = world.createEntity();
@@ -77,7 +77,7 @@ public class RenderableComponentComparatorTest {
 	}
 	
 	@Test
-	public void test5() {
+	public void shouldReturnSubEntityAfterParentEntityIfGreaterSubLayer() {
 		World world = new World();
 
 		Entity e1 = world.createEntity();
@@ -92,7 +92,7 @@ public class RenderableComponentComparatorTest {
 	}
 	
 	@Test
-	public void test6() {
+	public void shouldReturnSubEntityBeforeAnotherEntityIfParentEntityBeforeThatOne() {
 		World world = new World();
 
 		Entity e1 = world.createEntity();
@@ -110,7 +110,7 @@ public class RenderableComponentComparatorTest {
 	}
 
 	@Test
-	public void test7() {
+	public void shouldReturnSubEntityBeforeAnotherEntityIfParentEntityBeforeThatOne2() {
 		World world = new World();
 
 		Entity e1 = world.createEntity();
@@ -128,7 +128,7 @@ public class RenderableComponentComparatorTest {
 	}
 
 	@Test
-	public void test8() {
+	public void testTwoSubEntitiesOrder() {
 		World world = new World();
 
 		Entity e1 = world.createEntity();
@@ -149,7 +149,7 @@ public class RenderableComponentComparatorTest {
 	}
 	
 	@Test
-	public void test9() {
+	public void testTwoSubEntities2() {
 		World world = new World();
 
 		Entity e1 = world.createEntity();
