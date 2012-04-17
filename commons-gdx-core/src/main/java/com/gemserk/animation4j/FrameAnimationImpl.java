@@ -130,7 +130,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 	public void restart() {
 		currentFrame = 0;
 		currentTime = 0;
-		currentIteration = 1;
+		currentIteration++;
 	}
 
 	@Override

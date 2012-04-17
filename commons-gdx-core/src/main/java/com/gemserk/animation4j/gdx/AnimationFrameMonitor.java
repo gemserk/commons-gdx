@@ -47,4 +47,10 @@ public class AnimationFrameMonitor {
 		return triggered;
 	}
 
+	public void reset() {
+		this.triggered = animation.getCurrentFrameIndex() >= frameToMonitor;
+		this.alreadyTriggeredForIteration = false;
+		this.currentIteration = animation.getIteration();
+	}
+
 }
