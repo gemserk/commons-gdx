@@ -140,5 +140,19 @@ public class SpatialHierarchicalImplTest {
 		assertEquals(52f, child.getX(), 0.1f);
 		assertEquals(55f, child.getY(), 0.1f);
 	}
+	
+	@Test
+	public void testOfTheNiceDrawing() {
+		Spatial parent = new SpatialImpl(10f, 10f, 1f, 1f, -45f);
+		SpatialHierarchicalImpl child = new SpatialHierarchicalImpl(parent, 1f, 1f);
+		
+		child.setPosition(10f, 15f);
+		child.setAngle(-45f);
+		
+		assertEquals(10f, child.getX(), 0.1f);
+		assertEquals(15f, child.getY(), 0.1f);
+		
+		assertEquals(-45, child.getAngle(), 0.1f);
+	}
 
 }
