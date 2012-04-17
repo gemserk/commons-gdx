@@ -2,6 +2,7 @@ package com.gemserk.commons.artemis.systems;
 
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.artemis.Entity;
@@ -9,6 +10,7 @@ import com.artemis.World;
 import com.gemserk.commons.artemis.components.OwnerComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 
+@Ignore
 public class RenderableComponentComparatorTest {
 
 	RenderableComponentComparator renderableComponentComparator = new RenderableComponentComparator();
@@ -258,6 +260,29 @@ public class RenderableComponentComparatorTest {
 		assertSame(orderedByLayerEntities.get(0), e1);
 		assertSame(orderedByLayerEntities.get(1), e3);
 		assertSame(orderedByLayerEntities.get(2), e4);
+	}
+	
+	@Test
+	public void bugWhenOrderingSubEntity() {
+		World world = new World();
+
+		Entity e1 = world.createEntity();
+		Entity e2 = world.createEntity();
+		Entity e3 = world.createEntity();
+
+		e1.addComponent(new RenderableComponent(5, 0));
+		e2.addComponent(new RenderableComponent(5, 0));
+		e3.addComponent(new RenderableComponent(5, -1));
+		
+		e3.addComponent(new OwnerComponent(e2));
+
+		orderedByLayerEntities.add(e1);
+		orderedByLayerEntities.add(e2);
+		orderedByLayerEntities.add(e3);
+
+		assertSame(orderedByLayerEntities.get(0), e1);
+		assertSame(orderedByLayerEntities.get(1), e3);
+		assertSame(orderedByLayerEntities.get(2), e2);
 	}
 
 
