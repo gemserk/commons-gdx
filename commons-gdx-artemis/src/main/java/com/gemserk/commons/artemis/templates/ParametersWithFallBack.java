@@ -68,7 +68,8 @@ public class ParametersWithFallBack implements Parameters {
 	@Override
 	public void clear() {
 		fallBackParameters.clear();
-		parameters.clear();
+		if (parameters != null)
+			parameters.clear();
 	}
 
 }
