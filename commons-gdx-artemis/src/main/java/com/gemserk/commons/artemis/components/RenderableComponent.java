@@ -13,11 +13,16 @@ public class RenderableComponent extends Component {
 		return (RenderableComponent) e.getComponent(type);
 	}
 
-	private boolean visible;
-	private int layer;
+	public boolean visible;
+	public int layer;
+	public int subLayer;
 	
 	public int getLayer() {
 		return layer;
+	}
+	
+	public int getSubLayer() {
+		return subLayer;
 	}
 	
 	public boolean isVisible() {
@@ -28,12 +33,31 @@ public class RenderableComponent extends Component {
 		this.visible = visible;
 	}
 	
+	public void setLayer(int layer) {
+		this.layer = layer;
+	}
+	
+	public void setLayer(int layer, int subLayer) {
+		this.layer = layer;
+		this.subLayer = subLayer;
+	}
+	
 	public RenderableComponent(int layer) {
 		this(layer, true);
 	}
 
 	public RenderableComponent(int layer, boolean visible) {
+		this(layer, 0, visible);
+	}
+	
+	public RenderableComponent(int layer, int subLayer) {
+		this(layer, subLayer, true);
+	}
+
+
+	public RenderableComponent(int layer, int subLayer, boolean visible) {
 		this.layer = layer;
+		this.subLayer = subLayer;
 		this.visible = visible;
 	}
 
