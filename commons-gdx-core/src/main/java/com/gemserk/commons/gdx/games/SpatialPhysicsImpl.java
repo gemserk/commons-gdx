@@ -6,42 +6,34 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class SpatialPhysicsImpl implements Spatial {
 	
-	private final Vector2 position = new Vector2();
-	
-	private float angle = 0f;
-	
 	private final Body body;
-	
 	private float w, h;
 	
 	@Override
 	public float getX() {
-		return body.getTransform().getPosition().x;
+		return body.getPosition().x;
 	}
 
 	@Override
 	public float getY() {
-		return body.getTransform().getPosition().y;
+		return body.getPosition().y;
 	}
 
 	@Override
 	public void setPosition(float x, float y) {
-		position.set(x, y);
-		body.setTransform(position, angle * MathUtils.degreesToRadians);
+		body.setTransform(x, y, body.getAngle() * MathUtils.degreesToRadians);
 	}
 
 	@Override
 	public float getAngle() {
 		// floatValue.value = (float) (body.getAngle() * 180f / Math.PI);
-		this.angle = body.getAngle() * MathUtils.radiansToDegrees;
-		return angle;
+		return body.getAngle() * MathUtils.radiansToDegrees;
 	}
 
 	@Override
 	public void setAngle(float angle) {
-		this.angle = angle;
 		// TODO: fix this to update the position if it wasn't correctly set yet.
-		body.getTransform().setRotation(angle * MathUtils.degreesToRadians);
+		body.setTransform(body.getPosition(), angle * MathUtils.degreesToRadians);
 	}
 
 	@Override
@@ -81,8 +73,7 @@ public class SpatialPhysicsImpl implements Spatial {
 
 	@Override
 	public Vector2 getPosition() {
-		position.set(body.getTransform().getPosition());
-		return position;
+		return body.getPosition();
 	}
 
 }
