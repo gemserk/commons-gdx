@@ -53,6 +53,7 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 		Texture texture = new Texture(imageFile);
 		texture.setFilter(minFilter, magFilter);
 		BitmapFont bitmapFont = new BitmapFont(fontFile, new Sprite(texture), false);
+		
 		bitmapFont.setUseIntegerPositions(useIntegerPositions);
 		if (fixedWidthGlyphs != null)
 			bitmapFont.setFixedWidthGlyphs(fixedWidthGlyphs);

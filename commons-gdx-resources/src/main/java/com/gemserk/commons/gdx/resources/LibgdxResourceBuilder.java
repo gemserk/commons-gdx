@@ -48,6 +48,10 @@ public class LibgdxResourceBuilder {
 	public static FileHandle internal(String file) {
 		return Gdx.files.internal(file);
 	}
+	
+	public static FileHandle classPath(String file) {
+		return Gdx.files.classpath(file);
+	}
 
 	public static FileHandle absolute(String file) {
 		return Gdx.files.absolute(file);
@@ -394,6 +398,10 @@ public class LibgdxResourceBuilder {
 
 	public FontResourceBuilder font2(String imageFile, String fontFile) {
 		return new FontResourceBuilder(internal(imageFile), internal(fontFile));
+	}
+	
+	public FontResourceBuilder font2(FileHandle imageFile, FileHandle fontFile) {
+		return new FontResourceBuilder(imageFile, fontFile);
 	}
 
 	public SkinResourceBuilder skin(String skinFile, String textureFile) {
