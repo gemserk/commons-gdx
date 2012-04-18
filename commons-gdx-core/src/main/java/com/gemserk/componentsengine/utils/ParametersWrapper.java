@@ -8,6 +8,8 @@ import java.util.Set;
  * Lets you work with a map<string, object> in an easy way, using generic methods.
  */
 public class ParametersWrapper implements Parameters {
+	
+	// TODO: name it something like ParametersMapImpl
 
 	private Map<String, Object> wrappedParameters;
 

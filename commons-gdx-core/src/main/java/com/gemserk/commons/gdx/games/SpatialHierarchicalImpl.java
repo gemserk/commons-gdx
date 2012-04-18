@@ -15,13 +15,19 @@ public class SpatialHierarchicalImpl implements Spatial {
 	private float w, h;
 
 	public SpatialHierarchicalImpl(Spatial parent, float width, float height) {
+		this(parent, width, height, 0f, 0f, 0f);
+	}
+
+	public SpatialHierarchicalImpl(Spatial parent, float width, float height, float localX, float localY, float localAngle) {
 		this.parent = parent;
 		this.localAngle = 0f;
 		setPosition(parent.getX(), parent.getY());
 		setAngle(parent.getAngle());
 		setSize(width, height);
+		setLocalPosition(localX, localY);
+		setLocalAngle(localAngle);
 	}
-	
+
 	public SpatialHierarchicalImpl(Spatial parent) {
 		this(parent, parent.getWidth(), parent.getHeight());
 	}
@@ -49,7 +55,7 @@ public class SpatialHierarchicalImpl implements Spatial {
 		localPosition.set(x - parent.getX(), y - parent.getY());
 		localPosition.rotate(-parent.getAngle());
 	}
-	
+
 	public void setLocalPosition(float x, float y) {
 		localPosition.set(x, y);
 	}
@@ -58,7 +64,7 @@ public class SpatialHierarchicalImpl implements Spatial {
 	public float getAngle() {
 		return localAngle + parent.getAngle();
 	}
-	
+
 	public void setLocalAngle(float angle) {
 		this.localAngle = angle;
 	}
