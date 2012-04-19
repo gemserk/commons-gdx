@@ -1,10 +1,19 @@
 package com.gemserk.commons.artemis.components;
 
 import com.artemis.Component;
+import com.artemis.ComponentType;
+import com.artemis.ComponentTypeManager;
+import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.games.Movement;
 
 public class MovementComponent extends Component {
+	
+	public static final ComponentType type = ComponentTypeManager.getTypeFor(MovementComponent.class);
+
+	public static MovementComponent get(Entity e) {
+		return (MovementComponent) e.getComponent(type);
+	}
 
 	private Movement movement;
 	

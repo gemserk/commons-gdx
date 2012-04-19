@@ -6,13 +6,13 @@ public class SpatialHierarchicalImpl implements Spatial {
 
 	private final Vector2 aux = new Vector2();
 
-	private final Spatial parent;
-
 	private final Vector2 localPosition = new Vector2();
 	private final Vector2 absolutePosition = new Vector2();
 
 	private float localAngle;
 	private float w, h;
+	
+	private Spatial parent;
 
 	public SpatialHierarchicalImpl(Spatial parent, float width, float height) {
 		this(parent, width, height, 0f, 0f, 0f);
@@ -30,6 +30,14 @@ public class SpatialHierarchicalImpl implements Spatial {
 
 	public SpatialHierarchicalImpl(Spatial parent) {
 		this(parent, parent.getWidth(), parent.getHeight());
+	}
+	
+	public void setParent(Spatial parent) {
+		Vector2 position = getPosition();
+		float angle = getAngle();
+		this.parent = parent;
+		setPosition(position.x, position.y);
+		setAngle(angle);
 	}
 
 	@Override

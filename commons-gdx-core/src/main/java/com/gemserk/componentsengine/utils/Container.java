@@ -17,6 +17,15 @@ public class Container {
 	public void setTotal(float total) {
 		this.total = total;
 	}
+	
+	public void set(float total, float current) {
+		setTotal(total);
+		setCurrent(current);
+	}
+	
+	public void set(Container container) {
+		set(container.getTotal(), container.getCurrent());
+	}
 
 	public float getCurrent() {
 		return current;
@@ -25,7 +34,7 @@ public class Container {
 	public float getTotal() {
 		return total;
 	}
-
+	
 	public float getPercentage() {
 		return current / total;
 	}
@@ -44,7 +53,7 @@ public class Container {
 		this.current = container.getCurrent();
 		this.total = container.getTotal();
 	}
-
+	
 	public boolean isFull() {
 		return current == total;
 	}

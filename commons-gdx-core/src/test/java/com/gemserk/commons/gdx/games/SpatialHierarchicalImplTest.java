@@ -154,5 +154,26 @@ public class SpatialHierarchicalImplTest {
 		
 		assertEquals(-45, child.getAngle(), 0.1f);
 	}
+	
+	@Test
+	public void testChangeOfParent() {
+		Spatial parent1 = new SpatialImpl(10f, 10f, 1f, 1f, -45f);
+		Spatial parent2 = new SpatialImpl(50f, 60f, 1f, 1f,  78f);
+		
+		SpatialHierarchicalImpl child = new SpatialHierarchicalImpl(parent1, 1f, 1f);
+		
+		child.setPosition(10f, 15f);
+		child.setAngle(-45f);
+		
+		assertEquals(10f, child.getX(), 0.1f);
+		assertEquals(15f, child.getY(), 0.1f);
+		assertEquals(-45, child.getAngle(), 0.1f);
+		
+		child.setParent(parent2);
+		
+		assertEquals(10f, child.getX(), 0.1f);
+		assertEquals(15f, child.getY(), 0.1f);
+		assertEquals(-45, child.getAngle(), 0.1f);
+	}
 
 }
