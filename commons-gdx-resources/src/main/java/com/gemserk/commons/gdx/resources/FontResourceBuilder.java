@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 
-	private final FileHandle imageFile;
-	private final FileHandle fontFile;
+	private FileHandle imageFile;
+	private FileHandle fontFile;
 
 	private TextureFilter minFilter = TextureFilter.Nearest;
 	private TextureFilter magFilter = TextureFilter.Nearest;
-	
+
 	private boolean useIntegerPositions = true;
 	private CharSequence fixedWidthGlyphs = null;
 
@@ -22,7 +22,17 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 		this.magFilter = filter;
 		return this;
 	}
-	
+
+	public FontResourceBuilder imageFile(FileHandle imageFile) {
+		this.imageFile = imageFile;
+		return this;
+	}
+
+	public FontResourceBuilder fontFile(FileHandle fontFile) {
+		this.fontFile = fontFile;
+		return this;
+	}
+
 	public FontResourceBuilder minFilter(TextureFilter minFilter) {
 		this.minFilter = minFilter;
 		return this;
@@ -50,19 +60,22 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 
 	@Override
 	public BitmapFont build() {
-		Texture texture = new Texture(imageFile);
-		texture.setFilter(minFilter, magFilter);
-		BitmapFont bitmapFont = new BitmapFont(fontFile, new Sprite(texture), false);
-		
+		BitmapFont bitmapFont;
+
+		if (imageFile != null && fontFile != null) {
+			Texture texture = new Texture(imageFile);
+			texture.setFilter(minFilter, magFilter);
+			bitmapFont = new BitmapFont(fontFile, new Sprite(texture), false);
+		} else {
+			// if image file and font file are not specified, it creates a new default bitmap font.
+			bitmapFont = new BitmapFont();
+			bitmapFont.getRegion().getTexture().setFilter(minFilter, magFilter);
+		}
+
 		bitmapFont.setUseIntegerPositions(useIntegerPositions);
 		if (fixedWidthGlyphs != null)
 			bitmapFont.setFixedWidthGlyphs(fixedWidthGlyphs);
 		return bitmapFont;
-	}
-
-	public FontResourceBuilder(FileHandle imageFile, FileHandle fontFile) {
-		this.imageFile = imageFile;
-		this.fontFile = fontFile;
 	}
 
 }
