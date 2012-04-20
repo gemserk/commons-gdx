@@ -16,8 +16,8 @@ public class AliveSystem extends EntityProcessingSystem {
 		AliveComponent aliveComponent = entity.getComponent(AliveComponent.class);
 		float aliveTime = aliveComponent.getTime() - GlobalTime.getDelta();
 		aliveComponent.setTime(aliveTime);
-		if (aliveTime <= 0)
-			world.deleteEntity(entity);
+		if (aliveTime <= 0) 
+			entity.delete();
 	}
 
 }
