@@ -5,7 +5,13 @@ import com.gemserk.commons.utils.Store;
 import com.gemserk.commons.utils.StoreFactory;
 
 public class EntityStore extends Store<Entity> {
-	
+
+	/**
+	 * Creates a new EntityStore.
+	 * 
+	 * @param storeFactory
+	 *            The StoreFactory to use.
+	 */
 	public EntityStore(StoreFactory<Entity> storeFactory) {
 		super(storeFactory);
 	}
