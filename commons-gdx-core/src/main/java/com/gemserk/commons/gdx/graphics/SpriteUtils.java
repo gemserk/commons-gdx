@@ -114,7 +114,7 @@ public class SpriteUtils {
 		if (rotate90)
 			sprite.rotate90(clockwise);
 	}
-
+	
 	/**
 	 * Returns a clone of a Sprite based on the type of the sprite.
 	 */

@@ -13,22 +13,21 @@ public class OwnerSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void added(Entity e) {
+	protected void enabled(Entity e) {
 		OwnerComponent ownerComponent = OwnerComponent.get(e);
 		if (ownerComponent.getOwner() == null)
 			return;
-
 		ContainerComponent containerComponent = ContainerComponent.get(ownerComponent.getOwner());
 		if (containerComponent == null)
 			return;
 		containerComponent.getChildren().add(e);
 	}
 
-	protected void removed(Entity e) {
+	@Override
+	protected void disabled(Entity e) {
 		OwnerComponent ownerComponent = OwnerComponent.get(e);
 		if (ownerComponent.getOwner() == null)
 			return;
-
 		ContainerComponent containerComponent = ContainerComponent.get(ownerComponent.getOwner());
 		if (containerComponent == null)
 			return;
