@@ -6,8 +6,16 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class SpatialPhysicsImpl implements Spatial {
 	
-	private final Body body;
+	private Body body;
 	private float w, h;
+	
+	public void setBody(Body body) {
+		this.body = body;
+	}
+	
+	public Body getBody() {
+		return body;
+	}
 	
 	@Override
 	public float getX() {

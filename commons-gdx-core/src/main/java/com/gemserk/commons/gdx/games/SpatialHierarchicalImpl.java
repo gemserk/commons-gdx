@@ -13,6 +13,10 @@ public class SpatialHierarchicalImpl implements Spatial {
 	private float w, h;
 	
 	private Spatial parent;
+	
+	public Spatial getParent() {
+		return parent;
+	}
 
 	public SpatialHierarchicalImpl(Spatial parent, float width, float height) {
 		this(parent, width, height, 0f, 0f, 0f);
