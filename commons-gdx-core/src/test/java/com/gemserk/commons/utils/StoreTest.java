@@ -3,8 +3,6 @@ package com.gemserk.commons.utils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 public class StoreTest {
@@ -23,7 +21,7 @@ public class StoreTest {
 
 		assertEquals(0, integers.getTotalSize());
 
-		Integer integer1 = integers.get();
+		integers.get();
 
 		assertEquals(1, integers.size());
 		assertEquals(1, integers.getTotalSize());
@@ -35,8 +33,8 @@ public class StoreTest {
 
 		assertEquals(0, integers.getTotalSize());
 
-		Integer integer1 = integers.get();
-		Integer integer2 = integers.get();
+		integers.get();
+		integers.get();
 
 		assertEquals(2, integers.size());
 		assertEquals(2, integers.getTotalSize());
@@ -52,7 +50,7 @@ public class StoreTest {
 		assertEquals(0, integers.size());
 		assertEquals(1, integers.getTotalSize());
 
-		Integer integer2 = integers.get();
+		integers.get();
 
 		assertEquals(1, integers.size());
 		assertEquals(1, integers.getTotalSize());
