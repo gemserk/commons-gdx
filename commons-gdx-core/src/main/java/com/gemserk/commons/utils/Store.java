@@ -56,6 +56,8 @@ public class Store<T> {
 	 * @param t
 	 */
 	public void free(T t) {
+		if (free.contains(t))
+			return;
 		free.add(t);
 		created.remove(t);
 	}
