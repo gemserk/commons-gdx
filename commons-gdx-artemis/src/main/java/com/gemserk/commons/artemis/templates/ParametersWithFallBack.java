@@ -14,8 +14,6 @@ import com.gemserk.componentsengine.utils.Parameters;
  */
 public class ParametersWithFallBack implements Parameters {
 	
-	// could be moved to components engine...
-
 	private Map<String, Object> fallBackParameters;
 	private Parameters parameters;
 	
@@ -43,6 +41,7 @@ public class ParametersWithFallBack implements Parameters {
 		return (T) o;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T get(String id, T defaultValue) {
 		Object o = get(id);
