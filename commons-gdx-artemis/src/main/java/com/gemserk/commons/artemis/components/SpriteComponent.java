@@ -18,7 +18,10 @@ public class SpriteComponent extends Component {
 	
 	private Sprite sprite;
 	private Color color;
+
+	// this is the hot spot for the transformations and it is relative to the size of the sprite
 	private Vector2 center; // x and y values between 0,1
+	
 	private boolean updateRotation = true;
 	
 	public void setUpdateRotation(boolean updateRotation) {
@@ -41,7 +44,23 @@ public class SpriteComponent extends Component {
 	public Vector2 getCenter() {
 		return center;
 	}
+	
+	/**
+	 * Returns the coordinate x of the original center relative to the sprite size.
+	 */
+	public float getRelativeCenterX() {
+		float width = sprite.getWidth();
+		return width * 0.5f - width * center.x;
+	}
 
+	/**
+	 * Returns the coordinate x of the original center relative to the sprite size.
+	 */
+	public float getRelativeCenterY() {
+		float height = sprite.getHeight();
+		return height * 0.5f - height * center.y;
+	}
+	
 	public Color getColor() {
 		return color;
 	}

@@ -15,7 +15,11 @@ public class StoreComponent extends Component {
 	}
 
 	public EntityStore store;
-	
+
+	public StoreComponent() {
+		this(null);
+	}
+
 	public StoreComponent(EntityStore store) {
 		this.store = store;
 	}
