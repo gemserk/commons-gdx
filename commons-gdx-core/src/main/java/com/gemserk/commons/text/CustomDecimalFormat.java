@@ -1,23 +1,37 @@
 package com.gemserk.commons.text;
 
 public class CustomDecimalFormat {
-	
-	private StringBuffer stringBuffer;
+
+	private StringBuilder stringBuilder;
+	private Character fillCharacter = null;
+	private char fillChar = ' ';
+
+	public void setFillCharacter(Character fillCharacter) {
+		this.fillCharacter = fillCharacter;
+		if (fillCharacter != null)
+			fillChar = fillCharacter.charValue();
+	}
 
 	public CustomDecimalFormat(int capacity) {
-		stringBuffer = new StringBuffer(capacity);
+		stringBuilder = new StringBuilder(capacity);
+		setFillCharacter(null);
 	}
-	
+
+	public CustomDecimalFormat(int capacity, char fillCharacter) {
+		stringBuilder = new StringBuilder(capacity);
+		setFillCharacter(Character.valueOf(fillCharacter));
+	}
+
 	public CharSequence format(long number) {
-		return format(number, stringBuffer);
+		return format(number, stringBuilder);
 	}
 
-	public CharSequence format(long number, StringBuffer stringBuffer) {
+	public CharSequence format(long number, StringBuilder stringBuilder) {
 
-		int index = stringBuffer.capacity();
+		int index = stringBuilder.capacity();
 		long digitBase = 10;
 
-		stringBuffer.setLength(0);
+		stringBuilder.setLength(0);
 
 		while (number > 0) {
 			long digit = number % digitBase;
@@ -26,20 +40,20 @@ public class CustomDecimalFormat {
 
 			long currentDigit = digit * 10 / digitBase;
 
-			stringBuffer.append(currentDigit);
+			stringBuilder.append(currentDigit);
 
 			digitBase *= 10;
 			index--;
 		}
 
-		while (index > 0) {
-			stringBuffer.append(0);
+		while (index > 0 && fillCharacter != null) {
+			stringBuilder.append(fillChar);
 			index--;
 		}
 
-		stringBuffer.reverse();
+		stringBuilder.reverse();
 
-		return stringBuffer;
+		return stringBuilder;
 	}
 
 }
