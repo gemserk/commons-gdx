@@ -33,6 +33,8 @@ public class CustomDecimalFormat {
 
 		stringBuilder.setLength(0);
 
+		boolean zero = number == 0;
+
 		while (number > 0) {
 			long digit = number % digitBase;
 
@@ -43,6 +45,11 @@ public class CustomDecimalFormat {
 			stringBuilder.append(currentDigit);
 
 			digitBase *= 10;
+			index--;
+		}
+
+		if (zero && index > 0) {
+			stringBuilder.append(0L);
 			index--;
 		}
 

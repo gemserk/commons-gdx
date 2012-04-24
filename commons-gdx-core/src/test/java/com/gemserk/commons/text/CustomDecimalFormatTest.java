@@ -47,6 +47,13 @@ public class CustomDecimalFormatTest {
 	}
 	
 	@Test
+	public void shouldFillWithSpecifiedFillCharacter4() {
+		CustomDecimalFormat customDecimalFormat = new CustomDecimalFormat(5);
+		customDecimalFormat.setFillCharacter(' ');
+		assertEquals("    0", customDecimalFormat.format(0L).toString());
+	}
+	
+	@Test
 	public void shouldFillWithSpecifiedFillCharacter3() {
 		CustomDecimalFormat customDecimalFormat = new CustomDecimalFormat(5);
 		customDecimalFormat.setFillCharacter(null);
