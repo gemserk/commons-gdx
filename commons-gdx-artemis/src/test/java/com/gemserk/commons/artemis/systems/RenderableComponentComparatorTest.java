@@ -282,6 +282,42 @@ public class RenderableComponentComparatorTest {
 		assertSame(orderedByLayerEntities.get(1), e3);
 		assertSame(orderedByLayerEntities.get(2), e2);
 	}
+	
+	@Test
+	public void bugEntityWithNullOwner() {
+		World world = new World();
+
+		Entity e1 = world.createEntity();
+		Entity e2 = world.createEntity();
+
+		e1.addComponent(new RenderableComponent(5));
+		e2.addComponent(new RenderableComponent(5));
+		e2.addComponent(new OwnerComponent(null));
+
+		orderedByLayerEntities.add(e1);
+		orderedByLayerEntities.add(e2);
+
+		assertSame(orderedByLayerEntities.get(0), e1);
+		assertSame(orderedByLayerEntities.get(1), e2);
+	}
+	
+	@Test
+	public void bugEntityWithNullOwner2() {
+		World world = new World();
+
+		Entity e1 = world.createEntity();
+		Entity e2 = world.createEntity();
+
+		e1.addComponent(new RenderableComponent(5));
+		e2.addComponent(new RenderableComponent(5));
+		e2.addComponent(new OwnerComponent(null));
+
+		orderedByLayerEntities.add(e2);
+		orderedByLayerEntities.add(e1);
+
+		assertSame(orderedByLayerEntities.get(0), e1);
+		assertSame(orderedByLayerEntities.get(1), e2);
+	}
 
 
 }

@@ -22,16 +22,22 @@ public class RenderableComponentComparator implements Comparator<Entity> {
 		int id1 = o1.getId();
 		int id2 = o2.getId();
 
-		if (ownerComponent1 != null)
-			id1 = ownerComponent1.getOwner().getId();
+		if (ownerComponent1 != null) {
+			Entity owner = ownerComponent1.getOwner();
+			if (owner != null)
+				id1 = owner.getId();
+		}
 
-		if (ownerComponent2 != null)
-			id2 = ownerComponent2.getOwner().getId();
+		if (ownerComponent2 != null) {
+			Entity owner = ownerComponent2.getOwner();
+			if (owner != null)
+				id2 = owner.getId();
+		}
 
 		if (id1 != id2)
 			return id1 - id2;
 
 		return c1.subLayer - c2.subLayer;
 	}
-	
+
 }
