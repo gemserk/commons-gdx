@@ -49,6 +49,10 @@ public class Container {
 		this.total = total;
 	}
 	
+	public Container(float total) {
+		this(total, total);
+	}
+	
 	public Container(Container container) {
 		this.current = container.getCurrent();
 		this.total = container.getTotal();
