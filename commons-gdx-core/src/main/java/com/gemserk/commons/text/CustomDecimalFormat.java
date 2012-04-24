@@ -1,13 +1,27 @@
 package com.gemserk.commons.text;
 
 public class CustomDecimalFormat {
-	
+
 	private StringBuilder stringBuilder;
+	private Character fillCharacter = null;
+	private char fillChar = ' ';
+
+	public void setFillCharacter(Character fillCharacter) {
+		this.fillCharacter = fillCharacter;
+		if (fillCharacter != null)
+			fillChar = fillCharacter.charValue();
+	}
 
 	public CustomDecimalFormat(int capacity) {
 		stringBuilder = new StringBuilder(capacity);
+		setFillCharacter(null);
 	}
-	
+
+	public CustomDecimalFormat(int capacity, char fillCharacter) {
+		stringBuilder = new StringBuilder(capacity);
+		setFillCharacter(Character.valueOf(fillCharacter));
+	}
+
 	public CharSequence format(long number) {
 		return format(number, stringBuilder);
 	}
@@ -32,8 +46,8 @@ public class CustomDecimalFormat {
 			index--;
 		}
 
-		while (index > 0) {
-			stringBuilder.append(0);
+		while (index > 0 && fillCharacter != null) {
+			stringBuilder.append(fillChar);
 			index--;
 		}
 
