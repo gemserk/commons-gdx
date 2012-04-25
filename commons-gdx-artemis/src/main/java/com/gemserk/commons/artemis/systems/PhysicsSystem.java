@@ -15,19 +15,26 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 	private ActivableSystem activableSystem = new ActivableSystemImpl();
 
 	World physicsWorld;
+	int velocityIterations;
+	int positionIterations;
 
 	private PhysicsContactListener physicsContactListener;
 
 	public PhysicsSystem(World physicsWorld) {
+		this(physicsWorld, 6, 2);
+	}
+	
+	public PhysicsSystem(World physicsWorld, int velocityIterations, int positionIterations) {
 		super(Components.physicsComponentClass);
 		this.physicsWorld = physicsWorld;
+		this.velocityIterations = velocityIterations;
+		this.positionIterations = positionIterations;
 		physicsContactListener = new PhysicsContactListener();
 	}
 
 	@Override
 	protected void begin() {
-		// make the velocity and position steps variable
-		physicsWorld.step(GlobalTime.getDelta(), 6, 2);
+		physicsWorld.step(GlobalTime.getDelta(), velocityIterations, positionIterations);
 	}
 
 	@Override
