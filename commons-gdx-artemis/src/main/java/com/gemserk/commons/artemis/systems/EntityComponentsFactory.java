@@ -9,7 +9,7 @@ public abstract class EntityComponentsFactory<T> {
 	public abstract void free(T entityComponent);
 	public abstract void load(Entity e, T entityComponent);
 	
-	public void add(Entity entity){
+	public T add(Entity entity){
 		T entityComponent;
 		if(pool.isEmpty()){
 			entityComponent = newInstance();
@@ -18,6 +18,7 @@ public abstract class EntityComponentsFactory<T> {
 		}
 		load(entity,entityComponent);
 		entityComponents.put(entity.getId(), entityComponent);
+		return entityComponent;
 	}
 	
 	public void remove(Entity entity){
