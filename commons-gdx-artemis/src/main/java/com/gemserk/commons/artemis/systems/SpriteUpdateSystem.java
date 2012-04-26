@@ -18,24 +18,56 @@ import com.gemserk.commons.gdx.time.TimeStepProviderGlobalImpl;
  */
 public class SpriteUpdateSystem extends EntityProcessingSystem {
 
+	public static class EntityComponents {
+
+		public SpatialComponent spatialComponent;
+		public SpriteComponent spriteComponent;
+		public PreviousStateSpatialComponent previousStateSpatialComponent;
+		
+	}
+	
+	public static class Factory extends EntityComponentsFactory<EntityComponents> {
+
+		@Override
+		public EntityComponents newInstance() {
+			return new EntityComponents();
+		}
+
+		@Override
+		public void free(EntityComponents entityComponent) {			
+		}
+
+		@Override
+		public void load(Entity e, EntityComponents entityComponent) {
+			entityComponent.spatialComponent = Components.getSpatialComponent(e);
+			entityComponent.spriteComponent = Components.getSpriteComponent(e);
+			entityComponent.previousStateSpatialComponent = Components.getPreviousStateSpatialComponent(e);
+		}
+		
+	}
+	
 	private final TimeStepProvider timeStepProvider;
+	private Factory factory;
 
 	public SpriteUpdateSystem() {
 		this(new TimeStepProviderGlobalImpl());
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public SpriteUpdateSystem(TimeStepProvider timeStepProvider) {
 		super(Components.spatialComponentClass, Components.spriteComponentClass);
 		this.timeStepProvider = timeStepProvider;
+		this.factory = new Factory();
 	}
 
 	@Override
 	protected void process(Entity e) {
-		SpatialComponent spatialComponent = Components.getSpatialComponent(e);
-		SpriteComponent spriteComponent = Components.getSpriteComponent(e);
+		
+		EntityComponents components = factory.get(e);
+		SpatialComponent spatialComponent = components.spatialComponent;
+		SpriteComponent spriteComponent = components.spriteComponent;
 
-		PreviousStateSpatialComponent previousStateSpatialComponent = Components.getPreviousStateSpatialComponent(e);
+		PreviousStateSpatialComponent previousStateSpatialComponent = components.previousStateSpatialComponent;
 
 		Spatial spatial = spatialComponent.getSpatial();
 
@@ -73,5 +105,17 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 		
 		if (x != sprite.getX() || y != sprite.getY())
 			sprite.setPosition(x, y);
+	}
+	
+	@Override
+	protected void enabled(Entity e) {
+		super.enabled(e);
+		factory.add(e);
+	}
+	
+	@Override
+	protected void disabled(Entity e) {
+		factory.remove(e);
+		super.disabled(e);
 	}
 }
