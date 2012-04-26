@@ -10,6 +10,7 @@ import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.FrustumCullingComponent;
 import com.gemserk.commons.artemis.components.ParticleEmitterComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
+import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
@@ -21,7 +22,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	class EntityComponents {
 		public RenderableComponent renderableComponent;
 		public FrustumCullingComponent frustumCullingComponent;
-		public Spatial spatial;
+		public SpatialComponent spatialComponent;
 		public SpriteComponent spriteComponent;
 		public TextComponent textComponent;
 		public ParticleEmitterComponent particleEmitterComponent;
@@ -97,7 +98,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			FrustumCullingComponent frustumCullingComponent = components.frustumCullingComponent;
 			if (frustumCullingComponent != null) {
 
-				Spatial spatial = Components.getSpatialComponent(e).getSpatial();
+				Spatial spatial = components.spatialComponent.getSpatial();
 				
 				entityBounds.set(frustumCullingComponent.bounds);
 				
@@ -156,7 +157,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		public void free(EntityComponents entityComponent) {
 			entityComponent.renderableComponent = null;
 			entityComponent.frustumCullingComponent = null;
-			entityComponent.spatial = null;
+			entityComponent.spatialComponent = null;
 			entityComponent.spriteComponent = null;
 			entityComponent.textComponent = null;
 			entityComponent.particleEmitterComponent = null;
@@ -166,7 +167,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		public void load(Entity e, EntityComponents entityComponent) {
 			entityComponent.renderableComponent = Components.getRenderableComponent(e);
 			entityComponent.frustumCullingComponent = Components.getFrustumCullingComponent(e);
-			entityComponent.spatial = Components.getSpatialComponent(e).getSpatial();
+			entityComponent.spatialComponent = Components.getSpatialComponent(e);
 			entityComponent.spriteComponent = Components.getSpriteComponent(e);
 			entityComponent.textComponent = Components.getTextComponent(e);
 			entityComponent.particleEmitterComponent = Components.getParticleEmitterComponent(e);
