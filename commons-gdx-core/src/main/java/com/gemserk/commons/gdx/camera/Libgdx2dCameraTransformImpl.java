@@ -34,19 +34,19 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	public Libgdx2dCameraTransformImpl(float centerX, float centerY) {
 		projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
+
 		invertedTransform.set(projectionMatrix);
 		invertedTransform.inv();
-		
+
 		tmp.set(-1, -1, 0f);
 		tmp.prj(invertedTransform);
-		
+
 		min.x = tmp.x;
 		min.y = tmp.y;
-		
+
 		tmp.set(1, 1, 0f);
 		tmp.prj(invertedTransform);
-		
+
 		max.x = tmp.x;
 		max.y = tmp.y;
 
@@ -145,7 +145,6 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 		recalculateMatrix();
 		return combinedMatrix;
 	}
-	
 
 	@Override
 	public Matrix4 getModelViewMatrix() {
@@ -197,16 +196,16 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	private void recalculateMatrix() {
 		if (matrixDirty) {
-			combinedMatrix.set(projectionMatrix);
 			calculateTransform(transform);
+
+			combinedMatrix.set(projectionMatrix);
 			Matrix4.mul(combinedMatrix.val, transform.val);
 
-			calculateTransform(invertedTransform);
+			invertedTransform.set(transform.val);
 			invertedTransform.inv();
-
+			
 			matrixDirty = false;
 		}
 	}
-
 
 }
