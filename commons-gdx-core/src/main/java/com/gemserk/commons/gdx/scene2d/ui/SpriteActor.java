@@ -8,6 +8,10 @@ public class SpriteActor extends Actor {
 
 	private final Sprite sprite;
 	private final String name;
+	
+	public Sprite getSprite() {
+		return sprite;
+	}
 
 	public String getName() {
 		return name;
