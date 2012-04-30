@@ -10,6 +10,7 @@ import com.gemserk.animation4j.gdx.converters.CommonGdxConverters;
 import com.gemserk.animation4j.gdx.converters.LibgdxConverters;
 import com.gemserk.commons.gdx.camera.Camera;
 
+@SuppressWarnings("rawtypes")
 public class TimelineConfigurator {
 
 	private static final String OPACITY_SUFFIX = ".opacity";

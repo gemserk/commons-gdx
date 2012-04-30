@@ -293,7 +293,11 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void music(String id, String file) {
-		resourceManager.add(id, new MusicDataLoader(internal(file)));
+		music(id, internal(file));
+	}
+	
+	public void music(String id, FileHandle fileHandle) {
+		resourceManager.add(id, new MusicDataLoader(fileHandle));
 	}
 
 	public void xmlDocument(String id, final String file) {
