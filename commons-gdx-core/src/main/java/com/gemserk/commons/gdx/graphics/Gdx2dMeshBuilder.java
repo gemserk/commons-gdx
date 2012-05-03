@@ -36,7 +36,6 @@ public class Gdx2dMeshBuilder {
 	private final int maxVertices;
 	private int numVertices;
 
-	private final int numTexCoords;
 	private final int vertexSize;
 	private final int normalOffset;
 	private final int colorOffset;
@@ -50,7 +49,6 @@ public class Gdx2dMeshBuilder {
 
 	public Gdx2dMeshBuilder(int maxVertices, boolean hasNormals, boolean hasColors, int numTexCoords) {
 		this.maxVertices = maxVertices;
-		this.numTexCoords = numTexCoords;
 
 		VertexAttribute[] attribs = buildVertexAttributes(hasNormals, hasColors, numTexCoords);
 		vertexAttributes = new VertexAttributes(attribs);
@@ -89,14 +87,13 @@ public class Gdx2dMeshBuilder {
 		return array;
 	}
 
-
 	public Gdx2dMeshBuilder color(float r, float g, float b, float a) {
 		vertices[vertexIdx + colorOffset] = Color.toFloatBits(r, g, b, a);
 		return this;
 	}
 
 	public Gdx2dMeshBuilder texCoord(float u, float v) {
-		final int idx = vertexIdx + texCoordOffset;
+		final int idx = vertexIdx + texCoordOffset + numSetTexCoords;
 		vertices[idx] = u;
 		vertices[idx + 1] = v;
 		numSetTexCoords += 2;
@@ -122,26 +119,25 @@ public class Gdx2dMeshBuilder {
 		numVertices++;
 		return this;
 	}
-	
+
 	public Gdx2dMeshBuilder vertex(float x, float y) {
-		vertex(x,y,0);
+		vertex(x, y, 0);
 		return this;
 	}
 
 	public Mesh build() {
-		
-		Mesh mesh = new Mesh(true,numVertices,0,vertexAttributes);
-		
+
+		Mesh mesh = new Mesh(true, numVertices, 0, vertexAttributes);
+
 		float realData[] = new float[numVertices * vertexSize];
-		
-		System.arraycopy(vertices,0,realData,0,realData.length);
+
+		System.arraycopy(vertices, 0, realData, 0, realData.length);
 		mesh.setVertices(realData);
-		
 
 		numSetTexCoords = 0;
 		vertexIdx = 0;
 		numVertices = 0;
-		
+
 		return mesh;
 	}
 
