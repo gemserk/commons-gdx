@@ -29,6 +29,8 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 	private boolean rotate90 = false;
 	private boolean clockwise = false;
 
+	private boolean trySpriteAtlas = false;
+
 	private int regionIndex;
 
 	public SpriteResourceBuilder x(int x) {
@@ -74,6 +76,11 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 	public SpriteResourceBuilder rotate90(boolean clockwise) {
 		this.rotate90 = true;
 		this.clockwise = clockwise;
+		return this;
+	}
+
+	public SpriteResourceBuilder trySpriteAtlas() {
+		this.trySpriteAtlas = true;
 		return this;
 	}
 
@@ -133,10 +140,14 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 			// note that whis resource will not be updated if the resource of the texture atlas changed...
 			Sprite sprite = null;
 
-			if (sprite instanceof AtlasSprite)
-				sprite = new AtlasSprite(((AtlasSprite) spriteRegion).getAtlasRegion());
-			else
+			if (trySpriteAtlas) {
+				if (spriteRegion instanceof AtlasSprite)
+					sprite = new AtlasSprite(((AtlasSprite) spriteRegion).getAtlasRegion());
+				else
+					sprite = new Sprite(spriteRegion);
+			} else {
 				sprite = new Sprite(spriteRegion);
+			}
 
 			SpriteUtils.transformSprite(sprite, scale, cx, cy, flop, flip, rotate90, clockwise);
 
