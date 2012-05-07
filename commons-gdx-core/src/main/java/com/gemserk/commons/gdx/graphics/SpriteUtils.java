@@ -103,18 +103,17 @@ public class SpriteUtils {
 	 *            The direciton of the rotation if it should be rotated.
 	 */
 	public static void transformSprite(Sprite sprite, float scale, float cx, float cy, boolean flop, boolean flip, boolean rotate90, boolean clockwise) {
-		if (!rotate90)
+		if (!rotate90) {
 			sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
-		else
+		} else {
+			sprite.rotate90(clockwise);
 			sprite.setSize(sprite.getHeight() * scale, sprite.getWidth() * scale);
+		}
 
 		SpriteUtils.center(sprite, cx, cy);
 		sprite.flip(flop, flip);
-
-		if (rotate90)
-			sprite.rotate90(clockwise);
 	}
-	
+
 	/**
 	 * Returns a clone of a Sprite based on the type of the sprite.
 	 */
