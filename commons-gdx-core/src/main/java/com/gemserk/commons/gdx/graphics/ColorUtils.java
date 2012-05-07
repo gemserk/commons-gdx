@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 
 public class ColorUtils {
 
+	private static final float intToFloat = 1f / 256f;
+	private static final String hexNotationPrefix = "#";
+	private static final int hexRadix = 16;
+
 	/**
 	 * Sets the Color components using the specified integer value in the format RGB565. This is inverse to the rgb565(r, g, b) method.
 	 * 
@@ -60,6 +64,21 @@ public class ColorUtils {
 		color.g = ((value & 0x00ff0000) >>> 16) / 255f;
 		color.b = ((value & 0x0000ff00) >>> 8) / 255f;
 		color.a = ((value & 0x000000ff)) / 255f;
+	}
+
+	public static Color hexRGBToColor(Color color, String string) {
+		if (string.startsWith(hexNotationPrefix)) {
+			try {
+				Integer red = Integer.valueOf(string.substring(1, 3), hexRadix);
+				Integer green = Integer.valueOf(string.substring(3, 5), hexRadix);
+				Integer blue = Integer.valueOf(string.substring(5, 7), hexRadix);
+				color.set(red.floatValue() * intToFloat, green.floatValue() * intToFloat, blue.floatValue() * intToFloat, color.a);
+				return color;
+			} catch (NumberFormatException nbf) {
+				throw new IllegalArgumentException("Invalid color hex string " + string, nbf);
+			}
+		}
+		throw new IllegalArgumentException("Invalid color hex string " + string);
 	}
 
 }

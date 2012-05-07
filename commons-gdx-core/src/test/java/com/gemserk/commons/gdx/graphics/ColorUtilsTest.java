@@ -93,5 +93,23 @@ public class ColorUtilsTest {
 		assertEquals(0.4f, color.g, 0.025f);
 		assertEquals(0.6f, color.b, 0.025f);
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testConvertFromHexString() {
+		Color color = new Color();
+		color.set(0.2f, 0.3f, 0.4f, 0.5f);
+		ColorUtils.hexRGBToColor(color, "akldfkla;shfkla;");
+	}
+	
+	@Test
+	public void testConvertFromHexString2() {
+		Color color = new Color();
+		color.set(0.2f, 0.3f, 0.4f, 0.5f);
+		ColorUtils.hexRGBToColor(color, "#ffaabb");
+		assertEquals(1f, color.r, 0.025f);
+		assertEquals(0.666f, color.g, 0.025f);
+		assertEquals(0.733f, color.b, 0.025f);
+		assertEquals(0.5f, color.a, 0.025f);
+	}
 
 }
