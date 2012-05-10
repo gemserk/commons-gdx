@@ -17,8 +17,8 @@ public class SpriteActor extends Actor {
 		return name;
 	}
 
-	public SpriteActor(Sprite title, String name) {
-		this.sprite = title;
+	public SpriteActor(Sprite sprite, String name) {
+		this.sprite = sprite;
 		this.name = name;
 	}
 

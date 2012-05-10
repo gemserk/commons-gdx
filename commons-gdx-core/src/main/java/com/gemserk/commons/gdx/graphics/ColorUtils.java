@@ -65,20 +65,24 @@ public class ColorUtils {
 		color.b = ((value & 0x0000ff00) >>> 8) / 255f;
 		color.a = ((value & 0x000000ff)) / 255f;
 	}
-
-	public static Color hexRGBToColor(Color color, String string) {
-		if (string.startsWith(hexNotationPrefix)) {
+	
+	public static Color hexRGBToColor(String hexColor) {
+		return hexRGBToColor(new Color(1f, 1f, 1f, 1f), hexColor);
+	}
+	
+	public static Color hexRGBToColor(Color color, String hexColor) {
+		if (hexColor.startsWith(hexNotationPrefix)) {
 			try {
-				Integer red = Integer.valueOf(string.substring(1, 3), hexRadix);
-				Integer green = Integer.valueOf(string.substring(3, 5), hexRadix);
-				Integer blue = Integer.valueOf(string.substring(5, 7), hexRadix);
+				Integer red = Integer.valueOf(hexColor.substring(1, 3), hexRadix);
+				Integer green = Integer.valueOf(hexColor.substring(3, 5), hexRadix);
+				Integer blue = Integer.valueOf(hexColor.substring(5, 7), hexRadix);
 				color.set(red.floatValue() * intToFloat, green.floatValue() * intToFloat, blue.floatValue() * intToFloat, color.a);
 				return color;
 			} catch (NumberFormatException nbf) {
-				throw new IllegalArgumentException("Invalid color hex string " + string, nbf);
+				throw new IllegalArgumentException("Invalid color hex string " + hexColor, nbf);
 			}
 		}
-		throw new IllegalArgumentException("Invalid color hex string " + string);
+		throw new IllegalArgumentException("Invalid color hex string " + hexColor);
 	}
 
 }
