@@ -1,9 +1,13 @@
 package com.gemserk.commons.gdx.resources;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.Glyph;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
@@ -16,6 +20,20 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 
 	private boolean useIntegerPositions = true;
 	private CharSequence fixedWidthGlyphs = null;
+
+	static class FontSpacing {
+
+		CharSequence charSequence;
+		int spacing;
+
+		public FontSpacing(CharSequence charSequence, int spacing) {
+			this.charSequence = charSequence;
+			this.spacing = spacing;
+		}
+
+	}
+
+	private ArrayList<FontSpacing> spacings = new ArrayList<FontResourceBuilder.FontSpacing>();
 
 	public FontResourceBuilder filter(TextureFilter filter) {
 		this.minFilter = filter;
@@ -53,6 +71,11 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 		return this;
 	}
 
+	public FontResourceBuilder spacing(CharSequence charSequence, int spacing) {
+		this.spacings.add(new FontSpacing(charSequence, spacing));
+		return this;
+	}
+
 	@Override
 	public boolean isVolatile() {
 		return false;
@@ -75,6 +98,25 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 		bitmapFont.setUseIntegerPositions(useIntegerPositions);
 		if (fixedWidthGlyphs != null)
 			bitmapFont.setFixedWidthGlyphs(fixedWidthGlyphs);
+
+		BitmapFontData data = bitmapFont.getData();
+
+		for (int i = 0; i < spacings.size(); i++) {
+			FontSpacing fontSpacing = spacings.get(i);
+			CharSequence charSequence = fontSpacing.charSequence;
+
+			for (int c = 0; c < charSequence.length(); c++) {
+				char charAt = charSequence.charAt(c);
+				Glyph g = data.getGlyph(charAt);
+
+				g.xoffset += (fontSpacing.spacing - g.xadvance) / 2;
+				g.xadvance = fontSpacing.spacing;
+
+				// g.xadvance = g.width + fontSpacing.spacing;
+			}
+
+		}
+
 		return bitmapFont;
 	}
 
