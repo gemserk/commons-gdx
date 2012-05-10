@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.Glyph;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.gemserk.commons.gdx.graphics.BitmapFontUtils;
 
 public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 
@@ -99,21 +100,21 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 		if (fixedWidthGlyphs != null)
 			bitmapFont.setFixedWidthGlyphs(fixedWidthGlyphs);
 
-		BitmapFontData data = bitmapFont.getData();
-
 		for (int i = 0; i < spacings.size(); i++) {
 			FontSpacing fontSpacing = spacings.get(i);
 			CharSequence charSequence = fontSpacing.charSequence;
 
-			for (int c = 0; c < charSequence.length(); c++) {
-				char charAt = charSequence.charAt(c);
-				Glyph g = data.getGlyph(charAt);
+			BitmapFontUtils.spacing(bitmapFont, charSequence, fontSpacing.spacing);
 
-				g.xoffset += (fontSpacing.spacing - g.xadvance) / 2;
-				g.xadvance = fontSpacing.spacing;
-
-				// g.xadvance = g.width + fontSpacing.spacing;
-			}
+			// for (int c = 0; c < charSequence.length(); c++) {
+			// char charAt = charSequence.charAt(c);
+			// Glyph g = data.getGlyph(charAt);
+			//
+			// g.xoffset += (fontSpacing.spacing - g.xadvance) / 2;
+			// g.xadvance = fontSpacing.spacing;
+			//
+			// // g.xadvance = g.width + fontSpacing.spacing;
+			// }
 
 		}
 
