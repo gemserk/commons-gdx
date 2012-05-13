@@ -21,9 +21,9 @@ public class TimelineConfiguratorDataLoader extends DataLoader<TimelineConfigura
 			put("Cubic.IN", InterpolationFunctions.cubicEaseIn);
 			put("Cubic.OUT", InterpolationFunctions.cubicEaseOut);
 			put("Cubic.INOUT", InterpolationFunctions.cubicEaseInOut);
-			put("Quad.IN", InterpolationFunctions.quadraticEaseIn);
-			put("Quad.OUT", InterpolationFunctions.quadraticEaseOut);
-			put("Quad.INOUT", InterpolationFunctions.quadraticEaseInOut);
+			put("Quad.IN", InterpolationFunctions.quadraticEaseIn());
+			put("Quad.OUT", InterpolationFunctions.quadraticEaseOut());
+			// put("Quad.INOUT", InterpolationFunctions.linear);
 		}
 	};
 
