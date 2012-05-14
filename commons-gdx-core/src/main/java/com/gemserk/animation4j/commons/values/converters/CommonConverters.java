@@ -6,7 +6,7 @@ import com.gemserk.commons.values.FloatValue;
 
 public class CommonConverters {
 	
-	private static final FloatValueConverter floatValueConverter = new FloatValueConverter();
+	public static final FloatValueConverter floatValueConverter = new FloatValueConverter();
 
 	public static TypeConverter<FloatValue> floatValue() {
 		return floatValueConverter;
