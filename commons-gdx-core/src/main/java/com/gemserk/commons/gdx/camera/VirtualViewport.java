@@ -44,8 +44,9 @@ public class VirtualViewport {
 	 *            The screen Height.
 	 */
 	public float getWidth(float screenWidth, float screenHeight) {
+		float virtualAspect = virtualWidth/virtualHeight;
 		float aspect = screenWidth / screenHeight;
-		if (screenWidth > screenHeight) {
+		if (aspect >= virtualAspect) {
 			if (!shrink)
 				return virtualHeight * aspect;
 			return virtualWidth;
@@ -65,15 +66,16 @@ public class VirtualViewport {
 	 *            The screen Height.
 	 */
 	public float getHeight(float screenWidth, float screenHeight) {
+		float virtualAspect = virtualWidth/virtualHeight;
 		float aspect = screenWidth / screenHeight;
-		if (screenWidth > screenHeight) {
+		if (aspect >= virtualAspect) {
 			if (!shrink)
 				return virtualHeight;
 			return virtualWidth / aspect;
 		} else {
 			if (shrink)
 				return virtualWidth;
-			return virtualWidth * aspect;
+			return virtualWidth / aspect;
 		}
 	}
 

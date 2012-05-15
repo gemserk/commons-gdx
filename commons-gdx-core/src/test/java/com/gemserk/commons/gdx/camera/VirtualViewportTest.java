@@ -29,6 +29,13 @@ public class VirtualViewportTest {
 		assertThat(virtualViewport.getWidth(800f, 480f), IsEqual.equalTo(1000f));
 		assertThat(virtualViewport.getHeight(800f, 480f), IsEqual.equalTo(600f));
 	}
+	
+	@Test
+	public void test1() {
+		VirtualViewport virtualViewport = new VirtualViewport(800f, 600f);
+		assertThat(virtualViewport.getWidth(400f, 600f), IsEqual.equalTo(800f));
+		assertThat(virtualViewport.getHeight(400f, 600f), IsEqual.equalTo(1200f));
+	}
 
 	@Test
 	public void testShrinkWithNormalViewport() {
