@@ -22,6 +22,27 @@ public class LibgdxConverters {
 		return vector2Converter;
 	}
 	
+	public static final TypeConverter<Color> colorOpacityConverter = new TypeConverter<Color>() {
+		@Override
+		public int variables() {
+			return 1;
+		}
+
+		@Override
+		public Color copyToObject(Color color, float[] x) {
+			color.a = x[0];
+			return color;
+		}
+
+		@Override
+		public float[] copyFromObject(Color color, float[] x) {
+			if (x == null)
+				x = new float[variables()];
+			x[0] = color.a;
+			return x;
+		}
+	};
+	
 	public static final TypeConverter<Sprite> spriteColorConverter = new TypeConverter<Sprite>() {
 
 		@Override
