@@ -4,6 +4,11 @@ import com.artemis.Entity;
 import com.gemserk.componentsengine.utils.Parameters;
 
 public interface EntityFactory {
+	
+	/**
+	 * Creates a new Entity and returns it applying no templates. 
+	 */
+	Entity instantiate();
 
 	/**
 	 * Creates a new Entity and applies the specified EntityTemplate.

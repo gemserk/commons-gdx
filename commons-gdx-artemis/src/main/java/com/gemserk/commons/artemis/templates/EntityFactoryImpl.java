@@ -28,4 +28,11 @@ public class EntityFactoryImpl implements EntityFactory {
 		return entity;
 	}
 
+	@Override
+	public Entity instantiate() {
+		Entity entity = world.createEntity();
+		entity.refresh();
+		return entity;
+	}
+
 }
