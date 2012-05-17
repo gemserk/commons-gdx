@@ -97,5 +97,10 @@ public class MathUtils2 {
 	public static void shrinkRectangle(Rectangle r, float width, float height) {
 		growRectangle(r, -width, -height);
 	}
-
+	
+	public static void multiplyBy(float[] array, float factor){
+		for (int i = 0; i < array.length; i++) {
+			array[i]*=factor;
+		}
+	}
 }
