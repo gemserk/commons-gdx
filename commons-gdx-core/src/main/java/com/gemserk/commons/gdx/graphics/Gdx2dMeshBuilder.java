@@ -91,6 +91,11 @@ public class Gdx2dMeshBuilder {
 		vertices[vertexIdx + colorOffset] = Color.toFloatBits(r, g, b, a);
 		return this;
 	}
+	
+	public Gdx2dMeshBuilder color(Color color) {
+		vertices[vertexIdx + colorOffset] = Color.toFloatBits(color.r, color.g, color.b, color.a);
+		return this;
+	}
 
 	public Gdx2dMeshBuilder texCoord(float u, float v) {
 		final int idx = vertexIdx + texCoordOffset + numSetTexCoords;
