@@ -9,7 +9,12 @@ public class AnimationFrameMonitor {
 
 	boolean triggered, alreadyTriggeredForIteration;
 	Animation animation;
-
+	
+	public void setFrameToMonitor(int frameToMonitor) {
+		this.frameToMonitor = frameToMonitor;
+		reset();
+	}
+	
 	public AnimationFrameMonitor(Animation animation, int frame) {
 		this.animation = animation;
 		this.frameToMonitor = frame;
