@@ -130,8 +130,11 @@ public class LibgdxInputMappingBuilder<K> {
 	}
 
 	public static ButtonMonitor anyPointerButtonMonitor(final Input input) {
+		return anyPointerButtonMonitor(input, 5);
+	}
+	
+	public static ButtonMonitor anyPointerButtonMonitor(final Input input, final int maxPointers) {
 		return new ButtonMonitor() {
-			final int maxPointers = 5;
 			int lastPointer = 0;
 
 			@Override
@@ -152,8 +155,11 @@ public class LibgdxInputMappingBuilder<K> {
 	}
 
 	public static AnalogInputMonitor anyPointerXCoordinateMonitor(final Input input) {
+		return anyPointerXCoordinateMonitor(input, 5);
+	}
+
+	public static AnalogInputMonitor anyPointerXCoordinateMonitor(final Input input, final int maxPointers) {
 		return new AnalogInputMonitor() {
-			final int maxPointers = 5;
 			int lastPointer = 0;
 
 			@Override
@@ -174,8 +180,11 @@ public class LibgdxInputMappingBuilder<K> {
 	}
 
 	public static AnalogInputMonitor anyPointerYCoordinateMonitor(final Input input) {
+		return anyPointerYCoordinateMonitor(input, 5);
+	}
+
+	public static AnalogInputMonitor anyPointerYCoordinateMonitor(final Input input, final int maxPointers) {
 		return new AnalogInputMonitor() {
-			final int maxPointers = 5;
 			int lastPointer = 0;
 
 			@Override
