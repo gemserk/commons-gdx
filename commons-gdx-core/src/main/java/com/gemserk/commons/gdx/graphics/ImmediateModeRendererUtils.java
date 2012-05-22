@@ -5,6 +5,8 @@ import java.nio.FloatBuffer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer10;
 import com.badlogic.gdx.math.Circle;
@@ -132,7 +134,7 @@ public class ImmediateModeRendererUtils {
 		}
 		renderer.end();
 	}
-	
+
 	public static void fillRectangle(float x0, float y0, float x1, float y1, Color color) {
 		renderer.begin(getProjectionMatrix(), GL10.GL_TRIANGLES);
 		{
@@ -152,7 +154,7 @@ public class ImmediateModeRendererUtils {
 
 			renderer.color(color.r, color.g, color.b, color.a);
 			renderer.vertex(x1, y0, 0f);
-			
+
 			renderer.color(color.r, color.g, color.b, color.a);
 			renderer.vertex(x0, y0, 0f);
 		}
@@ -215,5 +217,26 @@ public class ImmediateModeRendererUtils {
 
 	public static void draw(int primitiveType, Mesh2d mesh2d, float x, float y, float angle) {
 		Mesh2dRenderUtils.draw(primitiveType, mesh2d, x, y, angle);
+	}
+
+	public static void drawSpriteBounds(Sprite sprite, Color color) {
+		float[] vertices = sprite.getVertices();
+
+		float x1 = vertices[SpriteBatch.X1];
+		float y1 = vertices[SpriteBatch.Y1];
+
+		float x2 = vertices[SpriteBatch.X2];
+		float y2 = vertices[SpriteBatch.Y2];
+
+		float x3 = vertices[SpriteBatch.X3];
+		float y3 = vertices[SpriteBatch.Y3];
+
+		float x4 = vertices[SpriteBatch.X4];
+		float y4 = vertices[SpriteBatch.Y4];
+
+		drawLine(x1, y1, x2, y2, color);
+		drawLine(x2, y2, x3, y3, color);
+		drawLine(x3, y3, x4, y4, color);
+		drawLine(x4, y4, x1, y1, color);
 	}
 }
