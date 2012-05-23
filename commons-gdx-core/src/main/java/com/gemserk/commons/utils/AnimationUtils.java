@@ -13,5 +13,17 @@ public class AnimationUtils {
 			frame.setSize(width * scale, height * scale);
 		}
 	}
+	
+	public static float framesToSeconds(int frame, int fps) {
+		return (float) ((frame - 1) * fps) * 0.001f;
+	}
+
+	public static float framesToSeconds(int frame) {
+		return framesToSeconds(frame, 30);
+	}
+
+	public static int secondsToFrame(float seconds, int fps) {
+		return (int) (seconds * 1000) / fps;
+	}
 
 }
