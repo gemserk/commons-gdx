@@ -105,17 +105,6 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 			CharSequence charSequence = fontSpacing.charSequence;
 
 			BitmapFontUtils.spacing(bitmapFont, charSequence, fontSpacing.spacing);
-
-			// for (int c = 0; c < charSequence.length(); c++) {
-			// char charAt = charSequence.charAt(c);
-			// Glyph g = data.getGlyph(charAt);
-			//
-			// g.xoffset += (fontSpacing.spacing - g.xadvance) / 2;
-			// g.xadvance = fontSpacing.spacing;
-			//
-			// // g.xadvance = g.width + fontSpacing.spacing;
-			// }
-
 		}
 
 		return bitmapFont;

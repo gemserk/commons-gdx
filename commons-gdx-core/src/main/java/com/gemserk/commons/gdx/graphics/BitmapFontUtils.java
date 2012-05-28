@@ -17,6 +17,8 @@ public class BitmapFontUtils {
 		for (int c = 0; c < charSequence.length(); c++) {
 			char charAt = charSequence.charAt(c);
 			Glyph g = data.getGlyph(charAt);
+			if (g == null)
+				continue;
 			g.xoffset += (spacing - g.xadvance) / 2;
 			g.xadvance = spacing;
 		}
