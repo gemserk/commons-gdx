@@ -2,9 +2,11 @@ package com.gemserk.commons.gdx.graphics;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 
 public class MeshUtils {
-	
+
 	public static Mesh createVerticalGradient(final float width, final float height, Color[] gradientColors, float[] gradientStops) {
 
 		if (gradientStops.length == 1) {
@@ -43,6 +45,37 @@ public class MeshUtils {
 
 		Mesh mesh = meshBuilder.build();
 		mesh.scale(width, height, 1f);
+		return mesh;
+	}
+
+	/**
+	 * Translates the Mesh the specified x and y coordinates.
+	 * 
+	 * @param mesh
+	 *            The Mesh to be modified.
+	 * @param x
+	 *            The x coordinate to be translated.
+	 * @param y
+	 *            The y coordinate to be translated.
+	 */
+	public static Mesh translate(Mesh mesh, float x, float y) {
+		VertexAttribute posAttr = mesh.getVertexAttribute(Usage.Position);
+		int offset = posAttr.offset / 4;
+		int numVertices = mesh.getNumVertices();
+		int vertexSize = mesh.getVertexSize() / 4;
+
+		float[] vertices = new float[numVertices * vertexSize];
+		mesh.getVertices(vertices);
+
+		int idx = offset;
+		for (int i = 0; i < numVertices; i++) {
+			vertices[idx] += x;
+			vertices[idx + 1] += y;
+			idx += vertexSize;
+		}
+
+		mesh.setVertices(vertices);
+
 		return mesh;
 	}
 
