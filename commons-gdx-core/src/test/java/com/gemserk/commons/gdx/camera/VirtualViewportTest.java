@@ -5,8 +5,6 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
-import com.gemserk.commons.gdx.camera.VirtualViewport;
-
 public class VirtualViewportTest {
 
 	@Test
@@ -51,4 +49,5 @@ public class VirtualViewportTest {
 		assertThat(virtualViewport.getHeight(800f, 480f), IsEqual.equalTo(480f));
 	}
 	
+
 }
