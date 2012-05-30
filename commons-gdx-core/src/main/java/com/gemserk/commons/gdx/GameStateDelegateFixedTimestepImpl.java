@@ -10,13 +10,13 @@ public class GameStateDelegateFixedTimestepImpl implements GameState {
 
 	protected float delta;
 
-	protected float dt;
-	protected float maxFrameTime;
+	protected final float dt;
+	protected final float maxFrameTime;
 
 	protected float accumulator;
 
 	protected GameState gameState;
-	
+
 	public GameStateDelegateFixedTimestepImpl(GameState gameState) {
 		this(gameState, 0.01f, 0.25f);
 	}
@@ -29,6 +29,7 @@ public class GameStateDelegateFixedTimestepImpl implements GameState {
 
 	public void init() {
 		gameState.init();
+		accumulator = dt * 2;
 	}
 
 	public void dispose() {
