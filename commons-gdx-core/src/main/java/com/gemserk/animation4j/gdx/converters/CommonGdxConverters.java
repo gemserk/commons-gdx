@@ -2,6 +2,7 @@ package com.gemserk.animation4j.gdx.converters;
 
 import com.gemserk.animation4j.converters.TypeConverter;
 import com.gemserk.commons.gdx.camera.Camera;
+import com.gemserk.commons.gdx.games.Spatial;
 
 public class CommonGdxConverters {
 
@@ -50,6 +51,32 @@ public class CommonGdxConverters {
 			return x;
 
 		}
+	};
+
+	public static final TypeConverter<Spatial> spatialConverter = new TypeConverter<Spatial>() {
+
+		@Override
+		public int variables() {
+			return 3;
+		}
+
+		@Override
+		public float[] copyFromObject(Spatial spatial, float[] x) {
+			if (x == null)
+				x = new float[variables()];
+			x[0] = spatial.getX();
+			x[1] = spatial.getY();
+			x[2] = spatial.getAngle();
+			return x;
+		}
+
+		@Override
+		public Spatial copyToObject(Spatial spatial, float[] x) {
+			spatial.setPosition(x[0], x[1]);
+			spatial.setAngle(x[2]);
+			return spatial;
+		}
+
 	};
 
 }
