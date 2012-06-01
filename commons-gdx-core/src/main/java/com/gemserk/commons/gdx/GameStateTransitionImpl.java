@@ -63,10 +63,15 @@ public class GameStateTransitionImpl extends GameStateImpl {
 			super(duration);
 		}
 
+		public FadeOutTransitionEffect(float duration, Color color) {
+			this(duration);
+			this.color.set(color);
+		}
+
 		@Override
 		public void render(GameState current, GameState next) {
 			current.render();
-			color.set(0f, 0f, 0f, getAlpha());
+			color.a = getAlpha();
 			
 			Gdx.gl10.glEnable(GL10.GL_BLEND);
 			ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -83,11 +88,16 @@ public class GameStateTransitionImpl extends GameStateImpl {
 		public FadeInTransitionEffect(float duration) {
 			super(duration);
 		}
+		
+		public FadeInTransitionEffect(float duration, Color color) {
+			this(duration);
+			this.color.set(color);
+		}
 
 		@Override
 		public void render(GameState current, GameState next) {
 			next.render();
-			color.set(0f, 0f, 0f, 1f - getAlpha());
+			color.a = 1f - getAlpha();
 
 			Gdx.gl10.glEnable(GL10.GL_BLEND);
 			ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

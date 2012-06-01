@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.gemserk.commons.gdx.GameStateTransitionImpl.FadeInTransitionEffect;
 import com.gemserk.commons.gdx.GameStateTransitionImpl.FadeOutTransitionEffect;
 import com.gemserk.commons.gdx.GameStateTransitionImpl.TransitionEffect;
@@ -143,6 +144,19 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 		}
 
 		/**
+		 * Adds a new fade out effect to the transition effects list using the specified duration.
+		 * 
+		 * @param duration
+		 *            The duration of the fade out effect.
+		 * @param color
+		 *            The color to fade out to.
+		 */
+		public GameStateTransitionBuilder fadeOut(float duration, Color color) {
+			this.transitionEffects.add(new FadeOutTransitionEffect(duration, color));
+			return this;
+		}
+
+		/**
 		 * Adds a new fade in effect to the transition effects list using the specified duration.
 		 * 
 		 * @param duration
@@ -150,6 +164,19 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 		 */
 		public GameStateTransitionBuilder fadeIn(float duration) {
 			this.transitionEffects.add(new FadeInTransitionEffect(duration));
+			return this;
+		}
+
+		/**
+		 * Adds a new fade in effect to the transition effects list using the specified duration.
+		 * 
+		 * @param duration
+		 *            The duration of the fade in effect.
+		 * @param color
+		 *            The color to fade in to.
+		 */
+		public GameStateTransitionBuilder fadeIn(float duration, Color color) {
+			this.transitionEffects.add(new FadeInTransitionEffect(duration, color));
 			return this;
 		}
 
@@ -173,7 +200,7 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 				return;
 
 			transitioning = true;
-			
+
 			// not sure what to do in case current game state == next...
 
 			if (restartNext)
