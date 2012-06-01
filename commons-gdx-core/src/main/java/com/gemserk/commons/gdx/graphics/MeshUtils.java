@@ -78,5 +78,34 @@ public class MeshUtils {
 
 		return mesh;
 	}
+	
+	/**
+	 * Sets the colors of the vertices of the mesh.
+	 * 
+	 * @param mesh
+	 *            The Mesh to be modified.
+	 * @param colors
+	 *            The new vertex colors.
+	 * @param verticesCache
+	 *            An array to contain all the vertices of the mesh size should be (mesh.getNumVertices()*mesh.getVertexSize()/4). This is to avoid GC
+	 */
+	public static Mesh changeColors(Mesh mesh, float[] colors, float[] verticesCache) {
+		VertexAttribute posAttr = mesh.getVertexAttribute(Usage.ColorPacked);
+		int offset = posAttr.offset / 4;
+		int numVertices = mesh.getNumVertices();
+		int vertexSize = mesh.getVertexSize() / 4;
+
+		mesh.getVertices(verticesCache);
+
+		int idx = offset;
+		for (int i = 0; i < numVertices; i++) {
+			verticesCache[idx] = colors[i];
+			idx += vertexSize;
+		}
+
+		mesh.setVertices(verticesCache);
+
+		return mesh;
+	}
 
 }
