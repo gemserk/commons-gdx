@@ -3,7 +3,7 @@ package com.gemserk.commons.utils;
 import java.util.List;
 
 /**
- * Provides some useful methdos to be used with lists.
+ * Provides some useful methods to be used with lists.
  */
 public class ListUtils {
 
