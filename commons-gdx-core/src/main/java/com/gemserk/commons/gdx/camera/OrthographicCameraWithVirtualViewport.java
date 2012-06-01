@@ -7,9 +7,13 @@ import com.badlogic.gdx.math.Vector3;
 
 public class OrthographicCameraWithVirtualViewport extends OrthographicCamera {
 
-	final Vector3 tmp = new Vector3();
-	final Vector2 origin = new Vector2();
-	final VirtualViewport virtualViewport;
+	Vector3 tmp = new Vector3();
+	Vector2 origin = new Vector2();
+	VirtualViewport virtualViewport;
+	
+	public void setVirtualViewport(VirtualViewport virtualViewport) {
+		this.virtualViewport = virtualViewport;
+	}
 
 	public OrthographicCameraWithVirtualViewport(VirtualViewport virtualViewport, float cx, float cy) {
 		this.virtualViewport = virtualViewport;
