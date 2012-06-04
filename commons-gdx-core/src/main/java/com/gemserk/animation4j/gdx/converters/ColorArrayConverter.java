@@ -22,10 +22,10 @@ public class ColorArrayConverter implements TypeConverter<Color[]> {
 			x = new float[variables()];
 
 		for (int i = 0; i < arraySize; i++) {
-			x[i + 0] = object[i].r;
-			x[i + 1] = object[i].g;
-			x[i + 2] = object[i].b;
-			x[i + 3] = object[i].a;
+			x[i * 4 + 0] = object[i].r;
+			x[i * 4 + 1] = object[i].g;
+			x[i * 4 + 2] = object[i].b;
+			x[i * 4 + 3] = object[i].a;
 		}
 		return x;
 	}
@@ -41,10 +41,10 @@ public class ColorArrayConverter implements TypeConverter<Color[]> {
 
 		for (int i = 0; i < arraySize; i++) {
 			Color color = object[i];
-			color.r = x[i + 0];
-			color.g = x[i + 1];
-			color.b = x[i + 2];
-			color.a = x[i + 3];
+			color.r = x[i * 4 + 0];
+			color.g = x[i * 4 + 1];
+			color.b = x[i * 4 + 2];
+			color.a = x[i * 4 + 3];
 		}
 
 		return object;
