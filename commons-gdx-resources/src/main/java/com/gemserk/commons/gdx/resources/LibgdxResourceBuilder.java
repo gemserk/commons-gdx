@@ -416,5 +416,9 @@ public class LibgdxResourceBuilder {
 				.skinFile(internal(skinFile)) //
 				.textureFile(internal(textureFile));
 	}
+	
+	public <T> ResourceBuilder<T> alias(String resourceId){
+		return new AliasResourceBuilder(resourceManager, resourceId);
+	}
 
 }
