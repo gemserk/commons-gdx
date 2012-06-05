@@ -73,10 +73,10 @@ public class GameStateTransitionImpl extends GameStateImpl {
 			current.render();
 			color.a = getAlpha();
 			
-			Gdx.gl10.glEnable(GL10.GL_BLEND);
+			Gdx.gl.glEnable(GL10.GL_BLEND);
 			ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			ImmediateModeRendererUtils.fillRectangle(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), color);
-			Gdx.gl10.glDisable(GL10.GL_BLEND);
+			Gdx.gl.glDisable(GL10.GL_BLEND);
 		}
 
 	}
@@ -99,10 +99,10 @@ public class GameStateTransitionImpl extends GameStateImpl {
 			next.render();
 			color.a = 1f - getAlpha();
 
-			Gdx.gl10.glEnable(GL10.GL_BLEND);
+			Gdx.gl.glEnable(GL10.GL_BLEND);
 			ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			ImmediateModeRendererUtils.fillRectangle(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), color);
-			Gdx.gl10.glDisable(GL10.GL_BLEND);
+			Gdx.gl.glDisable(GL10.GL_BLEND);
 		}
 
 	}

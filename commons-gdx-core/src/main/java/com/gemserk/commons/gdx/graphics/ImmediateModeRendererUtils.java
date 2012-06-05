@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer10;
+import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,7 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class ImmediateModeRendererUtils {
 
-	private static final ImmediateModeRenderer renderer = new ImmediateModeRenderer10();
+	private static final ImmediateModeRenderer renderer = Gdx.graphics.isGL20Available() ? new ImmediateModeRenderer20(false, true, 0): new ImmediateModeRenderer10();
 
 	private static final Vector2 tmp = new Vector2();
 	private static final Vector2 angleTmp = new Vector2(1, 0);

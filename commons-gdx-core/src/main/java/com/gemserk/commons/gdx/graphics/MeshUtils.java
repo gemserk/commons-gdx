@@ -48,6 +48,17 @@ public class MeshUtils {
 		return mesh;
 	}
 
+	public static void addRectangle(Gdx2dMeshBuilder builder, float x0, float y0, float x1, float y1, Color color) {
+
+		builder //
+				.color(color).vertex(x0, y0) //
+				.color(color).vertex(x0, y1) //
+				.color(color).vertex(x1, y1) //
+				.color(color).vertex(x1, y1) //
+				.color(color).vertex(x1, y0) //
+				.color(color).vertex(x0, y0); //
+	}
+
 	/**
 	 * Translates the Mesh the specified x and y coordinates.
 	 * 
@@ -78,7 +89,7 @@ public class MeshUtils {
 
 		return mesh;
 	}
-	
+
 	/**
 	 * Sets the colors of the vertices of the mesh.
 	 * 
