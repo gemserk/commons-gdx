@@ -8,6 +8,10 @@ public class ActionAdapter extends Action {
 	protected Actor target;
 	protected boolean done;
 	
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+	
 	public ActionAdapter() {
 		done = false;
 	}
