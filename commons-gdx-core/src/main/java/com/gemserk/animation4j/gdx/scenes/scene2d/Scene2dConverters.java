@@ -29,6 +29,29 @@ public class Scene2dConverters {
 		}
 	};
 	
+	public static final TypeConverter<Actor> actorSizeTypeConverter = new TypeConverter<Actor>() {
+		@Override
+		public int variables() {
+			return 2;
+		}
+
+		@Override
+		public float[] copyFromObject(Actor object, float[] x) {
+			if (x == null)
+				x = new float[variables()];
+			x[0] = object.width;
+			x[1] = object.height;
+			return x;
+		}
+
+		@Override
+		public Actor copyToObject(Actor object, float[] x) {
+			object.width = x[0];
+			object.height = x[1];
+			return object;
+		}
+	};
+	
 	public static final TypeConverter<ActorDecorator> actorDecoratorSizeTypeConverter = new TypeConverter<ActorDecorator>() {
 		@Override
 		public int variables() {
