@@ -14,7 +14,7 @@ public class AnimationComponent extends Component {
 		return (AnimationComponent) e.getComponent(type);
 	}
 
-	private final Animation[] animations;
+	private Animation[] animations;
 
 	private int currentAnimation;
 	
@@ -40,6 +40,10 @@ public class AnimationComponent extends Component {
 
 	public AnimationComponent(Animation[] spriteSheets) {
 		this.animations = spriteSheets;
+	}
+	
+	public void setAnimations(Animation[] animations) {
+		this.animations = animations;
 	}
 
 }
