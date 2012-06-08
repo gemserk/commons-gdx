@@ -27,6 +27,7 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 		this.frameAnimation = frameAnimation;
 		this.playing = true;
 		this.started = true;
+		speed = 1f;
 	}
 
 	public int getFramesCount() {
