@@ -14,6 +14,9 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.TextureAtlasData.Page;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.gemserk.animation4j.FrameAnimationImpl;
@@ -47,7 +50,7 @@ public class LibgdxResourceBuilder {
 	public static FileHandle internal(String file) {
 		return Gdx.files.internal(file);
 	}
-	
+
 	public static FileHandle classPath(String file) {
 		return Gdx.files.classpath(file);
 	}
@@ -85,6 +88,33 @@ public class LibgdxResourceBuilder {
 				return new TextureAtlas(fileHandle);
 			}
 		});
+	}
+
+	public void splitLoadingTextureAtlas(final String id, final String file) {
+		FileHandle packFile = Gdx.files.internal(file);
+		final TextureAtlasData textureAtlasData = new TextureAtlasData(packFile, packFile.parent(), false);
+
+		Array<Page> pages = textureAtlasData.getPages();
+		final String pageTextureSuffix = "_generated_page_";
+		for (int i = 0; i < pages.size; i++) {
+			Page page = pages.get(i);
+			FileHandle textureFile = page.textureFile;
+			resource(id + pageTextureSuffix + i, texture2(textureFile).format(page.format).useMipMaps(page.useMipMaps).magFilter(page.magFilter).minFilter(page.minFilter));
+		}
+
+		resourceManager.add(id, new DataLoader<TextureAtlas>() {
+			@Override
+			public TextureAtlas load() {
+				Array<Page> pages = textureAtlasData.getPages();
+				for (int i = 0; i < pages.size; i++) {
+					Page page = pages.get(i);
+					page.texture = resourceManager.getResourceValue(id + pageTextureSuffix + i);
+				}
+				
+				return new TextureAtlas(textureAtlasData);
+			}
+		});
+		
 	}
 
 	/**
@@ -166,8 +196,8 @@ public class LibgdxResourceBuilder {
 						throw new RuntimeException("Failed to create animation " + id + " from texture atlas " + textureAtlasId, e);
 					}
 				}
-				
-				if (sprites.size() == 0) { 
+
+				if (sprites.size() == 0) {
 					throw new IllegalArgumentException("Failed to create animation " + id + ", no regions found for prefix " + prefix);
 				}
 
@@ -182,8 +212,8 @@ public class LibgdxResourceBuilder {
 
 				Sprite[] frames = new Sprite[endFrame - startFrame + 1];
 				int frameNumber = startFrame;
-				
-				if (endFrame >= sprites.size()) { 
+
+				if (endFrame >= sprites.size()) {
 					throw new IllegalArgumentException("Failed to create animation " + id + ", end frame " + endFrame + " couldn't be greater than sprites quantity " + sprites.size());
 				}
 
@@ -294,7 +324,7 @@ public class LibgdxResourceBuilder {
 	public void music(String id, String file) {
 		music(id, internal(file));
 	}
-	
+
 	public void music(String id, FileHandle fileHandle) {
 		resourceManager.add(id, new MusicDataLoader(fileHandle));
 	}
@@ -386,7 +416,7 @@ public class LibgdxResourceBuilder {
 	public AnimationResourceBuilder animation2(String textureId) {
 		return new AnimationResourceBuilder(resourceManager, textureId);
 	}
-	
+
 	public AnimationFromTextureAtlasResourceBuilder animationFromTextureAtlas(String textureAtlasId) {
 		return new AnimationFromTextureAtlasResourceBuilder(resourceManager, textureAtlasId);
 	}
@@ -402,7 +432,7 @@ public class LibgdxResourceBuilder {
 	public FontResourceBuilder font2(String imageFile, String fontFile) {
 		return new FontResourceBuilder().imageFile(internal(imageFile)).fontFile(internal(fontFile));
 	}
-	
+
 	public FontResourceBuilder font2(FileHandle imageFile, FileHandle fontFile) {
 		return new FontResourceBuilder().imageFile(imageFile).fontFile(fontFile);
 	}
@@ -416,8 +446,8 @@ public class LibgdxResourceBuilder {
 				.skinFile(internal(skinFile)) //
 				.textureFile(internal(textureFile));
 	}
-	
-	public <T> ResourceBuilder<T> alias(String resourceId){
+
+	public <T> ResourceBuilder<T> alias(String resourceId) {
 		return new AliasResourceBuilder(resourceManager, resourceId);
 	}
 
