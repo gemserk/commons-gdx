@@ -108,13 +108,25 @@ public class LibgdxResourceBuilder {
 				Array<Page> pages = textureAtlasData.getPages();
 				for (int i = 0; i < pages.size; i++) {
 					Page page = pages.get(i);
-					page.texture = resourceManager.getResourceValue(id + pageTextureSuffix + i);
+					try {
+						String textureResourceId = id + pageTextureSuffix + i;
+						page.texture = resourceManager.getResourceValue(textureResourceId);
+						if(page.texture==null)
+							throw new RuntimeException("The resource " + textureResourceId + " was not found");
+					} catch (Exception e) {
+						throw new RuntimeException("Error while loading page for textureAtlas " + id + " - page: " + page.textureFile.path());
+					}
 				}
-				
+
 				return new TextureAtlas(textureAtlasData);
 			}
+
+			@Override
+			public void unload(TextureAtlas atlas) {
+				atlas.dispose();
+			}
 		});
-		
+
 	}
 
 	/**
