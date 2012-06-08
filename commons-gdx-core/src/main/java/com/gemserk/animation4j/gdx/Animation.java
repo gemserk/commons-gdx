@@ -10,6 +10,18 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 
 	boolean playing, started;
 
+	private float speed;
+
+	@Override
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	@Override
+	public float getSpeed() {
+		return speed;
+	}
+
 	public Animation(Sprite[] frames, FrameAnimation frameAnimation) {
 		this.sprites = frames;
 		this.frameAnimation = frameAnimation;
@@ -44,7 +56,7 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 	public void update(float delta) {
 		if (!playing)
 			return;
-		frameAnimation.update(delta);
+		frameAnimation.update(delta * speed);
 		if (frameAnimation.isFinished())
 			playing = false;
 	}
@@ -90,7 +102,7 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 	public void resume() {
 		playing = true;
 	}
-	
+
 	public boolean isPlaying() {
 		return playing;
 	}
@@ -104,4 +116,5 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 	public PlayingDirection getPlayingDirection() {
 		return PlayingDirection.Normal;
 	}
+
 }
