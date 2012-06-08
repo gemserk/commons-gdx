@@ -128,8 +128,6 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			this.current = current;
 			this.next = next;
 			this.transitionEffects = new ArrayList<TransitionEffect>();
-			// we add by default the null transition effect.
-			this.transitionEffects.add(new TransitionEffect(0f));
 		}
 
 		/**
