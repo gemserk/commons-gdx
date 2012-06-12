@@ -74,5 +74,29 @@ public class Scene2dConverters {
 			return object;
 		}
 	};
+	
+	public static final TypeConverter<Actor> actorScaleTypeConverter = new TypeConverter<Actor>() {
+		
+		@Override
+		public int variables() {
+			return 2;
+		}
+
+		@Override
+		public float[] copyFromObject(Actor object, float[] x) {
+			if (x == null)
+				x = new float[variables()];
+			x[0] = object.scaleX;
+			x[1] = object.scaleY;
+			return x;
+		}
+
+		@Override
+		public Actor copyToObject(Actor object, float[] x) {
+			object.scaleX = x[0];
+			object.scaleY = x[1];
+			return object;
+		}
+	};
 
 }
