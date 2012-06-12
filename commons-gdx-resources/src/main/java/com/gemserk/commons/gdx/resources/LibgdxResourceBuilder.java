@@ -442,15 +442,15 @@ public class LibgdxResourceBuilder {
 	}
 
 	public FontResourceBuilder font2(String imageFile, String fontFile) {
-		return new FontResourceBuilder().imageFile(internal(imageFile)).fontFile(internal(fontFile));
+		return new FontResourceBuilder(resourceManager).imageFile(internal(imageFile)).fontFile(internal(fontFile));
 	}
 
 	public FontResourceBuilder font2(FileHandle imageFile, FileHandle fontFile) {
-		return new FontResourceBuilder().imageFile(imageFile).fontFile(fontFile);
+		return new FontResourceBuilder(resourceManager).imageFile(imageFile).fontFile(fontFile);
 	}
 
 	public FontResourceBuilder font2() {
-		return new FontResourceBuilder();
+		return new FontResourceBuilder(resourceManager);
 	}
 
 	public SkinResourceBuilder skin(String skinFile, String textureFile) {

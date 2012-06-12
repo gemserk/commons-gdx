@@ -6,12 +6,15 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.BitmapFontData;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.Glyph;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.gemserk.commons.gdx.graphics.BitmapFontUtils;
+import com.gemserk.resources.ResourceManager;
 
 public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
+
+	private ResourceManager<String> resourceManager;
 
 	private FileHandle imageFile;
 	private FileHandle fontFile;
@@ -35,6 +38,19 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 	}
 
 	private ArrayList<FontSpacing> spacings = new ArrayList<FontResourceBuilder.FontSpacing>();
+	
+	private String textureAtlasId;
+	private String regionId;
+	
+	public FontResourceBuilder(ResourceManager<String> resourceManager) {
+		this.resourceManager = resourceManager;
+	}
+	
+	public FontResourceBuilder region(String textureAtlasId, String regionId) {
+		this.textureAtlasId = textureAtlasId;
+		this.regionId = regionId;
+		return this;
+	}
 
 	public FontResourceBuilder filter(TextureFilter filter) {
 		this.minFilter = filter;
@@ -90,6 +106,14 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 			Texture texture = new Texture(imageFile);
 			texture.setFilter(minFilter, magFilter);
 			bitmapFont = new BitmapFont(fontFile, new Sprite(texture), false);
+		} else if (textureAtlasId != null && regionId != null){
+			if (fontFile == null) 
+				throw new IllegalArgumentException("Can't build a font resource without specifying the fontFile.");
+			TextureAtlas atlas = resourceManager.getResourceValue(textureAtlasId);
+			AtlasRegion region = atlas.findRegion(regionId);
+			if (region == null) 
+				throw new IllegalArgumentException("Can't build a font resource, region " + regionId + " not found in texture atlas");
+			bitmapFont = new BitmapFont(fontFile, region, false);
 		} else {
 			// if image file and font file are not specified, it creates a new default bitmap font.
 			bitmapFont = new BitmapFont();
