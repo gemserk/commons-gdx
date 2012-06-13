@@ -203,31 +203,23 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 			if (restartNext)
 				next.dispose();
+			
+			// inits the next gamestate
 
 			next.init();
 			next.resume();
 			next.show();
 
+			// if there is no effects, then there is no need of a gamestate transition
+			if (transitionEffects.isEmpty()) {
+				nextGameState();
+				return;
+			}
+
 			final GameState transitionGameState = new GameStateTransitionImpl(current, next, transitionEffects) {
 				@Override
 				protected void onTransitionFinished() {
-					current.pause();
-					current.hide();
-
-					if (disposeCurrent)
-						current.dispose();
-
-					Gdx.app.postRunnable(new Runnable() {
-						@Override
-						public void run() {
-							next.init();
-							next.resume();
-							next.show();
-							gameState = next;
-						}
-					});
-
-					transitioning = false;
+					nextGameState();
 				}
 
 			};
@@ -242,6 +234,31 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 				}
 			});
 
+		}
+
+		private void nextGameState() {
+
+			Gdx.app.postRunnable(new Runnable() {
+				@Override
+				public void run() {
+					// next.init();
+					// next.resume();
+					// next.show();
+					
+					gameState = next;
+
+					if (next != current) {
+						// if the next gamestate is different than the current, then hide and dispose the old one
+						current.pause();
+						current.hide();
+
+						if (disposeCurrent)
+							current.dispose();
+					}
+				}
+			});
+
+			transitioning = false;
 		}
 
 	}
