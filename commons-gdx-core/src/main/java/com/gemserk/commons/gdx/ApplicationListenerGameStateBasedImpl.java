@@ -255,10 +255,11 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 						if (disposeCurrent)
 							current.dispose();
 					}
+					
+					transitioning = false;
 				}
 			});
-
-			transitioning = false;
+			
 		}
 
 	}
