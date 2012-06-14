@@ -201,7 +201,7 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 			// not sure what to do in case current game state == next...
 
-			if (restartNext)
+			if (restartNext || (disposeCurrent && next == current))
 				next.dispose();
 			
 			// inits the next gamestate
