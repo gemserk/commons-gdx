@@ -45,7 +45,7 @@ public class SpriteActor extends Actor {
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		sprite.draw(batch);
+		sprite.draw(batch,color.a * parentAlpha);
 	}
 	
 }
