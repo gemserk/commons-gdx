@@ -1,10 +1,12 @@
 package com.gemserk.commons.gdx.resources;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.gemserk.util.GpuMemUtils;
 
 public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 
@@ -58,6 +60,10 @@ public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 	@Override
 	public Texture build() {
 		Texture texture = new Texture(fileHandle, format, useMipMaps);
+		int glError = Gdx.gl.glGetError();
+		if (glError != 0) {			
+			throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + GpuMemUtils.getTextureGpuSize()/1000000f);
+		}
 		texture.setFilter(minFilter, magFilter);
 		texture.setWrap(uTextureWrap, vTextureWrap);
 		return texture;
