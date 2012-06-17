@@ -11,9 +11,14 @@ public interface FrameAnimation {
 	int getCurrentFrame();
 	
 	/**
-	 * Return the iteration number of the animation (how mane times it was restarted).
+	 * Returns the iteration number of the animation (how mane times it was restarted).
 	 */
 	int getIteration();
+	
+	/**
+	 * Returns the current time of the animation.
+	 */
+	float getCurrentTime();
 
 	/**
 	 * Sets the current frame.

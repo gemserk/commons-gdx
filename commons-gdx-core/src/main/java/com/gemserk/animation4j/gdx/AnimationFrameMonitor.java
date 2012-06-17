@@ -1,23 +1,26 @@
 package com.gemserk.animation4j.gdx;
 
+import com.gemserk.commons.utils.AnimationUtils;
+
 /**
  * Monitors the animation to know when the animation shown an specific frame, to be used to trigger stuff.
  */
 public class AnimationFrameMonitor {
 
-	int frameToMonitor, currentIteration;
+	int currentIteration;
+	float timeToMonitor;
 
 	boolean triggered, alreadyTriggeredForIteration;
 	Animation animation;
 	
 	public void setFrameToMonitor(int frameToMonitor) {
-		this.frameToMonitor = frameToMonitor;
+		this.timeToMonitor = AnimationUtils.framesToSeconds(frameToMonitor, 30);
 		reset();
 	}
 	
 	public AnimationFrameMonitor(Animation animation, int frame) {
 		this.animation = animation;
-		this.frameToMonitor = frame;
+		this.timeToMonitor = AnimationUtils.framesToSeconds(frame, 30);
 		this.triggered = animation.getCurrentFrameIndex() >= frame;
 		this.alreadyTriggeredForIteration = false;
 		this.currentIteration = animation.getIteration();
@@ -40,7 +43,7 @@ public class AnimationFrameMonitor {
 			return;
 		}
 
-		triggered = animation.getCurrentFrameIndex() >= frameToMonitor;
+		triggered = animation.getCurrentTime() >= timeToMonitor;
 		alreadyTriggeredForIteration = triggered;
 	}
 
@@ -53,7 +56,7 @@ public class AnimationFrameMonitor {
 	}
 
 	public void reset() {
-		this.triggered = animation.getCurrentFrameIndex() >= frameToMonitor;
+		this.triggered = animation.getCurrentTime() >= timeToMonitor;
 		this.alreadyTriggeredForIteration = false;
 		this.currentIteration = animation.getIteration();
 	}

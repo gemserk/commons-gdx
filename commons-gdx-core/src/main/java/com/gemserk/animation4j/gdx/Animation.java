@@ -11,7 +11,7 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 	boolean playing, started;
 
 	private float speed;
-
+	
 	@Override
 	public void setSpeed(float speed) {
 		this.speed = speed;
@@ -116,6 +116,10 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 	@Override
 	public PlayingDirection getPlayingDirection() {
 		return PlayingDirection.Normal;
+	}
+	
+	public float getCurrentTime() {
+		return frameAnimation.getCurrentTime();
 	}
 
 }

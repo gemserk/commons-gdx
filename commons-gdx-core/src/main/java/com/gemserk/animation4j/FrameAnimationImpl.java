@@ -14,6 +14,8 @@ public class FrameAnimationImpl implements FrameAnimation {
 	int currentIteration;
 	float currentTime;
 
+	float iterationTime;
+
 	// add all play/stop/pause/etc?
 
 	boolean loop;
@@ -29,6 +31,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.currentTime = frameAnimationImpl.currentTime;
 		this.currentIteration = 1;
 		this.loop = frameAnimationImpl.loop;
+		this.iterationTime = frameAnimationImpl.iterationTime;
 	}
 
 	public FrameAnimationImpl(float f0, float... framesTimes) {
@@ -36,6 +39,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.currentTime = 0;
 		this.currentIteration = 1;
 		this.loop = false;
+		this.iterationTime = 0f;
 		set(f0, framesTimes);
 	}
 
@@ -46,6 +50,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.currentTime = 0;
 		this.currentIteration = 1;
 		this.loop = loop;
+		this.iterationTime = 0f;
 		set(framesTimes);
 	}
 
@@ -95,6 +100,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 	@Override
 	public void update(float delta) {
 		currentTime += delta;
+		iterationTime += delta;
 		float currentFrameTime = getCurrentFrameTime();
 		while (currentTime >= currentFrameTime && !isFinished()) {
 			nextFrame();
@@ -114,6 +120,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		else if (loop) {
 			currentFrame = 0;
 			currentIteration++;
+			iterationTime = 0f;
 		}
 
 	}
@@ -132,10 +139,17 @@ public class FrameAnimationImpl implements FrameAnimation {
 		currentFrame = 0;
 		currentTime = 0;
 		currentIteration++;
+		iterationTime = 0f;
 	}
 
 	@Override
 	public int getIteration() {
 		return currentIteration;
 	}
+
+	@Override
+	public float getCurrentTime() {
+		return iterationTime;
+	}
+
 }
