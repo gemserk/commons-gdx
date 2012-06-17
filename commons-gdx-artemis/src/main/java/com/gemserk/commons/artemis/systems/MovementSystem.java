@@ -9,24 +9,61 @@ import com.gemserk.commons.gdx.GlobalTime;
 import com.gemserk.commons.gdx.games.Spatial;
 
 public class MovementSystem extends EntityProcessingSystem {
+	
+	static class EntityComponents {
+		SpatialComponent spatialComponent;
+		MovementComponent movementComponent;
+	}
+
+	static class EntityComponentsHolder extends EntityComponentsFactory<EntityComponents> {
+
+		@Override
+		public EntityComponents newInstance() {
+			return new EntityComponents();
+		}
+
+		@Override
+		public void free(EntityComponents entityComponent) {
+			entityComponent.spatialComponent = null;
+			entityComponent.movementComponent = null;
+		}
+
+		@Override
+		public void load(Entity e, EntityComponents entityComponent) {
+			entityComponent.spatialComponent = SpatialComponent.get(e);
+			entityComponent.movementComponent = MovementComponent.get(e);
+		}
+
+	}
 
 	private final Vector2 tmpPosition = new Vector2();
 	private final Vector2 tmpVelocity = new Vector2();
-	
-	private static final Class<SpatialComponent> spatialComponentClass = SpatialComponent.class;
-	private static final Class<MovementComponent> movementComponentClass = MovementComponent.class;
+
+	EntityComponentsHolder componentsHolder;
 
 	@SuppressWarnings("unchecked")
 	public MovementSystem() {
-		super(spatialComponentClass, movementComponentClass);
+		super(SpatialComponent.class, MovementComponent.class);
+	}
+
+	@Override
+	protected void enabled(Entity e) {
+		super.enabled(e);
+		componentsHolder.add(e);
+	}
+	
+	@Override
+	protected void disabled(Entity e) {
+		super.disabled(e);
+		componentsHolder.remove(e);
 	}
 
 	@Override
 	protected void process(Entity e) {
-		SpatialComponent spatialComponent = e.getComponent(spatialComponentClass);
-		MovementComponent movementComponent = e.getComponent(movementComponentClass);
-
-		Spatial spatial = spatialComponent.getSpatial();
+		EntityComponents entityComponents = componentsHolder.get(e);
+		
+		MovementComponent movementComponent = entityComponents.movementComponent;
+		Spatial spatial = entityComponents.spatialComponent.getSpatial();
 
 		Vector2 velocity = movementComponent.getVelocity();
 
