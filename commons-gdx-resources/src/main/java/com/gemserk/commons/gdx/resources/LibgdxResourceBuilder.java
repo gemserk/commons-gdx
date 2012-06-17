@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.commons.gdx.graphics.ParticleEmitterUtils;
+import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.commons.gdx.resources.dataloaders.DisposableDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.MusicDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
@@ -193,6 +194,10 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final int time, final int... times) {
+		animation(id, textureAtlasId, prefix, sf, ef, loop, false, time, times);
+	}
+
+	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final boolean removeAlias, final int time, final int... times) {
 		resourceManager.addVolatile(id, new DataLoader<Animation>() {
 
 			FrameAnimationImpl cachedFrameAnimation = null;
@@ -211,7 +216,7 @@ public class LibgdxResourceBuilder {
 						throw new RuntimeException("Failed to create animation " + id + " from texture atlas " + textureAtlasId, e);
 					}
 
-					if (sprites.size() == 0) 
+					if (sprites.size() == 0)
 						throw new IllegalArgumentException("Failed to create animation " + id + ", no regions found for prefix " + prefix);
 
 					int endFrame = ef;
@@ -230,12 +235,18 @@ public class LibgdxResourceBuilder {
 						throw new IllegalArgumentException("Failed to create animation " + id + ", end frame " + endFrame + " couldn't be greater than sprites quantity " + sprites.size());
 					}
 
+					Sprite lastSprite = null;
 					for (int i = 0; i < frames.length; i++) {
 						Sprite sprite = sprites.get(frameNumber);
-						if (sprite instanceof AtlasSprite)
-							frames[i] = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
-						else
-							frames[i] = new Sprite(sprite);
+						if (removeAlias && SpriteUtils.isAliasSprite(lastSprite, sprite)) {
+							frames[i] = null;
+						} else {
+							if (sprite instanceof AtlasSprite)
+								frames[i] = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
+							else
+								frames[i] = new Sprite(sprite);
+							lastSprite = sprite;
+						}
 						frameNumber++;
 					}
 
