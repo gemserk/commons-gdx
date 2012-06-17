@@ -111,7 +111,7 @@ public class LibgdxResourceBuilder {
 					try {
 						String textureResourceId = id + pageTextureSuffix + i;
 						page.texture = resourceManager.getResourceValue(textureResourceId);
-						if(page.texture==null)
+						if (page.texture == null)
 							throw new RuntimeException("The resource " + textureResourceId + " was not found");
 					} catch (Exception e) {
 						throw new RuntimeException("Error while loading page for textureAtlas " + id + " - page: " + page.textureFile.path());
@@ -196,6 +196,7 @@ public class LibgdxResourceBuilder {
 		resourceManager.addVolatile(id, new DataLoader<Animation>() {
 
 			List<Sprite> sprites = null;
+			FrameAnimationImpl cachedFrameAnimation = null;
 
 			@Override
 			public Animation load() {
@@ -238,25 +239,27 @@ public class LibgdxResourceBuilder {
 					frameNumber++;
 				}
 
-				int framesCount = frames.length;
+				if (cachedFrameAnimation == null) {
+					int framesCount = frames.length;
 
-				float[] newTimes = new float[framesCount - 1];
-				int lastTime = time;
+					float[] newTimes = new float[framesCount - 1];
+					int lastTime = time;
 
-				// added convert from int time in milliseconds to float time in seconds
+					// added convert from int time in milliseconds to float time in seconds
 
-				for (int i = 0; i < framesCount - 1; i++) {
-					if (i < times.length) {
-						newTimes[i] = ((float) times[i]) * 0.001f;
-						lastTime = times[i];
-					} else
-						newTimes[i] = ((float) lastTime) * 0.001f;
+					for (int i = 0; i < framesCount - 1; i++) {
+						if (i < times.length) {
+							newTimes[i] = ((float) times[i]) * 0.001f;
+							lastTime = times[i];
+						} else
+							newTimes[i] = ((float) lastTime) * 0.001f;
+					}
+
+					cachedFrameAnimation = new FrameAnimationImpl(0.001f * (float) time, newTimes);
+					cachedFrameAnimation.setLoop(loop);
 				}
 
-				FrameAnimationImpl frameAnimation = new FrameAnimationImpl(0.001f * (float) time, newTimes);
-				frameAnimation.setLoop(loop);
-
-				return new Animation(frames, frameAnimation);
+				return new Animation(frames, new FrameAnimationImpl(cachedFrameAnimation));
 			}
 
 		});
