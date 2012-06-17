@@ -28,6 +28,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.currentFrame = frameAnimationImpl.currentFrame;
 		this.currentTime = frameAnimationImpl.currentTime;
 		this.currentIteration = 1;
+		this.loop = frameAnimationImpl.loop;
 	}
 
 	public FrameAnimationImpl(float f0, float... framesTimes) {
