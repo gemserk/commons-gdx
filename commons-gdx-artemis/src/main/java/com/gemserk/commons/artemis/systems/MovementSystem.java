@@ -44,6 +44,7 @@ public class MovementSystem extends EntityProcessingSystem {
 	@SuppressWarnings("unchecked")
 	public MovementSystem() {
 		super(SpatialComponent.class, MovementComponent.class);
+		componentsHolder = new EntityComponentsHolder();
 	}
 
 	@Override
