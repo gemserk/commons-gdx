@@ -195,68 +195,81 @@ public class LibgdxResourceBuilder {
 	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final int time, final int... times) {
 		resourceManager.addVolatile(id, new DataLoader<Animation>() {
 
-			List<Sprite> sprites = null;
 			FrameAnimationImpl cachedFrameAnimation = null;
+			Animation cachedAnimation = null;
 
 			@Override
 			public Animation load() {
-				TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
+				if (cachedAnimation == null) {
+					TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
 
-				if (sprites == null) {
+					List<Sprite> sprites = null;
+
 					try {
 						sprites = textureAtlas.createSprites(prefix);
 					} catch (GdxRuntimeException e) {
 						throw new RuntimeException("Failed to create animation " + id + " from texture atlas " + textureAtlasId, e);
 					}
+
+					if (sprites.size() == 0) 
+						throw new IllegalArgumentException("Failed to create animation " + id + ", no regions found for prefix " + prefix);
+
+					int endFrame = ef;
+					int startFrame = sf;
+
+					if (endFrame == -1)
+						endFrame = sprites.size() - 1;
+
+					if (startFrame == -1)
+						startFrame = 0;
+
+					Sprite[] frames = new Sprite[endFrame - startFrame + 1];
+					int frameNumber = startFrame;
+
+					if (endFrame >= sprites.size()) {
+						throw new IllegalArgumentException("Failed to create animation " + id + ", end frame " + endFrame + " couldn't be greater than sprites quantity " + sprites.size());
+					}
+
+					for (int i = 0; i < frames.length; i++) {
+						Sprite sprite = sprites.get(frameNumber);
+						if (sprite instanceof AtlasSprite)
+							frames[i] = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
+						else
+							frames[i] = new Sprite(sprite);
+						frameNumber++;
+					}
+
+					if (cachedFrameAnimation == null) {
+						int framesCount = frames.length;
+
+						float[] newTimes = new float[framesCount - 1];
+						int lastTime = time;
+
+						// added convert from int time in milliseconds to float time in seconds
+
+						for (int i = 0; i < framesCount - 1; i++) {
+							if (i < times.length) {
+								newTimes[i] = ((float) times[i]) * 0.001f;
+								lastTime = times[i];
+							} else
+								newTimes[i] = ((float) lastTime) * 0.001f;
+						}
+
+						cachedFrameAnimation = new FrameAnimationImpl(0.001f * (float) time, newTimes);
+						cachedFrameAnimation.setLoop(loop);
+					}
+
+					cachedAnimation = new Animation(frames, cachedFrameAnimation);
 				}
 
-				if (sprites.size() == 0) {
-					throw new IllegalArgumentException("Failed to create animation " + id + ", no regions found for prefix " + prefix);
-				}
-
-				int endFrame = ef;
-				int startFrame = sf;
-
-				if (endFrame == -1)
-					endFrame = sprites.size() - 1;
-
-				if (startFrame == -1)
-					startFrame = 0;
-
-				Sprite[] frames = new Sprite[endFrame - startFrame + 1];
-				int frameNumber = startFrame;
-
-				if (endFrame >= sprites.size()) {
-					throw new IllegalArgumentException("Failed to create animation " + id + ", end frame " + endFrame + " couldn't be greater than sprites quantity " + sprites.size());
-				}
+				Sprite[] frames = new Sprite[cachedAnimation.getFramesCount()];
 
 				for (int i = 0; i < frames.length; i++) {
-					Sprite sprite = sprites.get(frameNumber);
+					Sprite sprite = cachedAnimation.getFrame(i);
 					if (sprite instanceof AtlasSprite)
 						frames[i] = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
 					else
 						frames[i] = new Sprite(sprite);
-					frameNumber++;
-				}
-
-				if (cachedFrameAnimation == null) {
-					int framesCount = frames.length;
-
-					float[] newTimes = new float[framesCount - 1];
-					int lastTime = time;
-
-					// added convert from int time in milliseconds to float time in seconds
-
-					for (int i = 0; i < framesCount - 1; i++) {
-						if (i < times.length) {
-							newTimes[i] = ((float) times[i]) * 0.001f;
-							lastTime = times[i];
-						} else
-							newTimes[i] = ((float) lastTime) * 0.001f;
-					}
-
-					cachedFrameAnimation = new FrameAnimationImpl(0.001f * (float) time, newTimes);
-					cachedFrameAnimation.setLoop(loop);
 				}
 
 				return new Animation(frames, new FrameAnimationImpl(cachedFrameAnimation));
