@@ -127,4 +127,24 @@ public class SpriteUtils {
 		}
 	}
 
+	/**
+	 * Returns true if both Sprites could be considered as alias by checking their regions values.
+	 */
+	public static boolean isAliasSprite(Sprite sprite1, Sprite sprite2) {
+		boolean isAtlasSprite1 = sprite1 instanceof AtlasSprite;
+		boolean isAtlasSprite2 = sprite2 instanceof AtlasSprite;
+
+		if (isAtlasSprite1 != isAtlasSprite2) 
+			return false;
+		
+		if (!isAtlasSprite1) { 
+			return TextureRegionUtils.textureRegionEquals(sprite1, sprite2);
+		} else {
+			AtlasSprite atlasSprite1 = (AtlasSprite) sprite1;
+			AtlasSprite atlasSprite2 = (AtlasSprite) sprite2;
+			boolean regionEquals = TextureRegionUtils.atlasRegionEquals(atlasSprite1.getAtlasRegion(), atlasSprite2.getAtlasRegion());
+			return regionEquals && TextureRegionUtils.textureRegionEquals(sprite1, sprite2);
+		}
+	}
+
 }
