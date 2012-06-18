@@ -23,7 +23,7 @@ public class AnimationUtils {
 	}
 
 	public static int secondsToFrame(float seconds, int fps) {
-		return Math.round(seconds * fps);
+		return (int) Math.floor(seconds * fps);
 	}
 
 }
