@@ -12,16 +12,16 @@ public class AnimationFrameMonitor {
 
 	boolean triggered, alreadyTriggeredForIteration;
 	Animation animation;
-	
+
 	public void setFrameToMonitor(int frameToMonitor) {
 		this.timeToMonitor = AnimationUtils.framesToSeconds(frameToMonitor, 30);
 		reset();
 	}
-	
-	public AnimationFrameMonitor(Animation animation, int frame) {
+
+	public AnimationFrameMonitor(Animation animation, float timeToMonitor) {
 		this.animation = animation;
-		this.timeToMonitor = AnimationUtils.framesToSeconds(frame, 30);
-		this.triggered = animation.getCurrentFrameIndex() >= frame;
+		this.timeToMonitor = timeToMonitor;
+		this.triggered = animation.getCurrentTime() >= timeToMonitor;
 		this.alreadyTriggeredForIteration = false;
 		this.currentIteration = animation.getIteration();
 	}
@@ -43,7 +43,8 @@ public class AnimationFrameMonitor {
 			return;
 		}
 
-		triggered = animation.getCurrentTime() >= timeToMonitor;
+		float currentTime = animation.getCurrentTime();
+		triggered = currentTime >= timeToMonitor;
 		alreadyTriggeredForIteration = triggered;
 	}
 

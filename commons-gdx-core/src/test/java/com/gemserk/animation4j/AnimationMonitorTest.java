@@ -8,13 +8,14 @@ import org.junit.Test;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.animation4j.gdx.AnimationFrameMonitor;
+import com.gemserk.commons.utils.AnimationUtils;
 
 public class AnimationMonitorTest {
 
 	@Test
 	public void shouldNotBeShownWhenStarted() {
 		Animation animation = new Animation(new Sprite[] {}, new FrameAnimationImpl(true, 50f, 25f, 30f));
-		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 1);
+		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 50f);
 
 		animation.update(1f);
 		animationMonitor.update();
@@ -25,7 +26,7 @@ public class AnimationMonitorTest {
 	@Test
 	public void testWasShowWhenItShouldBe() {
 		Animation animation = new Animation(new Sprite[] {}, new FrameAnimationImpl(true, 50f, 25f, 30f));
-		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 1);
+		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 50f);
 
 		animation.update(51f);
 		animationMonitor.update();
@@ -34,9 +35,9 @@ public class AnimationMonitorTest {
 	}
 
 	@Test
-	public void shouldNotReturnShownTwice() {
+	public void shouldNotReturnTriggerTwice() {
 		Animation animation = new Animation(new Sprite[] {}, new FrameAnimationImpl(true, 50f, 25f, 30f));
-		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 1);
+		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 50f);
 
 		animation.update(51f);
 		animationMonitor.update();
@@ -48,7 +49,7 @@ public class AnimationMonitorTest {
 	@Test
 	public void shouldTriggerAgainOnDifferentAnimationIteration() {
 		Animation animation = new Animation(new Sprite[] {}, new FrameAnimationImpl(true, 50f, 25f, 30f));
-		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 1);
+		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 50f);
 
 		animation.update(51f);
 		animationMonitor.update();
@@ -63,7 +64,7 @@ public class AnimationMonitorTest {
 	@Test
 	public void shouldNotTriggerAgainOnDifferentAnimationIterationButUpdatedTwice() {
 		Animation animation = new Animation(new Sprite[] {}, new FrameAnimationImpl(true, 50f, 25f, 30f));
-		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 1);
+		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 50f);
 
 		animation.update(51f);
 		animationMonitor.update();
@@ -79,7 +80,7 @@ public class AnimationMonitorTest {
 	@Test
 	public void shouldNotTriggerIfNotFrameOnSecondIteration() {
 		Animation animation = new Animation(new Sprite[] {}, new FrameAnimationImpl(true, 50f, 25f, 30f));
-		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 1);
+		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 50f);
 
 		animation.update(51f);
 		animationMonitor.update();
@@ -94,7 +95,7 @@ public class AnimationMonitorTest {
 	@Test
 	public void shouldTriggerIfDirecltyChangedIteration() {
 		Animation animation = new Animation(new Sprite[] {}, new FrameAnimationImpl(true, 50f, 25f, 30f));
-		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 1);
+		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 50f);
 
 		animation.update(50f + 25f + 31f);
 		animationMonitor.update();
@@ -105,7 +106,7 @@ public class AnimationMonitorTest {
 	@Test
 	public void shouldHadBeenShownIfGreaterFrame() {
 		Animation animation = new Animation(new Sprite[] {}, new FrameAnimationImpl(true, 50f, 25f, 30f));
-		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 1);
+		AnimationFrameMonitor animationMonitor = new AnimationFrameMonitor(animation, 50f);
 
 		animation.update(76f);
 		animationMonitor.update();

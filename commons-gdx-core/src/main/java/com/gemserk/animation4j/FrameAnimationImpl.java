@@ -140,7 +140,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		else if (loop) {
 			currentFrame = 0;
 			currentIteration++;
-			iterationTime = 0f;
+			iterationTime -= duration;
 		}
 
 	}

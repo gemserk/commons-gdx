@@ -94,5 +94,15 @@ public class FrameAnimationImplTest {
 		animation.update(20f);
 		assertEquals(true, animation.isFinished());
 	}
-
+	
+	@Test
+	public void testCurrentTimeWhenIteration() {
+		FrameAnimationImpl source = new FrameAnimationImpl(true, 10f, 15f, 5f);
+		source.update(30f);
+		assertEquals(2, source.getIteration());
+		assertThat(source.getCurrentTime(), IsEqual.equalTo(0f));
+		source.update(35f);
+		assertThat(source.getCurrentTime(), IsEqual.equalTo(5f));
+	}
+	
 }
