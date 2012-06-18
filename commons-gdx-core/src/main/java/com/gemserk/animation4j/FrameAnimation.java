@@ -19,6 +19,11 @@ public interface FrameAnimation {
 	 * Returns the current time of the animation.
 	 */
 	float getCurrentTime();
+	
+	/**
+	 * Returns the duration of the animation.
+	 */
+	float getDuration();
 
 	/**
 	 * Sets the current frame.

@@ -121,5 +121,9 @@ public class Animation implements com.gemserk.animation4j.animations.Animation {
 	public float getCurrentTime() {
 		return frameAnimation.getCurrentTime();
 	}
+	
+	public float getDuration() {
+		return frameAnimation.getDuration();
+	}
 
 }

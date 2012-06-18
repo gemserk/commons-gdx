@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.gemserk.animation4j.gdx.Animation;
 
 public class AnimationUtils {
-	
+
 	public static void scaleAnimation(Animation animation, float scale) {
 		for (int i = 0; i < animation.getFramesCount(); i++) {
 			Sprite frame = animation.getFrame(i);
@@ -13,7 +13,7 @@ public class AnimationUtils {
 			frame.setSize(width * scale, height * scale);
 		}
 	}
-	
+
 	public static float framesToSeconds(int frame, int fps) {
 		return (float) ((frame - 1) * fps) * 0.001f;
 	}
@@ -23,7 +23,7 @@ public class AnimationUtils {
 	}
 
 	public static int secondsToFrame(float seconds, int fps) {
-		return (int) (seconds * 1000) / fps;
+		return Math.round(seconds * fps);
 	}
 
 }

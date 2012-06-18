@@ -15,6 +15,8 @@ public class FrameAnimationImpl implements FrameAnimation {
 	float currentTime;
 
 	float iterationTime;
+	
+	float duration;
 
 	// add all play/stop/pause/etc?
 
@@ -32,6 +34,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.currentIteration = 1;
 		this.loop = frameAnimationImpl.loop;
 		this.iterationTime = frameAnimationImpl.iterationTime;
+		this.duration = frameAnimationImpl.duration;
 	}
 
 	public FrameAnimationImpl(float f0, float... framesTimes) {
@@ -40,6 +43,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.currentIteration = 1;
 		this.loop = false;
 		this.iterationTime = 0f;
+		this.duration = 0f;
 		set(f0, framesTimes);
 	}
 	
@@ -49,6 +53,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.currentIteration = 1;
 		this.loop = false;
 		this.iterationTime = 0f;
+		this.duration = 0f;
 		set(framesTimes);
 	}
 
@@ -60,6 +65,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.currentIteration = 1;
 		this.loop = loop;
 		this.iterationTime = 0f;
+		this.duration = 0f;
 		set(framesTimes);
 	}
 
@@ -70,14 +76,19 @@ public class FrameAnimationImpl implements FrameAnimation {
 	private void set(float f0, float... frames) {
 		this.framesTimes = new float[frames.length + 1];
 		this.framesTimes[0] = f0;
-		for (int i = 1; i < frames.length + 1; i++)
+		duration += f0;
+		for (int i = 1; i < frames.length + 1; i++) {
 			this.framesTimes[i] = frames[i - 1];
+			duration += frames[i - 1];
+		}
 	}
 
 	private void set(float... frames) {
 		this.framesTimes = new float[frames.length];
-		for (int i = 0; i < frames.length; i++)
+		for (int i = 0; i < frames.length; i++) {
 			this.framesTimes[i] = frames[i];
+			duration += frames[i];
+		}
 	}
 
 	public int getFramesCount() {
@@ -159,6 +170,11 @@ public class FrameAnimationImpl implements FrameAnimation {
 	@Override
 	public float getCurrentTime() {
 		return iterationTime;
+	}
+
+	@Override
+	public float getDuration() {
+		return duration;
 	}
 
 }
