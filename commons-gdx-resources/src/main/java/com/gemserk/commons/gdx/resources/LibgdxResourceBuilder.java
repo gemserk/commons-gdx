@@ -1,5 +1,6 @@
 package com.gemserk.commons.gdx.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Document;
@@ -28,6 +29,7 @@ import com.gemserk.commons.gdx.resources.dataloaders.MusicDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
 import com.gemserk.commons.svg.inkscape.DocumentParser;
+import com.gemserk.commons.values.FloatValue;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.dataloaders.DataLoader;
@@ -200,6 +202,47 @@ public class LibgdxResourceBuilder {
 	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final boolean removeAlias, final int time, final int... times) {
 		resourceManager.addVolatile(id, new DataLoader<Animation>() {
 
+			class DuplicatedSpritesRemover {
+
+				float[] times;
+				Sprite[] frames;
+
+				public void removeDuplicates(Sprite[] frames, float[] times) {
+
+					ArrayList<Sprite> newSprites = new ArrayList<Sprite>();
+					ArrayList<FloatValue> newTimes = new ArrayList<FloatValue>();
+
+					Sprite lastSprite = null;
+					int i = 0;
+
+					FloatValue frameTime = null;
+
+					do {
+						Sprite sprite = frames[i];
+
+						if (SpriteUtils.isAliasSprite(lastSprite, sprite)) {
+							frameTime.value += times[i];
+						} else {
+							newSprites.add(sprite);
+							lastSprite = sprite;
+
+							frameTime = new FloatValue(times[i]);
+							newTimes.add(frameTime);
+						}
+						i++;
+					} while (i < frames.length);
+
+					this.frames = new Sprite[newSprites.size()];
+					this.times = new float[newTimes.size()];
+
+					newSprites.toArray(this.frames);
+
+					for (i = 0; i < newTimes.size(); i++)
+						this.times[i] = newTimes.get(i).value;
+				}
+
+			}
+
 			FrameAnimationImpl cachedFrameAnimation = null;
 			Animation cachedAnimation = null;
 
@@ -235,40 +278,40 @@ public class LibgdxResourceBuilder {
 						throw new IllegalArgumentException("Failed to create animation " + id + ", end frame " + endFrame + " couldn't be greater than sprites quantity " + sprites.size());
 					}
 
-					Sprite lastSprite = null;
+					int framesCount = frames.length;
+
+					float[] newTimes = new float[framesCount];
+					newTimes[0] = 0.001f * (float) time;
+					float lastTime = newTimes[0];
+
+					// added convert from int time in milliseconds to float time in seconds
+
+					for (int i = 1; i < framesCount; i++) {
+						if (i < times.length) {
+							newTimes[i] = ((float) times[i]) * 0.001f;
+							lastTime = newTimes[i];
+						} else
+							newTimes[i] = lastTime;
+					}
+
 					for (int i = 0; i < frames.length; i++) {
 						Sprite sprite = sprites.get(frameNumber);
-						if (removeAlias && SpriteUtils.isAliasSprite(lastSprite, sprite)) {
-							frames[i] = null;
-						} else {
-							if (sprite instanceof AtlasSprite)
-								frames[i] = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
-							else
-								frames[i] = new Sprite(sprite);
-							lastSprite = sprite;
-						}
+						if (sprite instanceof AtlasSprite)
+							frames[i] = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
+						else
+							frames[i] = new Sprite(sprite);
 						frameNumber++;
 					}
 
-					if (cachedFrameAnimation == null) {
-						int framesCount = frames.length;
-
-						float[] newTimes = new float[framesCount - 1];
-						int lastTime = time;
-
-						// added convert from int time in milliseconds to float time in seconds
-
-						for (int i = 0; i < framesCount - 1; i++) {
-							if (i < times.length) {
-								newTimes[i] = ((float) times[i]) * 0.001f;
-								lastTime = times[i];
-							} else
-								newTimes[i] = ((float) lastTime) * 0.001f;
-						}
-
-						cachedFrameAnimation = new FrameAnimationImpl(0.001f * (float) time, newTimes);
-						cachedFrameAnimation.setLoop(loop);
+					if (removeAlias) {
+						DuplicatedSpritesRemover duplicatedSpritesRemover = new DuplicatedSpritesRemover();
+						duplicatedSpritesRemover.removeDuplicates(frames, newTimes);
+						frames = duplicatedSpritesRemover.frames;
+						newTimes = duplicatedSpritesRemover.times;
 					}
+
+					cachedFrameAnimation = new FrameAnimationImpl(newTimes);
+					cachedFrameAnimation.setLoop(loop);
 
 					cachedAnimation = new Animation(frames, cachedFrameAnimation);
 				}
