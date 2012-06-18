@@ -196,6 +196,11 @@ public class LibgdxResourceBuilder {
 	public void animation(final String id, final String textureAtlasId, final String prefix, final boolean loop, final int time, final int... times) {
 		animation(id, textureAtlasId, prefix, -1, -1, loop, time, times);
 	}
+	
+	public void animation(final String id, final String textureAtlasId, final String prefix, final boolean loop, boolean removeAlias, final int time, final int... times) {
+		animation(id, textureAtlasId, prefix, -1, -1, loop, removeAlias, time, times);
+	}
+
 
 	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final int time, final int... times) {
 		animation(id, textureAtlasId, prefix, sf, ef, loop, true, time, times);
