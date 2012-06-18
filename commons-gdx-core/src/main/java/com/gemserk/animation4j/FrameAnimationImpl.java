@@ -42,6 +42,15 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.iterationTime = 0f;
 		set(f0, framesTimes);
 	}
+	
+	public FrameAnimationImpl(float... framesTimes) {
+		this.currentFrame = 0;
+		this.currentTime = 0;
+		this.currentIteration = 1;
+		this.loop = false;
+		this.iterationTime = 0f;
+		set(framesTimes);
+	}
 
 	public FrameAnimationImpl(boolean loop, float... framesTimes) {
 		// we could use the pattern 1+
