@@ -3,6 +3,8 @@ package com.gemserk.commons.gdx.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import com.badlogic.gdx.Gdx;
@@ -196,7 +198,7 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final int time, final int... times) {
-		animation(id, textureAtlasId, prefix, sf, ef, loop, false, time, times);
+		animation(id, textureAtlasId, prefix, sf, ef, loop, true, time, times);
 	}
 
 	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final boolean removeAlias, final int time, final int... times) {
@@ -304,10 +306,12 @@ public class LibgdxResourceBuilder {
 					}
 
 					if (removeAlias) {
+						int framesBeforeRemoval = frames.length;
 						DuplicatedSpritesRemover duplicatedSpritesRemover = new DuplicatedSpritesRemover();
 						duplicatedSpritesRemover.removeDuplicates(frames, newTimes);
 						frames = duplicatedSpritesRemover.frames;
 						newTimes = duplicatedSpritesRemover.times;
+						Gdx.app.log("commons-gdx", "[" + id + "] frames removed: " + (framesBeforeRemoval - frames.length));
 					}
 
 					cachedFrameAnimation = new FrameAnimationImpl(newTimes);
