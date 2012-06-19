@@ -12,7 +12,6 @@ import java.util.ArrayList;
  */
 public class Store<T> {
 
-	ArrayList<T> created = new ArrayList<T>();
 	ArrayList<T> free = new ArrayList<T>();
 
 	StoreFactory<T> storeFactory;
@@ -39,13 +38,11 @@ public class Store<T> {
 
 	protected T reuseObject() {
 		T t = free.remove(free.size()-1);
-		created.add(t);
 		return t;
 	}
 
 	protected T newObject() {
 		T t = storeFactory.createObject();
-		created.add(t);
 		return t;
 	}
 
@@ -58,32 +55,16 @@ public class Store<T> {
 		if (free.contains(t))
 			return;
 		free.add(t);
-		created.remove(t);
 	}
 
 	/**
 	 * Returns the size of the created objects collection.
 	 */
 	public int size() {
-		return created.size();
+		return free.size();
 	}
 
-	/**
-	 * Returns the total size of objects between free and created objects.
-	 */
-	public int getTotalSize() {
-		return created.size() + free.size();
-	}
 
-	/**
-	 * Returns an object of the created collection.
-	 * 
-	 * @param index
-	 *            The index of the object to be returned.
-	 */
-	public T get(int index) {
-		return created.get(index);
-	}
 
 	/**
 	 * Creates the specified number of objects and adds them to the free collection in the store.

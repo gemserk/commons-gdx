@@ -19,25 +19,23 @@ public class StoreTest {
 	public void shouldReturnNewInstanceIfNoInstancesStored() {
 		Store<Integer> integers = new Store<Integer>(new IntegerStoreFactory());
 
-		assertEquals(0, integers.getTotalSize());
+		assertEquals(0, integers.size());
 
 		integers.get();
 
-		assertEquals(1, integers.size());
-		assertEquals(1, integers.getTotalSize());
+		assertEquals(0, integers.size());
 	}
 
 	@Test
 	public void shouldReturnNewInstanceIfNoInstancesStored2() {
 		Store<Integer> integers = new Store<Integer>(new IntegerStoreFactory());
 
-		assertEquals(0, integers.getTotalSize());
+		assertEquals(0, integers.size());
 
 		integers.get();
 		integers.get();
 
-		assertEquals(2, integers.size());
-		assertEquals(2, integers.getTotalSize());
+		assertEquals(0, integers.size());
 	}
 
 	@Test
@@ -47,13 +45,11 @@ public class StoreTest {
 		Integer integer1 = integers.get();
 		integers.free(integer1);
 
-		assertEquals(0, integers.size());
-		assertEquals(1, integers.getTotalSize());
+		assertEquals(1, integers.size());
 
 		integers.get();
 
-		assertEquals(1, integers.size());
-		assertEquals(1, integers.getTotalSize());
+		assertEquals(0, integers.size());
 	}
 
 	@Test
@@ -61,12 +57,11 @@ public class StoreTest {
 		Store<Integer> integers = new Store<Integer>(new IntegerStoreFactory());
 
 		Integer integer1 = new Integer(50);
-		assertEquals(0, integers.getTotalSize());
+		assertEquals(0, integers.size());
 
 		integers.free(integer1);
 
-		assertEquals(0, integers.size());
-		assertEquals(1, integers.getTotalSize());
+		assertEquals(1, integers.size());
 	}
 
 	@Test
@@ -74,12 +69,10 @@ public class StoreTest {
 		Store<Integer> integers = new Store<Integer>(new IntegerStoreFactory());
 
 		assertEquals(0, integers.size());
-		assertEquals(0, integers.getTotalSize());
 		
 		integers.preCreate(5);
 
-		assertEquals(0, integers.size());
-		assertEquals(5, integers.getTotalSize());
+		assertEquals(5, integers.size());
 	}
 
 	@Test
