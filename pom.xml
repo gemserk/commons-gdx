@@ -69,10 +69,15 @@
 		<vecmath.version>1.5.3-GEMSERK</vecmath.version>
 	</properties>
 
+
+	<prerequisites>
+		<maven>2.2.1</maven>
+	</prerequisites>
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -83,6 +88,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
 				</configuration>
