@@ -60,6 +60,7 @@
 	<properties>
 		<compiler.version>1.6</compiler.version>
 		<adwhirl.version>3.0.0</adwhirl.version>
+		<admob.version>6.0.1</admob.version>
 		<android.version>2.2.1</android.version>
 		<animation4j.version>0.2.2-SNAPSHOT</animation4j.version>
 		<artemis.version>0.0.1-GEMSERK-SNAPSHOT</artemis.version>
