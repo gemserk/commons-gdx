@@ -38,8 +38,7 @@ public class Store<T> {
 	}
 
 	protected T reuseObject() {
-		T t = free.get(0);
-		free.remove(0);
+		T t = free.remove(free.size()-1);
 		created.add(t);
 		return t;
 	}
