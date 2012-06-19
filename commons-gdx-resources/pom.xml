@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.gemserk.commons.gdx</groupId>
 		<artifactId>commons-gdx</artifactId>
-		<version>0.0.9-SNAPSHOT</version>
+		<version>0.0.10-SNAPSHOT</version>
 	</parent>
 	<artifactId>commons-gdx-resources</artifactId>
 	<packaging>jar</packaging>
