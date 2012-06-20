@@ -1,10 +1,13 @@
 package com.gemserk.commons.artemis.utils;
 
 import com.artemis.Entity;
+import com.badlogic.gdx.utils.Array;
 import com.gemserk.commons.utils.Store;
 import com.gemserk.commons.utils.StoreFactory;
 
 public class EntityStore extends Store<Entity> {
+
+	Array<Entity> freedThisFrame = new Array<Entity>(false, 20, Entity.class);
 
 	/**
 	 * Creates a new EntityStore.
@@ -17,8 +20,13 @@ public class EntityStore extends Store<Entity> {
 	}
 
 	public void free(Entity e) {
+		if (freedThisFrame.contains(e, true))
+			return;
+
 		e.disable();
-		super.free(e);
+		freedThisFrame.add(e);
+
+		// super.free(e);
 	}
 
 	public Entity get() {
@@ -27,4 +35,17 @@ public class EntityStore extends Store<Entity> {
 		return e;
 	}
 
+	public int refreshPool() {
+		int size = freedThisFrame.size;
+		if (size <= 0)
+			return 0;
+
+		Entity[] entities = freedThisFrame.items;
+		for (int i = 0; i < size; i++) {
+			Entity entity = entities[i];
+			super.free(entity);
+		}
+		freedThisFrame.clear();
+		return size;
+	}
 }
