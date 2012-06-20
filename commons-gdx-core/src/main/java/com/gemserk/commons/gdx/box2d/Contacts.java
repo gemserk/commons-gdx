@@ -49,8 +49,13 @@ public class Contacts {
 
 	}
 
-	Array<Contact> contacts = new Array<Contact>();
+	Array<Contact> contacts = new Array<Contact>(16);
 	int activeContacts = 0;
+	
+	public Contacts() {
+		for (int i = 0; i < 10; i++) 
+			contacts.add(new Contact());
+	}
 
 	public void addContact(com.badlogic.gdx.physics.box2d.Contact contact, boolean AB) {
 		Vector2 normal = contact.getWorldManifold().getNormal();
