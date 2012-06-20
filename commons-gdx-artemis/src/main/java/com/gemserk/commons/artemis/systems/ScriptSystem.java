@@ -6,7 +6,6 @@ import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.scripts.Script;
-import com.gemserk.commons.artemis.systems.ScriptSystem.Factory;
 
 public class ScriptSystem extends EntityProcessingSystem {
 

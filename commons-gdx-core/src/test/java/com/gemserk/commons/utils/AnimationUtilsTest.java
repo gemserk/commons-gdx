@@ -14,4 +14,11 @@ public class AnimationUtilsTest {
 		assertThat(AnimationUtils.secondsToFrame(1f, 30), IsEqual.equalTo(30));
 	}
 
+	@Test
+	public void test2() {
+		assertThat(AnimationUtils.framesToSeconds(0, 30), IsEqual.equalTo(0f));
+		assertThat(AnimationUtils.framesToSeconds(1, 30), IsEqual.equalTo(1f / 30f));
+		assertThat(AnimationUtils.framesToSeconds(30, 30), IsEqual.equalTo(1f));
+	}
+
 }

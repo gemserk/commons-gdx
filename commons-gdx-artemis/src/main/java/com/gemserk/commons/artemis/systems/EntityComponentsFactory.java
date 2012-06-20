@@ -6,14 +6,19 @@ import com.badlogic.gdx.utils.IntMap;
 
 public abstract class EntityComponentsFactory<T> {
 
-	public final IntMap<T> entityComponents = new IntMap<T>();
-	final Bag<T> pool = new Bag<T>(64);
+	public final IntMap<T> entityComponents = new IntMap<T>(256);
+	final Bag<T> pool = new Bag<T>(256);
 
 	public abstract T newInstance();
 
 	public abstract void free(T entityComponent);
 
 	public abstract void load(Entity e, T entityComponent);
+	
+	public EntityComponentsFactory() {
+		for (int i = 0; i < 200; i++) 
+			pool.add(newInstance());
+	}
 
 	public T add(Entity entity) {
 		T entityComponent;

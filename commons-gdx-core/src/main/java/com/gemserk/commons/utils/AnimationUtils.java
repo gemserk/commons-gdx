@@ -15,7 +15,7 @@ public class AnimationUtils {
 	}
 
 	public static float framesToSeconds(int frame, int fps) {
-		return (float) ((frame - 1) * fps) * 0.001f;
+		return ((float) frame / fps);
 	}
 
 	public static float framesToSeconds(int frame) {
