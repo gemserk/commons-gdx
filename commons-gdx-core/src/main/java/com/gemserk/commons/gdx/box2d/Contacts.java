@@ -49,11 +49,11 @@ public class Contacts {
 
 	}
 
-	Array<Contact> contacts = new Array<Contact>(16);
+	Array<Contact> contacts = new Array<Contact>(32);
 	int activeContacts = 0;
 	
 	public Contacts() {
-		for (int i = 0; i < 10; i++) 
+		for (int i = 0; i < 31; i++) 
 			contacts.add(new Contact());
 	}
 
