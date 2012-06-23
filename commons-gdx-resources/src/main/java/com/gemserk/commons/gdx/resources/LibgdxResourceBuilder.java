@@ -196,17 +196,28 @@ public class LibgdxResourceBuilder {
 	public void animation(final String id, final String textureAtlasId, final String prefix, final boolean loop, final int time, final int... times) {
 		animation(id, textureAtlasId, prefix, -1, -1, loop, time, times);
 	}
-	
+
 	public void animation(final String id, final String textureAtlasId, final String prefix, final boolean loop, boolean removeAlias, final int time, final int... times) {
 		animation(id, textureAtlasId, prefix, -1, -1, loop, removeAlias, time, times);
 	}
-
 
 	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final int time, final int... times) {
 		animation(id, textureAtlasId, prefix, sf, ef, loop, true, time, times);
 	}
 
 	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final boolean removeAlias, final int time, final int... times) {
+		float ftime = 0.001f * (float) time;
+		float[] ftimes = null;
+		// if (times != null) {
+		ftimes = new float[times.length];
+		for (int i = 0; i < ftimes.length; i++) {
+			ftimes[i] = 0.001f * times[i];
+		}
+		// }
+		animation(id, textureAtlasId, prefix, sf, ef, loop, removeAlias, ftime, ftimes);
+	}
+
+	public void animation(final String id, final String textureAtlasId, final String prefix, final int sf, final int ef, final boolean loop, final boolean removeAlias, final float time, final float... times) {
 		resourceManager.addVolatile(id, new DataLoader<Animation>() {
 
 			class DuplicatedSpritesRemover {
@@ -288,14 +299,16 @@ public class LibgdxResourceBuilder {
 					int framesCount = frames.length;
 
 					float[] newTimes = new float[framesCount];
-					newTimes[0] = 0.001f * (float) time;
+					// newTimes[0] = 0.001f * (float) time;
+					newTimes[0] = time;
 					float lastTime = newTimes[0];
 
 					// added convert from int time in milliseconds to float time in seconds
 
 					for (int i = 1; i < framesCount; i++) {
 						if (i < times.length) {
-							newTimes[i] = ((float) times[i]) * 0.001f;
+							// newTimes[i] = ((float) times[i]) * 0.001f;
+							newTimes[i] = times[i];
 							lastTime = newTimes[i];
 						} else
 							newTimes[i] = lastTime;
