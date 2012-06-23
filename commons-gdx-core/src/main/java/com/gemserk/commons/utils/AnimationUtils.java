@@ -5,6 +5,8 @@ import com.gemserk.animation4j.gdx.Animation;
 
 public class AnimationUtils {
 
+	private final static int defaultPrecision = 1000;
+
 	public static void scaleAnimation(Animation animation, float scale) {
 		for (int i = 0; i < animation.getFramesCount(); i++) {
 			Sprite frame = animation.getFrame(i);
@@ -24,6 +26,14 @@ public class AnimationUtils {
 
 	public static int secondsToFrame(float seconds, int fps) {
 		return (int) Math.floor(seconds * fps);
+	}
+
+	public static float truncate(float number) {
+		return truncate(number, defaultPrecision);
+	}
+	
+	public static float truncate(float number, int precision) {
+		return (float) (Math.floor(number * precision + .5) / precision);
 	}
 
 }

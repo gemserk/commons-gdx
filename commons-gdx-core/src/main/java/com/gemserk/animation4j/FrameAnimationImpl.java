@@ -15,7 +15,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 	float currentTime;
 
 	float iterationTime;
-	
+
 	float duration;
 
 	// add all play/stop/pause/etc?
@@ -46,7 +46,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		this.duration = 0f;
 		set(f0, framesTimes);
 	}
-	
+
 	public FrameAnimationImpl(float... framesTimes) {
 		this.currentFrame = 0;
 		this.currentTime = 0;
@@ -69,25 +69,33 @@ public class FrameAnimationImpl implements FrameAnimation {
 		set(framesTimes);
 	}
 
+	private float truncate(float number, int precision) {
+		return (float) (Math.floor(number * precision + .5) / precision);
+	}
+
+	private float truncate(float number) {
+		return truncate(number, 1000);
+	}
+
 	public FrameAnimationImpl clone() {
 		return new FrameAnimationImpl(this);
 	}
 
 	private void set(float f0, float... frames) {
 		this.framesTimes = new float[frames.length + 1];
-		this.framesTimes[0] = f0;
-		duration += f0;
+		this.framesTimes[0] = truncate(f0);
+		duration += framesTimes[0];
 		for (int i = 1; i < frames.length + 1; i++) {
-			this.framesTimes[i] = frames[i - 1];
-			duration += frames[i - 1];
+			this.framesTimes[i] = truncate(frames[i - 1]);
+			duration += this.framesTimes[i];
 		}
 	}
 
 	private void set(float... frames) {
 		this.framesTimes = new float[frames.length];
 		for (int i = 0; i < frames.length; i++) {
-			this.framesTimes[i] = frames[i];
-			duration += frames[i];
+			this.framesTimes[i] = truncate(frames[i]);
+			duration += this.framesTimes[i];
 		}
 	}
 
@@ -141,6 +149,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 			currentFrame = 0;
 			currentIteration++;
 			iterationTime -= duration;
+			iterationTime = truncate(iterationTime);
 			if (iterationTime <= 0f)
 				iterationTime = 0f;
 		}
