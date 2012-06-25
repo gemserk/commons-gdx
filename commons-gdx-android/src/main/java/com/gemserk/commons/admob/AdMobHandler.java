@@ -41,14 +41,16 @@ public class AdMobHandler extends Handler {
 	}
 
 	private void hideAds() {
-		adView.setVisibility(View.GONE);
+		if (adView.getVisibility() != View.GONE) {
+			// Fade the ad in over 4/10 of a second.
+			AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
+			animation.setDuration(300);
+			animation.setFillAfter(false);
+			animation.setInterpolator(new AccelerateInterpolator());
+			adView.startAnimation(animation);// *
+		}
 
-		// Fade the ad in over 4/10 of a second.
-		AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
-		animation.setDuration(300);
-		animation.setFillAfter(false);
-		animation.setInterpolator(new AccelerateInterpolator());
-		adView.startAnimation(animation);// *
+		adView.setVisibility(View.GONE);
 	}
 
 	private void showAds(Message msg) {
