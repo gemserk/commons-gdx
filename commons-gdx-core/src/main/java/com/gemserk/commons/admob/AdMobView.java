@@ -1,17 +1,13 @@
 package com.gemserk.commons.admob;
 
-public class AdMobView {
+public interface AdMobView {
 	
-	public void show() {
-		
-	}
+	void show();
 
-	public void show(AdViewLocation adViewLocation) {
-		
-	}
+	void show(AdViewLocation adViewLocation);
+	
+	void show(AdViewLocation adViewLocation, long delay);
 
-	public void hide() {
-		
-	}
+	void hide();
 	
 }
