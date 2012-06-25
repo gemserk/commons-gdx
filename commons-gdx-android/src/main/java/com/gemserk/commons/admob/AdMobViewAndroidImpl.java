@@ -14,20 +14,16 @@ public class AdMobViewAndroidImpl implements AdMobView {
 	public void show() {
 		adMobHandler.sendEmptyMessage(AdMobHandler.SHOW_ADS);
 	}
-	
+
 	@Override
-	public void show(AdViewLocation adViewLocation) {
+	public void show(AdsParameters adsParameters) {
 		Message msg = adMobHandler.obtainMessage();
 		msg.what = AdMobHandler.SHOW_ADS;
-		msg.obj = adViewLocation;
-		adMobHandler.sendMessage(msg);
-	}
-	
-	public void show(AdViewLocation adViewLocation, long delay) {
-		Message msg = adMobHandler.obtainMessage();
-		msg.what = AdMobHandler.SHOW_ADS;
-		msg.obj = adViewLocation;
-		adMobHandler.sendMessageDelayed(msg, delay);
+		msg.obj = adsParameters;
+		if (adsParameters.delay > 0L)
+			adMobHandler.sendMessageDelayed(msg, adsParameters.delay);
+		else
+			adMobHandler.sendMessage(msg);
 	}
 
 	@Override
