@@ -20,6 +20,9 @@ public class AdMobViewAndroidImpl implements AdMobView {
 		Message msg = adMobHandler.obtainMessage();
 		msg.what = AdMobHandler.SHOW_ADS;
 		msg.obj = adsParameters;
+		
+		clearEnqueuedMessages();
+
 		if (adsParameters.delay > 0L)
 			adMobHandler.sendMessageDelayed(msg, adsParameters.delay);
 		else
@@ -28,7 +31,13 @@ public class AdMobViewAndroidImpl implements AdMobView {
 
 	@Override
 	public void hide() {
+		clearEnqueuedMessages();
 		adMobHandler.sendEmptyMessage(AdMobHandler.HIDE_ADS);
 	}
 
+	private void clearEnqueuedMessages() {
+		adMobHandler.removeMessages(AdMobHandler.SHOW_ADS);
+		adMobHandler.removeMessages(AdMobHandler.HIDE_ADS);
+	}
+	
 }
