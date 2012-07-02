@@ -7,22 +7,23 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
+import com.gemserk.commons.artemis.components.PhysicsComponent.ImmediateModePhysicsListener;
 
 public class PhysicsContactListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		if(!contact.isTouching())
+		if (!contact.isTouching())
 			return;
-		
+
 		Body bodyA = contact.getFixtureA().getBody();
 		Body bodyB = contact.getFixtureB().getBody();
 
 		Entity entityA = (Entity) bodyA.getUserData();
 		Entity entityB = (Entity) bodyB.getUserData();
 
-		addBodyToContacts(entityA, contact,true);
-		addBodyToContacts(entityB, contact,false);
+		addBodyToContacts(entityA, contact, true);
+		addBodyToContacts(entityB, contact, false);
 	}
 
 	/**
@@ -38,11 +39,15 @@ public class PhysicsContactListener implements ContactListener {
 	private void addBodyToContacts(Entity e, Contact contact, boolean fixtureA) {
 		if (e == null)
 			return;
-		PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
+		PhysicsComponent physicsComponent = PhysicsComponent.get(e);
 		if (physicsComponent == null)
 			return;
-		
+
 		physicsComponent.getContact().addContact(contact, fixtureA);
+
+		ImmediateModePhysicsListener physicsListener = physicsComponent.physicsListener;
+		if (physicsListener != null)
+			physicsListener.beginContact(e, contact, fixtureA);
 	}
 
 	@Override
@@ -53,8 +58,8 @@ public class PhysicsContactListener implements ContactListener {
 		Entity entityA = (Entity) bodyA.getUserData();
 		Entity entityB = (Entity) bodyB.getUserData();
 
-		removeBodyFromContacts(entityA, contact,true);
-		removeBodyFromContacts(entityB, contact,false);
+		removeBodyFromContacts(entityA, contact, true);
+		removeBodyFromContacts(entityB, contact, false);
 	}
 
 	/**
@@ -68,10 +73,14 @@ public class PhysicsContactListener implements ContactListener {
 	private void removeBodyFromContacts(Entity e, Contact contact, boolean fixtureA) {
 		if (e == null)
 			return;
-		PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
+		PhysicsComponent physicsComponent = PhysicsComponent.get(e);
 		if (physicsComponent == null)
 			return;
 		physicsComponent.getContact().removeContact(contact, fixtureA);
+
+		ImmediateModePhysicsListener physicsListener = physicsComponent.physicsListener;
+		if (physicsListener != null)
+			physicsListener.endContact(e, contact, fixtureA);
 	}
 
 	@Override

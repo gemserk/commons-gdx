@@ -14,6 +14,8 @@ public class Contacts {
 		boolean inContact = false;
 
 		Vector2 normal = new Vector2();
+		Vector2 myBodyPosition = new Vector2();
+		Vector2 otherBodyPosition = new Vector2();
 		
 		// no contact points?
 
@@ -22,6 +24,8 @@ public class Contacts {
 			this.otherFixture = otherFixture;
 			this.normal.set(normal);
 			this.inContact = true;
+			myBodyPosition.set(myFixture.getBody().getPosition());
+			otherBodyPosition.set(otherFixture.getBody().getPosition());
 		}
 
 		public void unsetContact() {
@@ -29,6 +33,8 @@ public class Contacts {
 			myFixture = null;
 			otherFixture = null;
 			this.normal.set(0f, 0f);
+			this.myBodyPosition.set(0,0);
+			this.otherBodyPosition.set(0,0);
 		}
 
 		public Fixture getMyFixture() {
@@ -45,6 +51,14 @@ public class Contacts {
 
 		public Vector2 getNormal() {
 			return normal;
+		}
+		
+		public Vector2 getMyBodyPosition() {
+			return myBodyPosition;
+		}
+		
+		public Vector2 getOtherBodyPosition() {
+			return otherBodyPosition;
 		}
 
 	}
