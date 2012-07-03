@@ -121,6 +121,8 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 		boolean disposeCurrent = false;
 		boolean restartNext = false;
 
+		int updatesToConsume = 0;
+
 		ArrayList<TransitionEffect> transitionEffects;
 
 		public GameStateTransitionBuilder(ApplicationListenerGameStateBasedImpl applicationListenerGameStateBasedImpl, GameState current, GameState next) {
@@ -128,6 +130,19 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			this.current = current;
 			this.next = next;
 			this.transitionEffects = new ArrayList<TransitionEffect>();
+		}
+
+		/**
+		 * Consumes the next updatesToConsume updates.
+		 * 
+		 * @param updatesToConsume
+		 *            the number of updates to be consumed, it is 0 by default.
+		 */
+		public GameStateTransitionBuilder updatesToConsume(int updatesToConsume) {
+			if (updatesToConsume < 0)
+				throw new IllegalArgumentException("unsupported updatesToConsume variable, should be >= 0");
+			this.updatesToConsume = updatesToConsume;
+			return this;
 		}
 
 		/**
@@ -203,7 +218,7 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 			if (restartNext || (disposeCurrent && next == current))
 				next.dispose();
-			
+
 			// inits the next gamestate
 
 			next.init();
@@ -211,12 +226,12 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			next.show();
 
 			// if there is no effects, then there is no need of a gamestate transition
-			if (transitionEffects.isEmpty()) {
-				nextGameState();
-				return;
-			}
+			// if (transitionEffects.isEmpty()) {
+			// nextGameState();
+			// return;
+			// }
 
-			final GameState transitionGameState = new GameStateTransitionImpl(current, next, transitionEffects) {
+			final GameState transitionGameState = new GameStateTransitionImpl(current, next, transitionEffects, updatesToConsume) {
 				@Override
 				protected void onTransitionFinished() {
 					nextGameState();
@@ -244,7 +259,7 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 					// next.init();
 					// next.resume();
 					// next.show();
-					
+
 					gameState = next;
 
 					if (next != current) {
@@ -255,11 +270,11 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 						if (disposeCurrent)
 							current.dispose();
 					}
-					
+
 					transitioning = false;
 				}
 			});
-			
+
 		}
 
 	}

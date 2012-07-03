@@ -106,10 +106,9 @@ public class GameStateTransitionImpl extends GameStateImpl {
 		}
 
 	}
-	
+
 	public static class RenderNextTransitionEffect extends TransitionEffect {
 
-		
 		public RenderNextTransitionEffect(float duration) {
 			super(duration);
 		}
@@ -126,14 +125,18 @@ public class GameStateTransitionImpl extends GameStateImpl {
 	int currentTransitionEffectIndex;
 	ArrayList<TransitionEffect> transitionEffects;
 
-	public GameStateTransitionImpl(GameState current, GameState next, ArrayList<TransitionEffect> transitionEffects) {
+	boolean finished;
+	int updatesToConsume;
+
+	public GameStateTransitionImpl(GameState current, GameState next, ArrayList<TransitionEffect> transitionEffects, int updatesToConsume) {
 		this.current = current;
 		this.next = next;
 		this.transitionEffects = transitionEffects;
-		if(transitionEffects.isEmpty()){
+		this.updatesToConsume = updatesToConsume;
+		if (transitionEffects.isEmpty())
 			transitionEffects.add(new RenderNextTransitionEffect(0));
-		}
 		this.currentTransitionEffectIndex = 0;
+		this.finished = false;
 	}
 
 	@Override
@@ -141,21 +144,39 @@ public class GameStateTransitionImpl extends GameStateImpl {
 
 	}
 
+	int consumedUpdates;
+
 	@Override
 	public void update() {
 
-		TransitionEffect currentTransitionEffect = transitionEffects.get(currentTransitionEffectIndex);
+		if (!finished) {
+			TransitionEffect currentTransitionEffect = transitionEffects.get(currentTransitionEffectIndex);
 
-		currentTransitionEffect.update(getDelta());
-		if (currentTransitionEffect.isFinished()) {
-			currentTransitionEffect.dispose();
-			currentTransitionEffectIndex++;
+			currentTransitionEffect.update(getDelta());
+			if (currentTransitionEffect.isFinished()) {
+				currentTransitionEffect.dispose();
+				currentTransitionEffectIndex++;
+			}
+
+			if (currentTransitionEffectIndex >= transitionEffects.size()) {
+				consumedUpdates = updatesToConsume;
+				finished = true;
+			}
 		}
 
-		if (currentTransitionEffectIndex >= transitionEffects.size()) {
-			onTransitionFinished();
-			return;
+		if (finished) {
+
+			if (consumedUpdates == 0) {
+				onTransitionFinished();
+				return;
+			} else {
+				consumedUpdates--;
+				Gdx.app.log("commons-gdx", "transitiongamestate.delta: consuming " + getDelta() + "s");
+				return;
+			}
+
 		}
+
 	}
 
 	protected void onTransitionFinished() {
