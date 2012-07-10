@@ -18,6 +18,8 @@ public class PhysicsComponent extends Component {
 
 		public void endContact(Entity e, Contact contact, boolean fixtureA);
 
+		public void preSolve(Entity e, Contact contact, boolean fixtureA);
+
 	}
 
 	public static final ComponentType type = ComponentTypeManager.getTypeFor(PhysicsComponent.class);

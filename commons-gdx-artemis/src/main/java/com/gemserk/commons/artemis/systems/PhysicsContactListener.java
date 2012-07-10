@@ -85,8 +85,29 @@ public class PhysicsContactListener implements ContactListener {
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		// TODO Auto-generated function stub
+		if (!contact.isTouching())
+			return;
 
+		Body bodyA = contact.getFixtureA().getBody();
+		Body bodyB = contact.getFixtureB().getBody();
+
+		Entity entityA = (Entity) bodyA.getUserData();
+		Entity entityB = (Entity) bodyB.getUserData();
+
+		executePreSolveListener(entityA, contact, true);
+		executePreSolveListener(entityB, contact, false);
+	}
+
+	private void executePreSolveListener(Entity e, Contact contact, boolean fixtureA) {
+		if (e == null)
+			return;
+		PhysicsComponent physicsComponent = PhysicsComponent.get(e);
+		if (physicsComponent == null)
+			return;
+
+		ImmediateModePhysicsListener physicsListener = physicsComponent.physicsListener;
+		if (physicsListener != null)
+			physicsListener.preSolve(e, contact, fixtureA);
 	}
 
 	@Override
