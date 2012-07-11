@@ -6,6 +6,10 @@ public class FloatMonitor {
 	boolean changed;
 	
 	float epsilon = 0.001f;
+	
+	public float getValue() {
+		return value;
+	}
 
 	public FloatMonitor(float value) {
 		this.value = value;

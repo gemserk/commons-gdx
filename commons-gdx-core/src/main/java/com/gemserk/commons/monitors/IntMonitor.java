@@ -4,6 +4,10 @@ public class IntMonitor {
 	
 	int value;
 	boolean changed;
+	
+	public int getValue() {
+		return value;
+	}
 
 	public IntMonitor(int value) {
 		this.value = value;

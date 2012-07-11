@@ -4,6 +4,10 @@ public class LongMonitor {
 	
 	long value;
 	boolean changed;
+	
+	public long getValue() {
+		return value;
+	}
 
 	public LongMonitor(long value) {
 		this.value = value;
