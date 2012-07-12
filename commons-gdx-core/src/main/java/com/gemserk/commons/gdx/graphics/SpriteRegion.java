@@ -15,6 +15,7 @@ public class SpriteRegion {
 
 	public TextureRegion textureRegion;
 	public float u0, v0, u1, v1;
+	public float width, height;
 
 	public SpriteRegion(TextureRegion textureRegion) {
 		this.textureRegion = textureRegion;
@@ -30,4 +31,11 @@ public class SpriteRegion {
 		this.v1 = v1;
 	}
 
+	/**
+	 * Sets the desired width and height of the sprite region.
+	 */
+	public void setSize(float width, float height) {
+		this.width = width;
+		this.height = height;
+	}
 }

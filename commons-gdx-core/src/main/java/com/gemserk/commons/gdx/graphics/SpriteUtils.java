@@ -162,7 +162,9 @@ public class SpriteUtils {
 		float v0 = spriteRegion.v0;
 		float u1 = spriteRegion.u1;
 		float v1 = spriteRegion.v1;
-		cut(sprite, textureRegion, u0, v0, u1, v1);
+		float width = spriteRegion.width;
+		float height = spriteRegion.height;
+		cut(sprite, textureRegion, u0, v0, u1, v1, width, height);
 	}
 
 	/**
@@ -173,24 +175,24 @@ public class SpriteUtils {
 	 * @param textureRegion
 	 *            The TextureRegion to be used as the original region.
 	 */
-	public static void cut(Sprite sprite, TextureRegion textureRegion, float u0, float v0, float u1, float v1) {
+	public static void cut(Sprite sprite, TextureRegion textureRegion, float u0, float v0, float u1, float v1, float width, float height) {
 		int regionX = textureRegion.getRegionX();
 		int regionY = textureRegion.getRegionY();
 		int regionWidth = textureRegion.getRegionWidth();
 		int regionHeight = textureRegion.getRegionHeight();
 
-		float width = u1 - u0;
-		float height = v1 - v0;
+		float innerWidth = u1 - u0;
+		float innerHeight = v1 - v0;
 
 		int newRegionX = (int) (regionX + u0 * regionWidth);
 		int newRegionY = (int) (regionY + v0 * regionHeight);
 
-		int newRegionWidth = (int) (width * regionWidth);
-		int newRegionHeight = (int) (height * regionHeight);
+		int newRegionWidth = (int) (innerWidth * regionWidth);
+		int newRegionHeight = (int) (innerHeight * regionHeight);
 
 		sprite.setRegion(newRegionX, newRegionY, newRegionWidth, newRegionHeight);
 
-		sprite.setSize(newRegionWidth, newRegionHeight);
+		sprite.setSize(innerWidth * width, innerHeight * height);
 	}
 
 }
