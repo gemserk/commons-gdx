@@ -1,6 +1,7 @@
 package com.gemserk.commons.gdx.graphics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 
 /**
@@ -134,10 +135,10 @@ public class SpriteUtils {
 		boolean isAtlasSprite1 = sprite1 instanceof AtlasSprite;
 		boolean isAtlasSprite2 = sprite2 instanceof AtlasSprite;
 
-		if (isAtlasSprite1 != isAtlasSprite2) 
+		if (isAtlasSprite1 != isAtlasSprite2)
 			return false;
-		
-		if (!isAtlasSprite1) { 
+
+		if (!isAtlasSprite1) {
 			return TextureRegionUtils.textureRegionEquals(sprite1, sprite2);
 		} else {
 			AtlasSprite atlasSprite1 = (AtlasSprite) sprite1;
@@ -145,6 +146,51 @@ public class SpriteUtils {
 			boolean regionEquals = TextureRegionUtils.atlasRegionEquals(atlasSprite1.getAtlasRegion(), atlasSprite2.getAtlasRegion());
 			return regionEquals && TextureRegionUtils.textureRegionEquals(sprite1, sprite2);
 		}
+	}
+
+	/**
+	 * Modifies the Sprite region to the given TextureRegion by the SpriteRegion and its internal inner region relative values.
+	 * 
+	 * @param sprite
+	 *            The Sprite to be modified.
+	 * @param spriteRegion
+	 *            The SpriteRegion with the values to be used when cutting the Sprite.
+	 */
+	public static void cut(Sprite sprite, SpriteRegion spriteRegion) {
+		TextureRegion textureRegion = spriteRegion.textureRegion;
+		float u0 = spriteRegion.u0;
+		float v0 = spriteRegion.v0;
+		float u1 = spriteRegion.u1;
+		float v1 = spriteRegion.v1;
+		cut(sprite, textureRegion, u0, v0, u1, v1);
+	}
+
+	/**
+	 * Modifies the Sprite region to the given TextureRegion and inner region relative values.
+	 * 
+	 * @param sprite
+	 *            The Sprite to be modified.
+	 * @param textureRegion
+	 *            The TextureRegion to be used as the original region.
+	 */
+	public static void cut(Sprite sprite, TextureRegion textureRegion, float u0, float v0, float u1, float v1) {
+		int regionX = textureRegion.getRegionX();
+		int regionY = textureRegion.getRegionY();
+		int regionWidth = textureRegion.getRegionWidth();
+		int regionHeight = textureRegion.getRegionHeight();
+
+		float width = u1 - u0;
+		float height = v1 - v0;
+
+		int newRegionX = (int) (regionX + u0 * regionWidth);
+		int newRegionY = (int) (regionY + v0 * regionHeight);
+
+		int newRegionWidth = (int) (width * regionWidth);
+		int newRegionHeight = (int) (height * regionHeight);
+
+		sprite.setRegion(newRegionX, newRegionY, newRegionWidth, newRegionHeight);
+
+		sprite.setSize(newRegionWidth, newRegionHeight);
 	}
 
 }
