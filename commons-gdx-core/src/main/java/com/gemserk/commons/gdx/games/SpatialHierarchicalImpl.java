@@ -11,9 +11,18 @@ public class SpatialHierarchicalImpl implements Spatial {
 
 	private float localAngle;
 	private float w, h;
-	
+
 	private Spatial parent;
-	
+
+	public static SpatialHierarchicalImpl hierarchicalWithParent(Spatial parent, boolean updateWithParent) {
+		SpatialHierarchicalImpl spatialHierarchicalImpl = new SpatialHierarchicalImpl();
+		if (!updateWithParent)
+			spatialHierarchicalImpl.parent = parent;
+		else
+			spatialHierarchicalImpl.setParent(parent);
+		return spatialHierarchicalImpl;
+	}
+
 	public Spatial getParent() {
 		return parent;
 	}
@@ -32,10 +41,14 @@ public class SpatialHierarchicalImpl implements Spatial {
 		setLocalAngle(localAngle);
 	}
 
+	public SpatialHierarchicalImpl() {
+		
+	}
+
 	public SpatialHierarchicalImpl(Spatial parent) {
 		this(parent, parent.getWidth(), parent.getHeight());
 	}
-	
+
 	public void setParent(Spatial parent) {
 		Vector2 position = getPosition();
 		float angle = getAngle();
