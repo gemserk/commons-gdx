@@ -5,10 +5,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.badlogic.gdx.utils.ObjectIntMap;
+
 public class RandomAccessSet<T> implements Set<T>, RandomAccess<T> {
 
 	ArrayList<T> items = new ArrayList<T>();
-	CachingFastMapIntValue<T> positions = new CachingFastMapIntValue<T>();
+	ObjectIntMap<Object> positions = new ObjectIntMap<Object>();
+	private final int NOT_PRESENT = -1;
 
 	@Override
 	public int size() {
@@ -53,6 +56,7 @@ public class RandomAccessSet<T> implements Set<T>, RandomAccess<T> {
 		return items.toArray();
 	}
 
+	@SuppressWarnings("hiding")
 	@Override
 	public <T> T[] toArray(T[] a) {
 		return items.toArray(a);
@@ -60,8 +64,8 @@ public class RandomAccessSet<T> implements Set<T>, RandomAccess<T> {
 
 	@Override
 	public boolean add(T e) {
-		int position = positions.get(e);
-		if (position == CachingFastMapIntValue.NOT_PRESENT_VALUE) {
+		int position = positions.get(e, NOT_PRESENT);
+		if (position == NOT_PRESENT) {
 			items.add(e);
 			positions.put(e, items.size() - 1);
 			return true;
@@ -72,13 +76,13 @@ public class RandomAccessSet<T> implements Set<T>, RandomAccess<T> {
 
 	@Override
 	public boolean remove(Object e) {
-		int position = positions.get(e);
-		if (position == CachingFastMapIntValue.NOT_PRESENT_VALUE)
+		int position = positions.get(e, NOT_PRESENT);
+		if (position == NOT_PRESENT)
 			return false;
 
 		int lastPosition = items.size() - 1;
 		T lastItem = items.get(lastPosition);
-		positions.remove(e);
+		positions.remove(e, NOT_PRESENT);
 		items.remove(lastPosition);
 		if (position != lastPosition) {
 			items.set(position, lastItem);
@@ -104,8 +108,7 @@ public class RandomAccessSet<T> implements Set<T>, RandomAccess<T> {
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new UnsupportedOperationException("retainAll is not supported in this Set implementation");
 	}
 
 	@Override
