@@ -120,6 +120,7 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 		boolean disposeCurrent = false;
 		boolean restartNext = false;
+		boolean delayed = true;
 
 		int updatesToConsume = 0;
 
@@ -142,6 +143,17 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			if (updatesToConsume < 0)
 				throw new IllegalArgumentException("unsupported updatesToConsume variable, should be >= 0");
 			this.updatesToConsume = updatesToConsume;
+			return this;
+		}
+
+		/**
+		 * If the transition should be delayed with post runnables or be performed in the moment start is called, true by default.
+		 * 
+		 * @param delayed
+		 *            If should be delayed or not.
+		 */
+		public GameStateTransitionBuilder delayed(boolean delayed) {
+			this.delayed = delayed;
 			return this;
 		}
 
@@ -225,6 +237,11 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			next.resume();
 			next.show();
 
+			if (!delayed) {
+				setNextGameState();
+				return;
+			}
+
 			// if there is no effects, then there is no need of a gamestate transition
 			// if (transitionEffects.isEmpty()) {
 			// nextGameState();
@@ -252,29 +269,27 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 		}
 
 		private void nextGameState() {
-
 			Gdx.app.postRunnable(new Runnable() {
 				@Override
 				public void run() {
-					// next.init();
-					// next.resume();
-					// next.show();
-
-					gameState = next;
-
-					if (next != current) {
-						// if the next gamestate is different than the current, then hide and dispose the old one
-						current.pause();
-						current.hide();
-
-						if (disposeCurrent)
-							current.dispose();
-					}
-
-					transitioning = false;
+					setNextGameState();
 				}
 			});
+		}
 
+		private void setNextGameState() {
+			gameState = next;
+
+			if (next != current) {
+				// if the next gamestate is different than the current, then hide and dispose the old one
+				current.pause();
+				current.hide();
+
+				if (disposeCurrent)
+					current.dispose();
+			}
+
+			transitioning = false;
 		}
 
 	}
