@@ -21,7 +21,7 @@ public class PerfLogger {
 	
 	public void update(){
 		if(enabled){
-			float deltaTime = Gdx.graphics.getDeltaTime();
+			float deltaTime = Gdx.graphics.getRawDeltaTime();
 			deltas.add(deltaTime);
 			events.add(event);
 						

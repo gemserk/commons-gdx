@@ -48,7 +48,7 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			return;
 		// should set the global time
 
-		float delta = Gdx.graphics.getDeltaTime();
+		float delta = Gdx.graphics.getRawDeltaTime();
 		float alpha = 1f;
 
 		GlobalTime.setDelta(delta);

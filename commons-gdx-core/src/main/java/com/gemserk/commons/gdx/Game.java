@@ -36,7 +36,7 @@ public class Game implements ApplicationListener {
 	public void render() {
 		if (screen == null)
 			return;
-		screen.setDelta(Gdx.graphics.getDeltaTime());
+		screen.setDelta(Gdx.graphics.getRawDeltaTime());
 		screen.update();
 		screen.render();
 	}
