@@ -45,8 +45,11 @@ public class ScriptSystem extends EntityProcessingSystem {
 		super.enabled(e);
 		EntityComponents entityComponents = factory.add(e);
 		ArrayList<Script> scripts = entityComponents.scripts;
-		for (int i = 0; i < scripts.size(); i++)
-			scripts.get(i).init(world, e);
+		int size = scripts.size();
+		for (int i = 0; i < size; i++) {
+			Script script = scripts.get(i);
+			script.init(world, e);
+		}
 	}
 
 	@Override
@@ -54,8 +57,11 @@ public class ScriptSystem extends EntityProcessingSystem {
 		EntityComponents entityComponents = factory.get(e);
 		ArrayList<Script> scripts = entityComponents.scripts;
 		
-		for (int i = 0; i < scripts.size(); i++)
-			scripts.get(i).dispose(world, e);
+		int size = scripts.size();
+		for (int i = 0; i < size; i++) {
+			Script script = scripts.get(i);
+			script.dispose(world, e);
+		}
 		
 		factory.remove(e);
 		super.disabled(e);
@@ -63,9 +69,13 @@ public class ScriptSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(Entity e) {
-		ArrayList<Script> scripts = factory.get(e).scripts;
-		for (int i = 0; i < scripts.size(); i++)
-			scripts.get(i).update(world, e);
+		EntityComponents entityComponents = factory.get(e);
+		ArrayList<Script> scripts = entityComponents.scripts;
+		int size = scripts.size();
+		for (int i = 0; i < size; i++) {
+			Script script = scripts.get(i);
+			script.update(world, e);
+		}
 	}
 
 }
