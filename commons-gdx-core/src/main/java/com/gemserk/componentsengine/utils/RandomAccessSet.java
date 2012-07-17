@@ -76,16 +76,15 @@ public class RandomAccessSet<T> implements Set<T>, RandomAccess<T> {
 
 	@Override
 	public boolean remove(Object e) {
-		int position = positions.get(e, NOT_PRESENT);
+		int position = positions.remove(e, NOT_PRESENT);
 		if (position == NOT_PRESENT)
 			return false;
 
 		int lastPosition = items.size() - 1;
-		T lastItem = items.get(lastPosition);
-		positions.remove(e, NOT_PRESENT);
-		items.remove(lastPosition);
+		T lastItem = items.remove(lastPosition);
 		if (position != lastPosition) {
 			items.set(position, lastItem);
+			positions.remove(lastItem, NOT_PRESENT);
 			positions.put(lastItem, position);
 		}
 		return true;
