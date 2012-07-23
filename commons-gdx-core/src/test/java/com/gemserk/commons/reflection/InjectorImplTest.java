@@ -125,26 +125,6 @@ public class InjectorImplTest {
 	}
 
 	@Test
-	public void objectConfiguratorUsageExample2() {
-
-		final Object someValue = new Float(100f);
-
-		Injector injectorImpl = new InjectorImpl() {
-			@Override
-			public <T> T injectMembers(T object) {
-				super.injectMembers(object);
-				setField(object, "object", someValue);
-				return object;
-			}
-		};
-
-		MyTemplate myTemplate = new MyTemplate();
-		injectorImpl.injectMembers(myTemplate);
-
-		assertNotNull(myTemplate.object);
-	}
-
-	@Test
 	public void shouldConfigureTemplateWithNewInstance() {
 		InjectorImpl injectorImpl = new InjectorImpl();
 		injectorImpl.bind("object", new Float(100f));
