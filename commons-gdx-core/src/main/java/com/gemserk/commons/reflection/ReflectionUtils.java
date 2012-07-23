@@ -5,18 +5,89 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.gemserk.componentsengine.utils.RandomAccessMap;
+import com.gemserk.componentsengine.utils.RandomAccessWithKey;
+
 public class ReflectionUtils {
 
 	// Could be optimized?
 
-	private static class ClassCache {
+	public static class ClassCache {
 
-		Map<String, Method> cachedMethods = new HashMap<String, Method>();
-		Map<String, Field> cachedFields = new HashMap<String, Field>();
+		private final Class<?> clazz;
+		private final Map<String, Method> cachedMethods = new HashMap<String, Method>();
+		private final Map<String, Field> cachedFields = new HashMap<String, Field>();
+		private final RandomAccessMap<String, InternalField> cachedInternalFields = new RandomAccessMap<String, InternalField>();
+
+		public ClassCache(Class<?> clazz) {
+			this.clazz = clazz;
+			Field[] fields = clazz.getDeclaredFields();
+			for (int i = 0; i < fields.length; i++) {
+				Field field = fields[i];
+				field.setAccessible(true);
+				String name = field.getName();
+				cachedInternalFields.put(name, getInternalField(name, field));
+				cachedFields.put(name, field);
+			}
+		}
+
+		public Method getSetter(String fieldName) {
+			return findMethod(getSetterName(fieldName));
+		}
+
+		public Method getGetter(String fieldName) {
+			return findMethod(getGetterName(fieldName));
+		}
+
+		private InternalField getInternalField(String fieldName, Field field) {
+			Method setter = getSetter(fieldName);
+			Method getter = getGetter(fieldName);
+
+			if (setter != null && getter != null)
+				return new InternalFieldMethodsReflectionImpl(fieldName, getter, setter);
+			else
+				return new InternalFieldDirectImpl(fieldName, field);
+		}
+
+		public RandomAccessWithKey<String, InternalField> getInternalFields() {
+			return cachedInternalFields;
+		}
+
+		public Method findMethod(String methodName) {
+			if (!cachedMethods.containsKey(methodName))
+				cachedMethods.put(methodName, internalFindMethod(methodName));
+			return cachedMethods.get(methodName);
+		}
+
+		protected Method internalFindMethod(String methodName) {
+			Method[] methods = clazz.getMethods();
+			for (Method method : methods) {
+				if (method.getName().equals(methodName)) {
+					method.setAccessible(true);
+					return method;
+				}
+			}
+			return null;
+		}
+
+		public Field getField(String fieldName) {
+			// one problem here is we are caching only declared field on this class, not parents or anything...
+			if (!cachedFields.containsKey(fieldName)) {
+				try {
+					cachedFields.put(fieldName, clazz.getDeclaredField(fieldName));
+				} catch (SecurityException e) {
+					cachedFields.put(fieldName, null);
+				} catch (NoSuchFieldException e) {
+					cachedFields.put(fieldName, null);
+				}
+			}
+			return cachedFields.get(fieldName);
+		}
 
 	}
 
-	private static Map<Class, ClassCache> classCacheMap = new HashMap<Class, ClassCache>();
+	private static Map<Class<?>, ClassCache> classCacheMap = new HashMap<Class<?>, ClassCache>();
+
 	private static Map<String, String> cachedGettersMap = new HashMap<String, String>();
 	private static Map<String, String> cachedSettersMap = new HashMap<String, String>();
 
@@ -36,82 +107,10 @@ public class ReflectionUtils {
 		return name.toUpperCase().substring(0, 1) + name.substring(1);
 	}
 
-	public static Method findMethod(Class clazz, String methodName) {
-		ClassCache classCacheEntry = getClassCache(clazz);
-
-		Method method = classCacheEntry.cachedMethods.get(methodName);
-
-		if (method != null)
-			return method;
-
-		method = internalFindMethod(clazz, methodName);
-
-		if (method == null)
-			return null;
-
-		classCacheEntry.cachedMethods.put(methodName, method);
-
-		return method;
-	}
-
-	protected static Method internalFindMethod(Class clazz, String methodName) {
-		Method[] methods = clazz.getMethods();
-		for (Method method : methods)
-			if (method.getName().equals(methodName))
-				return method;
-		return null;
-	}
-
-	public static Method getSetter(Class clazz, String fieldName) {
-		return findMethod(clazz, getSetterName(fieldName));
-	}
-
-	public static Method getGetter(Class clazz, String fieldName) {
-		return findMethod(clazz, getGetterName(fieldName));
-	}
-
-	private static ClassCache getClassCache(Class clazz) {
+	public static ClassCache getClassCache(Class<?> clazz) {
 		if (!classCacheMap.containsKey(clazz))
-			classCacheMap.put(clazz, new ClassCache());
+			classCacheMap.put(clazz, new ClassCache(clazz));
 		return classCacheMap.get(clazz);
 	}
 
-	public static Object getFieldValue(Object object, String field) {
-		String getterName = getGetterName(field);
-		Method getterMethod = findMethod(object.getClass(), getterName);
-
-		if (getterMethod == null)
-			throw new RuntimeException(getterName + "() method not found in " + object.getClass());
-
-		try {
-			return getterMethod.invoke(object, (Object[]) null);
-		} catch (Exception e) {
-			throw new RuntimeException(getterName + "() method not found in " + object.getClass(), e);
-		}
-	}
-
-	public static void setField(Object object, String fieldName, Object value) {
-		Class<?> clazz = object.getClass();
-		Method setter = ReflectionUtils.getSetter(clazz, fieldName);
-
-		String setterName = getSetterName(fieldName);
-
-		if (setter == null)
-			throw new RuntimeException(setterName + "() method not found in " + object.getClass());
-
-		try {
-			setter.invoke(object, value);
-		} catch (Exception e) {
-			throw new RuntimeException("failed to set value on " + setterName + "() method from " + object.getClass(), e);
-		}
-	}
-
-	public static Field getClassField(Class<?> clazz, String fieldName) throws NoSuchFieldException {
-		ClassCache classCache = getClassCache(clazz);
-		// one problem here is we are caching only declared field on this class, not parents or anything...
-		if (!classCache.cachedFields.containsKey(fieldName))
-			classCache.cachedFields.put(fieldName, clazz.getDeclaredField(fieldName));
-		return classCache.cachedFields.get(fieldName);
-	}
-	
 }

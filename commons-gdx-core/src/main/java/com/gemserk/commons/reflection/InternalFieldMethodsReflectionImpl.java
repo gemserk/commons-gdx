@@ -13,10 +13,10 @@ public class InternalFieldMethodsReflectionImpl implements InternalField {
 		this.getterMethod = getterMethod;
 		this.setterMethod = setterMethod;
 	}
-	
+
 	@Override
 	public String getFieldName() {
-		return null;
+		return fieldName;
 	}
 
 	@Override
@@ -36,6 +36,5 @@ public class InternalFieldMethodsReflectionImpl implements InternalField {
 			throw new RuntimeException(e);
 		}
 	}
-
 
 }

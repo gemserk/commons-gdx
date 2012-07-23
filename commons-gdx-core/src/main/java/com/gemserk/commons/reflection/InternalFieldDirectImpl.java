@@ -2,16 +2,16 @@ package com.gemserk.commons.reflection;
 
 import java.lang.reflect.Field;
 
-public class InternalFieldPublicImpl implements InternalField {
+public class InternalFieldDirectImpl implements InternalField {
 
 	protected Field field;
 	protected String fieldName;
 
-	public InternalFieldPublicImpl(Field field) {
+	public InternalFieldDirectImpl(Field field) {
 		this(field.getName(), field);
 	}
 
-	public InternalFieldPublicImpl(String fieldName, Field field) {
+	public InternalFieldDirectImpl(String fieldName, Field field) {
 		this.field = field;
 		this.fieldName = fieldName;
 	}

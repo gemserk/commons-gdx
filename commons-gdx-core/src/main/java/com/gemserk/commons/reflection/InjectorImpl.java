@@ -1,14 +1,14 @@
 package com.gemserk.commons.reflection;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gemserk.commons.reflection.ReflectionUtils.ClassCache;
 import com.gemserk.componentsengine.utils.RandomAccessMap;
+import com.gemserk.componentsengine.utils.RandomAccessWithKey;
 
 /**
  * Basic implementation of our Injector interface, some limitations are that it works with singleton instances only and it can't inject superclass fields.
@@ -18,7 +18,7 @@ import com.gemserk.componentsengine.utils.RandomAccessMap;
 public class InjectorImpl implements Injector {
 
 	protected static final Logger logger = LoggerFactory.getLogger(InjectorImpl.class);
-	
+
 	private Map<Class<?>, Object> instances;
 	private RandomAccessMap<String, Object> configurationMap;
 
@@ -34,11 +34,15 @@ public class InjectorImpl implements Injector {
 		// For now, it will only work for the declared fields of the object class, it will not try to set fields from its super classes.
 
 		Class<?> clazz = object.getClass();
-		Field[] fields = clazz.getDeclaredFields();
 
-		for (int i = 0; i < fields.length; i++) {
-			Field field = fields[i];
-			String fieldName = field.getName();
+		ClassCache classCache = ReflectionUtils.getClassCache(clazz);
+		RandomAccessWithKey<String, InternalField> fields = classCache.getInternalFields();
+
+		for (int i = 0; i < fields.size(); i++) {
+			// Field field = fields[i];
+			InternalField field = fields.get(i);
+			String fieldName = field.getFieldName();
+
 			Object value = configurationMap.get(fieldName);
 
 			if (value == null)
@@ -47,49 +51,12 @@ public class InjectorImpl implements Injector {
 				continue;
 			// }
 
-			setField(object, fieldName, value);
+			field.setValue(object, value);
+			// setField(object, fieldName, value);
 		}
-		
+
 		return object;
 	}
-
-	protected void setField(Object object, String fieldName, Object value) {
-		Class<?> clazz = object.getClass();
-		Method setter = ReflectionUtils.getSetter(clazz, fieldName);
-
-		String setterName = ReflectionUtils.getSetterName(fieldName);
-
-		if (setter == null) {
-
-			// try to access the field directly....
-
-			try {
-				Field field = ReflectionUtils.getClassField(clazz, fieldName);
-				
-				if (!field.isAccessible()) {
-					if (logger.isDebugEnabled()) {
-						logger.debug(setterName + "() method not found in " + object.getClass());
-						logger.debug("making field public");
-					}
-					field.setAccessible(true);
-				}
-
-				field.set(object, value);
-			} catch (Exception e) {
-				throw new RuntimeException("Failed to set value to field " + fieldName, e);
-			}
-
-		} else {
-			try {
-				setter.setAccessible(true);
-				setter.invoke(object, value);
-			} catch (Exception e) {
-				throw new RuntimeException("failed to set value on " + setterName + "() method from " + object.getClass(), e);
-			}
-		}
-	}
-
-
 
 	@Override
 	public void bind(String name, Object value) {
