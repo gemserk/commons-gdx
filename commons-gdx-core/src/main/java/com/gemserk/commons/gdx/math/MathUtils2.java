@@ -93,14 +93,24 @@ public class MathUtils2 {
 		r.width += width;
 		r.height += height;
 	}
-	
+
 	public static void shrinkRectangle(Rectangle r, float width, float height) {
 		growRectangle(r, -width, -height);
 	}
-	
-	public static void multiplyBy(float[] array, float factor){
+
+	public static void multiplyBy(float[] array, float factor) {
 		for (int i = 0; i < array.length; i++) {
-			array[i]*=factor;
+			array[i] *= factor;
 		}
 	}
+
+	public static float inverseLinealInterpolation(float value, float min, float max) {
+		if (value < min)
+			value = min;
+		if (value > max)
+			value = max;
+
+		return (value - min) / (max - min);
+	}
+
 }
