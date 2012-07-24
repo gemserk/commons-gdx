@@ -25,6 +25,8 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 	private boolean useIntegerPositions = true;
 	private CharSequence fixedWidthGlyphs = null;
 
+	private float scale = 1f;
+
 	static class FontSpacing {
 
 		CharSequence charSequence;
@@ -38,14 +40,14 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 	}
 
 	private ArrayList<FontSpacing> spacings = new ArrayList<FontResourceBuilder.FontSpacing>();
-	
+
 	private String textureAtlasId;
 	private String regionId;
-	
+
 	public FontResourceBuilder(ResourceManager<String> resourceManager) {
 		this.resourceManager = resourceManager;
 	}
-	
+
 	public FontResourceBuilder region(String textureAtlasId, String regionId) {
 		this.textureAtlasId = textureAtlasId;
 		this.regionId = regionId;
@@ -92,6 +94,11 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 		this.spacings.add(new FontSpacing(charSequence, spacing));
 		return this;
 	}
+	
+	public FontResourceBuilder scale(float scale) {
+		this.scale = scale;
+		return this;
+	}
 
 	@Override
 	public boolean isVolatile() {
@@ -106,12 +113,12 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 			Texture texture = new Texture(imageFile);
 			texture.setFilter(minFilter, magFilter);
 			bitmapFont = new BitmapFont(fontFile, new Sprite(texture), false);
-		} else if (textureAtlasId != null && regionId != null){
-			if (fontFile == null) 
+		} else if (textureAtlasId != null && regionId != null) {
+			if (fontFile == null)
 				throw new IllegalArgumentException("Can't build a font resource without specifying the fontFile.");
 			TextureAtlas atlas = resourceManager.getResourceValue(textureAtlasId);
 			AtlasRegion region = atlas.findRegion(regionId);
-			if (region == null) 
+			if (region == null)
 				throw new IllegalArgumentException("Can't build a font resource, region " + regionId + " not found in texture atlas");
 			bitmapFont = new BitmapFont(fontFile, region, false);
 		} else {
@@ -130,6 +137,8 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 
 			BitmapFontUtils.spacing(bitmapFont, charSequence, fontSpacing.spacing);
 		}
+		
+		bitmapFont.setScale(scale);
 
 		return bitmapFont;
 	}
