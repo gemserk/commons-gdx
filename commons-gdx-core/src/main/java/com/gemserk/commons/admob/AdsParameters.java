@@ -33,6 +33,12 @@ public class AdsParameters {
 		return this;
 	}
 
+	/**
+	 * The delay to show the Ads in milliseconds.
+	 * 
+	 * @param delay
+	 *            The delay in milliseconds.
+	 */
 	public AdsParameters delay(long delay) {
 		this.delay = delay;
 		return this;
