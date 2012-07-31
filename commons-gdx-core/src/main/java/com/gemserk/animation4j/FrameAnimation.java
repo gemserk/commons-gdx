@@ -11,6 +11,11 @@ public interface FrameAnimation {
 	int getCurrentFrame();
 	
 	/**
+	 * @return Returns the total number of frames. 
+	 */
+	int getFramesCount();
+	
+	/**
 	 * Returns the iteration number of the animation (how mane times it was restarted).
 	 */
 	int getIteration();
