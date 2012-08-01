@@ -99,6 +99,7 @@ public class FrameAnimationImpl implements FrameAnimation {
 		}
 	}
 
+	@Override
 	public int getFramesCount() {
 		return framesTimes.length;
 	}
