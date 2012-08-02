@@ -10,9 +10,9 @@ public class AnimationFrameMonitor {
 	float timeToMonitor;
 
 	boolean triggered, alreadyTriggeredForIteration;
-	Animation animation;
+	com.gemserk.animation4j.animations.Animation animation;
 
-	public void monitor(Animation animation, float timeToMonitor) {
+	public void monitor(com.gemserk.animation4j.animations.Animation animation, float timeToMonitor) {
 		this.animation = animation;
 		this.timeToMonitor = timeToMonitor;
 		this.triggered = animation.getCurrentTime() >= timeToMonitor;
@@ -20,7 +20,7 @@ public class AnimationFrameMonitor {
 		this.currentIteration = animation.getIteration();
 	}
 	
-	public void monitor(Animation animation) {
+	public void monitor(com.gemserk.animation4j.animations.Animation animation) {
 		this.monitor(animation, timeToMonitor);
 	}
 	
@@ -29,7 +29,7 @@ public class AnimationFrameMonitor {
 		this.animation = null;
 	}
 
-	public AnimationFrameMonitor(Animation animation, float timeToMonitor) {
+	public AnimationFrameMonitor(com.gemserk.animation4j.animations.Animation animation, float timeToMonitor) {
 		this.animation = animation;
 		this.timeToMonitor = timeToMonitor;
 		this.triggered = animation.getCurrentTime() >= timeToMonitor;
