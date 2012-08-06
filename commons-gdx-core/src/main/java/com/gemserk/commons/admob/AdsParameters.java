@@ -15,7 +15,7 @@ public class AdsParameters {
 	public int verticalAlign;
 	public int horizontalAlign;
 	public long delay = 0L;
-
+	
 	public ArrayList<AdsAnimation> animations = new ArrayList<AdsAnimation>();
 
 	public AdsParameters verticalAlign(int vertical) {
@@ -43,5 +43,5 @@ public class AdsParameters {
 		this.delay = delay;
 		return this;
 	}
-
+	
 }

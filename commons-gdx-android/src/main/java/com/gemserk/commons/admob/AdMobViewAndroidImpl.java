@@ -29,10 +29,7 @@ public class AdMobViewAndroidImpl implements AdMobView {
 
 		clearEnqueuedMessages();
 
-		if (adsParameters.delay > 0L)
-			adMobHandler.sendMessageDelayed(msg, adsParameters.delay);
-		else
-			adMobHandler.sendMessage(msg);
+		sendMessage(msg, adsParameters);
 	}
 
 	@Override
@@ -41,6 +38,27 @@ public class AdMobViewAndroidImpl implements AdMobView {
 			return;
 		clearEnqueuedMessages();
 		adMobHandler.sendEmptyMessage(AdMobHandler.HIDE_ADS);
+	}
+	
+	@Override
+	public void hide(AdsParameters adsParameters) {
+		if (!isEnabled())
+			return;
+		
+		Message msg = adMobHandler.obtainMessage();
+		msg.what = AdMobHandler.HIDE_ADS;
+		msg.obj = adsParameters;
+		
+		clearEnqueuedMessages();
+		
+		sendMessage(msg, adsParameters);
+	}
+
+	private void sendMessage(Message msg, AdsParameters adsParameters) {
+		if (adsParameters.delay > 0L)
+			adMobHandler.sendMessageDelayed(msg, adsParameters.delay);
+		else
+			adMobHandler.sendMessage(msg);
 	}
 
 	private void clearEnqueuedMessages() {

@@ -8,6 +8,8 @@ public interface AdMobView {
 	
 	void hide();
 	
+	void hide(AdsParameters adsParameters);
+	
 	boolean isEnabled();
 	
 	void setEnabled(boolean enabled);
