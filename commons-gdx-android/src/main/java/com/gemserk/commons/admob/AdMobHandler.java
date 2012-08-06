@@ -33,23 +33,43 @@ public class AdMobHandler extends Handler {
 			break;
 		}
 		case HIDE_ADS: {
-			hideAds();
+			hideAds(msg);
 			break;
 		}
 		}
 	}
 
-	private void hideAds() {
-		if (adView.getVisibility() != View.GONE) {
+	private void hideAds(Message msg) {
+		AdsParameters adsParameters = (AdsParameters) msg.obj;
+
+		if (adsParameters != null && adView.getVisibility() != View.GONE) {
+
+			// if (adView.getVisibility() != View.GONE) {
 			// Fade the ad in over 4/10 of a second.
-			AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
-			animation.setDuration(300);
-			animation.setFillAfter(false);
-			animation.setInterpolator(new AccelerateInterpolator());
-			adView.startAnimation(animation);// *
+
+			ArrayList<AdsAnimation> animations = adsParameters.animations;
+			
+			for (int i = 0; i < animations.size(); i++) {
+				AdsAnimation adsAnimation = animations.get(i);
+
+				if (adsAnimation.type == AdsAnimation.Type.Alpha) {
+					AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
+					animation.setDuration(adsAnimation.duration);
+					animation.setFillAfter(false);
+					animation.setInterpolator(new LinearInterpolator());
+					adView.startAnimation(animation);//
+				}
+
+			}
+
+			// }
+
+		} else {
+			adView.setVisibility(View.GONE);
 		}
 
-		adView.setVisibility(View.GONE);
+		// adView.setVisibility(View.GONE);
+
 	}
 
 	private void showAds(Message msg) {
@@ -80,9 +100,11 @@ public class AdMobHandler extends Handler {
 
 				// dont support other animations yet...
 			}
+		} else {
+			adView.setVisibility(View.VISIBLE);
 		}
 
-		adView.setVisibility(View.VISIBLE);
+		// adView.setVisibility(View.VISIBLE);
 	}
 
 	private int getVerticalAlign(AdsParameters adViewLocation) {
