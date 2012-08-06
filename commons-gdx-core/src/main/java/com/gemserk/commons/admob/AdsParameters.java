@@ -12,8 +12,9 @@ public class AdsParameters {
 	public static final int HORIZONTAL_RIGHT = 2;
 	public static final int HORIZONTAL_CENTER = 3;
 
-	public int verticalAlign;
-	public int horizontalAlign;
+	public Integer verticalAlign = null;
+	public Integer horizontalAlign = null;
+	
 	public long delay = 0L;
 	
 	public ArrayList<AdsAnimation> animations = new ArrayList<AdsAnimation>();

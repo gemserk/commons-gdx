@@ -49,10 +49,10 @@ public class AdMobViewAndroidImpl implements AdMobView {
 		msg.what = what;
 		msg.obj = adsParameters;
 		if (adsParameters != null && adsParameters.delay > 0L) {
-			System.out.println("sending message " + (what == AdMobHandler.SHOW_ADS ? "SHOW" : "HIDE") + " with delay of " + adsParameters.delay + "ms");
+			// System.out.println("sending message " + (what == AdMobHandler.SHOW_ADS ? "SHOW" : "HIDE") + " with delay of " + adsParameters.delay + "ms");
 			adMobHandler.sendMessageDelayed(msg, adsParameters.delay);
 		} else {
-			System.out.println("sending message " + (what == AdMobHandler.SHOW_ADS ? "SHOW" : "HIDE") + " without delay");
+			// System.out.println("sending message " + (what == AdMobHandler.SHOW_ADS ? "SHOW" : "HIDE") + " without delay");
 			adMobHandler.sendMessage(msg);
 		}
 	}
@@ -60,7 +60,7 @@ public class AdMobViewAndroidImpl implements AdMobView {
 	private void clearEnqueuedMessages() {
 		// if (logger.isDebugEnabled())
 		// logger.debug("removing enqueued messages");
-		System.out.println("clearing enqueued messages");
+		// System.out.println("clearing enqueued messages");
 		adMobHandler.removeMessages(AdMobHandler.SHOW_ADS);
 		adMobHandler.removeMessages(AdMobHandler.HIDE_ADS);
 	}
