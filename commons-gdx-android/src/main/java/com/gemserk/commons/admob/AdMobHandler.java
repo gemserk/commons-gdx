@@ -5,14 +5,68 @@ import java.util.ArrayList;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
+import com.gemserk.commons.admob.AdsAnimation.Type;
 import com.google.ads.AdView;
 
 public class AdMobHandler extends Handler {
+
+	static class AnimationAdapter implements AnimationListener {
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+
+		}
+
+	}
+
+	static class HideAnimationListener extends AnimationAdapter {
+
+		private final AdView adView;
+
+		public HideAnimationListener(AdView adView) {
+			this.adView = adView;
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			adView.setVisibility(View.GONE);
+			System.out.println("setting visibility to gone");
+		}
+
+	}
+
+	static class ShowAnimationListener extends AnimationAdapter {
+
+		private final AdView adView;
+
+		public ShowAnimationListener(AdView adView) {
+			this.adView = adView;
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+			adView.setVisibility(View.VISIBLE);
+			System.out.println("setting visibility to visible");
+		}
+
+	}
 
 	public static final int SHOW_ADS = 1;
 	public static final int HIDE_ADS = 0;
@@ -42,13 +96,13 @@ public class AdMobHandler extends Handler {
 	private void hideAds(Message msg) {
 		AdsParameters adsParameters = (AdsParameters) msg.obj;
 
-		if (adsParameters != null && adView.getVisibility() != View.GONE) {
+		if (adsParameters != null && !adsParameters.animations.isEmpty()) {
 
 			// if (adView.getVisibility() != View.GONE) {
 			// Fade the ad in over 4/10 of a second.
 
 			ArrayList<AdsAnimation> animations = adsParameters.animations;
-			
+
 			for (int i = 0; i < animations.size(); i++) {
 				AdsAnimation adsAnimation = animations.get(i);
 
@@ -57,25 +111,35 @@ public class AdMobHandler extends Handler {
 					animation.setDuration(adsAnimation.duration);
 					animation.setFillAfter(false);
 					animation.setInterpolator(new LinearInterpolator());
+					animation.setAnimationListener(new HideAnimationListener(adView));
 					adView.startAnimation(animation);//
+					
+					System.out.println("hiding with animation alpha");
+				} else if (adsAnimation.type == Type.Translation) {
+					float yDelta = adsParameters.verticalAlign == AdsParameters.VERTICAL_TOP ? -75f : 75f;
+					TranslateAnimation animation = new TranslateAnimation(0, 0, 0, yDelta);
+					animation.setDuration(adsAnimation.duration);
+					animation.setInterpolator(new LinearInterpolator());
+					animation.setAnimationListener(new HideAnimationListener(adView));
+					adView.startAnimation(animation);
+					
+					System.out.println("hiding with animation translation");
+				} else {
+					adView.setVisibility(View.GONE);
 				}
 
 			}
 
-			// }
-
 		} else {
 			adView.setVisibility(View.GONE);
 		}
-
-		// adView.setVisibility(View.GONE);
 
 	}
 
 	private void showAds(Message msg) {
 		AdsParameters adsParameters = (AdsParameters) msg.obj;
 
-		if (adsParameters != null) {
+		if (adsParameters != null && !adsParameters.animations.isEmpty()) {
 			RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
 			adParams.addRule(getVerticalAlign(adsParameters));
@@ -95,7 +159,21 @@ public class AdMobHandler extends Handler {
 					animation.setDuration(adsAnimation.duration);
 					animation.setFillAfter(false);
 					animation.setInterpolator(new LinearInterpolator());
-					adView.startAnimation(animation);// */
+					animation.setAnimationListener(new ShowAnimationListener(adView));
+					adView.startAnimation(animation);
+					
+					System.out.println("showing with animation alpha");
+				} else if (adsAnimation.type == Type.Translation) {
+					float yDelta = adsParameters.verticalAlign == AdsParameters.VERTICAL_TOP ? -75f : 75f;
+					TranslateAnimation animation = new TranslateAnimation(0, 0, yDelta, 0);
+					animation.setDuration(adsAnimation.duration);
+					animation.setInterpolator(new LinearInterpolator());
+					animation.setAnimationListener(new ShowAnimationListener(adView));
+					adView.startAnimation(animation);
+					
+					System.out.println("showing with animation translation");
+				} else {
+					adView.setVisibility(View.VISIBLE);
 				}
 
 				// dont support other animations yet...
@@ -104,7 +182,6 @@ public class AdMobHandler extends Handler {
 			adView.setVisibility(View.VISIBLE);
 		}
 
-		// adView.setVisibility(View.VISIBLE);
 	}
 
 	private int getVerticalAlign(AdsParameters adViewLocation) {

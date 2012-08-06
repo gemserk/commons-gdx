@@ -3,7 +3,7 @@ package com.gemserk.commons.admob;
 public class AdsAnimation {
 
 	public static enum Type {
-		Alpha
+		Alpha, Translation
 	}
 
 	public Type type;
