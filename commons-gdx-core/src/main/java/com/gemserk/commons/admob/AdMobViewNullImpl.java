@@ -27,4 +27,9 @@ public class AdMobViewNullImpl implements AdMobView {
 		
 	}
 
+	@Override
+	public void hide(AdsParameters adsParameters) {
+		
+	}
+
 }
