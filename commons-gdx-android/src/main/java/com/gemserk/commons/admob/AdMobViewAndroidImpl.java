@@ -47,8 +47,7 @@ public class AdMobViewAndroidImpl implements AdMobView {
 	private void sendMessage(int what, AdsParameters adsParameters) {
 		Message msg = adMobHandler.obtainMessage();
 		msg.what = what;
-		if (adsParameters != null)
-			msg.obj = adsParameters;
+		msg.obj = adsParameters;
 		if (adsParameters != null && adsParameters.delay > 0L) {
 			System.out.println("sending message " + (what == AdMobHandler.SHOW_ADS ? "SHOW" : "HIDE") + " with delay of " + adsParameters.delay + "ms");
 			adMobHandler.sendMessageDelayed(msg, adsParameters.delay);

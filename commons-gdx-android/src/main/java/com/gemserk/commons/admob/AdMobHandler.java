@@ -95,11 +95,11 @@ public class AdMobHandler extends Handler {
 
 	private void hideAds(Message msg) {
 		AdsParameters adsParameters = (AdsParameters) msg.obj;
+		
+		if (adView.getVisibility() == View.GONE)
+			return;
 
 		if (adsParameters != null && !adsParameters.animations.isEmpty()) {
-
-			// if (adView.getVisibility() != View.GONE) {
-			// Fade the ad in over 4/10 of a second.
 
 			ArrayList<AdsAnimation> animations = adsParameters.animations;
 
@@ -119,6 +119,7 @@ public class AdMobHandler extends Handler {
 					float yDelta = adsParameters.verticalAlign == AdsParameters.VERTICAL_TOP ? -75f : 75f;
 					TranslateAnimation animation = new TranslateAnimation(0, 0, 0, yDelta);
 					animation.setDuration(adsAnimation.duration);
+					animation.setFillAfter(false);
 					animation.setInterpolator(new LinearInterpolator());
 					animation.setAnimationListener(new HideAnimationListener(adView));
 					adView.startAnimation(animation);
