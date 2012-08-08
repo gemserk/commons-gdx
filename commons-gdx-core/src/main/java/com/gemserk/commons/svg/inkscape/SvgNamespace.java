@@ -49,9 +49,13 @@ public class SvgNamespace {
 	public static boolean isType(String type, Element element) {
 		if (element == null)
 			return false;
-		return type.equalsIgnoreCase(element.getNodeName());
+		return isType(type, element.getNodeName());
 	}
 
+	private static boolean isType(String type, String nodeName) {
+		return type.equalsIgnoreCase(nodeName);
+	}
+	
 	public static boolean hasAttribute(Element element, String attribute) {
 		return element.getAttributeNode(attribute) != null;
 	}

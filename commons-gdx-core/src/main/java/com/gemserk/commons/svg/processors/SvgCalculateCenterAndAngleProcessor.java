@@ -15,9 +15,9 @@ public class SvgCalculateCenterAndAngleProcessor extends SvgElementProcessor {
 
 	@Override
 	public boolean processElement(Element element) {
-		
-		if (!SvgNamespace.isImage(element))
-			return true;
+
+		// if (!SvgNamespace.isImage(element))
+		// return true;
 
 		if (!SvgNamespace.hasAttribute(element, SvgNamespace.attributeX))
 			return true;
