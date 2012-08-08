@@ -38,14 +38,14 @@ public class SpriteActor extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		sprite.setSize(this.width, this.height);
-		SpriteUtils.centerOn(sprite, this.x, this.y, cx, cy);
-		sprite.setRotation(this.rotation);
+		sprite.setSize(this.getWidth(), this.getHeight());
+		SpriteUtils.centerOn(sprite, this.getX(), this.getY(), cx, cy);
+		sprite.setRotation(this.getRotation());
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		sprite.draw(batch,color.a * parentAlpha);
+		sprite.draw(batch, getColor().a * parentAlpha);
 	}
 	
 }

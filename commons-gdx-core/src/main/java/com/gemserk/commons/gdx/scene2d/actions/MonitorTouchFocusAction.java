@@ -15,13 +15,8 @@ public class MonitorTouchFocusAction extends ActionAdapter {
 	}
 
 	@Override
-	public void setTarget(Actor target) {
-		super.setTarget(target);
-	}
-
-	@Override
-	public void act(float delta) {
-		Actor actor = getTarget();
+	public boolean act(float delta) {
+		Actor actor = getActor();
 		Stage stage = actor.getStage();
 
 		Actor focusedActor = stage.getTouchFocus(0);
@@ -31,7 +26,7 @@ public class MonitorTouchFocusAction extends ActionAdapter {
 				focusListener.focusLost(actor);
 				hasFocus = false;
 			}
-			return;
+			return super.act(delta);
 		}
 
 		if (!hasFocus) {
@@ -39,7 +34,7 @@ public class MonitorTouchFocusAction extends ActionAdapter {
 				focusListener.focusGained(actor);
 				hasFocus = true;
 			}
-			return;
+			return super.act(delta);
 		}
 
 	}

@@ -4,36 +4,40 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.gemserk.commons.gdx.scene2d.ActionAdapter;
 import com.gemserk.commons.monitors.BooleanMonitor;
 
+/**
+ * Deprecated because Table.isPressed is not available anymore.
+ */
+@Deprecated
 public class DragBehaviorAction extends ActionAdapter {
-	
+
 	BooleanMonitor booleanMonitor;
 	boolean dragging = false;
 	Vector2 previousPosition = new Vector2();
 	Vector2 drag = new Vector2();
-	
+
 	Vector3 worldTouchPosition = new Vector3();
 
 	@Override
-	public void setTarget(Actor target) {
-		super.setTarget(target);
+	public void setActor(Actor actor) {
+		super.setActor(actor);
 		booleanMonitor = new BooleanMonitor(false);
 	}
 
 	@Override
-	public void act(float delta) {
+	public boolean act(float delta) {
 		super.act(delta);
 
-		Table table = (Table) getTarget();
-		
+		Table table = (Table) getActor();
+
 		worldTouchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 1f);
 		table.getStage().getCamera().unproject(worldTouchPosition);
-		
-		booleanMonitor.update(table.isPressed);
-		
+
+		// booleanMonitor.update(table.isPressed);
+
 		if (booleanMonitor.isChanged()) {
 			if (booleanMonitor.getValue())
 				previousPosition.set(worldTouchPosition.x, worldTouchPosition.y);
@@ -44,15 +48,17 @@ public class DragBehaviorAction extends ActionAdapter {
 		if (dragging) {
 			drag.set(worldTouchPosition.x, worldTouchPosition.y);
 			drag.sub(previousPosition);
-			
+
 			drag.x = Math.round(drag.x);
 			drag.y = Math.round(drag.y);
 
-			table.x += drag.x;
-			table.y += drag.y;
+			table.setX(table.getX() + drag.x);
+			table.setY(table.getY() + drag.y);
 
 			previousPosition.set(worldTouchPosition.x, worldTouchPosition.y);
 		}
+
+		return super.act(delta);
 
 	}
 }

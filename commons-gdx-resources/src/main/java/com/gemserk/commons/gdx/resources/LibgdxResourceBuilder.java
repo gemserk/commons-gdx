@@ -267,7 +267,7 @@ public class LibgdxResourceBuilder {
 				if (cachedAnimation == null) {
 					TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
 
-					List<Sprite> sprites = null;
+					Array<Sprite> sprites = null;
 
 					try {
 						sprites = textureAtlas.createSprites(prefix);
@@ -275,14 +275,14 @@ public class LibgdxResourceBuilder {
 						throw new RuntimeException("Failed to create animation " + id + " from texture atlas " + textureAtlasId, e);
 					}
 
-					if (sprites.size() == 0)
+					if (sprites.size == 0)
 						throw new IllegalArgumentException("Failed to create animation " + id + ", no regions found for prefix " + prefix);
 
 					int endFrame = ef;
 					int startFrame = sf;
 
 					if (endFrame == -1)
-						endFrame = sprites.size() - 1;
+						endFrame = sprites.size - 1;
 
 					if (startFrame == -1)
 						startFrame = 0;
@@ -290,8 +290,8 @@ public class LibgdxResourceBuilder {
 					Sprite[] frames = new Sprite[endFrame - startFrame + 1];
 					int frameNumber = startFrame;
 
-					if (endFrame >= sprites.size()) {
-						throw new IllegalArgumentException("Failed to create animation " + id + ", end frame " + endFrame + " couldn't be greater than sprites quantity " + sprites.size());
+					if (endFrame >= sprites.size) {
+						throw new IllegalArgumentException("Failed to create animation " + id + ", end frame " + endFrame + " couldn't be greater than sprites quantity " + sprites.size);
 					}
 
 					int framesCount = frames.length;
@@ -543,10 +543,11 @@ public class LibgdxResourceBuilder {
 		return new FontResourceBuilder(resourceManager);
 	}
 
-	public SkinResourceBuilder skin(String skinFile, String textureFile) {
-		return new SkinResourceBuilder() //
+	public SkinResourceBuilder skin(String skinFile, String textureAtlasResourceId) {
+		return new SkinResourceBuilder(resourceManager) //
 				.skinFile(internal(skinFile)) //
-				.textureFile(internal(textureFile));
+				.textureAtlas(textureAtlasResourceId); //
+		// .textureFile(internal(textureFile) //
 	}
 
 	public <T> ResourceBuilder<T> alias(String resourceId) {

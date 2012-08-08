@@ -16,15 +16,14 @@ public class Scene2dConverters {
 		public float[] copyFromObject(Actor object, float[] x) {
 			if (x == null)
 				x = new float[variables()];
-			x[0] = object.x;
-			x[1] = object.y;
+			x[0] = object.getX();
+			x[1] = object.getY();
 			return x;
 		}
 
 		@Override
 		public Actor copyToObject(Actor object, float[] x) {
-			object.x = x[0];
-			object.y = x[1];
+			object.setPosition(x[0], x[1]);
 			return object;
 		}
 	};
@@ -39,15 +38,14 @@ public class Scene2dConverters {
 		public float[] copyFromObject(Actor object, float[] x) {
 			if (x == null)
 				x = new float[variables()];
-			x[0] = object.width;
-			x[1] = object.height;
+			x[0] = object.getWidth();
+			x[1] = object.getHeight();
 			return x;
 		}
 
 		@Override
 		public Actor copyToObject(Actor object, float[] x) {
-			object.width = x[0];
-			object.height = x[1];
+			object.setSize(x[0], x[1]);
 			return object;
 		}
 	};
@@ -86,15 +84,14 @@ public class Scene2dConverters {
 		public float[] copyFromObject(Actor object, float[] x) {
 			if (x == null)
 				x = new float[variables()];
-			x[0] = object.scaleX;
-			x[1] = object.scaleY;
+			x[0] = object.getScaleX();
+			x[1] = object.getScaleY();
 			return x;
 		}
 
 		@Override
 		public Actor copyToObject(Actor object, float[] x) {
-			object.scaleX = x[0];
-			object.scaleY = x[1];
+			object.setScale(x[0], x[1]);
 			return object;
 		}
 	};

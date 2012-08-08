@@ -1,54 +1,54 @@
 package com.gemserk.commons.gdx.resources;
 
-import java.util.List;
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.gemserk.animation4j.FrameAnimationImpl;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.resources.ResourceManager;
 
 public class AnimationFromTextureAtlasResourceBuilder implements ResourceBuilder<Animation> {
-	
+
 	public static class FrameTransformation {
-		
-		public void transform(Sprite sprite) {}
-		
+
+		public void transform(Sprite sprite) {
+		}
+
 	}
-	
+
 	ResourceManager<String> resourceManager;
-	List<Sprite> sprites = null;
+	Array<Sprite> sprites = null;
 
 	String textureAtlasId;
 	String prefix;
-	
+
 	int endFrame = -1;
 	int startFrame = -1;
-	
+
 	int time;
 	int times[];
-	
+
 	boolean loop;
-	
+
 	FrameTransformation frameTransformation = new FrameTransformation();
-	
+
 	@Override
 	public boolean isVolatile() {
 		return true;
 	}
-	
+
 	public AnimationFromTextureAtlasResourceBuilder prefix(String prefix) {
 		this.prefix = prefix;
 		return this;
 	}
-	
+
 	public AnimationFromTextureAtlasResourceBuilder loop(boolean loop) {
 		this.loop = loop;
 		return this;
 	}
-	
+
 	public AnimationFromTextureAtlasResourceBuilder frameTransformation(FrameTransformation frameTransformation) {
 		this.frameTransformation = frameTransformation;
 		return this;
@@ -59,8 +59,8 @@ public class AnimationFromTextureAtlasResourceBuilder implements ResourceBuilder
 		this.endFrame = endFrame;
 		return this;
 	}
-	
-	public AnimationFromTextureAtlasResourceBuilder times(int time, int ...times) {
+
+	public AnimationFromTextureAtlasResourceBuilder times(int time, int... times) {
 		this.time = time;
 		this.times = times;
 		return this;
@@ -73,7 +73,7 @@ public class AnimationFromTextureAtlasResourceBuilder implements ResourceBuilder
 
 	@Override
 	public Animation build() {
-		
+
 		TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasId);
 
 		if (sprites == null) {
@@ -85,7 +85,7 @@ public class AnimationFromTextureAtlasResourceBuilder implements ResourceBuilder
 		}
 
 		if (endFrame == -1)
-			endFrame = sprites.size() - 1;
+			endFrame = sprites.size - 1;
 
 		if (startFrame == -1)
 			startFrame = 0;
@@ -95,14 +95,14 @@ public class AnimationFromTextureAtlasResourceBuilder implements ResourceBuilder
 
 		for (int i = 0; i < frames.length; i++) {
 			Sprite sprite = sprites.get(frameNumber);
-			
+
 			if (sprite instanceof AtlasSprite)
 				frames[i] = new AtlasSprite(((AtlasSprite) sprite).getAtlasRegion());
 			else
 				frames[i] = new Sprite(sprite);
-			
+
 			frameTransformation.transform(frames[i]);
-			
+
 			frameNumber++;
 		}
 
@@ -126,6 +126,5 @@ public class AnimationFromTextureAtlasResourceBuilder implements ResourceBuilder
 
 		return new Animation(frames, frameAnimation);
 	}
-
 
 }

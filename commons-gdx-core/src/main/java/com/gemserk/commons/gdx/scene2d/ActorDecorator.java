@@ -1,7 +1,7 @@
 package com.gemserk.commons.gdx.scene2d;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class ActorDecorator {
 
@@ -26,27 +26,27 @@ public class ActorDecorator {
 	}
 
 	public float getWidth() {
-		return actor.width;
+		return actor.getWidth();
 	}
 
 	public float getHeight() {
-		return actor.height;
+		return actor.getHeight();
 	}
 
 	public void setWidth(float width) {
-		actor.width = width;
+		actor.setWidth(width);
 		center(actor, x, y, cx, cy);
 	}
 
 	public void setHeight(float height) {
-		actor.height = height;
+		actor.setHeight(height);
 		center(actor, x, y, cx, cy);
 	}
 
 	public void setActor(Actor actor) {
 		this.actor = actor;
-		this.x = actor.x + actor.width * cx;
-		this.y = actor.y + actor.height * cy;
+		this.x = actor.getX() + actor.getWidth()* cx;
+		this.y = actor.getY() + actor.getHeight() * cy;
 		center(actor, x, y, cx, cy);
 	}
 
@@ -64,8 +64,8 @@ public class ActorDecorator {
 	}
 
 	private void center(Actor actor, float x, float y, float cx, float cy) {
-		actor.x = x - actor.width * cx;
-		actor.y = y - actor.height * cy;
+		actor.setX(x - actor.getWidth() * cx);
+		actor.setY(y - actor.getHeight() * cy);
 		if (actor instanceof Table)
 			((Table) actor).invalidate();
 	}

@@ -2,13 +2,12 @@ package com.gemserk.commons.gdx.scene2d;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Align;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.FlickScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gemserk.animation4j.gdx.scenes.scene2d.Scene2dConverters;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.timeline.Builders;
@@ -24,7 +23,7 @@ public class Actors {
 		window.defaults().spaceBottom(5);
 
 		Label toastLabel = new Label(text, skin);
-		toastLabel.setAlignment(Align.LEFT);
+		toastLabel.setAlignment(Align.left);
 		toastLabel.setWrap(true);
 
 		window.row().fillX().expandX();
