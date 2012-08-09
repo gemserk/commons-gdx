@@ -1,68 +1,71 @@
 package com.gemserk.util.perf;
 
-import com.badlogic.gdx.Gdx;
+import com.gemserk.componentsengine.utils.RandomAccessMap;
 
 public class PerfLogger {
 
-	boolean enabled = false;
-	FloatSlidingWindowArray deltas;
-	IntSlidingWindowArray events;
-	int event = -1;
-	
-	int frames = 1;
-	float cummulativeDelta = 1;
-	
-	public PerfLogger(int windowSize, boolean enabled) {
-		deltas = new FloatSlidingWindowArray(windowSize);
-		events = new IntSlidingWindowArray(windowSize);
-		this.enabled = enabled;
-	}
-	
-	
-	public void update(){
-		if(enabled){
-			float deltaTime = Gdx.graphics.getRawDeltaTime();
-			deltas.add(deltaTime);
-			events.add(event);
-						
-			event = -1;
-			
-			frames++;
-			cummulativeDelta+=deltaTime;			
+	public static class PerfData {
+		public FloatSlidingWindowArray data;
+		public float current;
+
+		public PerfData(int windowSize) {
+			data = new FloatSlidingWindowArray(windowSize);
+		}
+
+		public void update() {
+			data.add(current);
+		}
+
+		public void clear() {
+			data.clear();
 		}
 	}
-	
-	public void event(int eventId){
-		event = eventId;
+
+	boolean enabled = false;
+	RandomAccessMap<String, PerfData> perfDatas = new RandomAccessMap<String, PerfLogger.PerfData>();
+
+	public PerfLogger(boolean enabled) {
+		this.enabled = enabled;
 	}
-	
-	public void enable(){
+
+	public void update() {
+		if (enabled) {
+			for (int i = 0; i < perfDatas.size(); i++) {
+				perfDatas.get(i).update();
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param key
+	 * @param perfData
+	 * @return the perfData received as a parameter
+	 */
+	public PerfData register(String key, PerfData perfData) {
+		perfDatas.put(key, perfData);
+		return perfData;
+	}
+
+	public PerfData getPerfData(String key) {
+		return perfDatas.get(key);
+	}
+
+	public void enable() {
 		enabled = true;
 	}
-	
-	public void disable(){
+
+	public void disable() {
 		enabled = false;
 	}
-	
-	public boolean isEnabled(){
+
+	public boolean isEnabled() {
 		return enabled;
 	}
-	
-	public FloatSlidingWindowArray getDeltas() {
-		return deltas;
-	}
-	
-	public IntSlidingWindowArray getEvents() {
-		return events;
-	}
-	
-	public float getAverageDelta() {
-		return cummulativeDelta/frames;
-	}
-	
-	public void clear(){
-		deltas.clear();
-		events.clear();
-		event = -1;
+
+	public void clear() {
+		for (int i = 0; i < perfDatas.size(); i++) {
+			perfDatas.get(i).clear();
+		}
 	}
 }
