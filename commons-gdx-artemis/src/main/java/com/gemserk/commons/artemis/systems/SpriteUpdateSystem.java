@@ -12,6 +12,7 @@ import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.time.TimeStepProvider;
 import com.gemserk.commons.gdx.time.TimeStepProviderGlobalImpl;
+import com.gemserk.componentsengine.utils.AngleUtils;
 
 /**
  * Updates Sprites from SpriteComponent to the location of the Spatial from the SpatialComponent, if the entity has a PreviousSpatialStateComponent, then it performs an interpolation between both spatial information using the GlobalTime.getAlpha().
@@ -23,9 +24,9 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 		public SpatialComponent spatialComponent;
 		public SpriteComponent spriteComponent;
 		public PreviousStateSpatialComponent previousStateSpatialComponent;
-		
+
 	}
-	
+
 	public static class Factory extends EntityComponentsFactory<EntityComponents> {
 
 		@Override
@@ -34,7 +35,7 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 		}
 
 		@Override
-		public void free(EntityComponents entityComponent) {			
+		public void free(EntityComponents entityComponent) {
 		}
 
 		@Override
@@ -43,16 +44,16 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 			entityComponent.spriteComponent = Components.getSpriteComponent(e);
 			entityComponent.previousStateSpatialComponent = Components.getPreviousStateSpatialComponent(e);
 		}
-		
+
 	}
-	
+
 	private final TimeStepProvider timeStepProvider;
 	private Factory factory;
 
 	public SpriteUpdateSystem() {
 		this(new TimeStepProviderGlobalImpl());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public SpriteUpdateSystem(TimeStepProvider timeStepProvider) {
 		super(Components.spatialComponentClass, Components.spriteComponentClass);
@@ -62,7 +63,7 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(Entity e) {
-		
+
 		EntityComponents components = factory.get(e);
 		SpatialComponent spatialComponent = components.spatialComponent;
 		SpriteComponent spriteComponent = components.spriteComponent;
@@ -80,7 +81,9 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 			Spatial previousSpatial = previousStateSpatialComponent.getSpatial();
 			newX = FloatInterpolator.interpolate(previousSpatial.getX(), spatial.getX(), interpolationAlpha);
 			newY = FloatInterpolator.interpolate(previousSpatial.getY(), spatial.getY(), interpolationAlpha);
-			angle = FloatInterpolator.interpolate(previousSpatial.getAngle(), spatial.getAngle(), interpolationAlpha);
+			float angleDiff = (float) AngleUtils.minimumDifference(previousSpatial.getAngle(), spatial.getAngle());
+			// angle = FloatInterpolator.interpolate(previousSpatial.getAngle(), spatial.getAngle(), interpolationAlpha);
+			angle = FloatInterpolator.interpolate(spatial.getAngle() - angleDiff, spatial.getAngle(), interpolationAlpha);
 		}
 
 		Sprite sprite = spriteComponent.getSprite();
@@ -90,29 +93,29 @@ public class SpriteUpdateSystem extends EntityProcessingSystem {
 			if (sprite.getRotation() != angle)
 				sprite.setRotation(angle);
 		}
-		
+
 		float ox = spatial.getWidth() * center.x;
 		float oy = spatial.getHeight() * center.y;
-		
+
 		if (ox != sprite.getOriginX() || oy != sprite.getOriginY())
 			sprite.setOrigin(ox, oy);
 
 		if (sprite.getWidth() != spatial.getWidth() || sprite.getHeight() != spatial.getHeight())
 			sprite.setSize(spatial.getWidth(), spatial.getHeight());
-		
+
 		float x = newX - sprite.getOriginX();
 		float y = newY - sprite.getOriginY();
-		
+
 		if (x != sprite.getX() || y != sprite.getY())
 			sprite.setPosition(x, y);
 	}
-	
+
 	@Override
 	protected void enabled(Entity e) {
 		super.enabled(e);
 		factory.add(e);
 	}
-	
+
 	@Override
 	protected void disabled(Entity e) {
 		factory.remove(e);
