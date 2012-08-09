@@ -7,13 +7,21 @@ public class PerfLogger {
 	public static class PerfData {
 		public FloatSlidingWindowArray data;
 		public float current;
+		private final float defaultValue;
 
+		
 		public PerfData(int windowSize) {
+			this(windowSize,0);
+		}
+		
+		public PerfData(int windowSize, float defaultValue) {
+			this.defaultValue = defaultValue;
 			data = new FloatSlidingWindowArray(windowSize);
 		}
 
 		public void update() {
 			data.add(current);
+			current=defaultValue;
 		}
 
 		public void clear() {
