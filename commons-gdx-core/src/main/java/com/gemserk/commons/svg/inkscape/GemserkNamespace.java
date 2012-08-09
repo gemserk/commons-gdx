@@ -1,6 +1,7 @@
 package com.gemserk.commons.svg.inkscape;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import com.gemserk.vecmath.Matrix3f;
 
@@ -44,8 +45,16 @@ public class GemserkNamespace {
 		return Float.parseFloat(element.getAttributeNS(namespace, attributeCenterX));
 	}
 
+	public static float getCenterX(Node node) {
+		return Float.parseFloat(node.getAttributes().getNamedItemNS(namespace, attributeCenterX).getNodeValue());
+	}
+	
 	public static float getCenterY(Element element) {
 		return Float.parseFloat(element.getAttributeNS(namespace, attributeCenterY));
+	}
+	
+	public static float getCenterY(Node node) {
+		return Float.parseFloat(node.getAttributes().getNamedItemNS(namespace, attributeCenterY).getNodeValue());
 	}
 
 	public static void setCenter(Element element, float cx, float cy) {
