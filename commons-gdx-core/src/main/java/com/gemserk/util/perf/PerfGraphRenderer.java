@@ -38,13 +38,22 @@ public class PerfGraphRenderer {
 		// shapeRenderer.end();
 	}
 
-	public void renderGraph2(PerfData perfData, ShapeRenderer shapeRenderer, float x, float y, float width, float height, float minValue, float maxValue, Color color, boolean bounding) {
+	public void renderGraph2(PerfData perfData, ShapeRenderer shapeRenderer, float x, float y, float width, float height, float minValue, float maxValue, Color color, boolean bounding, float[] guidelines) {
 		FloatSlidingWindowArray deltas = perfData.data;
 		int steps = deltas.size();
 		float lastY = y + MathUtils2.inverseLinealInterpolation(deltas.get(0), minValue, maxValue) * height;
 		float stepX = ((float) width) / deltas.getWindowSize();
-		shapeRenderer.setColor(color);
+		
 		shapeRenderer.begin(ShapeType.Line);
+		if(guidelines!=null){
+			shapeRenderer.setColor(Color.YELLOW);
+			for (int i = 0; i < guidelines.length; i++) {
+				float percentHeight = MathUtils2.inverseLinealInterpolation(guidelines[i], minValue, maxValue);
+				float guidelineY = y + height * percentHeight;
+				shapeRenderer.line(x, guidelineY, x + width, guidelineY);
+			}
+		}
+		shapeRenderer.setColor(color);
 		for (int i = 1; i < steps; i++) {
 			float percentHeight = MathUtils2.inverseLinealInterpolation(deltas.get(i), minValue, maxValue);
 			float nextY = y + height * percentHeight;
@@ -59,6 +68,8 @@ public class PerfGraphRenderer {
 			shapeRenderer.line(x + width, y + height, x, y + height);
 			shapeRenderer.line(x, y + height, x, y);
 		}
+		
+	
 		shapeRenderer.end();
 
 		// IntSlidingWindowArray events = perfLogger.getEvents();
