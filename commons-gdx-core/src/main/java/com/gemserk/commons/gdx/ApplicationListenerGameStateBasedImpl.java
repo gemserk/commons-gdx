@@ -16,6 +16,22 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 	protected GameState gameState;
 	protected boolean transitioning;
+	
+	/**
+	 * The global speed of the game, 1 by default.
+	 */
+	private float speed = 1f;
+	
+	/**
+	 * Sets the global speed of the game.
+	 */
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
 
 	public GameState getGameState() {
 		return gameState;
@@ -48,7 +64,7 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			return;
 		// should set the global time
 
-		float delta = Gdx.graphics.getRawDeltaTime();
+		float delta = Gdx.graphics.getRawDeltaTime() * speed;
 		float alpha = 1f;
 
 		GlobalTime.setDelta(delta);

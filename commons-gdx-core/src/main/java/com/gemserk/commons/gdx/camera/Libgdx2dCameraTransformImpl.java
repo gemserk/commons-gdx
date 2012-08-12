@@ -92,8 +92,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 	@Override
 	public void apply(SpriteBatch spriteBatch) {
-		calculateTransform(transform);
-		spriteBatch.setTransformMatrix(transform);
+		spriteBatch.setProjectionMatrix(getCombinedMatrix());
 	}
 
 	public void apply() {
@@ -203,7 +202,7 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 
 			invertedTransform.set(transform.val);
 			invertedTransform.inv();
-			
+
 			matrixDirty = false;
 		}
 	}

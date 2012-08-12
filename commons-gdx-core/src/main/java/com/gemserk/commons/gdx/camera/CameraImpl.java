@@ -11,12 +11,18 @@ public class CameraImpl implements Camera {
 	public CameraImpl() {
 		this(0f, 0f, 1f, 0f);
 	}
-
+	
 	public CameraImpl(float x, float y, float zoom, float angle) {
 		this.x = x;
 		this.y = y;
 		this.zoom = zoom;
 		this.angle = angle;
+	}
+	
+	public void set(Camera camera) {
+		setPosition(camera.getX(), camera.getY());
+		setAngle(camera.getAngle());
+		setZoom(camera.getZoom());
 	}
 
 	public void setPosition(float x, float y) {

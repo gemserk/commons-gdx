@@ -27,10 +27,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		public TextComponent textComponent;
 		public ParticleEmitterComponent particleEmitterComponent;
 	}
-	
 
-	
-	
 	private final SpriteBatch spriteBatch;
 	private final OrderedByLayerEntities orderedByLayerEntities;
 	private final Libgdx2dCamera camera;
@@ -39,17 +36,21 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	private final Rectangle frustum = new Rectangle();
 	private final Rectangle entityBounds = new Rectangle();
 	private Factory factory;
-	
+
+	private boolean ownsSpriteBatch;
+
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch) {
 		this.camera = camera;
 		this.spriteBatch = spriteBatch;
 		this.orderedByLayerEntities = new OrderedByLayerEntities(minLayer, maxLayer);
 		this.enabled = true;
 		this.factory = new Factory();
+		this.ownsSpriteBatch = false;
 	}
 
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera) {
 		this(minLayer, maxLayer, camera, new SpriteBatch());
+		this.ownsSpriteBatch = true;
 	}
 
 	@Override
@@ -59,7 +60,8 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
 	@Override
 	public void dispose() {
-		spriteBatch.dispose();
+		if (ownsSpriteBatch)
+			spriteBatch.dispose();
 	}
 
 	@Override
@@ -84,9 +86,9 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	public void render() {
 		camera.getFrustum(frustum);
 		camera.apply(spriteBatch);
-		
+
 		IntMap<EntityComponents> entityComponents = factory.entityComponents;
-		
+
 		spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerEntities.size(); i++) {
 			Entity e = orderedByLayerEntities.get(i);
@@ -99,16 +101,16 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			if (frustumCullingComponent != null) {
 
 				Spatial spatial = components.spatialComponent.getSpatial();
-				
+
 				entityBounds.set(frustumCullingComponent.bounds);
-				
+
 				entityBounds.setX(entityBounds.getX() + spatial.getX());
 				entityBounds.setY(entityBounds.getY() + spatial.getY());
-				
+
 				if (!frustum.overlaps(entityBounds))
 					continue;
 			}
-			
+
 			SpriteComponent spriteComponent = components.spriteComponent;
 			if (spriteComponent != null) {
 				Sprite sprite = spriteComponent.getSprite();
@@ -119,11 +121,11 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			TextComponent textComponent = components.textComponent;
 			if (textComponent != null) {
 				BitmapFont font = textComponent.font;
-				
+
 				if (font.getScaleX() != textComponent.scale) {
 					font.setScale(textComponent.scale);
 				}
-				
+
 				font.setColor(textComponent.color);
 				SpriteBatchUtils.drawMultilineText(spriteBatch, font, //
 						textComponent.text, textComponent.x, textComponent.y, textComponent.cx, textComponent.cy);
@@ -145,7 +147,7 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 	class Factory extends EntityComponentsFactory<EntityComponents> {
 
 		@Override
