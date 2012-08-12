@@ -28,7 +28,7 @@ public class ScaleOnFocusAction extends ActionAdapter {
 			@Override
 			public void focusLost(Actor actor) {
 				focusTransition = Transitions.transition(actorDecorator, Scene2dConverters.actorDecoratorSizeTypeConverter) //
-						.start(actor.width, actor.height) //
+						.start(actor.getWidth(), actor.getHeight()) //
 						.end(0.1f, width * 1f, height * 1f) //
 						.build();
 			}
@@ -36,28 +36,30 @@ public class ScaleOnFocusAction extends ActionAdapter {
 			@Override
 			public void focusGained(Actor actor) {
 				focusTransition = Transitions.transition(actorDecorator, Scene2dConverters.actorDecoratorSizeTypeConverter) //
-						.start(actor.width, actor.height) //
+						.start(actor.getWidth(), actor.getHeight()) //
 						.end(0.1f, width * 1.1f, height * 1.1f) //
 						.build();
 			}
 		});
 
 	}
-
+	
 	@Override
-	public void setTarget(Actor target) {
-		super.setTarget(target);
-		width = target.width;
-		height = target.height;
-		actorDecorator.setActor(target);
-		monitorTouchFocusAction.setTarget(target);
+	public void setActor(Actor actor) {
+		super.setActor(actor);
+		width = actor.getWidth();
+		height = actor.getHeight();
+		actorDecorator.setActor(actor);
+		monitorTouchFocusAction.setActor(actor);
 	}
 
 	@Override
-	public void act(float delta) {
+	public boolean act(float delta) {
 		monitorTouchFocusAction.act(delta);
 
 		if (focusTransition != null)
 			focusTransition.update(delta);
+		
+		return super.act(delta);
 	}
 }

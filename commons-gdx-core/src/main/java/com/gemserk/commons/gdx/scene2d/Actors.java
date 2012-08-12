@@ -2,7 +2,9 @@ package com.gemserk.commons.gdx.scene2d;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -31,25 +33,25 @@ public class Actors {
 		
 		window.invalidate();
 		
-		window.width = Gdx.graphics.getWidth() * 0.95f;
-		window.height = toastLabel.getTextBounds().height + 20 + window.getStyle().titleFont.getLineHeight();
+		window.setWidth(Gdx.graphics.getWidth() * 0.95f);
+		window.setHeight(toastLabel.getTextBounds().height + 20 + window.getStyle().titleFont.getLineHeight());
 
-		window.x = Gdx.graphics.getWidth() * 0.5f - window.width * 0.5f;
+		window.setX(Gdx.graphics.getWidth() * 0.5f - window.getWidth() * 0.5f);
 
-		float outsideY = Gdx.graphics.getHeight() + window.height;
-		float insideY = Gdx.graphics.getHeight() - window.height + window.getStyle().titleFont.getLineHeight();
+		float outsideY = Gdx.graphics.getHeight() + window.getHeight();
+		float insideY = Gdx.graphics.getHeight() - window.getHeight() + window.getStyle().titleFont.getLineHeight();
 
-		window.y = outsideY;
+		window.setY(outsideY);
 		
 		final TimelineAnimation timelineAnimation = Builders.animation( //
 				Builders.timeline() //
 						.value(Builders.timelineValue(window, Scene2dConverters.actorPositionTypeConverter) //
-								.keyFrame(0f, new float[] { window.x, outsideY }, //
+								.keyFrame(0f, new float[] { window.getX(), outsideY }, //
 										InterpolationFunctions.linear(), InterpolationFunctions.easeIn()) //
-								.keyFrame(1f, new float[] { window.x, insideY }) //
-								.keyFrame(4f, new float[] { window.x, insideY }, //
+								.keyFrame(1f, new float[] { window.getX(), insideY }) //
+								.keyFrame(4f, new float[] { window.getX(), insideY }, //
 										InterpolationFunctions.linear(), InterpolationFunctions.easeOut()) //
-								.keyFrame(5f, new float[] { window.x, outsideY }) //
+								.keyFrame(5f, new float[] { window.getX(), outsideY }) //
 						) //
 				) //
 				.started(true) //
@@ -57,14 +59,15 @@ public class Actors {
 				.speed(5f / time) //
 				.build();
 		
-		window.action(new ActionAdapter(){ 
+		window.addAction(new ActionAdapter(){ 
 			@Override
-			public void act(float delta) {
+			public boolean act(float delta) {
 				timelineAnimation.update(delta);
-
-				if (timelineAnimation.isFinished()) {
-					window.getStage().removeActor(window);
+				if (timelineAnimation.isFinished()) { 
+					window.remove();
+					done = true;
 				}
+				return super.act(delta);
 			}
 		});
 		
@@ -85,16 +88,16 @@ public class Actors {
 		TextButton firstOptionButton = new TextButton(firstOption, skin);
 		TextButton secondOptionButton = new TextButton(secondOption, skin);
 
-		firstOptionButton.setClickListener(new ClickListener() {
+		firstOptionButton.addListener(new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				dialogListener.optionSelected(0);
 			}
 		});
 
-		secondOptionButton.setClickListener(new ClickListener() {
+		secondOptionButton.addListener(new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				dialogListener.optionSelected(1);
 			}
 		});
@@ -106,19 +109,19 @@ public class Actors {
 			window.row().padLeft(20);
 			Label label = new Label(texts[i], skin);
 			label.setWrap(true);
-			window.add(label).align(Align.LEFT).colspan(2).fillX();
+			window.add(label).align(Align.left).colspan(2).fillX();
 		}
 
 		window.row().fill().expandX();
-		window.add(firstOptionButton).align(Align.CENTER).padLeft(20).padRight(20).expandX();
-		window.add(secondOptionButton).align(Align.CENTER).padLeft(20).padRight(20).expandX();
+		window.add(firstOptionButton).align(Align.center).padLeft(20).padRight(20).expandX();
+		window.add(secondOptionButton).align(Align.center).padLeft(20).padRight(20).expandX();
 
-		FlickScrollPane scrollPane = new FlickScrollPane(window);
+		ScrollPane scrollPane = new ScrollPane(window);
 
-		scrollPane.width = Gdx.graphics.getWidth() * 0.95f;
-		scrollPane.height = Gdx.graphics.getHeight() * 0.95f;
-		scrollPane.x = Gdx.graphics.getWidth() * 0.5f - scrollPane.width * 0.5f;
-		scrollPane.y = Gdx.graphics.getHeight() * 0.5f - scrollPane.height * 0.5f;
+		scrollPane.setWidth(Gdx.graphics.getWidth() * 0.95f);
+		scrollPane.setHeight(Gdx.graphics.getHeight() * 0.95f);
+		scrollPane.setX(Gdx.graphics.getWidth() * 0.5f - scrollPane.getWidth() * 0.5f);
+		scrollPane.setY(Gdx.graphics.getHeight() * 0.5f - scrollPane.getHeight() * 0.5f);
 
 		return scrollPane;
 	}
@@ -132,23 +135,23 @@ public class Actors {
 		TextButton secondOptionButton = new TextButton(secondOption, skin);
 		TextButton thirdOptionButton = new TextButton(thirdOption, skin);
 
-		firstOptionButton.setClickListener(new ClickListener() {
+		firstOptionButton.addListener(new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				dialogListener.optionSelected(0);
 			}
 		});
 
-		secondOptionButton.setClickListener(new ClickListener() {
+		secondOptionButton.addListener(new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				dialogListener.optionSelected(1);
 			}
 		});
 		
-		thirdOptionButton.setClickListener(new ClickListener() {
+		thirdOptionButton.addListener(new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked(InputEvent event, float x, float y) {
 				dialogListener.optionSelected(2);
 			}
 		});
@@ -160,22 +163,22 @@ public class Actors {
 			window.row().padLeft(20);
 			Label label = new Label(texts[i], skin);
 			label.setWrap(true);
-			window.add(label).align(Align.LEFT).colspan(2).fillX();
+			window.add(label).align(Align.left).colspan(2).fillX();
 		}
 
 		window.row().fill().expandX().padTop(10);
-		window.add(firstOptionButton).align(Align.CENTER).padLeft(30).padRight(30);
+		window.add(firstOptionButton).align(Align.center).padLeft(30).padRight(30);
 		window.row().fill().expandX();
-		window.add(secondOptionButton).align(Align.CENTER).padLeft(30).padRight(30);
+		window.add(secondOptionButton).align(Align.center).padLeft(30).padRight(30);
 		window.row().fill().expandX();
-		window.add(thirdOptionButton).align(Align.CENTER).padLeft(30).padRight(30);
+		window.add(thirdOptionButton).align(Align.center).padLeft(30).padRight(30);
 
-		FlickScrollPane scrollPane = new FlickScrollPane(window);
+		ScrollPane scrollPane = new ScrollPane(window);
 
-		scrollPane.width = Gdx.graphics.getWidth() * 0.95f;
-		scrollPane.height = Gdx.graphics.getHeight() * 0.95f;
-		scrollPane.x = Gdx.graphics.getWidth() * 0.5f - scrollPane.width * 0.5f;
-		scrollPane.y = Gdx.graphics.getHeight() * 0.5f - scrollPane.height * 0.5f;
+		scrollPane.setWidth(Gdx.graphics.getWidth() * 0.95f);
+		scrollPane.setHeight(Gdx.graphics.getHeight() * 0.95f);
+		scrollPane.setX(Gdx.graphics.getWidth() * 0.5f - scrollPane.getWidth() * 0.5f);
+		scrollPane.setY(Gdx.graphics.getHeight() * 0.5f - scrollPane.getHeight() * 0.5f);
 		
 		return scrollPane;
 	}
