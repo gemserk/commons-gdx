@@ -33,9 +33,7 @@ public abstract class ActionAdapter extends Action {
 
 	}
 
-	public boolean update(float delta) {
-		return false;
-	}
+	public abstract boolean update(float delta);
 
 	public void end() {
 
