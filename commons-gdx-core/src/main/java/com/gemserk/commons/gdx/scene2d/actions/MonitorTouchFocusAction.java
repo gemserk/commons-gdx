@@ -14,7 +14,7 @@ public class MonitorTouchFocusAction extends ActionAdapter {
 	}
 
 	@Override
-	public boolean act(float delta) {
+	public boolean update(float delta) {
 		return true;
 		// Actor focusedActor = stage.getTouchFocus(0);
 		//
@@ -35,4 +35,5 @@ public class MonitorTouchFocusAction extends ActionAdapter {
 		// }
 
 	}
+
 }

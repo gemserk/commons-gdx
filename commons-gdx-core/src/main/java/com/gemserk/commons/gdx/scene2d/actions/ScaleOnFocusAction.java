@@ -54,12 +54,12 @@ public class ScaleOnFocusAction extends ActionAdapter {
 	}
 
 	@Override
-	public boolean act(float delta) {
+	public boolean update(float delta) {
 		monitorTouchFocusAction.act(delta);
 
 		if (focusTransition != null)
 			focusTransition.update(delta);
 		
-		return super.act(delta);
+		return false;
 	}
 }

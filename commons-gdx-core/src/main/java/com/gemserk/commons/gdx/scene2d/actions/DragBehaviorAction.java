@@ -3,7 +3,6 @@ package com.gemserk.commons.gdx.scene2d.actions;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.gemserk.commons.gdx.scene2d.ActionAdapter;
 import com.gemserk.commons.monitors.BooleanMonitor;
@@ -22,15 +21,12 @@ public class DragBehaviorAction extends ActionAdapter {
 	Vector3 worldTouchPosition = new Vector3();
 
 	@Override
-	public void setActor(Actor actor) {
-		super.setActor(actor);
+	public void begin() {
 		booleanMonitor = new BooleanMonitor(false);
 	}
 
 	@Override
-	public boolean act(float delta) {
-		super.act(delta);
-
+	public boolean update(float delta) {
 		Table table = (Table) getActor();
 
 		worldTouchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 1f);
@@ -58,7 +54,7 @@ public class DragBehaviorAction extends ActionAdapter {
 			previousPosition.set(worldTouchPosition.x, worldTouchPosition.y);
 		}
 
-		return super.act(delta);
-
+		return false;
 	}
+	
 }

@@ -61,13 +61,13 @@ public class Actors {
 		
 		window.addAction(new ActionAdapter(){ 
 			@Override
-			public boolean act(float delta) {
+			public boolean update(float delta) {
 				timelineAnimation.update(delta);
 				if (timelineAnimation.isFinished()) { 
 					window.remove();
-					done = true;
+					return true;
 				}
-				return super.act(delta);
+				return false;
 			}
 		});
 		

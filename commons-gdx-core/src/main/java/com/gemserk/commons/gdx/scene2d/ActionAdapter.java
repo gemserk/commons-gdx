@@ -1,30 +1,44 @@
 package com.gemserk.commons.gdx.scene2d;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class ActionAdapter extends Action {
+public abstract class ActionAdapter extends Action {
 
-	protected boolean done;
-
-	public void setDone(boolean done) {
-		this.done = done;
-	}
+	protected boolean initialized;
 
 	public ActionAdapter() {
-		done = false;
+		initialized = false;
+	}
+
+	@Override
+	public void setActor(Actor actor) {
+		if (actor == null && this.actor != null) {
+			end();
+			initialized = false;
+		}
+		super.setActor(actor);
 	}
 
 	@Override
 	public boolean act(float delta) {
-		return done;
+		if (!initialized) {
+			begin();
+			initialized = true;
+		}
+		return update(delta);
 	}
 
-	// @Override
-	// public Action copy() {
-	// ActionAdapter actionAdapter = new ActionAdapter();
-	// actionAdapter.target = this.target;
-	// actionAdapter.done = this.done;
-	// return actionAdapter;
-	// }
+	public void begin() {
+
+	}
+
+	public boolean update(float delta) {
+		return false;
+	}
+
+	public void end() {
+
+	}
 
 }
