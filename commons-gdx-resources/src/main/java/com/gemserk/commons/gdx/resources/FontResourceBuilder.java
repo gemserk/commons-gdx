@@ -8,11 +8,44 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.gemserk.commons.gdx.graphics.BitmapFontUtils;
 import com.gemserk.resources.ResourceManager;
 
 public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
+
+	// public static class ScalableBitmapFont extends BitmapFont {
+	//
+	// private float realScale;
+	//
+	// public void setRealScale(float realScale) {
+	// this.realScale = realScale;
+	// }
+	//
+	// public float getRealScale() {
+	// return realScale;
+	// }
+	//
+	// public ScalableBitmapFont() {
+	// super();
+	// }
+	//
+	// public ScalableBitmapFont(FileHandle fontFile, TextureRegion region, boolean flip) {
+	// super(fontFile, region, flip);
+	// }
+	//
+	// @Override
+	// public void setScale(float scaleXY) {
+	// super.setScale(scaleXY * realScale);
+	// }
+	//
+	// @Override
+	// public void setScale(float scaleX, float scaleY) {
+	// super.setScale(scaleX * realScale, scaleY * realScale);
+	// }
+	//
+	// }
 
 	private ResourceManager<String> resourceManager;
 
@@ -94,7 +127,7 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 		this.spacings.add(new FontSpacing(charSequence, spacing));
 		return this;
 	}
-	
+
 	public FontResourceBuilder scale(float scale) {
 		this.scale = scale;
 		return this;
@@ -134,11 +167,11 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 		for (int i = 0; i < spacings.size(); i++) {
 			FontSpacing fontSpacing = spacings.get(i);
 			CharSequence charSequence = fontSpacing.charSequence;
-
 			BitmapFontUtils.spacing(bitmapFont, charSequence, fontSpacing.spacing);
 		}
-		
+
 		bitmapFont.setScale(scale);
+		// bitmapFont.setRealScale(scale);
 
 		return bitmapFont;
 	}
