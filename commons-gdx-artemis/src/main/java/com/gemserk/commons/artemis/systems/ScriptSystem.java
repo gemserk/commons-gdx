@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.gemserk.commons.artemis.components.Components;
+import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.scripts.Script;
 import com.gemserk.componentsengine.utils.RandomAccessMap;
 
@@ -40,6 +41,28 @@ public class ScriptSystem extends EntitySystem {
 	public ScriptSystem() {
 		super(Components.scriptComponentClass);
 		this.factory = new Factory();
+	}
+	
+	@Override
+	protected void added(Entity e) {
+		super.added(e);
+		ArrayList<Script> scripts = ScriptComponent.get(e).getScripts();
+		int size = scripts.size();
+		for (int i = 0; i < size; i++) {
+			Script script = scripts.get(i);
+			script.added(world, e);
+		}
+	}
+	
+	@Override
+	protected void removed(Entity e) {
+		super.removed(e);
+		ArrayList<Script> scripts = ScriptComponent.get(e).getScripts();
+		int size = scripts.size();
+		for (int i = 0; i < size; i++) {
+			Script script = scripts.get(i);
+			script.removed(world, e);
+		}
 	}
 
 	@Override
