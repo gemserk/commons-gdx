@@ -22,11 +22,8 @@ public class EntityStore extends Store<Entity> {
 	public void free(Entity e) {
 		if (freedThisFrame.contains(e, true))
 			return;
-
 		e.disable();
 		freedThisFrame.add(e);
-
-		// super.free(e);
 	}
 
 	public Entity get() {
@@ -48,4 +45,5 @@ public class EntityStore extends Store<Entity> {
 		freedThisFrame.clear();
 		return size;
 	}
+	
 }
