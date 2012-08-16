@@ -22,9 +22,9 @@ public class ScriptCompositeImpl extends ScriptJavaImpl {
 	}
 	
 	@Override
-	public void init(World world, Entity e) {
+	public void enabled(World world, Entity e) {
 		for (int i = 0; i < scripts.size(); i++)
-			scripts.get(i).init(world, e);
+			scripts.get(i).enabled(world, e);
 	}
 
 	@Override
@@ -34,9 +34,9 @@ public class ScriptCompositeImpl extends ScriptJavaImpl {
 	}
 	
 	@Override
-	public void dispose(World world, Entity e) {
+	public void disabled(World world, Entity e) {
 		for (int i = 0; i < scripts.size(); i++)
-			scripts.get(i).dispose(world, e);
+			scripts.get(i).disabled(world, e);
 		
 	}
 

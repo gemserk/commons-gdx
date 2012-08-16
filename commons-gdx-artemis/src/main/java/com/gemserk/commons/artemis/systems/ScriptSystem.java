@@ -48,7 +48,7 @@ public class ScriptSystem extends EntityProcessingSystem {
 		int size = scripts.size();
 		for (int i = 0; i < size; i++) {
 			Script script = scripts.get(i);
-			script.init(world, e);
+			script.enabled(world, e);
 		}
 	}
 
@@ -60,7 +60,7 @@ public class ScriptSystem extends EntityProcessingSystem {
 		int size = scripts.size();
 		for (int i = 0; i < size; i++) {
 			Script script = scripts.get(i);
-			script.dispose(world, e);
+			script.disabled(world, e);
 		}
 		
 		factory.remove(e);
