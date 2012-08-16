@@ -2,11 +2,11 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.utils.Bag;
-import com.badlogic.gdx.utils.IntMap;
+import com.gemserk.componentsengine.utils.RandomAccessMap;
 
 public abstract class EntityComponentsFactory<T> {
 
-	public final IntMap<T> entityComponents = new IntMap<T>(256);
+	public final RandomAccessMap<Entity,T> entityComponents = new RandomAccessMap<Entity,T>(256);
 	final Bag<T> pool = new Bag<T>(256);
 
 	public abstract T newInstance();
@@ -28,18 +28,18 @@ public abstract class EntityComponentsFactory<T> {
 			entityComponent = pool.removeLast();
 		}
 		load(entity, entityComponent);
-		entityComponents.put(entity.getId(), entityComponent);
+		entityComponents.put(entity, entityComponent);
 		return entityComponent;
 	}
 
 	public void remove(Entity entity) {
-		T entityComponent = entityComponents.remove(entity.getId());
+		T entityComponent = entityComponents.remove(entity);
 		free(entityComponent);
 		pool.add(entityComponent);
 	}
 
 	public T get(Entity entity) {
-		return entityComponents.get(entity.getId());
+		return entityComponents.get(entity);
 	}
 
 }
