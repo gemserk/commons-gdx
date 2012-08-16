@@ -65,6 +65,9 @@ public class MovementSystem extends EntitySystem {
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		RandomAccessMap<Entity, EntityComponents> allTheEntityComponents = componentsHolder.entityComponents;
 		int entitiesSize = allTheEntityComponents.size();
+		
+		float delta = GlobalTime.getDelta();
+		
 		for (int entityIndex = 0; entityIndex < entitiesSize; entityIndex++) {
 			EntityComponents entityComponents = allTheEntityComponents.get(entityIndex);
 			
@@ -72,8 +75,6 @@ public class MovementSystem extends EntitySystem {
 			Spatial spatial = entityComponents.spatialComponent.getSpatial();
 
 			Vector2 velocity = movementComponent.getVelocity();
-
-			float delta = GlobalTime.getDelta();
 
 			tmpVelocity.set(velocity).mul(delta);
 			tmpPosition.set(spatial.getX(), spatial.getY()).add(tmpVelocity);
