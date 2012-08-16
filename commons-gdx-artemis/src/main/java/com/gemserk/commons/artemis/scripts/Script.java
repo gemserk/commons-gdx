@@ -4,9 +4,9 @@ import com.artemis.Entity;
 import com.artemis.World;
 
 public interface Script {
-
+	
 	/**
-	 * Called when the Entity is added to the World.
+	 * Called each time the Entity is enabled, assuming it is already in the world.
 	 * 
 	 * @param world
 	 *            The Artemis World where the Entity is.
@@ -26,7 +26,7 @@ public interface Script {
 	void update(World world, Entity e);
 
 	/**
-	 * Called when the Entity is removed from the world.
+	 * Called each time the entity is disabled.
 	 * 
 	 * @param world
 	 *            The Artemis World where the Entity is.
