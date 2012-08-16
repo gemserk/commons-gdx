@@ -14,12 +14,12 @@ import com.gemserk.componentsengine.utils.RandomAccessMap;
  */
 public class PreviousStateSpatialSystem extends EntitySystem {
 
-	class EntityComponents {
+	static class EntityComponents {
 		public SpatialComponent spatialComponent;
 		public PreviousStateSpatialComponent previousStateSpatialComponent;
 	}
 
-	class Factory extends EntityComponentsFactory<EntityComponents> {
+	static class Factory extends EntityComponentsFactory<EntityComponents> {
 
 		@Override
 		public EntityComponents newInstance() {

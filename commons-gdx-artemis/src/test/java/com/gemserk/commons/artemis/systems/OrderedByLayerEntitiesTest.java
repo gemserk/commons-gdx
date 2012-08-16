@@ -9,11 +9,10 @@ import com.artemis.World;
 import com.gemserk.commons.artemis.components.OwnerComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 
-public class RenderableComponentComparatorTest {
+public class OrderedByLayerEntitiesTest {
 
-	RenderableComponentComparator renderableComponentComparator = new RenderableComponentComparator();
 	OrderedByLayerEntities orderedByLayerEntities = new OrderedByLayerEntities(-100, 100);
-
+	
 	@Test
 	public void shouldReturnEntityFirstIfLesserLayer() {
 		World world = new World();

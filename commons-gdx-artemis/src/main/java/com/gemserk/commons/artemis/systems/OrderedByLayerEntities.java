@@ -5,14 +5,17 @@ import com.badlogic.gdx.utils.Array;
 
 public class OrderedByLayerEntities {
 
-	private static final RenderableComponentComparator renderableComponentComparator = new RenderableComponentComparator();
-	
+	private RenderableComponentComparator renderableComponentComparator;
+	private RenderableComponentComparator.Factory factory;
+
 	private final Array<Entity> entities = new Array<Entity>();
 	private final int minLayer, maxLayer;
 
 	public OrderedByLayerEntities(int minLayer, int maxLayer) {
 		this.minLayer = minLayer;
 		this.maxLayer = maxLayer;
+		factory = new RenderableComponentComparator.Factory();
+		this.renderableComponentComparator = new RenderableComponentComparator(factory);
 	}
 
 	public boolean belongs(int layer) {
@@ -21,11 +24,13 @@ public class OrderedByLayerEntities {
 
 	public void add(Entity e) {
 		entities.add(e);
+		factory.add(e);
 		entities.sort(renderableComponentComparator);
 	}
 
 	public void remove(Entity e) {
 		entities.removeValue(e, true);
+		factory.remove(e);
 	}
 
 	public int size() {

@@ -21,7 +21,7 @@ import com.gemserk.componentsengine.utils.RandomAccessMap;
  */
 public class SpriteUpdateSystem extends EntitySystem {
 
-	public static class EntityComponents {
+	static class EntityComponents {
 
 		public SpatialComponent spatialComponent;
 		public SpriteComponent spriteComponent;
@@ -29,7 +29,7 @@ public class SpriteUpdateSystem extends EntitySystem {
 
 	}
 
-	public static class Factory extends EntityComponentsFactory<EntityComponents> {
+	static class Factory extends EntityComponentsFactory<EntityComponents> {
 
 		@Override
 		public EntityComponents newInstance() {
