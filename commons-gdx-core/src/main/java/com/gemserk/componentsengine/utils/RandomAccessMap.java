@@ -12,6 +12,16 @@ public class RandomAccessMap<K, V> implements Map<K, V>, RandomAccessWithKey<K, 
 	ArrayList<K> keys = new ArrayList<K>();
 	CachingFastMapIntValue<K> positions = new CachingFastMapIntValue<K>();
 
+	
+	public RandomAccessMap() {
+		this(10);
+	}
+
+	public RandomAccessMap(int initialSize) {
+		items = new ArrayList<V>(initialSize);
+		keys = new ArrayList<K>(initialSize);
+	}
+
 	@Override
 	public int size() {
 		return items.size();
@@ -62,17 +72,20 @@ public class RandomAccessMap<K, V> implements Map<K, V>, RandomAccessWithKey<K, 
 
 		int lastPosition = items.size() - 1;
 
-		V lastItem = items.get(lastPosition);
 		positions.remove(key);
-		V removedItem = items.remove(lastPosition);
+		
+		V lastItem = items.remove(lastPosition);
 		K lastKey = keys.remove(lastPosition);
 
 		if (position != lastPosition) {
+			V removedItem = items.get(position);
 			items.set(position, lastItem);
 			keys.set(position, lastKey);
 			positions.put(lastKey, position);
+			return removedItem;
+		} else {
+			return lastItem;
 		}
-		return removedItem;
 	}
 
 	@Override

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.IntMap;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.FrustumCullingComponent;
 import com.gemserk.commons.artemis.components.ParticleEmitterComponent;
@@ -16,6 +15,7 @@ import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
+import com.gemserk.componentsengine.utils.RandomAccessMap;
 
 public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
@@ -87,12 +87,12 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		camera.getFrustum(frustum);
 		camera.apply(spriteBatch);
 
-		IntMap<EntityComponents> entityComponents = factory.entityComponents;
+		RandomAccessMap<Entity,EntityComponents> entityComponents = factory.entityComponents;
 
 		spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerEntities.size(); i++) {
 			Entity e = orderedByLayerEntities.get(i);
-			EntityComponents components = entityComponents.get(e.getId());
+			EntityComponents components = entityComponents.get(e);
 			RenderableComponent renderableComponent = components.renderableComponent;
 			if (!renderableComponent.isVisible())
 				continue;

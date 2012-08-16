@@ -1,5 +1,7 @@
 package com.gemserk.componentsengine.utils;
 
+import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,6 +75,14 @@ public class RandomAccessMapTest {
 		Assert.assertTrue(map.containsValue("goodbye"));
 		Assert.assertTrue(map.containsValue("bonjour"));
 		Assert.assertEquals(2, map.size());
+	}
+	
+	@Test
+	public void removeReturnsTheRemovedItemStartingWithTwoItems(){
+		map.put("hola","hello");
+		map.put("chau","goodbye");
+		String removes = map.remove("hola");
+		Assert.assertThat(removes, Matchers.equalTo("hello"));
 	}
 	
 }
