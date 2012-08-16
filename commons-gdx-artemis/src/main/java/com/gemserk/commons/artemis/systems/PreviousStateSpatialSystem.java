@@ -59,15 +59,6 @@ public class PreviousStateSpatialSystem extends EntitySystem {
 		super.disabled(e);
 	}
 
-	// @Override
-	// protected void process(Entity e) {
-	// SpatialComponent spatialComponent = Components.getSpatialComponent(e);
-	// Spatial spatial = spatialComponent.getSpatial();
-	// PreviousStateSpatialComponent previousStateSpatialComponent = Components.getPreviousStateSpatialComponent(e);
-	// Spatial previousSpatial = previousStateSpatialComponent.getSpatial();
-	// previousSpatial.set(spatial);
-	// }
-
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		RandomAccessMap<Entity, EntityComponents> allTheEntityComponents = factory.entityComponents;
