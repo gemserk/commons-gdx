@@ -1,12 +1,14 @@
 package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
-import com.artemis.EntityProcessingSystem;
+import com.artemis.EntitySystem;
+import com.artemis.utils.ImmutableBag;
 import com.gemserk.commons.artemis.components.AliveComponent;
 import com.gemserk.commons.artemis.components.StoreComponent;
 import com.gemserk.commons.gdx.GlobalTime;
+import com.gemserk.componentsengine.utils.RandomAccessMap;
 
-public class AliveSystem extends EntityProcessingSystem {
+public class AliveSystem extends EntitySystem {
 
 	class EntityComponents {
 		AliveComponent aliveComponent;
@@ -42,30 +44,41 @@ public class AliveSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(Entity e) {
-		EntityComponents components = factory.get(e);
-		AliveComponent aliveComponent = components.aliveComponent;
-		float aliveTime = aliveComponent.getTime() - GlobalTime.getDelta();
-		aliveComponent.setTime(aliveTime);
-		if (aliveTime <= 0) {
-			StoreComponent storeComponent = StoreComponent.get(e);
-			if (storeComponent != null)
-				storeComponent.store.free(e);
-			else
-				e.delete();
+	protected void processEntities(ImmutableBag<Entity> entities) {
+		RandomAccessMap<Entity, EntityComponents> allTheEntityComponents = factory.entityComponents;
+		int entitiesSize = allTheEntityComponents.size();
+		for (int entityIndex = 0; entityIndex < entitiesSize; entityIndex++) {
+			EntityComponents entityComponents = allTheEntityComponents.get(entityIndex);
+			
+			AliveComponent aliveComponent = entityComponents.aliveComponent;
+			float aliveTime = aliveComponent.getTime() - GlobalTime.getDelta();
+			aliveComponent.setTime(aliveTime);
+			if (aliveTime <= 0) {
+				Entity e = allTheEntityComponents.getKey(entityIndex);
+				StoreComponent storeComponent = StoreComponent.get(e);
+				if (storeComponent != null)
+					storeComponent.store.free(e);
+				else
+					e.delete();
+			}
 		}
 	}
-	
+
 	@Override
 	protected void enabled(Entity e) {
 		super.enabled(e);
 		factory.add(e);
 	}
-	
+
 	@Override
 	protected void disabled(Entity e) {
 		factory.remove(e);
 		super.disabled(e);
+	}
+
+	@Override
+	protected boolean checkProcessing() {
+		return true;
 	}
 
 }
