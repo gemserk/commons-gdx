@@ -5,11 +5,6 @@ import java.util.ArrayList;
 /**
  * Provides an API for a store of free objects and created objects of one kind, used to easily reuse them to avoid generating garbage collection.
  */
-/**
- * @author acoppes
- * 
- * @param <T>
- */
 public class Store<T> {
 
 	ArrayList<T> free = new ArrayList<T>();
@@ -37,7 +32,7 @@ public class Store<T> {
 	}
 
 	protected T reuseObject() {
-		T t = free.remove(free.size()-1);
+		T t = free.remove(free.size() - 1);
 		return t;
 	}
 
@@ -63,8 +58,6 @@ public class Store<T> {
 	public int size() {
 		return free.size();
 	}
-
-
 
 	/**
 	 * Creates the specified number of objects and adds them to the free collection in the store.

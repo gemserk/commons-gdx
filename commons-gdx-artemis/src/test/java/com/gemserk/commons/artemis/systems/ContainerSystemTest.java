@@ -1,8 +1,6 @@
 package com.gemserk.commons.artemis.systems;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;

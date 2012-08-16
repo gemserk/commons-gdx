@@ -11,6 +11,7 @@ public class HitDetectionSystem extends EntityProcessingSystem implements Activa
 
 	private final ActivableSystem activableSystem = new ActivableSystemImpl();
 
+	@SuppressWarnings("unchecked")
 	public HitDetectionSystem() {
 		super(HitComponent.class);
 	}

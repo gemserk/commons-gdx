@@ -10,6 +10,7 @@ import com.gemserk.commons.gdx.games.Spatial;
 
 public class ParticleEmitterSystem extends EntityProcessingSystem {
 	
+	@SuppressWarnings("unchecked")
 	public ParticleEmitterSystem() {
 		super(Components.particleEmitterComponentClass, Components.spatialComponentClass);
 	}

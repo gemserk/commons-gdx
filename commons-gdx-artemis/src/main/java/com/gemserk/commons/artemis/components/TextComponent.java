@@ -1,7 +1,6 @@
 package com.gemserk.commons.artemis.components;
 
 import com.artemis.Component;
-import com.artemis.ComponentType;
 import com.artemis.ComponentTypeManager;
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.Color;
@@ -9,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class TextComponent extends Component {
 	
-	public static final ComponentType type = ComponentTypeManager.getTypeFor(TextComponent.class);
+	public static final int type = ComponentTypeManager.getTypeFor(TextComponent.class).getId();
 
 	public static TextComponent get(Entity e) {
 		return (TextComponent) e.getComponent(type);

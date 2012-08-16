@@ -19,6 +19,7 @@ public class CameraUpdateSystem extends EntityProcessingSystem {
 		this(new TimeStepProviderGlobalImpl());
 	}
 
+	@SuppressWarnings("unchecked")
 	public CameraUpdateSystem(TimeStepProvider timeStepProvider) {
 		super(Components.cameraComponentClass);
 		this.timeStepProvider = timeStepProvider;

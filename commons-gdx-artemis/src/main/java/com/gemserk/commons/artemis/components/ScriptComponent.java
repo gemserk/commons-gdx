@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.artemis.Component;
-import com.artemis.ComponentType;
 import com.artemis.ComponentTypeManager;
 import com.artemis.Entity;
 import com.gemserk.commons.artemis.scripts.Script;
 
 public class ScriptComponent extends Component {
-	
-	public static final ComponentType type = ComponentTypeManager.getTypeFor(ScriptComponent.class);
+
+	public static final int type = ComponentTypeManager.getTypeFor(ScriptComponent.class).getId();
 
 	public static ScriptComponent get(Entity e) {
 		return (ScriptComponent) e.getComponent(type);

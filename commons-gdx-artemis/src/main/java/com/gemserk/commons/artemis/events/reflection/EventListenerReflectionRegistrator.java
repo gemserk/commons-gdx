@@ -16,15 +16,12 @@ import com.gemserk.componentsengine.utils.Pool.PoolObjectFactory;
 
 /**
  * Provides reflection utilities to register event listeners for the methods of a class, maybe should be used in an instance way, to avoid problems when forgetting to call unregister().
- * 
- * @author acoppes
- * 
  */
 public class EventListenerReflectionRegistrator {
 
 	protected static final Logger logger = LoggerFactory.getLogger(EventListenerReflectionRegistrator.class);
 
-	private static final Class<Handles> handlesClass = Handles.class;
+	// private static final Class<Handles> handlesClass = Handles.class;
 	private static final Class<Event> eventClass = Event.class;
 	private static final Map<Class<?>, Method[]> cachedClassMethods = new HashMap<Class<?>, Method[]>();
 

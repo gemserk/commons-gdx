@@ -12,7 +12,12 @@ import com.artemis.World;
 public class ScriptJavaImpl implements Script {
 
 	@Override
-	public void init(World world, Entity e) {
+	public void added(World world, Entity e) {
+
+	}
+
+	@Override
+	public void enabled(World world, Entity e) {
 
 	}
 
@@ -22,7 +27,12 @@ public class ScriptJavaImpl implements Script {
 	}
 
 	@Override
-	public void dispose(World world, Entity e) {
+	public void disabled(World world, Entity e) {
+
+	}
+
+	@Override
+	public void removed(World world, Entity e) {
 
 	}
 

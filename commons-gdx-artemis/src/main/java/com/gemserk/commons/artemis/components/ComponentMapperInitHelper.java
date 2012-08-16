@@ -9,6 +9,7 @@ import com.artemis.EntityManager;
 
 public class ComponentMapperInitHelper {
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void config(Object target, EntityManager entityManager) {
 		try {
 			for (Field field : target.getClass().getDeclaredFields()) {
