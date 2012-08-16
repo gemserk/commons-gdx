@@ -8,6 +8,7 @@ public class TagSystem extends EntityProcessingSystem {
 
 	private static final Class<TagComponent> tagComponentClass = TagComponent.class;
 
+	@SuppressWarnings("unchecked")
 	public TagSystem() {
 		super(TagComponent.class);
 	}

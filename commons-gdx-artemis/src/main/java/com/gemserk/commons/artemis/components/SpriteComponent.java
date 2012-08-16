@@ -1,7 +1,6 @@
 package com.gemserk.commons.artemis.components;
 
 import com.artemis.Component;
-import com.artemis.ComponentType;
 import com.artemis.ComponentTypeManager;
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.Color;
@@ -9,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public class SpriteComponent extends Component {
-	
-	public static final ComponentType type = ComponentTypeManager.getTypeFor(SpriteComponent.class);
+
+	public static final int type = ComponentTypeManager.getTypeFor(SpriteComponent.class).getId();
 
 	public static SpriteComponent get(Entity e) {
 		return (SpriteComponent) e.getComponent(type);

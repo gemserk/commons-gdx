@@ -41,6 +41,7 @@ public class SoundSpawnerSystem extends EntityProcessingSystem {
 		this.eventManager = eventManager;
 	}
 
+	@SuppressWarnings("unchecked")
 	public SoundSpawnerSystem() {
 		super(Components.soundSpawnerComponentClass);
 	}

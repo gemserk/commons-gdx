@@ -4,15 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.artemis.Component;
-import com.artemis.ComponentType;
 import com.artemis.ComponentTypeManager;
 import com.artemis.Entity;
 
 public class PropertiesComponent extends Component {
 	
 	// TODO: should use a Parameters class? should Parameters API be named something like Properties?
-	
-	public static final ComponentType type = ComponentTypeManager.getTypeFor(PropertiesComponent.class);
+
+	public static final int type = ComponentTypeManager.getTypeFor(PropertiesComponent.class).getId();
 
 	public static PropertiesComponent get(Entity e) {
 		return (PropertiesComponent) e.getComponent(type);

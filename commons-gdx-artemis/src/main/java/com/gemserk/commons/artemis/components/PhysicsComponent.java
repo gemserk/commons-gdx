@@ -1,7 +1,6 @@
 package com.gemserk.commons.artemis.components;
 
 import com.artemis.Component;
-import com.artemis.ComponentType;
 import com.artemis.ComponentTypeManager;
 import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -22,7 +21,7 @@ public class PhysicsComponent extends Component {
 
 	}
 
-	public static final ComponentType type = ComponentTypeManager.getTypeFor(PhysicsComponent.class);
+	public static final int type = ComponentTypeManager.getTypeFor(PhysicsComponent.class).getId();
 
 	public static PhysicsComponent get(Entity e) {
 		return (PhysicsComponent) e.getComponent(type);

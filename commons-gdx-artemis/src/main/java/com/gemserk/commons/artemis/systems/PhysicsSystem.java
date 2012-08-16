@@ -24,6 +24,7 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		this(physicsWorld, 6, 2);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public PhysicsSystem(World physicsWorld, int velocityIterations, int positionIterations) {
 		super(Components.physicsComponentClass);
 		this.physicsWorld = physicsWorld;

@@ -14,6 +14,7 @@ public class ReflectionRegistratorEventSystem extends EntityProcessingSystem {
 	private static final Class<ScriptComponent> scriptComponentClass = ScriptComponent.class;
 	private final EventListenerReflectionRegistrator eventListenerReflectionRegistrator;
 
+	@SuppressWarnings("unchecked")
 	public ReflectionRegistratorEventSystem(EventManager eventManager) {
 		super(ScriptComponent.class);
 		this.eventListenerReflectionRegistrator = new EventListenerReflectionRegistrator(eventManager);

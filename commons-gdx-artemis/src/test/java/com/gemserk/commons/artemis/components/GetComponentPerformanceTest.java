@@ -86,7 +86,7 @@ public class GetComponentPerformanceTest {
 		long startNanoTime = System.nanoTime();
 
 		for (int i = 0; i < iterations; i++) {
-			MyTestComponent myTestComponent = MyTestComponent.class.cast(e.getComponent(myTestComponentType));
+			MyTestComponent myTestComponent = MyTestComponent.class.cast(e.getComponent(myTestComponentType.getId()));
 		}
 
 		return System.nanoTime() - startNanoTime;
@@ -105,7 +105,7 @@ public class GetComponentPerformanceTest {
 		long startNanoTime = System.nanoTime();
 
 		for (int i = 0; i < iterations; i++) {
-			MyTestComponent myTestComponent = myTestComponentClass.cast(e.getComponent(myTestComponentType));
+			MyTestComponent myTestComponent = myTestComponentClass.cast(e.getComponent(myTestComponentType.getId()));
 		}
 
 		return System.nanoTime() - startNanoTime;

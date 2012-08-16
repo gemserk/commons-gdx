@@ -8,6 +8,7 @@ import com.gemserk.commons.artemis.components.ParentComponent;
 
 public class HierarchySystem extends EntityProcessingSystem {
 
+	@SuppressWarnings("unchecked")
 	public HierarchySystem() {
 		super(ParentComponent.class);
 	}

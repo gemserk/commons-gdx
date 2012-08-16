@@ -12,6 +12,7 @@ public class AntiGravitySystem extends EntityProcessingSystem {
 	
 	private final Vector2 tmp = new Vector2();
 
+	@SuppressWarnings("unchecked")
 	public AntiGravitySystem() {
 		super(AntiGravityComponent.class);
 	}
