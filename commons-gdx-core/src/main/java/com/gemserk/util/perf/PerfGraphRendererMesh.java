@@ -149,7 +149,6 @@ public class PerfGraphRendererMesh implements Disposable {
 			return;
 
 		mesh.setVertices(vertices, 0, vertexIndex);
-		System.out.println("vertexIndex: " + vertexIndex + " - vertexSize: " + vertexSize + " - vertices: " + cantVertices);
 		meshRenderer.render(camera, mesh, GL10.GL_LINES, 0, cantVertices);
 
 		// IntSlidingWindowArray events = perfLogger.getEvents();
