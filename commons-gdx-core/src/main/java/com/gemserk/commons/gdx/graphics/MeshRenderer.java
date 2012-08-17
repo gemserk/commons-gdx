@@ -102,8 +102,6 @@ public class MeshRenderer implements Disposable {
 		} else {
 			shader.begin();
 			shader.setUniformMatrix("u_projectionViewMatrix", camera.combined);
-			if(primitive==GL10.GL_LINE)
-				System.out.println("Line");
 			mesh.render(shader, primitive, offset, cantElements);
 			shader.end();
 		}
