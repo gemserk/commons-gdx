@@ -1,7 +1,6 @@
 package com.gemserk.componentsengine.utils;
 
 import org.hamcrest.Matchers;
-import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

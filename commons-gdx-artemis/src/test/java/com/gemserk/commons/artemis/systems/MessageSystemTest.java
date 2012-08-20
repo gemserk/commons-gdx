@@ -58,6 +58,7 @@ public class MessageSystemTest {
 			this.messageQueue = messageQueue;
 		}
 
+		@SuppressWarnings("unchecked")
 		public MessageQueueSystem() {
 			super(MessageQueueComponent.class);
 		}
@@ -97,6 +98,7 @@ public class MessageSystemTest {
 			this.messageQueue = messageQueue;
 		}
 
+		@SuppressWarnings("unchecked")
 		public MessageListenerSystem() {
 			super(MessageHandlerComponent.class);
 		}

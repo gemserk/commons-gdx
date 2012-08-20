@@ -25,6 +25,7 @@ public class InjectorImplTest {
 
 		private Object object;
 
+		@SuppressWarnings("unused")
 		public void setObject(Object object) {
 			this.object = object;
 		}

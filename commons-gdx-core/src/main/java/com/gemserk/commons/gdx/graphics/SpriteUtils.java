@@ -1,8 +1,8 @@
 package com.gemserk.commons.gdx.graphics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Libgdx Sprite utils

@@ -29,10 +29,6 @@ public class MultipleImplementationsSameComponentWorkaroundTest {
 			return spatial;
 		}
 
-		public void setSpatial(Spatial spatial) {
-			this.spatial = spatial;
-		}
-
 		public SpatialComponent(Spatial spatial) {
 			this.spatial = spatial;
 		}
@@ -88,6 +84,7 @@ public class MultipleImplementationsSameComponentWorkaroundTest {
 
 	private static class SpatialSystem extends EntityProcessingSystem {
 
+		@SuppressWarnings("unchecked")
 		public SpatialSystem() {
 			super(SpatialComponent.class);
 		}

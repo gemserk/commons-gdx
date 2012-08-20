@@ -62,6 +62,7 @@ public class MultipleImplementationsSameComponentTest {
 		
 		private float[] tmpPosition = new float[2];
 
+		@SuppressWarnings("unchecked")
 		public SecondImplementationSystem() {
 			super(SecondImplementationComponent.class);
 		}
@@ -79,6 +80,7 @@ public class MultipleImplementationsSameComponentTest {
 		
 		private float[] tmpPosition = new float[2];
 
+		@SuppressWarnings("unchecked")
 		public FirstImplementationSystem() {
 			super(FirstImplementationComponent.class);
 		}
@@ -96,6 +98,7 @@ public class MultipleImplementationsSameComponentTest {
 		
 		private float[] tmpPosition = new float[2];
 
+		@SuppressWarnings("unchecked")
 		public ParentSpatialSystem() {
 			super(SpatialComponent.class);
 		}

@@ -8,7 +8,6 @@ import org.junit.Test;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.gemserk.animation4j.gdx.Animation;
 import com.gemserk.animation4j.gdx.AnimationFrameMonitor;
-import com.gemserk.commons.utils.AnimationUtils;
 
 public class AnimationMonitorTest {
 

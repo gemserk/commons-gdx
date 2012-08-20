@@ -1,6 +1,5 @@
 package com.gemserk.commons.versions;
 
-import com.gemserk.commons.versions.ApplicationVersion;
 
 public class ApplicationVersionImpl implements ApplicationVersion {
 
