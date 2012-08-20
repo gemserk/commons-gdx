@@ -53,7 +53,7 @@ public class GetComponentPerformanceTest {
 		System.out.println("Time with componentMapper.get(e) = " + testTimeWithGetComponentFromMapperNs / 1000000 + "ms");
 		System.out.println("Time with cast(e.getComponent(type)) = " + testTimeWithGetComponentUsingTypeAndClassNs / 1000000 + "ms");
 		System.out.println("Time with cast(e.getComponent(type)) (with class cache) = " + testTimeWithGetComponentUsingTypeAndCacheClassNs / 1000000 + "ms");
-		
+
 	}
 
 	public long testTimeWithGetComponentFromMapper(int iterations) {
@@ -68,12 +68,13 @@ public class GetComponentPerformanceTest {
 		long startNanoTime = System.nanoTime();
 
 		for (int i = 0; i < iterations; i++) {
-			MyTestComponent myTestComponent = myTestComponentMapper.get(e);
+			myTestComponentMapper.get(e);
+			// MyTestComponent myTestComponent = myTestComponentMapper.get(e);
 		}
 
 		return System.nanoTime() - startNanoTime;
 	}
-	
+
 	public long testTimeWithGetComponentUsingTypeAndClass(int iterations) {
 
 		World world = new World();
@@ -86,7 +87,8 @@ public class GetComponentPerformanceTest {
 		long startNanoTime = System.nanoTime();
 
 		for (int i = 0; i < iterations; i++) {
-			MyTestComponent myTestComponent = MyTestComponent.class.cast(e.getComponent(myTestComponentType.getId()));
+			// MyTestComponent myTestComponent = MyTestComponent.class.cast(e.getComponent(myTestComponentType.getId()));
+			MyTestComponent.class.cast(e.getComponent(myTestComponentType.getId()));
 		}
 
 		return System.nanoTime() - startNanoTime;
@@ -105,12 +107,13 @@ public class GetComponentPerformanceTest {
 		long startNanoTime = System.nanoTime();
 
 		for (int i = 0; i < iterations; i++) {
-			MyTestComponent myTestComponent = myTestComponentClass.cast(e.getComponent(myTestComponentType.getId()));
+			// MyTestComponent myTestComponent = myTestComponentClass.cast(e.getComponent(myTestComponentType.getId()));
+			myTestComponentClass.cast(e.getComponent(myTestComponentType.getId()));
 		}
 
 		return System.nanoTime() - startNanoTime;
 	}
-	
+
 	public long testTimeWithGetComponentFromClassWithClassCache(int iterations) {
 
 		World world = new World();
@@ -123,7 +126,8 @@ public class GetComponentPerformanceTest {
 		long startNanoTime = System.nanoTime();
 
 		for (int i = 0; i < iterations; i++) {
-			MyTestComponent myTestComponent = e.getComponent(myTestComponentClass);
+			// MyTestComponent myTestComponent = e.getComponent(myTestComponentClass);
+			e.getComponent(myTestComponentClass);
 		}
 
 		return System.nanoTime() - startNanoTime;
@@ -137,11 +141,12 @@ public class GetComponentPerformanceTest {
 		e.refresh();
 
 		long startNanoTime = System.nanoTime();
-		long iterationsTime = 0;
-		long previousFrameTime = startNanoTime;
+		// long iterationsTime = 0;
+		// long previousFrameTime = startNanoTime;
 
 		for (int i = 0; i < iterations; i++) {
-			MyTestComponent myTestComponent = e.getComponent(MyTestComponent.class);
+			// MyTestComponent myTestComponent = e.getComponent(MyTestComponent.class);
+			e.getComponent(MyTestComponent.class);
 		}
 
 		return System.nanoTime() - startNanoTime;

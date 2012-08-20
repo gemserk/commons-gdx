@@ -1,14 +1,10 @@
 package com.gemserk.componentsengine.input;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.gemserk.componentsengine.input.CoordinatesMonitor;
 
 public class CoordinatesMonitorTest {
 	

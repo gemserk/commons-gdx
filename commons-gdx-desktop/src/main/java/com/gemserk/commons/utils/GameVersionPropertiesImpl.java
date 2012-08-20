@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.badlogic.gdx.Gdx;
-import com.gemserk.commons.utils.GameVersion;
 
 /**
  * Provides the game version retrieving it from a Properties file.

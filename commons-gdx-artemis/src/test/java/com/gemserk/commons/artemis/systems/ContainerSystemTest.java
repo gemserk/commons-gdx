@@ -70,6 +70,7 @@ public class ContainerSystemTest {
 
 	boolean shouldBeDisabled;
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldNotProcessDisabledChildrenEntity() {
 		World world = new World();

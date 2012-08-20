@@ -1,6 +1,6 @@
 package com.gemserk.commons.utils;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;

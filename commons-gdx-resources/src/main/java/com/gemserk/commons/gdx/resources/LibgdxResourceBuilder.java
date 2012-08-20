@@ -523,12 +523,16 @@ public class LibgdxResourceBuilder {
 		return new AnimationFromTextureAtlasResourceBuilder(resourceManager, textureAtlasId);
 	}
 
-	public static XmlDocumentResourceBuilder xmlDocument(String file) {
+	public XmlDocumentResourceBuilder xmlDocument(String file) {
 		return xmlDocument(internal(file));
 	}
 
-	public static XmlDocumentResourceBuilder xmlDocument(FileHandle file) {
-		return new XmlDocumentResourceBuilder().file(file);
+	public XmlDocumentResourceBuilder xmlDocument(FileHandle file) {
+		return new XmlDocumentResourceBuilder(resourceManager).file(file);
+	}
+	
+	public XmlSchemaResourceBuilder xmlSchema() {
+		return new XmlSchemaResourceBuilder();
 	}
 
 	public FontResourceBuilder font2(String imageFile, String fontFile) {
@@ -550,6 +554,7 @@ public class LibgdxResourceBuilder {
 		// .textureFile(internal(textureFile) //
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <T> ResourceBuilder<T> alias(String resourceId) {
 		return new AliasResourceBuilder(resourceManager, resourceId);
 	}

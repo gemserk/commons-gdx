@@ -66,6 +66,7 @@ public class EventListenerReflectionRegistratorTest {
 		anonymousWasCalled = false;
 
 		Object myScript = new ScriptJavaImpl() {
+			@SuppressWarnings("unused")
 			public void customEvent(Event e) {
 				anonymousWasCalled = true;
 			}

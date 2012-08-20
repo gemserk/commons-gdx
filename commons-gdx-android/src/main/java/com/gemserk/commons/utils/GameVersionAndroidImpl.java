@@ -5,8 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 
-import com.gemserk.commons.utils.GameVersion;
-
 /**
  * Provides the version of the game based on the Android PackageInfo.
  */

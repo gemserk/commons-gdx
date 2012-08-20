@@ -1,11 +1,7 @@
 package com.gemserk.commons.gdx.box2d;
 
 import static org.jmock.Expectations.same;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.number.OrderingComparisons;

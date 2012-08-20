@@ -6,13 +6,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.badlogic.gdx.utils.ObjectIntMap;
+
 public class RandomAccessMap<K, V> implements Map<K, V>, RandomAccessWithKey<K, V> {
 
 	ArrayList<V> items = new ArrayList<V>();
 	ArrayList<K> keys = new ArrayList<K>();
-	CachingFastMapIntValue<K> positions = new CachingFastMapIntValue<K>();
+	ObjectIntMap<Object> positions = new ObjectIntMap<Object>();
+	private final int NOT_PRESENT = -1;
 
-	
 	public RandomAccessMap() {
 		this(10);
 	}
@@ -44,8 +46,8 @@ public class RandomAccessMap<K, V> implements Map<K, V>, RandomAccessWithKey<K, 
 
 	@Override
 	public V get(Object key) {
-		int position = positions.get(key);
-		if (position == CachingFastMapIntValue.NOT_PRESENT_VALUE)
+		int position = positions.get(key, NOT_PRESENT);
+		if (position == NOT_PRESENT)
 			return null;
 
 		return items.get(position);
@@ -53,8 +55,8 @@ public class RandomAccessMap<K, V> implements Map<K, V>, RandomAccessWithKey<K, 
 
 	@Override
 	public V put(K key, V value) {
-		int position = positions.get(key);
-		if (position == CachingFastMapIntValue.NOT_PRESENT_VALUE) {
+		int position = positions.get(key, NOT_PRESENT);
+		if (position == NOT_PRESENT) {
 			items.add(value);
 			keys.add(key);
 			positions.put(key, items.size() - 1);
@@ -66,14 +68,14 @@ public class RandomAccessMap<K, V> implements Map<K, V>, RandomAccessWithKey<K, 
 
 	@Override
 	public V remove(Object key) {
-		int position = positions.get(key);
-		if (position == CachingFastMapIntValue.NOT_PRESENT_VALUE)
+		int position = positions.get(key, NOT_PRESENT);
+		if (position == NOT_PRESENT)
 			return null;
 
 		int lastPosition = items.size() - 1;
 
-		positions.remove(key);
-		
+		positions.remove(key, NOT_PRESENT);
+
 		V lastItem = items.remove(lastPosition);
 		K lastKey = keys.remove(lastPosition);
 
