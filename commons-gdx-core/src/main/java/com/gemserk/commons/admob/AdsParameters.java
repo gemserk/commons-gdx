@@ -17,6 +17,8 @@ public class AdsParameters {
 	
 	public long delay = 0L;
 	
+	public boolean animationsEnabled = false;
+	
 	public ArrayList<AdsAnimation> animations = new ArrayList<AdsAnimation>();
 
 	public AdsParameters verticalAlign(int vertical) {
@@ -42,6 +44,11 @@ public class AdsParameters {
 	 */
 	public AdsParameters delay(long delay) {
 		this.delay = delay;
+		return this;
+	}
+	
+	public AdsParameters enableAnimations(boolean enable){
+		animationsEnabled=enable;
 		return this;
 	}
 	
