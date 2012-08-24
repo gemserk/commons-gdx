@@ -50,7 +50,18 @@ public class AdMobViewAndroidImpl implements AdMobView {
 		msg.obj = adsParameters;
 		if (adsParameters != null && adsParameters.delay > 0L) {
 			// System.out.println("sending message " + (what == AdMobHandler.SHOW_ADS ? "SHOW" : "HIDE") + " with delay of " + adsParameters.delay + "ms");
-			adMobHandler.sendMessageDelayed(msg, adsParameters.delay);
+
+			long delay = adsParameters.delay;
+
+			// hack to use the animation duration as delay when the animations are disabled.
+			if (!adsParameters.animationsEnabled) {
+				long extraDelay = 0L;
+				for (int i = 0; i < adsParameters.animations.size(); i++)
+					extraDelay = Math.max(adsParameters.animations.get(i).duration, extraDelay);
+				delay += extraDelay;
+			}
+
+			adMobHandler.sendMessageDelayed(msg, delay);
 		} else {
 			// System.out.println("sending message " + (what == AdMobHandler.SHOW_ADS ? "SHOW" : "HIDE") + " without delay");
 			adMobHandler.sendMessage(msg);
