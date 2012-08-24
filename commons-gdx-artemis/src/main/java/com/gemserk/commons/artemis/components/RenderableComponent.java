@@ -3,6 +3,7 @@ package com.gemserk.commons.artemis.components;
 import com.artemis.Component;
 import com.artemis.ComponentTypeManager;
 import com.artemis.Entity;
+import com.gemserk.commons.artemis.systems.Renderable;
 
 public class RenderableComponent extends Component {
 
@@ -12,7 +13,9 @@ public class RenderableComponent extends Component {
 		return (RenderableComponent) e.getComponent(type);
 	}
 
-	public boolean visible;
+	public Renderable renderable = new Renderable();
+	
+	// TODO: move both layer and sublayer to renderable concept.
 	public int layer;
 	public int subLayer;
 	
@@ -25,11 +28,11 @@ public class RenderableComponent extends Component {
 	}
 	
 	public boolean isVisible() {
-		return visible;
+		return renderable.isVisible();
 	}
 	
 	public void setVisible(boolean visible) {
-		this.visible = visible;
+		renderable.setVisible(visible);
 	}
 	
 	public void setLayer(int layer) {
@@ -57,7 +60,7 @@ public class RenderableComponent extends Component {
 	public RenderableComponent(int layer, int subLayer, boolean visible) {
 		this.layer = layer;
 		this.subLayer = subLayer;
-		this.visible = visible;
+		this.setVisible(visible);
 	}
 
 }

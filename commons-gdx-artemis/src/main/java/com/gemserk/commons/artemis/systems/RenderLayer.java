@@ -1,6 +1,5 @@
 package com.gemserk.commons.artemis.systems;
 
-import com.artemis.Entity;
 
 public interface RenderLayer {
 
@@ -17,7 +16,7 @@ public interface RenderLayer {
 	/**
 	 * Returns true if the entity belongs to the RenderLayer, probably based on one of its components, false otherwise.
 	 */
-	boolean belongs(Entity entity);
+	boolean belongs(Renderable renderable);
 
 	/**
 	 * Adds a new entity to the layer if belongs returned true.
@@ -25,7 +24,7 @@ public interface RenderLayer {
 	 * @param entity
 	 *            The entity to be added.
 	 */
-	void add(Entity entity);
+	void add(Renderable renderable);
 
 	/**
 	 * Removes an Entity from the layer, if belongs returned true.
@@ -33,7 +32,7 @@ public interface RenderLayer {
 	 * @param entity
 	 *            The entity to be removed.
 	 */
-	void remove(Entity entity);
+	void remove(Renderable renderable);
 
 	/**
 	 * Renders all the entities of the render layer.

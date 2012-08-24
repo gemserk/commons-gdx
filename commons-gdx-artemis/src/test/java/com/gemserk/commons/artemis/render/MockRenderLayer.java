@@ -1,7 +1,7 @@
 package com.gemserk.commons.artemis.render;
 
-import com.artemis.Entity;
 import com.gemserk.commons.artemis.systems.RenderLayer;
+import com.gemserk.commons.artemis.systems.Renderable;
 
 public class MockRenderLayer implements RenderLayer {
 
@@ -11,21 +11,6 @@ public class MockRenderLayer implements RenderLayer {
 
 	@Override
 	public void dispose() {
-		
-	}
-
-	@Override
-	public boolean belongs(Entity entity) {
-		return false;
-	}
-
-	@Override
-	public void add(Entity entity) {
-		
-	}
-
-	@Override
-	public void remove(Entity entity) {
 		
 	}
 
@@ -41,6 +26,21 @@ public class MockRenderLayer implements RenderLayer {
 
 	@Override
 	public void setEnabled(boolean enabled) {
+		
+	}
+
+	@Override
+	public boolean belongs(Renderable renderable) {
+		return false;
+	}
+
+	@Override
+	public void add(Renderable renderable) {
+		
+	}
+
+	@Override
+	public void remove(Renderable renderable) {
 		
 	}
 

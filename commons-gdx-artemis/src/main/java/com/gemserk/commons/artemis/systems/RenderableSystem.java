@@ -4,12 +4,38 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.utils.Disposable;
+import com.gemserk.commons.artemis.components.OwnerComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.render.RenderLayers;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
 public class RenderableSystem extends EntitySystem implements Disposable {
-	
+
+	// static class EntityComponents {
+	// public RenderableComponent renderableComponent;
+	// public OwnerComponent ownerComponent;
+	// }
+	//
+	// static class Factory extends EntityComponentsFactory<EntityComponents> {
+	//
+	// @Override
+	// public EntityComponents newInstance() {
+	// return new EntityComponents();
+	// }
+	//
+	// @Override
+	// public void free(EntityComponents entityComponent) {
+	// entityComponent.renderableComponent = null;
+	// entityComponent.ownerComponent = null;
+	// }
+	//
+	// @Override
+	// public void load(Entity e, EntityComponents entityComponent) {
+	// entityComponent.renderableComponent = RenderableComponent.get(e);
+	// entityComponent.ownerComponent = OwnerComponent.get(e);
+	// }
+	// }
+
 	private RenderLayers renderLayers;
 
 	@SuppressWarnings("unchecked")
@@ -37,24 +63,39 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	}
 
 	@Override
-	protected void enabled(Entity entity) {
+	protected void enabled(Entity e) {
+		RenderableComponent renderableComponent = RenderableComponent.get(e);
+		OwnerComponent ownerComponent = OwnerComponent.get(e);
+
+		Renderable renderable = renderableComponent.renderable;
+		
+		renderable.entity = e;
+
+		renderable.id = e.getId();
+		if (ownerComponent != null && ownerComponent.getOwner() != null)
+			renderable.id = ownerComponent.getOwner().getId();
+		renderable.layer = renderableComponent.getLayer();
+		renderable.subLayer = renderableComponent.getSubLayer();
+
 		// order the entity in the Layer, probably the same inside the layer
 		for (int i = 0; i < renderLayers.size(); i++) {
 			RenderLayer renderLayer = renderLayers.get(i);
-			if (renderLayer.belongs(entity)) {
-				renderLayer.add(entity);
+			if (renderLayer.belongs(renderable)) {
+				renderLayer.add(renderable);
 				return;
 			}
 		}
 	}
 
 	@Override
-	protected void disabled(Entity entity) {
+	protected void disabled(Entity e) {
+		RenderableComponent renderableComponent = RenderableComponent.get(e);
+		Renderable renderable = renderableComponent.renderable;
 		// remove the order
 		for (int i = 0; i < renderLayers.size(); i++) {
 			RenderLayer renderLayer = renderLayers.get(i);
-			if (renderLayer.belongs(entity)) {
-				renderLayer.remove(entity);
+			if (renderLayer.belongs(renderable)) {
+				renderLayer.remove(renderable);
 				return;
 			}
 		}

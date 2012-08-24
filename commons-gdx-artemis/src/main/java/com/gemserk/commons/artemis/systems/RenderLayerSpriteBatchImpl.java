@@ -29,7 +29,8 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	}
 
 	private final SpriteBatch spriteBatch;
-	private final OrderedByLayerEntities orderedByLayerEntities;
+	// private final OrderedByLayerEntities orderedByLayerEntities;
+	private final OrderedByLayerRenderables orderedByLayerRenderables;
 	private final Libgdx2dCamera camera;
 	private boolean enabled;
 
@@ -42,7 +43,8 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch) {
 		this.camera = camera;
 		this.spriteBatch = spriteBatch;
-		this.orderedByLayerEntities = new OrderedByLayerEntities(minLayer, maxLayer);
+		// this.orderedByLayerEntities = new OrderedByLayerEntities(minLayer, maxLayer);
+		this.orderedByLayerRenderables = new OrderedByLayerRenderables(minLayer, maxLayer);
 		this.enabled = true;
 		this.factory = new Factory();
 		this.ownsSpriteBatch = false;
@@ -65,21 +67,20 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	}
 
 	@Override
-	public boolean belongs(Entity e) {
-		RenderableComponent renderableComponent = Components.getRenderableComponent(e);
-		return orderedByLayerEntities.belongs(renderableComponent.getLayer());
+	public boolean belongs(Renderable renderable) {
+		return orderedByLayerRenderables.belongs(renderable);
 	}
 
 	@Override
-	public void add(Entity entity) {
-		factory.add(entity);
-		orderedByLayerEntities.add(entity);
+	public void add(Renderable renderable) {
+		factory.add(renderable.entity);
+		orderedByLayerRenderables.add(renderable);
 	}
 
 	@Override
-	public void remove(Entity entity) {
-		orderedByLayerEntities.remove(entity);
-		factory.remove(entity);
+	public void remove(Renderable renderable) {
+		orderedByLayerRenderables.remove(renderable);
+		factory.add(renderable.entity);
 	}
 
 	@Override
@@ -87,16 +88,20 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		camera.getFrustum(frustum);
 		camera.apply(spriteBatch);
 
-		RandomAccessMap<Entity,EntityComponents> entityComponents = factory.entityComponents;
+		RandomAccessMap<Entity, EntityComponents> entityComponents = factory.entityComponents;
 
 		spriteBatch.begin();
-		for (int i = 0; i < orderedByLayerEntities.size(); i++) {
-			Entity e = orderedByLayerEntities.get(i);
-			EntityComponents components = entityComponents.get(e);
-			RenderableComponent renderableComponent = components.renderableComponent;
-			if (!renderableComponent.isVisible())
+		for (int i = 0; i < orderedByLayerRenderables.size(); i++) {
+			Renderable renderable = orderedByLayerRenderables.get(i);
+			
+			// RenderableComponent renderableComponent = components.renderableComponent;
+			// if (!renderableComponent.isVisible())
+			// continue;
+
+			if (!renderable.isVisible())
 				continue;
 
+			EntityComponents components = entityComponents.get(renderable.getEntity());
 			FrustumCullingComponent frustumCullingComponent = components.frustumCullingComponent;
 			if (frustumCullingComponent != null) {
 
