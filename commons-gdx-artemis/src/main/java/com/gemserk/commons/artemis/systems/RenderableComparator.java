@@ -6,11 +6,14 @@ public class RenderableComparator implements Comparator<Renderable> {
 
 	@Override
 	public int compare(Renderable o1, Renderable o2) {
-		if (o1.layer != o2.layer)
-			return o1.layer - o2.layer;
+		int layer1 = o1.layer;
+		int layer2 = o2.layer;
+		
+		if (layer1 != layer2)
+			return layer1 - layer2;
 
-		int id1 = o1.getId();
-		int id2 = o2.getId();
+		int id1 = o1.id;
+		int id2 = o2.id;
 
 		if (id1 != id2)
 			return id1 - id2;
