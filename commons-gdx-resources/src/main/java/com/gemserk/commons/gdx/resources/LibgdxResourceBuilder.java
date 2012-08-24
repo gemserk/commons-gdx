@@ -1,7 +1,6 @@
 package com.gemserk.commons.gdx.resources;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.w3c.dom.Document;
 
@@ -505,6 +504,14 @@ public class LibgdxResourceBuilder {
 		else
 			resourceManager.add(id, dataLoader);
 
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void resource(final String id, final DataLoaderBuilder dataLoaderBuilder) {
+		if (dataLoaderBuilder.isVolatile())
+			resourceManager.addVolatile(id, dataLoaderBuilder.build(resourceManager));
+		else
+			resourceManager.add(id, dataLoaderBuilder.build(resourceManager));
 	}
 
 	public SpriteResourceBuilder sprite2() {
