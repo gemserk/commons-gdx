@@ -2,7 +2,6 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
-import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.artemis.components.OwnerComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
@@ -53,7 +52,7 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 	}
 
 	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
+	protected void processEntities() {
 		for (int i = 0; i < renderLayers.size(); i++) {
 			RenderLayer renderLayer = renderLayers.get(i);
 			if (!renderLayer.isEnabled())

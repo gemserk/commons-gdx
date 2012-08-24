@@ -2,7 +2,6 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
-import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
@@ -62,7 +61,7 @@ public class MovementSystem extends EntitySystem {
 	}
 
 	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
+	protected void processEntities() {
 		RandomAccessMap<Entity, EntityComponents> allTheEntityComponents = componentsHolder.entityComponents;
 		int entitiesSize = allTheEntityComponents.size();
 		

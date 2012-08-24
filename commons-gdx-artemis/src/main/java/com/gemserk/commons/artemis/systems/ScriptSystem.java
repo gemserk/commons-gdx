@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
-import com.artemis.utils.ImmutableBag;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.ScriptComponent;
 import com.gemserk.commons.artemis.scripts.Script;
@@ -93,7 +92,7 @@ public class ScriptSystem extends EntitySystem {
 	}
 
 	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
+	protected void processEntities() {
 		RandomAccessMap<Entity, EntityComponents> allTheEntityComponents = factory.entityComponents;
 		int entitiesSize = allTheEntityComponents.size();
 		for (int entityIndex = 0; entityIndex < entitiesSize; entityIndex++) {

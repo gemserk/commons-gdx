@@ -10,7 +10,7 @@ public class ActiveEntitiesCounterSystem extends EntitySystem {
 	IntMap<Entity> activeEntities = new IntMap<Entity>();
 
 	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
+	protected void processEntities() {
 	}
 
 	@Override
