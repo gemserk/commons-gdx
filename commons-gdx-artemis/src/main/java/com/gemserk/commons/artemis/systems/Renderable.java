@@ -4,7 +4,6 @@ import com.artemis.Entity;
 
 public class Renderable {
 
-	// if it has owner it uses the id of the owner...
 	int id;
 	int layer;
 	int subLayer;
@@ -36,6 +35,24 @@ public class Renderable {
 	
 	public void setLayer(int layer) {
 		this.layer = layer;
+	}
+	
+	public Renderable(int layer) {
+		this(layer, true);
+	}
+
+	public Renderable(int layer, boolean visible) {
+		this(layer, 0, visible);
+	}
+	
+	public Renderable(int layer, int subLayer) {
+		this(layer, subLayer, true);
+	}
+
+	public Renderable(int layer, int subLayer, boolean visible) {
+		this.layer = layer;
+		this.subLayer = subLayer;
+		this.visible = visible;
 	}
 	
 	///

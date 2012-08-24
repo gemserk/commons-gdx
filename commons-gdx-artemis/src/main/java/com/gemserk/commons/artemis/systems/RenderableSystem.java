@@ -68,14 +68,14 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 		OwnerComponent ownerComponent = OwnerComponent.get(e);
 
 		Renderable renderable = renderableComponent.renderable;
-		
+
+		// this could be set on construction time
 		renderable.entity = e;
 
 		renderable.id = e.getId();
+		// if it has owner it uses the id of the owner... that was part of the original comparator
 		if (ownerComponent != null && ownerComponent.getOwner() != null)
 			renderable.id = ownerComponent.getOwner().getId();
-		renderable.layer = renderableComponent.getLayer();
-		renderable.subLayer = renderableComponent.getSubLayer();
 
 		// order the entity in the Layer, probably the same inside the layer
 		for (int i = 0; i < renderLayers.size(); i++) {

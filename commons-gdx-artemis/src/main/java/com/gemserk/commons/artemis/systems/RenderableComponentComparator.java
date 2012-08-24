@@ -47,8 +47,8 @@ public class RenderableComponentComparator implements Comparator<Entity> {
 		RenderableComponent c1 = entity1Components.renderableComponent;
 		RenderableComponent c2 = entity2Components.renderableComponent;
 
-		if (c1.layer != c2.layer)
-			return c1.layer - c2.layer;
+		if (c1.renderable.getLayer() != c2.renderable.getLayer())
+			return c1.renderable.getLayer() - c2.renderable.getLayer();
 
 		OwnerComponent ownerComponent1 = entity1Components.ownerComponent;
 		OwnerComponent ownerComponent2 = entity2Components.ownerComponent;
@@ -71,7 +71,7 @@ public class RenderableComponentComparator implements Comparator<Entity> {
 		if (id1 != id2)
 			return id1 - id2;
 
-		return c1.subLayer - c2.subLayer;
+		return c1.renderable.getSubLayer() - c2.renderable.getSubLayer();
 	}
 
 }
