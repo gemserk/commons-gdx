@@ -17,9 +17,9 @@ public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 
 	TextureWrap uTextureWrap = TextureWrap.ClampToEdge;
 	TextureWrap vTextureWrap = TextureWrap.ClampToEdge;
-	
+
 	boolean useMipMaps;
-	
+
 	Format format = null;
 
 	public TextureResourceBuilder minFilter(TextureFilter minFilter) {
@@ -37,13 +37,13 @@ public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 		vTextureWrap = v;
 		return this;
 	}
-	
-	public TextureResourceBuilder useMipMaps(boolean useMipMaps){
+
+	public TextureResourceBuilder useMipMaps(boolean useMipMaps) {
 		this.useMipMaps = useMipMaps;
 		return this;
 	}
-	
-	public TextureResourceBuilder format(Format format){
+
+	public TextureResourceBuilder format(Format format) {
 		this.format = format;
 		return this;
 	}
@@ -61,9 +61,8 @@ public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 	public Texture build() {
 		Texture texture = new Texture(fileHandle, format, useMipMaps);
 		int glError = Gdx.gl.glGetError();
-		if (glError != 0) {			
-			throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + GpuMemUtils.getTextureGpuSize()/1000000f);
-		}
+		if (glError != 0)
+			throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + GpuMemUtils.getTextureGpuSize() / 1000000f);
 		texture.setFilter(minFilter, magFilter);
 		texture.setWrap(uTextureWrap, vTextureWrap);
 		return texture;
