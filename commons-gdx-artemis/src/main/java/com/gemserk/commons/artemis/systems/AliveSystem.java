@@ -2,7 +2,6 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
-import com.artemis.utils.ImmutableBag;
 import com.gemserk.commons.artemis.components.AliveComponent;
 import com.gemserk.commons.artemis.components.StoreComponent;
 import com.gemserk.commons.gdx.GlobalTime;
@@ -44,7 +43,7 @@ public class AliveSystem extends EntitySystem {
 	}
 
 	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
+	protected void processEntities() {
 		RandomAccessMap<Entity, EntityComponents> allTheEntityComponents = factory.entityComponents;
 		int entitiesSize = allTheEntityComponents.size();
 		for (int entityIndex = 0; entityIndex < entitiesSize; entityIndex++) {
