@@ -137,7 +137,7 @@ public class SpriteResourceBuilder implements ResourceBuilder<Sprite> {
 					throw new RuntimeException("AtlasRegion " + regionId + " with index " + regionIndex + " from TextureAtlas " + textureAtlasId + " not found");
 
 			}
-			// note that whis resource will not be updated if the resource of the texture atlas changed...
+			// note that this resource will not be updated if the resource of the texture atlas changed...
 			Sprite sprite = null;
 
 			if (trySpriteAtlas) {
