@@ -29,7 +29,7 @@ public class SpatialPhysicsImpl implements Spatial {
 
 	@Override
 	public void setPosition(float x, float y) {
-		body.setTransform(x, y, body.getAngle() * MathUtils.degreesToRadians);
+		body.setTransform(x, y, body.getAngle() * MathUtils.degreesToRadians, false);
 	}
 
 	@Override
