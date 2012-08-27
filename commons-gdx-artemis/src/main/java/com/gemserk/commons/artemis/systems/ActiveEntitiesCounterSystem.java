@@ -2,7 +2,6 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
-import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.utils.IntMap;
 
 public class ActiveEntitiesCounterSystem extends EntitySystem {
