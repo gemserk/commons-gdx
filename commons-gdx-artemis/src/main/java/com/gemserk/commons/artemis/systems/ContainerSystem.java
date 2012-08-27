@@ -2,10 +2,11 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
+import com.artemis.EntitySystem;
 import com.gemserk.commons.artemis.components.ContainerComponent;
 import com.gemserk.commons.artemis.components.StoreComponent;
 
-public class ContainerSystem extends EntityProcessingSystem {
+public class ContainerSystem extends EntitySystem {
 
 	@SuppressWarnings("unchecked")
 	public ContainerSystem() {
@@ -28,8 +29,7 @@ public class ContainerSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(Entity e) {
-
+	protected void processEntities() {
 	}
 
 }

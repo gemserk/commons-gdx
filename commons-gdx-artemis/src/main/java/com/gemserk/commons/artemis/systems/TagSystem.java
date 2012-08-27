@@ -1,10 +1,10 @@
 package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
-import com.artemis.EntityProcessingSystem;
+import com.artemis.EntitySystem;
 import com.gemserk.commons.artemis.components.TagComponent;
 
-public class TagSystem extends EntityProcessingSystem {
+public class TagSystem extends EntitySystem {
 
 	private static final Class<TagComponent> tagComponentClass = TagComponent.class;
 
@@ -38,8 +38,6 @@ public class TagSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(Entity e) {
-
+	protected void processEntities() {
 	}
-
 }

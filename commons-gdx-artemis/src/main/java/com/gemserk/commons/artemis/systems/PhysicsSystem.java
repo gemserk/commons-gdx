@@ -1,7 +1,7 @@
 package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
-import com.artemis.EntityProcessingSystem;
+import com.artemis.EntitySystem;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
@@ -10,7 +10,7 @@ import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.utils.PhysicsUtils;
 import com.gemserk.commons.gdx.GlobalTime;
 
-public class PhysicsSystem extends EntityProcessingSystem implements ActivableSystem, Disposable {
+public class PhysicsSystem extends EntitySystem implements ActivableSystem, Disposable {
 
 	private ActivableSystem activableSystem = new ActivableSystemImpl();
 
@@ -38,14 +38,14 @@ public class PhysicsSystem extends EntityProcessingSystem implements ActivableSy
 		physicsWorld.step(GlobalTime.getDelta(), velocityIterations, positionIterations);
 	}
 
-	@Override
-	protected void process(Entity e) {
-
-	}
 
 	@Override
 	protected boolean checkProcessing() {
 		return isEnabled();
+	}
+	
+	@Override
+	protected void processEntities() {
 	}
 
 	@Override

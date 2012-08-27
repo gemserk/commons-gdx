@@ -1,11 +1,11 @@
 package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
-import com.artemis.EntityProcessingSystem;
+import com.artemis.EntitySystem;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.GroupComponent;
 
-public class GroupSystem extends EntityProcessingSystem {
+public class GroupSystem extends EntitySystem {
 
 	@SuppressWarnings("unchecked")
 	public GroupSystem() {
@@ -31,8 +31,7 @@ public class GroupSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(Entity e) {
-
+	protected void processEntities() {
 	}
 
 }
