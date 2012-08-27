@@ -41,7 +41,8 @@ public class SpatialPhysicsImpl implements Spatial {
 	@Override
 	public void setAngle(float angle) {
 		// TODO: fix this to update the position if it wasn't correctly set yet.
-		body.setTransform(body.getPosition(), angle * MathUtils.degreesToRadians);
+		Vector2 position = body.getPosition();
+		body.setTransform(position.x, position.y, angle * MathUtils.degreesToRadians, false);
 	}
 
 	@Override
