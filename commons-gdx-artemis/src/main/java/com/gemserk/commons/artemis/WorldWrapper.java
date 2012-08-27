@@ -8,13 +8,13 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class WorldWrapper {
 
-	private World world;
+	protected World world;
 
-	private ArrayList<EntitySystem> updateSystems;
-	private ArrayList<EntitySystem> renderSystems;
+	protected ArrayList<EntitySystem> updateSystems;
+	protected ArrayList<EntitySystem> renderSystems;
 
-	private ArrayList<WorldSystem> worldUpdateSystems;
-	private ArrayList<WorldSystem> worldRenderSystems;
+	protected ArrayList<WorldSystem> worldUpdateSystems;
+	protected ArrayList<WorldSystem> worldRenderSystems;
 
 	public World getWorld() {
 		return world;
