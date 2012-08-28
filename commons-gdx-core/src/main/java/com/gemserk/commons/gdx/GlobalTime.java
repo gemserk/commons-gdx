@@ -2,21 +2,21 @@ package com.gemserk.commons.gdx;
 
 public class GlobalTime {
 
-	private static int frame = 0;
+	private static long frame = 0;
 	private static float delta;
 	private static float alpha;
 
 	/**
 	 * Sets the current frame of the game.
 	 */
-	public static void setFrame(int frame) {
+	public static void setFrame(long frame) {
 		GlobalTime.frame = frame;
 	}
 
 	/**
 	 * Returns the current frame of the game.
 	 */
-	public static int getFrame() {
+	public static long getFrame() {
 		return frame;
 	}
 
