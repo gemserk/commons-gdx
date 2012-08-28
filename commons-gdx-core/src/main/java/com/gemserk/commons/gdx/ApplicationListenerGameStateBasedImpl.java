@@ -16,19 +16,19 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 	protected GameState gameState;
 	protected boolean transitioning;
-	
+
 	/**
 	 * The global speed of the game, 1 by default.
 	 */
 	private float speed = 1f;
-	
+
 	/**
 	 * Sets the global speed of the game.
 	 */
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-	
+
 	public float getSpeed() {
 		return speed;
 	}
@@ -254,16 +254,9 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			next.show();
 
 			if (!delayed) {
-//				nextGameState();
 				setNextGameState();
 				return;
 			}
-
-			// if there is no effects, then there is no need of a gamestate transition
-			// if (transitionEffects.isEmpty()) {
-			// nextGameState();
-			// return;
-			// }
 
 			final GameState transitionGameState = new GameStateTransitionImpl(current, next, transitionEffects, updatesToConsume) {
 				@Override
@@ -295,17 +288,29 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 		}
 
 		private void setNextGameState() {
-			gameState = next;
 
 			if (next != current) {
-				// if the next gamestate is different than the current, then hide and dispose the old one
+				// if the next GameState is different than the current, then hide and dispose the old one
 				current.pause();
 				current.hide();
 
-				if (disposeCurrent)
-					current.dispose();
+				if (disposeCurrent) {
+					if (ApplicationListenerGameStateBasedImpl.this.gameState == current) {
+						// to avoid problems with the current GameState if update/render code is still waiting to be processed,
+						// for example, if the GameState is a fixed time step implementation.
+						Gdx.app.postRunnable(new Runnable() {
+							@Override
+							public void run() {
+								current.dispose();
+							}
+						});
+					} else {
+						current.dispose();
+					}
+				}
 			}
 
+			gameState = next;
 			transitioning = false;
 		}
 
