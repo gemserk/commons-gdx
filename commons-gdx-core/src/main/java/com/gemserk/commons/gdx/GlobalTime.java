@@ -2,8 +2,23 @@ package com.gemserk.commons.gdx;
 
 public class GlobalTime {
 
+	private static int frame = 0;
 	private static float delta;
 	private static float alpha;
+
+	/**
+	 * Sets the current frame of the game.
+	 */
+	public static void setFrame(int frame) {
+		GlobalTime.frame = frame;
+	}
+
+	/**
+	 * Returns the current frame of the game.
+	 */
+	public static int getFrame() {
+		return frame;
+	}
 
 	/**
 	 * Returns delta time in seconds.

@@ -60,6 +60,8 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 
 	@Override
 	public void render() {
+		GlobalTime.setFrame(GlobalTime.getFrame() + 1);
+
 		if (gameState == null)
 			return;
 		// should set the global time
