@@ -254,7 +254,8 @@ public class ApplicationListenerGameStateBasedImpl implements ApplicationListene
 			next.show();
 
 			if (!delayed) {
-				nextGameState();
+//				nextGameState();
+				setNextGameState();
 				return;
 			}
 
