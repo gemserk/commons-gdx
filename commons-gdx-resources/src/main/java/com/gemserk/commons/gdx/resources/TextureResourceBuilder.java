@@ -62,7 +62,7 @@ public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 		Texture texture = new Texture(fileHandle, format, useMipMaps);
 		int glError = Gdx.gl.glGetError();
 		if (glError != 0)
-			throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + GpuMemUtils.getTextureGpuSize() / 1000000f);
+			throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + GpuMemUtils.getTextureGpuSize().gpuMemSize / 1000000f);
 		texture.setFilter(minFilter, magFilter);
 		texture.setWrap(uTextureWrap, vTextureWrap);
 		return texture;

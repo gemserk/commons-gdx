@@ -10,15 +10,18 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 
 public class GpuMemUtils {
+	
+	public static class GpuMemInfo {
+		public int totalTextures;
+		public int gpuMemSize;
+	}
 
-	public static int getTextureGpuSize(){
+	public static GpuMemInfo getTextureGpuSize(){
 		try {
 			Field managedTexturesField = Texture.class.getDeclaredField("managedTextures");
 			managedTexturesField.setAccessible(true);
 			Map<Application, List<Texture>> managedTexturesPerApp= (Map<Application, List<Texture>>) managedTexturesField.get(null);
 			List<Texture> managedTextures = managedTexturesPerApp.get(Gdx.app);
-			
-			System.out.println(managedTextures.size());
 			
 			int totalTextureSize = 0;
 			for (Texture texture : managedTextures) {
@@ -33,7 +36,10 @@ public class GpuMemUtils {
 				
 				totalTextureSize +=textureSize;
 			}
-			return totalTextureSize;
+			GpuMemInfo gpuMemInfo = new GpuMemInfo();
+			gpuMemInfo.totalTextures = managedTextures.size();
+			gpuMemInfo.gpuMemSize = totalTextureSize;
+			return gpuMemInfo;
 			
 		} catch (Exception e) {
 			throw new RuntimeException("Error while getting textures gpu memory use",e);
