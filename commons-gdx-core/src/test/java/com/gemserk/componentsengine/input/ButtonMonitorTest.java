@@ -11,7 +11,6 @@ import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class ButtonMonitorTest {
 
 	static class ButtonMonitorMock extends ButtonMonitor {
@@ -111,6 +110,19 @@ public class ButtonMonitorTest {
 
 		assertThat(monitor, MonitorMatcher.monitor(false, true, false));
 
+	}
+	
+	@Test
+	public void bugWithPressedAndReleasedAtTheSameTime() {
+		 monitor.down = true;
+		 monitor.update();
+		 assertThat(monitor, MonitorMatcher.monitor(true, false, false));
+		 monitor.down = false;
+		 monitor.update();
+		 assertThat(monitor, MonitorMatcher.monitor(false, true, false));
+		 monitor.down = true;
+		 monitor.update();
+		 assertThat(monitor, MonitorMatcher.monitor(true, false, false));
 	}
 
 	static class MonitorMatcher extends BaseMatcher<ButtonMonitor> {
