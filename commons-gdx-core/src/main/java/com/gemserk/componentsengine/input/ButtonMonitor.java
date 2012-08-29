@@ -16,12 +16,10 @@ public abstract class ButtonMonitor {
 
 	public void update() {
 		boolean down = isDown();
-
-		 pressed = !wasDown && down;
-		 released = wasDown && !down;
-		 holded = down && !pressed;
-		
-		 wasDown = down;
+		pressed = !wasDown && down;
+		released = wasDown && !down;
+		holded = down && !pressed;
+		wasDown = down;
 	}
 
 	public boolean isPressed() {
