@@ -39,12 +39,6 @@ public class LibgdxResourceBuilder {
 
 	protected ResourceManager<String> resourceManager;
 
-	private boolean cacheWhenLoad = false;
-
-	public void setCacheWhenLoad(boolean cacheWhenLoad) {
-		this.cacheWhenLoad = cacheWhenLoad;
-	}
-
 	public LibgdxResourceBuilder(ResourceManager<String> resourceManager) {
 		this.resourceManager = resourceManager;
 	}
@@ -71,8 +65,6 @@ public class LibgdxResourceBuilder {
 
 	public void texture(String id, FileHandle fileHandle, boolean linearFilter) {
 		resourceManager.add(id, new TextureDataLoader(fileHandle, linearFilter));
-		if (cacheWhenLoad)
-			resourceManager.get(id).get();
 	}
 
 	/**
@@ -418,8 +410,6 @@ public class LibgdxResourceBuilder {
 
 	public void sound(String id, FileHandle fileHandle) {
 		resourceManager.add(id, new SoundDataLoader(fileHandle));
-		if (cacheWhenLoad)
-			resourceManager.get(id).get();
 	}
 
 	public void music(String id, String file) {
