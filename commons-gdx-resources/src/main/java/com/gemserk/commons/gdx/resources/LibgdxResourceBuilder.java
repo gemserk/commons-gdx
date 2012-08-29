@@ -409,7 +409,15 @@ public class LibgdxResourceBuilder {
 	}
 
 	public void sound(String id, FileHandle fileHandle) {
-		resourceManager.add(id, new SoundDataLoader(fileHandle));
+		resourceManager.add(id, new SoundDataLoader(fileHandle, resourceManager));
+	}
+	
+	public void sound(String id, String metadataResourceId, String file) {
+		sound(id, metadataResourceId, internal(file));
+	}
+
+	public void sound(String id, String metadataResourceId, FileHandle fileHandle) {
+		resourceManager.add(id, new SoundDataLoader(fileHandle, resourceManager).durationMetadata(metadataResourceId));
 	}
 
 	public void music(String id, String file) {
