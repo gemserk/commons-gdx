@@ -25,6 +25,7 @@ public class ResourceBundleResourceBuilder implements ResourceBuilder<ResourceBu
 
 	FileHandle rootFileHandle;
 	Map<Locale, FileHandle> fileHandles = new HashMap<Locale, FileHandle>();
+	boolean cached = false;
 
 	public ResourceBundleResourceBuilder root(FileHandle fileHandle) {
 		this.rootFileHandle = fileHandle;
@@ -35,10 +36,15 @@ public class ResourceBundleResourceBuilder implements ResourceBuilder<ResourceBu
 		fileHandles.put(locale, fileHandle);
 		return this;
 	}
+	
+	public ResourceBundleResourceBuilder cached() {
+		cached = true;
+		return this;
+	}
 
 	@Override
 	public boolean isVolatile() {
-		return false;
+		return !cached;
 	}
 
 	@Override
