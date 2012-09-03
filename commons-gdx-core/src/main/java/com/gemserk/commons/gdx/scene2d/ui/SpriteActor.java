@@ -26,7 +26,7 @@ public class SpriteActor extends Actor {
 	}
 
 	@Override
-	public Actor hit(float x, float y) {
+	public Actor hit(float x, float y, boolean touchable) {
 		return null;
 	}
 	
