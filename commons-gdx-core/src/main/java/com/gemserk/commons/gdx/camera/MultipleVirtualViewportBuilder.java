@@ -18,22 +18,6 @@ public class MultipleVirtualViewportBuilder {
 		if (width >= minWidth && width <= maxWidth && height >= minHeight && height <= maxHeight)
 			return new VirtualViewport(width, height, true);
 
-		// float aspect = width / height;
-		//
-		// float scaleForMinSize = minHeight / height;
-		// float scaleForMaxSize = maxHeight / height;
-		//
-		// float virtualViewportHeight = height * scaleForMaxSize;
-		// float virtualViewportWidth = virtualViewportHeight * aspect;
-		//
-		// if (virtualViewportWidth >= minWidth && virtualViewportWidth <= maxWidth)
-		// return new VirtualViewport(virtualViewportWidth, virtualViewportHeight, true);
-		//
-		// virtualViewportHeight = height * scaleForMinSize;
-		// virtualViewportWidth = virtualViewportHeight * aspect;
-		//
-		// return new VirtualViewport(virtualViewportWidth, virtualViewportHeight, true);
-
 		float aspect = width / height;
 
 		float scaleForMinSize = minWidth / width;
