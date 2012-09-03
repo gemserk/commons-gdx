@@ -8,7 +8,6 @@ import com.gemserk.commons.gdx.graphics.SpriteUtils;
 public class SpriteActor extends Actor {
 
 	private final Sprite sprite;
-	private final String name;
 	
 	float cx, cy;
 	
@@ -21,13 +20,9 @@ public class SpriteActor extends Actor {
 		return sprite;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public SpriteActor(Sprite sprite, String name) {
 		this.sprite = sprite;
-		this.name = name;
+		setName(name);
 	}
 
 	@Override
