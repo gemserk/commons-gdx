@@ -1,7 +1,6 @@
 package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
-import com.artemis.EntityProcessingSystem;
 import com.artemis.EntitySystem;
 import com.gemserk.commons.artemis.components.ContainerComponent;
 import com.gemserk.commons.artemis.components.StoreComponent;
