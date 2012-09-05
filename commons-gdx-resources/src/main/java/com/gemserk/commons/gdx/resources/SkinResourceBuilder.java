@@ -45,7 +45,7 @@ public class SkinResourceBuilder implements ResourceBuilder<Skin> {
 		// throw new RuntimeException("Failed to create Skin, textureFile is a required parameter.");
 		TextureAtlas textureAtlas = resourceManager.getResourceValue(textureAtlasResourceId);
 		if (textureAtlas == null)
-			throw new RuntimeException("Failed to create Skin, textureAtlas " + textureAtlasResourceId + "resource not found.");
+			throw new RuntimeException("Failed to create Skin, textureAtlas " + textureAtlasResourceId + " resource not found.");
 		// return new Skin(skinFile, textureFile);
 		return new Skin(skinFile, textureAtlas);
 	}
