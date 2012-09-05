@@ -108,7 +108,7 @@ public class LibgdxResourceBuilder {
 						if (page.texture == null)
 							throw new RuntimeException("The resource " + textureResourceId + " was not found");
 					} catch (Exception e) {
-						throw new RuntimeException("Error while loading page for textureAtlas " + id + " - page: " + page.textureFile.path());
+						throw new RuntimeException("Error while loading page for textureAtlas " + id + " - page: " + page.textureFile.path(),e);
 					}
 				}
 
