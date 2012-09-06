@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
-import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer10;
-import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,11 +15,25 @@ import com.badlogic.gdx.math.Vector2;
 
 public class ImmediateModeRendererUtils {
 
-	private static final ImmediateModeRenderer renderer = Gdx.graphics.isGL20Available() ? new ImmediateModeRenderer20(false, true, 0): new ImmediateModeRenderer10();
+	private static ImmediateModeRenderer renderer;
+
+	private static ImmediateModeRenderer getRenderer() {
+		// if (renderer == null)
+		// renderer = Gdx.graphics.isGL20Available() ? new ImmediateModeRenderer20(false, true, 0) : new ImmediateModeRenderer10();
+		return renderer;
+	}
 
 	private static final Vector2 tmp = new Vector2();
 	private static final Vector2 angleTmp = new Vector2(1, 0);
 	private static Matrix4 projectionMatrix = null;
+
+	public static void setRenderer(ImmediateModeRenderer renderer) {
+		ImmediateModeRendererUtils.renderer = renderer;
+	}
+
+	public static void disposeRenderer() {
+		renderer.dispose();
+	}
 
 	public static void calculateProjectionMatrix(float x, float y, float zoom, float w, float h) {
 		getProjectionMatrix().setToOrtho2D(x, y, w / zoom, h / zoom);
@@ -64,6 +76,7 @@ public class ImmediateModeRendererUtils {
 	}
 
 	public static void drawSolidCircle(float x, float y, float radius, Color color) {
+		ImmediateModeRenderer renderer = getRenderer();
 		renderer.begin(getProjectionMatrix(), GL10.GL_LINE_LOOP);
 		{
 			float angle = 0;
@@ -82,6 +95,7 @@ public class ImmediateModeRendererUtils {
 	}
 
 	public static void drawLine(float x0, float y0, float x1, float y1, Color color) {
+		ImmediateModeRenderer renderer = getRenderer();
 		renderer.begin(getProjectionMatrix(), GL10.GL_LINES);
 		{
 			renderer.color(color.r, color.g, color.b, color.a);
@@ -119,6 +133,7 @@ public class ImmediateModeRendererUtils {
 	}
 
 	public static void drawRectangle(float x0, float y0, float x1, float y1, Color color) {
+		ImmediateModeRenderer renderer = getRenderer();
 		renderer.begin(getProjectionMatrix(), GL10.GL_LINE_LOOP);
 		{
 			renderer.color(color.r, color.g, color.b, color.a);
@@ -137,6 +152,7 @@ public class ImmediateModeRendererUtils {
 	}
 
 	public static void fillRectangle(float x0, float y0, float x1, float y1, Color color) {
+		ImmediateModeRenderer renderer = getRenderer();
 		renderer.begin(getProjectionMatrix(), GL10.GL_TRIANGLES);
 		{
 			// first triangle
@@ -169,6 +185,8 @@ public class ImmediateModeRendererUtils {
 		gl.glTranslatef(x, y, 0f);
 		gl.glRotatef(angle, 0f, 0f, 1f);
 
+		ImmediateModeRenderer renderer = getRenderer();
+
 		renderer.begin(getProjectionMatrix(), GL10.GL_LINE_LOOP);
 		for (int i = 0; i < vertices.length; i++) {
 			Vector2 v = vertices[i];
@@ -186,6 +204,8 @@ public class ImmediateModeRendererUtils {
 		gl.glPushMatrix();
 		gl.glTranslatef(x, y, 0f);
 		gl.glRotatef(angle, 0f, 0f, 1f);
+
+		ImmediateModeRenderer renderer = getRenderer();
 
 		renderer.begin(getProjectionMatrix(), GL10.GL_TRIANGLES);
 		for (int i = 0; i < triangulator.getTriangleCount(); i++) {
