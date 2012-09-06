@@ -13,9 +13,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
 import com.gemserk.commons.admob.AdsAnimation.Type;
-import com.google.ads.AdView;
 
-public class AdMobHandler extends Handler {
+public class AdViewHandler extends Handler {
 
 	static class AnimationAdapter implements AnimationListener {
 
@@ -38,15 +37,15 @@ public class AdMobHandler extends Handler {
 
 	static class HideAnimationListener extends AnimationAdapter {
 
-		private final AdView adView;
+		private final View view;
 
-		public HideAnimationListener(AdView adView) {
-			this.adView = adView;
+		public HideAnimationListener(View view) {
+			this.view = view;
 		}
 
 		@Override
 		public void onAnimationEnd(Animation animation) {
-			adView.setVisibility(View.GONE);
+			view.setVisibility(View.GONE);
 			// System.out.println("setting visibility to gone");
 		}
 
@@ -54,15 +53,15 @@ public class AdMobHandler extends Handler {
 
 	static class ShowAnimationListener extends AnimationAdapter {
 
-		private final AdView adView;
+		private final View view;
 
-		public ShowAnimationListener(AdView adView) {
-			this.adView = adView;
+		public ShowAnimationListener(View view) {
+			this.view = view;
 		}
 
 		@Override
 		public void onAnimationStart(Animation animation) {
-			adView.setVisibility(View.VISIBLE);
+			view.setVisibility(View.VISIBLE);
 			// System.out.println("setting visibility to visible");
 		}
 
@@ -71,13 +70,13 @@ public class AdMobHandler extends Handler {
 	public static final int SHOW_ADS = 1;
 	public static final int HIDE_ADS = 0;
 
-	private final AdView adView;
+	private final View adView;
 	private final RelativeLayout layout;
 
 	private int verticalAlign;
 	private int horizontalAlign;
 
-	public AdMobHandler(AdView adView, RelativeLayout layout) {
+	public AdViewHandler(View adView, RelativeLayout layout) {
 		this.adView = adView;
 		this.layout = layout;
 		this.verticalAlign = RelativeLayout.ALIGN_PARENT_TOP;
