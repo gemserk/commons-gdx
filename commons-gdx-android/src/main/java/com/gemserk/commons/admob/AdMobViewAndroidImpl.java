@@ -1,15 +1,16 @@
 package com.gemserk.commons.admob;
 
+import android.os.Handler;
 import android.os.Message;
 
 public class AdMobViewAndroidImpl implements AdMobView {
 
 	// protected static final Logger logger = LoggerFactory.getLogger(AdMobViewAndroidImpl.class);
 
-	private AdViewHandler adMobHandler;
+	private Handler adMobHandler;
 	private boolean enabled;
 
-	public AdMobViewAndroidImpl(AdViewHandler adMobHandler) {
+	public AdMobViewAndroidImpl(Handler adMobHandler) {
 		this.adMobHandler = adMobHandler;
 		this.enabled = true;
 	}
