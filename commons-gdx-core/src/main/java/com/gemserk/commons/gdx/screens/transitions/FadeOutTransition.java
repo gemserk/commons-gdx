@@ -37,7 +37,7 @@ public class FadeOutTransition extends GameTransitions.LeaveTransition {
 	@Override
 	public void init() {
 		super.init();
-//		colorTransition = Transitions.transitionBuilder(startColor).end(endColor).time(time).build();
+		// colorTransition = Transitions.transitionBuilder(startColor).end(endColor).time(time).build();
 		colorTransition = Transitions.transition(startColor).endObject(time, endColor).build();
 		Color color = colorTransition.get();
 		Mesh2dUtils.setColor(fadeRectangle, color.r, color.g, color.b, color.a);
@@ -45,10 +45,10 @@ public class FadeOutTransition extends GameTransitions.LeaveTransition {
 
 	@Override
 	public void postRender(float delta) {
-		Gdx.gl10.glEnable(GL10.GL_BLEND);
+		Gdx.gl.glEnable(GL10.GL_BLEND);
 		ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		ImmediateModeRendererUtils.draw(GL10.GL_TRIANGLES, fadeRectangle);
-		Gdx.gl10.glDisable(GL10.GL_BLEND);
+		Gdx.gl.glDisable(GL10.GL_BLEND);
 	}
 
 	@Override
