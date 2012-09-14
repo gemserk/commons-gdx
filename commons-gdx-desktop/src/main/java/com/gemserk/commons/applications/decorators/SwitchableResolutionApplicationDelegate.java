@@ -18,10 +18,12 @@ public class SwitchableResolutionApplicationDelegate implements ApplicationListe
 	private InputDevicesMonitorImpl<String> inputMonitor;
 	private ButtonMonitor switchResolutionButton;
 	private ButtonMonitor switchPreviousResolutionButton;
+	private String applicationName;
 
-	public SwitchableResolutionApplicationDelegate(ApplicationListener applicationListener, Dimension... resolutions) {
+	public SwitchableResolutionApplicationDelegate(ApplicationListener applicationListener, String applicationName, Dimension... resolutions) {
 		this.applicationListener = applicationListener;
 		this.resolutions = resolutions;
+		this.applicationName = applicationName;
 	}
 
 	public void create() {
@@ -41,7 +43,7 @@ public class SwitchableResolutionApplicationDelegate implements ApplicationListe
 
 	public void resize(int width, int height) {
 		applicationListener.resize(width, height);
-		Gdx.graphics.setTitle(String.format("ClashOfTheOlympians - Resolution(%dx%d) - (%d/%d)", width, height, currentResolution + 1, resolutions.length));
+		Gdx.graphics.setTitle(String.format(applicationName + " - Resolution(%dx%d) - (%d/%d)", width, height, currentResolution + 1, resolutions.length));
 	}
 
 	public void render() {
