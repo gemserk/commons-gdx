@@ -62,12 +62,11 @@ public class Gdx2dMeshBuilder {
 		texCoordOffset = getOffset(vertexAttributes, Usage.TextureCoordinates);
 	}
 
-	public int getOffset(VertexAttributes vertexAttributes, int usage) {
+	public static int getOffset(VertexAttributes vertexAttributes, int usage) {
 		int len = vertexAttributes.size();
 		for (int i = 0; i < len; i++)
 			if (vertexAttributes.get(i).usage == usage)
 				return vertexAttributes.get(i).offset / 4;
-
 		return 0;
 	}
 

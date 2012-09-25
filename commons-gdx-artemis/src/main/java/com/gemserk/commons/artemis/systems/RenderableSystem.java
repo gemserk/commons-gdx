@@ -10,31 +10,6 @@ import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
 public class RenderableSystem extends EntitySystem implements Disposable {
 
-	// static class EntityComponents {
-	// public RenderableComponent renderableComponent;
-	// public OwnerComponent ownerComponent;
-	// }
-	//
-	// static class Factory extends EntityComponentsFactory<EntityComponents> {
-	//
-	// @Override
-	// public EntityComponents newInstance() {
-	// return new EntityComponents();
-	// }
-	//
-	// @Override
-	// public void free(EntityComponents entityComponent) {
-	// entityComponent.renderableComponent = null;
-	// entityComponent.ownerComponent = null;
-	// }
-	//
-	// @Override
-	// public void load(Entity e, EntityComponents entityComponent) {
-	// entityComponent.renderableComponent = RenderableComponent.get(e);
-	// entityComponent.ownerComponent = OwnerComponent.get(e);
-	// }
-	// }
-
 	private RenderLayers renderLayers;
 
 	@SuppressWarnings("unchecked")
