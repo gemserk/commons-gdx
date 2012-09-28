@@ -54,4 +54,10 @@ public class ParametersDelegateImpl implements Parameters {
 		internal.clear();
 	}
 
+	@Override
+	public Parameters remove(String id) {
+		internal.remove(id);
+		return this;
+	}
+
 }

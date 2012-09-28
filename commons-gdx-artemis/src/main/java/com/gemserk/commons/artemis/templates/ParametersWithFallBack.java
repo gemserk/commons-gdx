@@ -71,4 +71,10 @@ public class ParametersWithFallBack implements Parameters {
 			parameters.clear();
 	}
 
+	@Override
+	public Parameters remove(String id) {
+		fallBackParameters.remove(id);
+		return this;
+	}
+
 }

@@ -77,4 +77,10 @@ public class ParametersWrapper implements Parameters {
 		wrappedParameters.clear();
 	}
 
+	@Override
+	public Parameters remove(String id) {
+		wrappedParameters.remove(id);
+		return this;
+	}
+
 }

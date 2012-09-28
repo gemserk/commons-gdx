@@ -45,6 +45,11 @@ public interface Parameters {
 	Parameters putAll(Map<String, Object> values);
 
 	/**
+	 * Removes the object identified by the specified identifier.
+	 */
+	Parameters remove(String id);
+
+	/**
 	 * Clears the map removing all the values from it.
 	 */
 	void clear();
