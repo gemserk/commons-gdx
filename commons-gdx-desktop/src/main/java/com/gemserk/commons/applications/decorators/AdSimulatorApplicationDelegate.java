@@ -53,10 +53,11 @@ public class AdSimulatorApplicationDelegate implements ApplicationListener {
 	private int horizontalAlign;
 	private int verticalAlign;
 
-	public AdSimulatorApplicationDelegate(ApplicationListener applicationListener, AdMobViewSimulatorImpl adMobViewSimulator) {
+	public AdSimulatorApplicationDelegate(ApplicationListener applicationListener, AdMobViewSimulatorImpl adMobViewSimulator, boolean enabled) {
 		this.applicationListener = applicationListener;
 		this.adMobViewSimulator = adMobViewSimulator;
 		this.animationManager = new AnimationManager();
+		this.enabled = enabled;
 	}
 
 	@Override
@@ -68,8 +69,6 @@ public class AdSimulatorApplicationDelegate implements ApplicationListener {
 		houseAdSprite = new Sprite(texture);
 		spriteBatch = new SpriteBatch();
 		Texture.setEnforcePotImages(true);
-
-		this.enabled = true;
 
 		adsParameters = new AdsParameters().delay(0).horizontalAlign(0).verticalAlign(0);
 
