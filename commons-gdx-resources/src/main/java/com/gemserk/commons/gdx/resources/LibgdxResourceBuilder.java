@@ -108,7 +108,7 @@ public class LibgdxResourceBuilder {
 						if (page.texture == null)
 							throw new RuntimeException("The resource " + textureResourceId + " was not found");
 					} catch (Exception e) {
-						throw new RuntimeException("Error while loading page for textureAtlas " + id + " - page: " + page.textureFile.path(),e);
+						throw new RuntimeException("Error while loading page for textureAtlas " + id + " - page: " + page.textureFile.path(), e);
 					}
 				}
 
@@ -411,7 +411,7 @@ public class LibgdxResourceBuilder {
 	public void sound(String id, FileHandle fileHandle) {
 		resourceManager.add(id, new SoundDataLoader(fileHandle, resourceManager));
 	}
-	
+
 	public void sound(String id, String metadataResourceId, String file) {
 		sound(id, metadataResourceId, internal(file));
 	}
@@ -503,7 +503,7 @@ public class LibgdxResourceBuilder {
 			resourceManager.add(id, dataLoader);
 
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void resource(final String id, final DataLoaderBuilder dataLoaderBuilder) {
 		if (dataLoaderBuilder.isVolatile())
@@ -535,7 +535,7 @@ public class LibgdxResourceBuilder {
 	public XmlDocumentResourceBuilder xmlDocument(FileHandle file) {
 		return new XmlDocumentResourceBuilder(resourceManager).file(file);
 	}
-	
+
 	public XmlSchemaResourceBuilder xmlSchema() {
 		return new XmlSchemaResourceBuilder();
 	}
