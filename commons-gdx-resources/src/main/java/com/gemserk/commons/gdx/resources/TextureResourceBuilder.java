@@ -2,10 +2,12 @@ package com.gemserk.commons.gdx.resources;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.gemserk.commons.gdx.resources.exceptions.OpenGLOutOfMemoryException;
 import com.gemserk.util.GpuMemUtils;
 
 public class TextureResourceBuilder implements ResourceBuilder<Texture> {
@@ -61,11 +63,23 @@ public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 	public Texture build() {
 		Texture texture = new Texture(fileHandle, format, useMipMaps);
 		int glError = Gdx.gl.glGetError();
-		if (glError != 0)
-			throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + GpuMemUtils.getTextureGpuSize().gpuMemSize / 1000000f);
+
+		// temporary to test the error...
+
+		// if (textureMem > 20f) {
+		// throw new OpenGLOutOfMemoryException("Error while loading texture " + fileHandle + " - TEXTUREMEM: " + textureMem);
+		// }
+
+		if (glError != 0) {
+			float textureMem = GpuMemUtils.getTextureGpuSize().gpuMemSize / 1000000f;
+			if (glError == GL10.GL_OUT_OF_MEMORY)
+				throw new OpenGLOutOfMemoryException("Error while loading texture " + fileHandle + " - TEXTUREMEM: " + textureMem);
+			else
+				throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + textureMem);
+		}
+
 		texture.setFilter(minFilter, magFilter);
 		texture.setWrap(uTextureWrap, vTextureWrap);
 		return texture;
 	}
-
 }
