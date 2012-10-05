@@ -65,12 +65,13 @@ public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 		int glError = Gdx.gl.glGetError();
 
 		// temporary to test the error...
-		// {
-		// float textureMem = GpuMemUtils.getTextureGpuSize().gpuMemSize / 1000000f;
-		// if (textureMem > 20f) {
-		// throw new OpenGLOutOfMemoryException("Error while loading texture " + fileHandle + " - TEXTUREMEM: " + textureMem);
-		// }
-		// }
+
+//		{
+//			float textureMem = GpuMemUtils.getTextureGpuSize().gpuMemSize / 1000000f;
+//			if (textureMem > 20f) {
+//				throw new OpenGLOutOfMemoryException("Error while loading texture " + fileHandle + " - TEXTUREMEM: " + textureMem);
+//			}
+//		}
 
 		if (glError != 0) {
 			float textureMem = GpuMemUtils.getTextureGpuSize().gpuMemSize / 1000000f;
