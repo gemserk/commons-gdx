@@ -39,8 +39,14 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	private Factory factory;
 
 	private boolean ownsSpriteBatch;
+	
+	private boolean blending;
 
-	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch) {
+	public void setBlending(boolean blending) {
+		this.blending = blending;
+	}
+	
+	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch, boolean blending) {
 		this.camera = camera;
 		this.spriteBatch = spriteBatch;
 		// this.orderedByLayerEntities = new OrderedByLayerEntities(minLayer, maxLayer);
@@ -48,6 +54,11 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 		this.enabled = true;
 		this.factory = new Factory();
 		this.ownsSpriteBatch = false;
+		this.blending = blending;
+	}
+	
+	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch) {
+		this(minLayer, maxLayer, camera, spriteBatch, true);
 	}
 
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera) {
@@ -90,6 +101,11 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
 		RandomAccessMap<Entity, EntityComponents> entityComponents = factory.entityComponents;
 
+		if (blending && !spriteBatch.isBlendingEnabled())
+			spriteBatch.enableBlending();
+		else if (!blending && spriteBatch.isBlendingEnabled())
+			spriteBatch.disableBlending();
+		
 		spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerRenderables.size(); i++) {
 			Renderable renderable = orderedByLayerRenderables.get(i);
