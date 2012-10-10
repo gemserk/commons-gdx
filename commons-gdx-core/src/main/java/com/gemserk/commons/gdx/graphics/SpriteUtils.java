@@ -116,6 +116,18 @@ public class SpriteUtils {
 	}
 
 	/**
+	 * Modifies the size of the Sprite using its current width and height and the specified scale.
+	 * 
+	 * @param sprite
+	 *            The Sprite to modify.
+	 * @param scale
+	 *            The scale to use when changing the Sprite size.
+	 */
+	public static void scale(Sprite sprite, float scale) {
+		sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+	}
+
+	/**
 	 * Returns a clone of a Sprite based on the type of the sprite.
 	 */
 	public static Sprite cloneSprite(Sprite sprite) {
