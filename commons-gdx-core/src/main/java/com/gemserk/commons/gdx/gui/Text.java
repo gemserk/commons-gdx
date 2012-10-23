@@ -14,7 +14,7 @@ public class Text extends ControlImpl {
 	private BitmapFont font;
 	private float scale = 1f;
 
-	private boolean roundPosition = false;
+	private boolean roundPosition = true;
 
 	public Text setText(CharSequence text) {
 		this.text = text;

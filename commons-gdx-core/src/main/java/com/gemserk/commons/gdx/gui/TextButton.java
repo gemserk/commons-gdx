@@ -31,7 +31,7 @@ public class TextButton extends ControlImpl {
 	private ButtonHandler buttonHandler = new ButtonHandler();
 	private Transition<Color> colorTransition;
 
-	private boolean roundPosition = false;
+	private boolean roundPosition = true;
 
 	public TextButton setColor(Color color) {
 		if (colorTransition != null)
