@@ -31,6 +31,8 @@ public class TextButton extends ControlImpl {
 	private ButtonHandler buttonHandler = new ButtonHandler();
 	private Transition<Color> colorTransition;
 
+	private boolean roundPosition = false;
+
 	public TextButton setColor(Color color) {
 		if (colorTransition != null)
 			colorTransition.start(0.25f, color);
@@ -82,6 +84,14 @@ public class TextButton extends ControlImpl {
 
 	public ButtonHandler getButtonHandler() {
 		return buttonHandler;
+	}
+
+	public void setRoundPosition(boolean roundPosition) {
+		this.roundPosition = roundPosition;
+	}
+
+	public boolean isRoundPosition() {
+		return roundPosition;
 	}
 
 	/**
@@ -143,7 +153,7 @@ public class TextButton extends ControlImpl {
 		if (!isVisible())
 			return;
 		font.setColor(colorTransition.get());
-		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, getX(), getY(), cx, cy, alignment);
+		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, getX(), getY(), cx, cy, alignment, roundPosition);
 		// ImmediateModeRendererUtils.drawRectangle(bounds.x, bounds.y, bounds.x + bounds.width, bounds.y + bounds.height, Color.GREEN);
 	}
 

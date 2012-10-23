@@ -87,6 +87,11 @@ public class GuiControls {
 			textButton.setCenter(cx, cy);
 			return this;
 		}
+		
+		public TextButtonBuilder roundPosition(boolean roundPosition) {
+			textButton.setRoundPosition(roundPosition);
+			return this;
+		}
 
 		@Override
 		public TextButton build() {
@@ -177,6 +182,11 @@ public class GuiControls {
 			return this;
 		}
 
+		public LabelBuilder roundPosition(boolean roundPosition) {
+			text.setRoundPosition(roundPosition);
+			return this;
+		}
+
 		public LabelBuilder font(BitmapFont font) {
 			text.setFont(font);
 			return this;
@@ -186,7 +196,7 @@ public class GuiControls {
 			text.setColor(r, g, b, a);
 			return this;
 		}
-		
+
 		public LabelBuilder scale(float scale) {
 			text.setScale(scale);
 			return this;
@@ -205,7 +215,7 @@ public class GuiControls {
 		}
 
 	}
-	
+
 	public static class ToggleableImageButtonBuilder implements Builder<ToggleableImageButton> {
 
 		ToggleableImageButton imageButton;
@@ -231,12 +241,12 @@ public class GuiControls {
 			imageButton.setCenter(cx, cy);
 			return this;
 		}
-		
+
 		public ToggleableImageButtonBuilder size(float w, float h) {
 			imageButton.setSize(w, h);
 			return this;
 		}
-		
+
 		public ToggleableImageButtonBuilder enabled(boolean enabled) {
 			imageButton.setEnabled(enabled);
 			return this;
@@ -266,7 +276,7 @@ public class GuiControls {
 	public static ImageButtonBuilder imageButton(Sprite sprite) {
 		return imageButtonBuilder.newButton(sprite);
 	}
-	
+
 	public static ImageButtonBuilder imageButton(ImageButton imageButton) {
 		return imageButtonBuilder.newButton(imageButton);
 	}

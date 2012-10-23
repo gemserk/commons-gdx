@@ -44,9 +44,16 @@ public class SpriteBatchUtils {
 	}
 
 	public static void drawMultilineTextWithAlignment(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y, float cx, float cy, HAlignment alignment) {
+		drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, alignment, false);
+	}
+
+	public static void drawMultilineTextWithAlignment(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y, float cx, float cy, HAlignment alignment, boolean roundPosition) {
 		TextBounds bounds = font.getMultiLineBounds(text);
 		float centerx = getCenterForAlignment(cx, alignment, bounds);
-		font.drawMultiLine(spriteBatch, text, x + centerx, y + bounds.height * cy, 0f, alignment);
+		if (roundPosition)
+			font.drawMultiLine(spriteBatch, text, Math.round(x + centerx), Math.round(y + bounds.height * cy), 0f, alignment);
+		else
+			font.drawMultiLine(spriteBatch, text, x + centerx, y + bounds.height * cy, 0f, alignment);
 	}
 
 	private static float getCenterForAlignment(float cx, HAlignment alignment, TextBounds bounds) {

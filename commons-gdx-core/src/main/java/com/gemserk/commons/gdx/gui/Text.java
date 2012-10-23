@@ -3,6 +3,7 @@ package com.gemserk.commons.gdx.gui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 
 public class Text extends ControlImpl {
@@ -12,7 +13,9 @@ public class Text extends ControlImpl {
 	private Color color = new Color(Color.WHITE);
 	private BitmapFont font;
 	private float scale = 1f;
-	
+
+	private boolean roundPosition = false;
+
 	public Text setText(CharSequence text) {
 		this.text = text;
 		return this;
@@ -30,9 +33,17 @@ public class Text extends ControlImpl {
 	public void setFont(BitmapFont font) {
 		this.font = font;
 	}
-	
+
 	public void setScale(float scale) {
 		this.scale = scale;
+	}
+
+	public void setRoundPosition(boolean roundPosition) {
+		this.roundPosition = roundPosition;
+	}
+
+	public boolean isRoundPosition() {
+		return roundPosition;
 	}
 
 	/**
@@ -71,7 +82,7 @@ public class Text extends ControlImpl {
 	public Text(CharSequence text) {
 		this(text, 0f, 0f, 0.5f, 0.5f);
 	}
-	
+
 	public Text(String id, CharSequence text, float x, float y, float cx, float cy) {
 		setId(id);
 		this.text = text;
@@ -81,12 +92,14 @@ public class Text extends ControlImpl {
 		this.cy = cy;
 	}
 
-
 	public void draw(SpriteBatch spriteBatch, BitmapFont font) {
 		if (!isVisible())
 			return;
 		font.setColor(color);
-		SpriteBatchUtils.drawMultilineText(spriteBatch, font, text, getX(), getY(), cx, cy);
+		float x = getX();
+		float y = getY();
+
+		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, HAlignment.LEFT, roundPosition);
 	}
 
 	@Override

@@ -2,8 +2,10 @@ package com.gemserk.commons.applications;
 
 public class DimensionArray {
 	public static DimensionWithDensity[] availableDimensions = { //
-	new DimensionWithDensity(800, 480, DimensionWithDensity.HighDensity),//
+			new DimensionWithDensity(800, 480, DimensionWithDensity.HighDensity),//
 			new DimensionWithDensity(854, 480, DimensionWithDensity.HighDensity),//
+			new DimensionWithDensity(800, 440, DimensionWithDensity.HighDensity),//
+			new DimensionWithDensity(854, 440, DimensionWithDensity.HighDensity),//
 			new DimensionWithDensity(800, 600, DimensionWithDensity.HighDensity),//
 			new DimensionWithDensity(854, 600, DimensionWithDensity.HighDensity),//
 			new DimensionWithDensity(480, 320),//
