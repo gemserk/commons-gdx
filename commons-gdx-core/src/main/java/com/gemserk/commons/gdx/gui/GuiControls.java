@@ -16,8 +16,6 @@ public class GuiControls {
 
 	public static class TextButtonBuilder implements Builder<TextButton> {
 
-		BitmapFont defaultFont = new BitmapFont();
-
 		TextButton textButton;
 
 		TextButtonBuilder() {
@@ -25,7 +23,7 @@ public class GuiControls {
 		}
 
 		private void reset() {
-			textButton = new TextButton(defaultFont, "", 0, 0);
+			textButton = new TextButton(null, "", 0, 0);
 		}
 
 		public TextButtonBuilder font(BitmapFont font) {
