@@ -60,16 +60,17 @@ public class NullSound implements Sound {
 	}
 
 	@Override
-	public long loop(float arg0, float arg1, float arg2) {
-		// TODO Auto-generated function stub
+	public long play(float volume, float pitch, float pan) {
 		return 0;
-		
 	}
 
 	@Override
-	public long play(float arg0, float arg1, float arg2) {
-		// TODO Auto-generated function stub
+	public long loop(float volume, float pitch, float pan) {
 		return 0;
+	}
+
+	@Override
+	public void setPriority(long arg0, int arg1) {
 		
 	}
 

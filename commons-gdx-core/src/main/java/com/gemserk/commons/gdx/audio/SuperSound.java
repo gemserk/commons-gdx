@@ -77,4 +77,9 @@ public class SuperSound implements Sound {
 	public String getSoundName() {
 		return soundName;
 	}
+
+	@Override
+	public void setPriority(long soundId, int priority) {
+		sound.setPriority(soundId, priority);
+	}
 }
