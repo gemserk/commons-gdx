@@ -9,16 +9,18 @@ public class LoadingGameState extends GameStateImpl {
 
 	// 30ms in ns...
 	private final long loadTimePerFrame = 30L * 1000000L;
-	
+
 	private long loadTime;
 
 	public TaskQueue getTaskQueue() {
 		return taskQueue;
 	}
 
-	@Override
-	public void init() {
-		super.init();
+	public void setTaskQueue(TaskQueue taskQueue) {
+		this.taskQueue = taskQueue;
+	}
+
+	public LoadingGameState() {
 		taskQueue = new TaskQueue();
 	}
 
@@ -28,16 +30,16 @@ public class LoadingGameState extends GameStateImpl {
 		// should be on the update if the update was processed once
 		long lastDelta = System.nanoTime();
 		long currentDelta = lastDelta;
-		
+
 		loadTime = 0;
-		
-		// this allows to perform more than one task in the same render call 
+
+		// this allows to perform more than one task in the same render call
 		while (!taskQueue.isDone() && loadTime <= loadTimePerFrame) {
 			taskQueue.processNext();
 			currentDelta = System.nanoTime();
 			loadTime += currentDelta - lastDelta;
 		}
-		
+
 	}
 
 }
