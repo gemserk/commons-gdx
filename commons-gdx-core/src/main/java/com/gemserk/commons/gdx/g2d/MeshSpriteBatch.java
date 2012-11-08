@@ -29,7 +29,7 @@ public class MeshSpriteBatch {
 
 	private final float[] vertices;
 	private final short[] indices;
-
+	
 	private final Matrix4 transformMatrix = new Matrix4();
 	private final Matrix4 projectionMatrix = new Matrix4();
 	private final Matrix4 combinedMatrix = new Matrix4();

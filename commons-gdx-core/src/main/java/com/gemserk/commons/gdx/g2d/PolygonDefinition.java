@@ -172,6 +172,8 @@ public class PolygonDefinition {
 			texCoords[i + 1] = region.getV() + texCoords[i + 1] * uvHeight;
 		}
 	}
+	
+	public static final short[] spriteIndices = { 0, 1, 2, 2, 3, 0 };
 
 	public static PolygonDefinition fromSprite(Sprite sprite) {
 		short[] indices = new short[6];
@@ -202,12 +204,7 @@ public class PolygonDefinition {
 		texCoords[6] = sprite.getU2();
 		texCoords[7] = sprite.getV2();
 
-		indices[0] = 0;
-		indices[1] = 1;
-		indices[2] = 2;
-		indices[3] = 2;
-		indices[4] = 3;
-		indices[5] = 0;
+		System.arraycopy(spriteIndices, 0, indices, 0, spriteIndices.length);
 
 		return new PolygonDefinition(vertices, texCoords, indices);
 	}

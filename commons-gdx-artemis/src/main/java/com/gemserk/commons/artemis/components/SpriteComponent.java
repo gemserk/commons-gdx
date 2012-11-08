@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.gdx.g2d.SpriteMesh;
 
 public class SpriteComponent extends Component {
 
@@ -63,7 +64,39 @@ public class SpriteComponent extends Component {
 
 	}
 
-	private SpriteRenderableSpriteImpl spriteRenderable;
+	public static class SpriteRenderableSpriteMeshImpl implements SpriteRenderable {
+
+		public SpriteMesh spriteMesh;
+
+		public SpriteRenderableSpriteMeshImpl(SpriteMesh spriteMesh) {
+			this.spriteMesh = spriteMesh;
+		}
+
+		@Override
+		public void setRotation(float angle) {
+			spriteMesh.setRotation(angle);
+		}
+
+		@Override
+		public void setOrigin(float ox, float oy) {
+			spriteMesh.setOrigin(ox, oy);
+		}
+
+		@Override
+		public void setPosition(float x, float y) {
+			float newX = x - spriteMesh.getOriginX();
+			float newY = y - spriteMesh.getOriginY();
+			spriteMesh.setPosition(newX, newY);
+		}
+
+		@Override
+		public void setSize(float width, float height) {
+			spriteMesh.setSize(width, height);
+		}
+
+	}
+
+	private SpriteRenderable spriteRenderable;
 	private Color color;
 
 	// this is the hot spot for the transformations and it is relative to the size of the sprite
@@ -78,7 +111,7 @@ public class SpriteComponent extends Component {
 	public boolean isUpdateRotation() {
 		return updateRotation;
 	}
-	
+
 	// /**
 	// * Returns the coordinate x of the original center relative to the sprite size.
 	// */
@@ -113,6 +146,14 @@ public class SpriteComponent extends Component {
 	public Color getColor() {
 		return color;
 	}
+	
+	public SpriteComponent(Sprite sprite, Color color) {
+		this(sprite, new Vector2(0.5f, 0.5f), color);
+	}
+
+	public SpriteComponent(Sprite sprite) {
+		this(sprite, Color.WHITE);
+	}
 
 	public SpriteComponent(Sprite sprite, Vector2 center, Color color) {
 		this(sprite, center.x, center.y, color);
@@ -124,13 +165,11 @@ public class SpriteComponent extends Component {
 		this.color = new Color(color);
 		this.center = new Vector2(cx, cy);
 	}
-
-	public SpriteComponent(Sprite sprite, Color color) {
-		this(sprite, new Vector2(0.5f, 0.5f), color);
-	}
-
-	public SpriteComponent(Sprite sprite) {
-		this(sprite, Color.WHITE);
+	
+	public SpriteComponent(SpriteRenderable spriteRenderable, float cx, float cy, Color color) {
+		this.spriteRenderable = spriteRenderable;
+		this.color = new Color(color);
+		this.center = new Vector2(cx, cy);
 	}
 
 	public void setSpriteRotation(float angle) {
