@@ -2,7 +2,6 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
-import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.PreviousStateSpatialComponent;
@@ -88,15 +87,8 @@ public class SpriteUpdateSystem extends EntitySystem {
 				angle = FloatInterpolator.interpolate(spatial.getAngle() - angleDiff, spatial.getAngle(), interpolationAlpha);
 			}
 
-			// Sprite sprite = spriteComponent.getSprite();
-			Vector2 center = spriteComponent.getCenter();
-
 			spriteComponent.setSpriteRotation(angle);
-
-			float ox = spatial.getWidth() * center.x;
-			float oy = spatial.getHeight() * center.y;
-
-			spriteComponent.setSpriteOrigin(ox, oy);
+			spriteComponent.setSpriteOriginFromSize(spatial.getWidth(), spatial.getHeight());
 			spriteComponent.setSpriteSize(spatial.getWidth(), spatial.getHeight());
 			spriteComponent.setSpritePosition(newX, newY);
 		}

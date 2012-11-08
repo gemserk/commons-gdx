@@ -15,7 +15,55 @@ public class SpriteComponent extends Component {
 		return (SpriteComponent) e.getComponent(type);
 	}
 
-	private Sprite sprite;
+	public static interface SpriteRenderable {
+
+		void setRotation(float angle);
+
+		void setOrigin(float ox, float oy);
+
+		void setPosition(float x, float y);
+
+		void setSize(float width, float height);
+
+	}
+
+	public static class SpriteRenderableSpriteImpl implements SpriteRenderable {
+
+		public Sprite sprite;
+
+		public SpriteRenderableSpriteImpl(Sprite sprite) {
+			this.sprite = sprite;
+		}
+
+		@Override
+		public void setRotation(float angle) {
+			if (Float.compare(angle, sprite.getRotation()) != 0)
+				sprite.setRotation(angle);
+		}
+
+		@Override
+		public void setOrigin(float ox, float oy) {
+			if (Float.compare(ox, sprite.getOriginX()) != 0 || Float.compare(oy, sprite.getOriginY()) != 0)
+				sprite.setOrigin(ox, oy);
+		}
+
+		@Override
+		public void setPosition(float x, float y) {
+			float newX = x - sprite.getOriginX();
+			float newY = y - sprite.getOriginY();
+			if (Float.compare(newX, sprite.getX()) != 0 || Float.compare(newY, sprite.getY()) != 0)
+				sprite.setPosition(newX, newY);
+		}
+
+		@Override
+		public void setSize(float width, float height) {
+			if (Float.compare(width, sprite.getWidth()) != 0 || Float.compare(height, sprite.getHeight()) != 0)
+				sprite.setSize(width, height);
+		}
+
+	}
+
+	private SpriteRenderableSpriteImpl spriteRenderable;
 	private Color color;
 
 	// this is the hot spot for the transformations and it is relative to the size of the sprite
@@ -30,34 +78,36 @@ public class SpriteComponent extends Component {
 	public boolean isUpdateRotation() {
 		return updateRotation;
 	}
+	
+	// /**
+	// * Returns the coordinate x of the original center relative to the sprite size.
+	// */
+	// public float getRelativeCenterX() {
+	// float width = sprite.getWidth();
+	// return width * 0.5f - width * center.x;
+	// }
+
+	// /**
+	// * Returns the coordinate x of the original center relative to the sprite size.
+	// */
+	// public float getRelativeCenterY() {
+	// float height = sprite.getHeight();
+	// return height * 0.5f - height * center.y;
+	// }
 
 	public Sprite getSprite() {
-		return sprite;
+		return spriteRenderable.sprite;
+		// return sprite;
 	}
 
 	// Used right now to set an animation frame, another option could be to implement a common interface which returns different sprite on getSprite().
 	public void setSprite(Sprite sprite) {
-		this.sprite = sprite;
+		spriteRenderable.sprite = sprite;
+		// this.sprite = sprite;
 	}
 
 	public Vector2 getCenter() {
 		return center;
-	}
-
-	/**
-	 * Returns the coordinate x of the original center relative to the sprite size.
-	 */
-	public float getRelativeCenterX() {
-		float width = sprite.getWidth();
-		return width * 0.5f - width * center.x;
-	}
-
-	/**
-	 * Returns the coordinate x of the original center relative to the sprite size.
-	 */
-	public float getRelativeCenterY() {
-		float height = sprite.getHeight();
-		return height * 0.5f - height * center.y;
 	}
 
 	public Color getColor() {
@@ -69,7 +119,8 @@ public class SpriteComponent extends Component {
 	}
 
 	public SpriteComponent(Sprite sprite, float cx, float cy, Color color) {
-		this.sprite = sprite;
+		// this.sprite = sprite;
+		this.spriteRenderable = new SpriteRenderableSpriteImpl(sprite);
 		this.color = new Color(color);
 		this.center = new Vector2(cx, cy);
 	}
@@ -85,27 +136,21 @@ public class SpriteComponent extends Component {
 	public void setSpriteRotation(float angle) {
 		if (!isUpdateRotation())
 			return;
-		// to avoid modifying the sprite.dirty unnecessary
-		if (sprite.getRotation() != angle)
-			sprite.setRotation(angle);
+		spriteRenderable.setRotation(angle);
 	}
 
-	public void setSpriteOrigin(float ox, float oy) {
-		if (ox != sprite.getOriginX() || oy != sprite.getOriginY())
-			sprite.setOrigin(ox, oy);
+	public void setSpriteOriginFromSize(float width, float height) {
+		float ox = width * center.x;
+		float oy = height * center.y;
+		spriteRenderable.setOrigin(ox, oy);
 	}
 
 	public void setSpriteSize(float width, float height) {
-		if (sprite.getWidth() != width || sprite.getHeight() != height)
-			sprite.setSize(width, height);
+		spriteRenderable.setSize(width, height);
 	}
 
 	public void setSpritePosition(float x, float y) {
-		float newX = x - sprite.getOriginX();
-		float newY = y - sprite.getOriginY();
-
-		if (newX != sprite.getX() || newY != sprite.getY())
-			sprite.setPosition(newX, newY);
+		spriteRenderable.setPosition(x, y);
 	}
 
 }
