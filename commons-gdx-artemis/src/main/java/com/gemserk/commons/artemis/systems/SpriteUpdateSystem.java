@@ -89,28 +89,17 @@ public class SpriteUpdateSystem extends EntitySystem {
 				angle = FloatInterpolator.interpolate(spatial.getAngle() - angleDiff, spatial.getAngle(), interpolationAlpha);
 			}
 
-			Sprite sprite = spriteComponent.getSprite();
+			// Sprite sprite = spriteComponent.getSprite();
 			Vector2 center = spriteComponent.getCenter();
 
-			if (spriteComponent.isUpdateRotation()) {
-				if (sprite.getRotation() != angle)
-					sprite.setRotation(angle);
-			}
+			spriteComponent.setSpriteRotation(angle);
 
 			float ox = spatial.getWidth() * center.x;
 			float oy = spatial.getHeight() * center.y;
 
-			if (ox != sprite.getOriginX() || oy != sprite.getOriginY())
-				sprite.setOrigin(ox, oy);
-
-			if (sprite.getWidth() != spatial.getWidth() || sprite.getHeight() != spatial.getHeight())
-				sprite.setSize(spatial.getWidth(), spatial.getHeight());
-
-			float x = newX - sprite.getOriginX();
-			float y = newY - sprite.getOriginY();
-
-			if (x != sprite.getX() || y != sprite.getY())
-				sprite.setPosition(x, y);
+			spriteComponent.setSpriteOrigin(ox, oy);
+			spriteComponent.setSpriteSize(spatial.getWidth(), spatial.getHeight());
+			spriteComponent.setSpritePosition(newX, newY);
 		}
 	}
 
