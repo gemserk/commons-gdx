@@ -2,7 +2,6 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.commons.artemis.components.Components;
