@@ -96,7 +96,7 @@ public class SpriteComponent extends Component {
 
 	}
 
-	private SpriteRenderable spriteRenderable;
+	private SpriteRenderableSpriteImpl spriteRenderable;
 	private Color color;
 
 	// this is the hot spot for the transformations and it is relative to the size of the sprite
@@ -146,7 +146,7 @@ public class SpriteComponent extends Component {
 	public Color getColor() {
 		return color;
 	}
-	
+
 	public SpriteComponent(Sprite sprite, Color color) {
 		this(sprite, new Vector2(0.5f, 0.5f), color);
 	}
@@ -160,13 +160,10 @@ public class SpriteComponent extends Component {
 	}
 
 	public SpriteComponent(Sprite sprite, float cx, float cy, Color color) {
-		// this.sprite = sprite;
-		this.spriteRenderable = new SpriteRenderableSpriteImpl(sprite);
-		this.color = new Color(color);
-		this.center = new Vector2(cx, cy);
+		this(new SpriteRenderableSpriteImpl(sprite), cx, cy, color);
 	}
-	
-	public SpriteComponent(SpriteRenderable spriteRenderable, float cx, float cy, Color color) {
+
+	public SpriteComponent(SpriteRenderableSpriteImpl spriteRenderable, float cx, float cy, Color color) {
 		this.spriteRenderable = spriteRenderable;
 		this.color = new Color(color);
 		this.center = new Vector2(cx, cy);

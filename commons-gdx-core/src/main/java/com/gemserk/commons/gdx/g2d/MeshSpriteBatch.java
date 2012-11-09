@@ -194,7 +194,7 @@ public class MeshSpriteBatch {
 		this.draw(texture, spriteVertices, 0, spriteVertices.length, indices, 0, indices.length);
 	}
 
-	private void draw(Texture texture, float[] spriteVertices, int offset, int length, short[] indices, int indicesOffset, int indicesLength) {
+	public void draw(Texture texture, float[] spriteVertices, int offset, int length, short[] indices, int indicesOffset, int indicesLength) {
 		if (!drawing)
 			throw new IllegalStateException("begin must be called before draw.");
 
