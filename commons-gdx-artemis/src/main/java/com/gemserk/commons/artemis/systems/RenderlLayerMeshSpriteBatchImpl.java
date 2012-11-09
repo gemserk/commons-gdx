@@ -2,12 +2,13 @@ package com.gemserk.commons.artemis.systems;
 
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.gemserk.commons.artemis.components.Components;
+import com.gemserk.commons.artemis.components.MeshSpriteComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.g2d.MeshSpriteBatch;
 import com.gemserk.commons.gdx.g2d.PolygonDefinition;
+import com.gemserk.commons.gdx.g2d.SpriteMesh;
 import com.gemserk.componentsengine.utils.RandomAccessMap;
 
 public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
@@ -15,6 +16,29 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 	static class EntityComponents {
 		public RenderableComponent renderableComponent;
 		public SpriteComponent spriteComponent;
+		public MeshSpriteComponent meshSpriteComponent;
+	}
+	
+	static class Factory extends EntityComponentsFactory<EntityComponents> {
+
+		@Override
+		public EntityComponents newInstance() {
+			return new EntityComponents();
+		}
+
+		@Override
+		public void free(EntityComponents entityComponent) {
+			entityComponent.renderableComponent = null;
+			entityComponent.spriteComponent = null;
+			entityComponent.meshSpriteComponent = null;
+		}
+
+		@Override
+		public void load(Entity e, EntityComponents entityComponent) {
+			entityComponent.renderableComponent = RenderableComponent.get(e);
+			entityComponent.spriteComponent = SpriteComponent.get(e);
+			entityComponent.meshSpriteComponent = MeshSpriteComponent.get(e);
+		}
 	}
 
 	private final MeshSpriteBatch meshSpriteBatch;
@@ -107,9 +131,19 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 			EntityComponents components = entityComponents.get(renderable.getEntity());
 
 			SpriteComponent spriteComponent = components.spriteComponent;
-			Sprite sprite = spriteComponent.getSprite();
-			sprite.setColor(spriteComponent.getColor());
-			meshSpriteBatch.draw(sprite.getTexture(), fromSprite(sprite.getVertices(), 0f), PolygonDefinition.spriteIndices);
+			MeshSpriteComponent meshSpriteComponent = components.meshSpriteComponent;
+			
+			if (spriteComponent != null) {
+				Sprite sprite = spriteComponent.getSprite();
+				sprite.setColor(spriteComponent.getColor());
+				meshSpriteBatch.draw(sprite.getTexture(), fromSprite(sprite.getVertices(), 0f), PolygonDefinition.spriteIndices);
+			} 
+			
+			if (meshSpriteComponent != null) {
+				SpriteMesh spriteMesh = meshSpriteComponent.spriteMesh;
+				spriteMesh.setColor(meshSpriteComponent.color);
+				meshSpriteBatch.draw(spriteMesh.getTexture(), spriteMesh.getVertices(), spriteMesh.getIndices());
+			}
 		}
 
 		meshSpriteBatch.end();
@@ -123,26 +157,6 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 	@Override
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	class Factory extends EntityComponentsFactory<EntityComponents> {
-
-		@Override
-		public EntityComponents newInstance() {
-			return new EntityComponents();
-		}
-
-		@Override
-		public void free(EntityComponents entityComponent) {
-			entityComponent.renderableComponent = null;
-			entityComponent.spriteComponent = null;
-		}
-
-		@Override
-		public void load(Entity e, EntityComponents entityComponent) {
-			entityComponent.renderableComponent = Components.getRenderableComponent(e);
-			entityComponent.spriteComponent = Components.getSpriteComponent(e);
-		}
 	}
 
 }

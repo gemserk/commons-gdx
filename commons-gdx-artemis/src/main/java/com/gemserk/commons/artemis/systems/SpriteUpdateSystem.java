@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.commons.artemis.components.Components;
+import com.gemserk.commons.artemis.components.MeshSpriteComponent;
 import com.gemserk.commons.artemis.components.PreviousStateSpatialComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -22,6 +23,7 @@ public class SpriteUpdateSystem extends EntitySystem {
 
 		public SpatialComponent spatialComponent;
 		public SpriteComponent spriteComponent;
+		public MeshSpriteComponent meshSpriteComponent;
 		public PreviousStateSpatialComponent previousStateSpatialComponent;
 
 	}
@@ -39,9 +41,10 @@ public class SpriteUpdateSystem extends EntitySystem {
 
 		@Override
 		public void load(Entity e, EntityComponents entityComponent) {
-			entityComponent.spatialComponent = Components.getSpatialComponent(e);
-			entityComponent.spriteComponent = Components.getSpriteComponent(e);
-			entityComponent.previousStateSpatialComponent = Components.getPreviousStateSpatialComponent(e);
+			entityComponent.spatialComponent = SpatialComponent.get(e);
+			entityComponent.spriteComponent = SpriteComponent.get(e);
+			entityComponent.previousStateSpatialComponent = PreviousStateSpatialComponent.get(e);
+			entityComponent.meshSpriteComponent = MeshSpriteComponent.get(e);
 		}
 
 	}
@@ -67,30 +70,34 @@ public class SpriteUpdateSystem extends EntitySystem {
 		for (int entityIndex = 0; entityIndex < entitiesSize; entityIndex++) {
 			EntityComponents components = allTheEntityComponents.get(entityIndex);
 			SpatialComponent spatialComponent = components.spatialComponent;
-			SpriteComponent spriteComponent = components.spriteComponent;
 
 			PreviousStateSpatialComponent previousStateSpatialComponent = components.previousStateSpatialComponent;
 
 			Spatial spatial = spatialComponent.getSpatial();
 
-			float newX = spatial.getX();
-			float newY = spatial.getY();
+			float x = spatial.getX();
+			float y = spatial.getY();
 			float angle = spatial.getAngle();
 
 			if (previousStateSpatialComponent != null) {
 				float interpolationAlpha = timeStepProvider.getAlpha();
 				Spatial previousSpatial = previousStateSpatialComponent.getSpatial();
-				newX = FloatInterpolator.interpolate(previousSpatial.getX(), spatial.getX(), interpolationAlpha);
-				newY = FloatInterpolator.interpolate(previousSpatial.getY(), spatial.getY(), interpolationAlpha);
+				x = FloatInterpolator.interpolate(previousSpatial.getX(), spatial.getX(), interpolationAlpha);
+				y = FloatInterpolator.interpolate(previousSpatial.getY(), spatial.getY(), interpolationAlpha);
 				float angleDiff = (float) AngleUtils.minimumDifference(previousSpatial.getAngle(), spatial.getAngle());
-				// angle = FloatInterpolator.interpolate(previousSpatial.getAngle(), spatial.getAngle(), interpolationAlpha);
 				angle = FloatInterpolator.interpolate(spatial.getAngle() - angleDiff, spatial.getAngle(), interpolationAlpha);
 			}
 
-			spriteComponent.setSpriteRotation(angle);
-			spriteComponent.setSpriteOriginFromSize(spatial.getWidth(), spatial.getHeight());
-			spriteComponent.setSpriteSize(spatial.getWidth(), spatial.getHeight());
-			spriteComponent.setSpritePosition(newX, newY);
+			float width = spatial.getWidth();
+			float height = spatial.getHeight();
+			
+			SpriteComponent spriteComponent = components.spriteComponent;
+			if (spriteComponent != null) 
+				spriteComponent.update(x, y, angle, width, height);
+			
+			MeshSpriteComponent meshSpriteComponent = components.meshSpriteComponent;
+			if (meshSpriteComponent != null)
+				meshSpriteComponent.update(x, entityIndex, angle, width, height);
 		}
 	}
 

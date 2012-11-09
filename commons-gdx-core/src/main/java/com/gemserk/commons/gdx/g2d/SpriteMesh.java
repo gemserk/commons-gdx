@@ -217,6 +217,11 @@ public class SpriteMesh {
 	public short[] getIndices() {
 		return indices;
 	}
+	
+
+	public void flip(boolean fx, boolean fy) {
+		setScale(this.sx * (fx ? -1 : 1), this.sy * (fy ? -1 : 1));
+	}
 
 	public float[] getVertices() {
 		if (dirty)
