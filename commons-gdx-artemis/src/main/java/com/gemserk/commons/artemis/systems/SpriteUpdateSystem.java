@@ -6,6 +6,7 @@ import com.gemserk.animation4j.interpolator.FloatInterpolator;
 import com.gemserk.commons.artemis.components.Components;
 import com.gemserk.commons.artemis.components.MeshSpriteComponent;
 import com.gemserk.commons.artemis.components.PreviousStateSpatialComponent;
+import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.gdx.games.Spatial;
@@ -58,7 +59,7 @@ public class SpriteUpdateSystem extends EntitySystem {
 
 	@SuppressWarnings("unchecked")
 	public SpriteUpdateSystem(TimeStepProvider timeStepProvider) {
-		super(Components.spatialComponentClass, Components.spriteComponentClass);
+		super(Components.spatialComponentClass, RenderableComponent.class);
 		this.timeStepProvider = timeStepProvider;
 		this.factory = new Factory();
 	}
@@ -97,7 +98,7 @@ public class SpriteUpdateSystem extends EntitySystem {
 			
 			MeshSpriteComponent meshSpriteComponent = components.meshSpriteComponent;
 			if (meshSpriteComponent != null)
-				meshSpriteComponent.update(x, entityIndex, angle, width, height);
+				meshSpriteComponent.update(x, y, angle, width, height);
 		}
 	}
 
