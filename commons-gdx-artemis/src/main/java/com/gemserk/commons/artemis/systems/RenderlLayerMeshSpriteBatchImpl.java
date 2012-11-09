@@ -18,7 +18,7 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 		public SpriteComponent spriteComponent;
 		public MeshSpriteComponent meshSpriteComponent;
 	}
-	
+
 	static class Factory extends EntityComponentsFactory<EntityComponents> {
 
 		@Override
@@ -50,10 +50,6 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 	private Factory factory;
 
 	private boolean blending;
-
-	public void setBlending(boolean blending) {
-		this.blending = blending;
-	}
 
 	public RenderlLayerMeshSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, MeshSpriteBatch meshSpriteBatch, boolean blending) {
 		this.camera = camera;
@@ -109,18 +105,18 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 
 	@Override
 	public void render() {
-		meshSpriteBatch.setProjectionMatrix(camera.getCombinedMatrix());
+		// meshSpriteBatch.setProjectionMatrix(camera.getCombinedMatrix());
 
 		RandomAccessMap<Entity, EntityComponents> entityComponents = factory.entityComponents;
 
-		if (blending)
-			meshSpriteBatch.enableBlending();
-		else
-			meshSpriteBatch.disableBlending();
-
-		meshSpriteBatch.setDepthTestEnabled(false);
-
-		meshSpriteBatch.begin();
+		// if (blending)
+		// meshSpriteBatch.enableBlending();
+		// else
+		// meshSpriteBatch.disableBlending();
+		//
+		// meshSpriteBatch.setDepthTestEnabled(false);
+		//
+		// meshSpriteBatch.begin();
 
 		for (int i = 0; i < orderedByLayerRenderables.size(); i++) {
 			Renderable renderable = orderedByLayerRenderables.get(i);
@@ -132,13 +128,13 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 
 			SpriteComponent spriteComponent = components.spriteComponent;
 			MeshSpriteComponent meshSpriteComponent = components.meshSpriteComponent;
-			
+
 			if (spriteComponent != null) {
 				Sprite sprite = spriteComponent.getSprite();
 				sprite.setColor(spriteComponent.getColor());
 				meshSpriteBatch.draw(sprite.getTexture(), fromSprite(sprite.getVertices(), 0f), PolygonDefinition.spriteIndices);
-			} 
-			
+			}
+
 			if (meshSpriteComponent != null) {
 				SpriteMesh spriteMesh = meshSpriteComponent.spriteMesh;
 				spriteMesh.setColor(meshSpriteComponent.color);
@@ -146,7 +142,7 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 			}
 		}
 
-		meshSpriteBatch.end();
+		// meshSpriteBatch.end();
 	}
 
 	@Override
