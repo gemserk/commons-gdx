@@ -19,13 +19,46 @@ import com.gemserk.componentsengine.utils.RandomAccessMap;
 
 public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
-	class EntityComponents {
+	static class EntityComponents {
 		public RenderableComponent renderableComponent;
 		public FrustumCullingComponent frustumCullingComponent;
 		public SpatialComponent spatialComponent;
 		public SpriteComponent spriteComponent;
 		public TextComponent textComponent;
 		public ParticleEmitterComponent particleEmitterComponent;
+	}
+
+	public static class OptimizationParameters {
+		public boolean beginBatch;
+		public boolean endBatch;
+		public boolean updateCamera;
+
+		public static OptimizationParameters optimizationsDisabled() {
+			OptimizationParameters parameters = new OptimizationParameters();
+			parameters.beginBatch = parameters.endBatch = parameters.updateCamera = true;
+			return parameters;
+		}
+
+		public static OptimizationParameters optimizationsEnabled() {
+			OptimizationParameters parameters = new OptimizationParameters();
+			parameters.beginBatch = parameters.endBatch = parameters.updateCamera = false;
+			return parameters;
+		}
+
+		public OptimizationParameters setBeginBatch(boolean beginBatch) {
+			this.beginBatch = beginBatch;
+			return this;
+		}
+
+		public OptimizationParameters setEndBatch(boolean endBatch) {
+			this.endBatch = endBatch;
+			return this;
+		}
+
+		public OptimizationParameters setUpdateCamera(boolean updateCamera) {
+			this.updateCamera = updateCamera;
+			return this;
+		}
 	}
 
 	private final SpriteBatch spriteBatch;
@@ -39,24 +72,31 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	private Factory factory;
 
 	private boolean ownsSpriteBatch;
-	
+
 	private boolean blending;
+	private OptimizationParameters optimizationParameters;
 
 	public void setBlending(boolean blending) {
 		this.blending = blending;
 	}
-	
-	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch, boolean blending) {
+
+	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch, boolean blending, OptimizationParameters optimizationParameters) {
 		this.camera = camera;
 		this.spriteBatch = spriteBatch;
-		// this.orderedByLayerEntities = new OrderedByLayerEntities(minLayer, maxLayer);
+		this.optimizationParameters = optimizationParameters;
+		// this.orderedByLayerEntities = new OrderedByLayerEntities(minLayer,
+		// maxLayer);
 		this.orderedByLayerRenderables = new OrderedByLayerRenderables(minLayer, maxLayer);
 		this.enabled = true;
 		this.factory = new Factory();
 		this.ownsSpriteBatch = false;
 		this.blending = blending;
 	}
-	
+
+	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera2, SpriteBatch spriteBatch2, boolean blending) {
+		this(minLayer, maxLayer, camera2, spriteBatch2, blending, OptimizationParameters.optimizationsDisabled());
+	}
+
 	public RenderLayerSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, SpriteBatch spriteBatch) {
 		this(minLayer, maxLayer, camera, spriteBatch, true);
 	}
@@ -97,7 +137,9 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 	@Override
 	public void render() {
 		camera.getFrustum(frustum);
-		camera.apply(spriteBatch);
+
+		if (optimizationParameters.updateCamera)
+			camera.apply(spriteBatch);
 
 		RandomAccessMap<Entity, EntityComponents> entityComponents = factory.entityComponents;
 
@@ -105,12 +147,14 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 			spriteBatch.enableBlending();
 		else if (!blending && spriteBatch.isBlendingEnabled())
 			spriteBatch.disableBlending();
-		
-		spriteBatch.begin();
+
+		if (optimizationParameters.beginBatch)
+			spriteBatch.begin();
 		for (int i = 0; i < orderedByLayerRenderables.size(); i++) {
 			Renderable renderable = orderedByLayerRenderables.get(i);
-			
-			// RenderableComponent renderableComponent = components.renderableComponent;
+
+			// RenderableComponent renderableComponent =
+			// components.renderableComponent;
 			// if (!renderableComponent.isVisible())
 			// continue;
 
@@ -156,7 +200,8 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 				particleEmitterComponent.particleEmitter.draw(spriteBatch);
 			}
 		}
-		spriteBatch.end();
+		if (optimizationParameters.endBatch)
+			spriteBatch.end();
 	}
 
 	@Override
