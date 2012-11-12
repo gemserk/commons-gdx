@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.gemserk.commons.artemis.components.MeshSpriteComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
-import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
+import com.gemserk.commons.artemis.render.Renderable;
 import com.gemserk.commons.gdx.g2d.MeshSpriteBatch;
 import com.gemserk.commons.gdx.g2d.PolygonDefinition;
 import com.gemserk.commons.gdx.g2d.SpriteMesh;
@@ -44,20 +44,15 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 	private final MeshSpriteBatch meshSpriteBatch;
 
 	private final OrderedByLayerRenderables orderedByLayerRenderables;
-	private final Libgdx2dCamera camera;
 	private boolean enabled;
 
 	private Factory factory;
 
-	private boolean blending;
-
-	public RenderlLayerMeshSpriteBatchImpl(int minLayer, int maxLayer, Libgdx2dCamera camera, MeshSpriteBatch meshSpriteBatch, boolean blending) {
-		this.camera = camera;
+	public RenderlLayerMeshSpriteBatchImpl(int minLayer, int maxLayer, MeshSpriteBatch meshSpriteBatch) {
 		this.meshSpriteBatch = meshSpriteBatch;
 		this.orderedByLayerRenderables = new OrderedByLayerRenderables(minLayer, maxLayer);
 		this.enabled = true;
 		this.factory = new Factory();
-		this.blending = blending;
 	}
 
 	@Override
@@ -77,14 +72,14 @@ public class RenderlLayerMeshSpriteBatchImpl implements RenderLayer {
 
 	@Override
 	public void add(Renderable renderable) {
-		factory.add(renderable.entity);
+		factory.add(renderable.getEntity());
 		orderedByLayerRenderables.add(renderable);
 	}
 
 	@Override
 	public void remove(Renderable renderable) {
 		orderedByLayerRenderables.remove(renderable);
-		factory.add(renderable.entity);
+		factory.add(renderable.getEntity());
 	}
 
 	private final float[] spriteVertices = new float[24];
