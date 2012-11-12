@@ -29,7 +29,7 @@ public class MeshSpriteBatch {
 
 	private final float[] vertices;
 	private final short[] indices;
-	
+
 	private final Matrix4 transformMatrix = new Matrix4();
 	private final Matrix4 projectionMatrix = new Matrix4();
 	private final Matrix4 combinedMatrix = new Matrix4();
@@ -52,6 +52,9 @@ public class MeshSpriteBatch {
 	public int maxVerticesInBatch = 0;
 
 	private ShaderProgram customShader = null;
+
+	// private ShortBuffer indicesBuffer;
+	// private FloatBuffer verticesBuffer;
 
 	public MeshSpriteBatch() {
 		this(2000);
@@ -93,6 +96,12 @@ public class MeshSpriteBatch {
 			shader = defaultShader;
 
 		depthTestEnabled = false;
+
+		// verticesBuffer = mesh.getVerticesBuffer();
+		// verticesBuffer.clear();
+		//
+		// indicesBuffer = mesh.getIndicesBuffer();
+		// indicesBuffer.clear();
 	}
 
 	static public ShaderProgram createDefaultShader() {
@@ -200,18 +209,25 @@ public class MeshSpriteBatch {
 
 		switchTexture(texture);
 
-		if (idx + length > vertices.length || indicesIndex + indicesLength > indices.length)
+		int capacity = vertices.length;
+		// int capacity = verticesBuffer.capacity();
+
+		if (idx + length > capacity || indicesIndex + indicesLength > indices.length)
 			flush();
 
-		if (length > vertices.length)
-			throw new IllegalArgumentException("Can't handle " + length + " vertices in one call, increase batch vertices size, current size is " + vertices.length);
+		if (length > capacity)
+			throw new IllegalArgumentException("Can't handle " + length + " vertices in one call, increase batch vertices size, current size is " + capacity);
 
 		System.arraycopy(spriteVertices, offset, vertices, idx, length);
+		// verticesBuffer.put(spriteVertices, offset, length);
 
 		int iOffset = idx / VERTEX_SIZE;
 
-		for (int i = 0; i < indicesLength; i++)
+		for (int i = 0; i < indicesLength; i++) {
 			this.indices[indicesIndex + i] = (short) (indices[i] + iOffset);
+			// indicesBuffer.put(indicesIndex + i, (short) (indices[i] + iOffset));
+
+		}
 
 		indicesIndex += indicesLength;
 
@@ -229,6 +245,7 @@ public class MeshSpriteBatch {
 			maxVerticesInBatch = verticesInBatch;
 
 		lastTexture.bind();
+
 		mesh.setVertices(vertices, 0, idx);
 		mesh.setIndices(indices, 0, indicesIndex);
 
@@ -240,6 +257,9 @@ public class MeshSpriteBatch {
 		} else {
 			mesh.render(GL10.GL_TRIANGLES, 0, indicesIndex);
 		}
+
+		// verticesBuffer.clear();
+		// indicesBuffer.clear();
 
 		idx = 0;
 		indicesIndex = 0;
