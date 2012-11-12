@@ -15,98 +15,6 @@ public class SpriteComponent extends Component {
 		return (SpriteComponent) e.getComponent(type);
 	}
 
-	// public static interface SpriteRenderable {
-	//
-	// void setRotation(float angle);
-	//
-	// void setOrigin(float ox, float oy);
-	//
-	// void setPosition(float x, float y);
-	//
-	// void setSize(float width, float height);
-	//
-	// void flip(boolean flip, boolean flop);
-	//
-	// }
-	//
-	// public static class SpriteRenderableSpriteImpl implements SpriteRenderable {
-	//
-	// public Sprite sprite;
-	//
-	// public SpriteRenderableSpriteImpl(Sprite sprite) {
-	// this.sprite = sprite;
-	// }
-	//
-	// @Override
-	// public void setRotation(float angle) {
-	// if (Float.compare(angle, sprite.getRotation()) != 0)
-	// sprite.setRotation(angle);
-	// }
-	//
-	// @Override
-	// public void setOrigin(float ox, float oy) {
-	// if (Float.compare(ox, sprite.getOriginX()) != 0 || Float.compare(oy, sprite.getOriginY()) != 0)
-	// sprite.setOrigin(ox, oy);
-	// }
-	//
-	// @Override
-	// public void setPosition(float x, float y) {
-	// float newX = x - sprite.getOriginX();
-	// float newY = y - sprite.getOriginY();
-	// if (Float.compare(newX, sprite.getX()) != 0 || Float.compare(newY, sprite.getY()) != 0)
-	// sprite.setPosition(newX, newY);
-	// }
-	//
-	// @Override
-	// public void setSize(float width, float height) {
-	// if (Float.compare(width, sprite.getWidth()) != 0 || Float.compare(height, sprite.getHeight()) != 0)
-	// sprite.setSize(width, height);
-	// }
-	//
-	// @Override
-	// public void flip(boolean flip, boolean flop) {
-	// sprite.flip(flip, flop);
-	// }
-	//
-	// }
-	//
-	// public static class SpriteRenderableSpriteMeshImpl implements SpriteRenderable {
-	//
-	// public SpriteMesh spriteMesh;
-	//
-	// public SpriteRenderableSpriteMeshImpl(SpriteMesh spriteMesh) {
-	// this.spriteMesh = spriteMesh;
-	// }
-	//
-	// @Override
-	// public void setRotation(float angle) {
-	// spriteMesh.setRotation(angle);
-	// }
-	//
-	// @Override
-	// public void setOrigin(float ox, float oy) {
-	// spriteMesh.setOrigin(ox, oy);
-	// }
-	//
-	// @Override
-	// public void setPosition(float x, float y) {
-	// float newX = x - spriteMesh.getOriginX();
-	// float newY = y - spriteMesh.getOriginY();
-	// spriteMesh.setPosition(newX, newY);
-	// }
-	//
-	// @Override
-	// public void setSize(float width, float height) {
-	// spriteMesh.setSize(width, height);
-	// }
-	//
-	// @Override
-	// public void flip(boolean flip, boolean flop) {
-	// spriteMesh.flip(flop, flip);
-	// }
-	//
-	// }
-
 	private Sprite sprite;
 	private Color color;
 
@@ -143,7 +51,7 @@ public class SpriteComponent extends Component {
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
 	}
-	
+
 	public Sprite getSprite() {
 		return sprite;
 	}
@@ -175,25 +83,25 @@ public class SpriteComponent extends Component {
 	}
 
 	public void update(float x, float y, float angle, float width, float height) {
-		
+
 		if (isUpdateRotation()) {
-			if (Float.compare(angle, sprite.getRotation()) != 0)
+			if (angle != sprite.getRotation())
 				sprite.setRotation(angle);
 		}
-		
+
 		float ox = width * center.x;
 		float oy = height * center.y;
-		
-		if (Float.compare(ox, sprite.getOriginX()) != 0 || Float.compare(oy, sprite.getOriginY()) != 0)
+
+		if (ox != sprite.getOriginX() || oy != sprite.getOriginY())
 			sprite.setOrigin(ox, oy);
-		
-		if (Float.compare(width, sprite.getWidth()) != 0 || Float.compare(height, sprite.getHeight()) != 0)
+
+		if (width != sprite.getWidth() || height != sprite.getHeight())
 			sprite.setSize(width, height);
-		
+
 		float newX = x - sprite.getOriginX();
 		float newY = y - sprite.getOriginY();
-		
-		if (Float.compare(newX, sprite.getX()) != 0 || Float.compare(newY, sprite.getY()) != 0)
+
+		if (newX != sprite.getX() || newY != sprite.getY())
 			sprite.setPosition(newX, newY);
 	}
 }
