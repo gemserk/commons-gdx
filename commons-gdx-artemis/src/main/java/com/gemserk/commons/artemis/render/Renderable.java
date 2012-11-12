@@ -1,4 +1,4 @@
-package com.gemserk.commons.artemis.systems;
+package com.gemserk.commons.artemis.render;
 
 import com.artemis.Entity;
 
@@ -16,9 +16,13 @@ public class Renderable {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
-	
+
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public int getLayer() {
@@ -58,6 +62,10 @@ public class Renderable {
 	///
 	
 	Entity entity;
+	
+	public void setEntity(Entity entity) {
+		this.entity = entity;
+	}
 	
 	public Entity getEntity() {
 		return entity;

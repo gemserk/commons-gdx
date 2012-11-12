@@ -94,7 +94,7 @@ public class SpriteUpdateSystem extends EntitySystem {
 			
 			SpriteComponent spriteComponent = components.spriteComponent;
 			if (spriteComponent != null) 
-				spriteComponent.update(x, y, angle, width, height);
+				spriteComponent.update(x, y, width, height, angle);
 			
 			MeshSpriteComponent meshSpriteComponent = components.meshSpriteComponent;
 			if (meshSpriteComponent != null)

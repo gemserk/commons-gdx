@@ -1,7 +1,6 @@
 package com.gemserk.commons.artemis.render;
 
 import com.gemserk.commons.artemis.systems.RenderLayer;
-import com.gemserk.commons.artemis.systems.Renderable;
 
 public class MockRenderLayer implements RenderLayer {
 

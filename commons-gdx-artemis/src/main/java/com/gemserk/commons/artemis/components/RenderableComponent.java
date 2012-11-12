@@ -3,7 +3,7 @@ package com.gemserk.commons.artemis.components;
 import com.artemis.Component;
 import com.artemis.ComponentTypeManager;
 import com.artemis.Entity;
-import com.gemserk.commons.artemis.systems.Renderable;
+import com.gemserk.commons.artemis.render.Renderable;
 
 public class RenderableComponent extends Component {
 

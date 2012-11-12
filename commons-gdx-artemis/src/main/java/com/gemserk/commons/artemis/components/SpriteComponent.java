@@ -82,22 +82,22 @@ public class SpriteComponent extends Component {
 		this.center = new Vector2(cx, cy);
 	}
 
-	public void update(float x, float y, float angle, float width, float height) {
-
-		if (isUpdateRotation()) {
-			if (angle != sprite.getRotation())
-				sprite.setRotation(angle);
-		}
-
+	public void update(float x, float y, float width, float height, float angle) {
+	
+		// to avoid modifying the sprite.dirty unnecessary
+		
+		if (isUpdateRotation() && sprite.getRotation() != angle)
+			sprite.setRotation(angle);
+		
 		float ox = width * center.x;
 		float oy = height * center.y;
-
+		
 		if (ox != sprite.getOriginX() || oy != sprite.getOriginY())
 			sprite.setOrigin(ox, oy);
-
+		
 		if (width != sprite.getWidth() || height != sprite.getHeight())
 			sprite.setSize(width, height);
-
+		
 		float newX = x - sprite.getOriginX();
 		float newY = y - sprite.getOriginY();
 
