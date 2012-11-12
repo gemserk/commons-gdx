@@ -1,5 +1,7 @@
 package com.gemserk.commons.artemis.systems;
 
+import com.gemserk.commons.artemis.render.Renderable;
+
 
 public interface RenderLayer {
 

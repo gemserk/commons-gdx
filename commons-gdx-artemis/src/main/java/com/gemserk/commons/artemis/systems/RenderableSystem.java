@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.commons.artemis.components.OwnerComponent;
 import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.render.RenderLayers;
+import com.gemserk.commons.artemis.render.Renderable;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 
 public class RenderableSystem extends EntitySystem implements Disposable {
@@ -44,12 +45,12 @@ public class RenderableSystem extends EntitySystem implements Disposable {
 		Renderable renderable = renderableComponent.renderable;
 
 		// this could be set on construction time
-		renderable.entity = e;
+		renderable.setEntity(e);
 
-		renderable.id = e.getId();
+		renderable.setId(e.getId());
 		// if it has owner it uses the id of the owner... that was part of the original comparator
 		if (ownerComponent != null && ownerComponent.getOwner() != null)
-			renderable.id = ownerComponent.getOwner().getId();
+			renderable.setId(ownerComponent.getOwner().getId());
 
 		// order the entity in the Layer, probably the same inside the layer
 		for (int i = 0; i < renderLayers.size(); i++) {

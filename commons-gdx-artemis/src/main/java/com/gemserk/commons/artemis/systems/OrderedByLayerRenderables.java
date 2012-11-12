@@ -1,6 +1,8 @@
 package com.gemserk.commons.artemis.systems;
 
 import com.badlogic.gdx.utils.Array;
+import com.gemserk.commons.artemis.render.Renderable;
+import com.gemserk.commons.artemis.render.RenderableComparator;
 
 public class OrderedByLayerRenderables {
 

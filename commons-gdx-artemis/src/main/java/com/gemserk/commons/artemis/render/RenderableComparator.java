@@ -1,6 +1,7 @@
-package com.gemserk.commons.artemis.systems;
+package com.gemserk.commons.artemis.render;
 
 import java.util.Comparator;
+
 
 public class RenderableComparator implements Comparator<Renderable> {
 

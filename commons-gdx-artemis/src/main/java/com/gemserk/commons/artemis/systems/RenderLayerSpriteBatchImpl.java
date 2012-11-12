@@ -12,6 +12,7 @@ import com.gemserk.commons.artemis.components.RenderableComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
+import com.gemserk.commons.artemis.render.Renderable;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
@@ -124,14 +125,14 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 
 	@Override
 	public void add(Renderable renderable) {
-		factory.add(renderable.entity);
+		factory.add(renderable.getEntity());
 		orderedByLayerRenderables.add(renderable);
 	}
 
 	@Override
 	public void remove(Renderable renderable) {
 		orderedByLayerRenderables.remove(renderable);
-		factory.add(renderable.entity);
+		factory.add(renderable.getEntity());
 	}
 
 	@Override
