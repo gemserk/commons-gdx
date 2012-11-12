@@ -82,25 +82,22 @@ public class SpriteComponent extends Component {
 		this(sprite, Color.WHITE);
 	}
 
-	public void setSpriteRotation(float angle) {
-		if (!isUpdateRotation())
-			return;
+	public void update(float x, float y, float width, float height, float angle) {
+	
 		// to avoid modifying the sprite.dirty unnecessary
-		if (sprite.getRotation() != angle)
+		
+		if (isUpdateRotation() && sprite.getRotation() != angle)
 			sprite.setRotation(angle);
-	}
-
-	public void setSpriteOrigin(float ox, float oy) {
+		
+		float ox = width * center.x;
+		float oy = height * center.y;
+		
 		if (ox != sprite.getOriginX() || oy != sprite.getOriginY())
 			sprite.setOrigin(ox, oy);
-	}
-
-	public void setSpriteSize(float width, float height) {
+		
 		if (sprite.getWidth() != width || sprite.getHeight() != height)
 			sprite.setSize(width, height);
-	}
-
-	public void setSpritePosition(float x, float y) {
+		
 		float newX = x - sprite.getOriginX();
 		float newY = y - sprite.getOriginY();
 
