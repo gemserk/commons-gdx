@@ -212,7 +212,7 @@ public class MeshSpriteBatch {
 		int capacity = vertices.length;
 		// int capacity = verticesBuffer.capacity();
 
-		if (idx + length > capacity || indicesIndex + indicesLength > indices.length)
+		if (idx + length > capacity || indicesIndex + indicesLength > this.indices.length)
 			flush();
 
 		if (length > capacity)
