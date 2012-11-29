@@ -32,6 +32,7 @@ public class Actors {
 		window.add(toastLabel).fillX().padLeft(10);
 		
 		window.invalidate();
+		window.setKeepWithinParent(false);
 		
 		window.setWidth(Gdx.graphics.getWidth() * 0.95f);
 		window.setHeight(toastLabel.getTextBounds().height + 20 + window.getStyle().titleFont.getLineHeight());
