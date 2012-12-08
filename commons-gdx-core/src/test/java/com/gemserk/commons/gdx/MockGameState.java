@@ -5,8 +5,9 @@ import com.gemserk.componentsengine.utils.Parameters;
 class MockGameState implements GameState {
 	
 	boolean updateCalled = false;
-	
 	boolean renderCalled = false;
+	
+	public boolean initialized = false;
 
 	private float delta;
 
@@ -14,7 +15,7 @@ class MockGameState implements GameState {
 
 	@Override
 	public void init() {
-
+		initialized = true;
 	}
 
 	@Override
@@ -34,7 +35,7 @@ class MockGameState implements GameState {
 
 	@Override
 	public void dispose() {
-
+		initialized = false;
 	}
 
 	@Override

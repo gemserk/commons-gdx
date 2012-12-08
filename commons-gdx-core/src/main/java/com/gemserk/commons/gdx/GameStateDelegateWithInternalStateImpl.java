@@ -15,7 +15,7 @@ public class GameStateDelegateWithInternalStateImpl implements GameState {
 	boolean initialized = false;
 
 	GameState gameState;
-	
+
 	public GameStateDelegateWithInternalStateImpl(GameState gameState) {
 		this.gameState = gameState;
 	}
@@ -35,41 +35,41 @@ public class GameStateDelegateWithInternalStateImpl implements GameState {
 	}
 
 	public void resume() {
-		if (!paused)
+		if (!paused || !initialized)
 			return;
 		paused = false;
 		gameState.resume();
 	}
 
 	public void pause() {
-		if (paused)
+		if (paused || !initialized)
 			return;
 		paused = true;
 		gameState.pause();
 	}
 
 	public void show() {
-		if (visible)
+		if (visible || !initialized)
 			return;
 		visible = true;
 		gameState.show();
 	}
 
 	public void hide() {
-		if (!visible)
+		if (!visible || !initialized)
 			return;
 		visible = false;
 		gameState.hide();
 	}
 
 	public void update() {
-		if (paused)
+		if (paused || !initialized)
 			return;
 		gameState.update();
 	}
 
 	public void render() {
-		if (!visible)
+		if (!visible || !initialized)
 			return;
 		gameState.render();
 	}
