@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Disposable;
 
 public class MeshRenderer implements Disposable {
+	
+	public int totalRenderCalls = 0;
 
 	private ShaderProgram shader = null;
 	private boolean blendingEnabled;
@@ -99,11 +101,13 @@ public class MeshRenderer implements Disposable {
 		if (shader == null) {
 			camera.apply(Gdx.gl10);
 			mesh.render(primitive, offset, cantElements);
+			totalRenderCalls++;
 		} else {
 			shader.begin();
 			shader.setUniformMatrix("u_projectionViewMatrix", camera.combined);
 			mesh.render(shader, primitive, offset, cantElements);
 			shader.end();
+			totalRenderCalls++;
 		}
 	}
 
