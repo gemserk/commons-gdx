@@ -64,7 +64,7 @@
 		<android.version>2.2.1</android.version>
 		<animation4j.version>0.2.2-SNAPSHOT</animation4j.version>
 		<artemis.version>0.0.1-GEMSERK-SNAPSHOT</artemis.version>
-		<gdx.version>0.9.7-SNAPSHOT</gdx.version>
+		<gdx.version>0.9.8-SNAPSHOT</gdx.version>
 		<resourcesmanager.version>0.2.0-SNAPSHOT</resourcesmanager.version>
 		<vecmath.version>1.5.3-GEMSERK</vecmath.version>
 	</properties>
