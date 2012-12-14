@@ -564,4 +564,8 @@ public class LibgdxResourceBuilder {
 		return new AliasResourceBuilder(resourceManager, resourceId);
 	}
 
+	public <T> DataLoaderBuilder<T> alias2(final String resourceId) {
+		return new AliasDataLoaderBuilder<T>(resourceId);
+	}
+
 }
