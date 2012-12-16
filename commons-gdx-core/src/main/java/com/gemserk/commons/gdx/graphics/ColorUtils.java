@@ -17,9 +17,7 @@ public class ColorUtils {
 	 *            An integer color value in RGB565 format.
 	 */
 	public static void rgb565ToColor(Color color, int value) {
-		color.r = ((value & 0x0000F800) >>> 11) / 31f;
-		color.g = ((value & 0x000007E0) >>> 5) / 63f;
-		color.b = ((value & 0x0000001F) >>> 0) / 31f;
+		Color.rgb565ToColor(color, value);
 	}
 
 	/**
@@ -31,10 +29,7 @@ public class ColorUtils {
 	 *            An integer color value in RGBA4444 format.
 	 */
 	public static void rgba4444ToColor(Color color, int value) {
-		color.r = ((value & 0x0000f000) >>> 12) / 15f;
-		color.g = ((value & 0x00000f00) >>> 8) / 15f;
-		color.b = ((value & 0x000000f0) >>> 4) / 15f;
-		color.a = ((value & 0x0000000f)) / 15f;
+		Color.rgba4444ToColor(color, value);
 	}
 
 	/**
@@ -46,9 +41,7 @@ public class ColorUtils {
 	 *            An integer color value in RGB888 format.
 	 */
 	public static void rgb888ToColor(Color color, int value) {
-		color.r = ((value & 0x00ff0000) >>> 16) / 255f;
-		color.g = ((value & 0x0000ff00) >>> 8) / 255f;
-		color.b = ((value & 0x000000ff)) / 255f;
+		Color.rgb888ToColor(color, value);
 	}
 
 	/**
@@ -60,10 +53,7 @@ public class ColorUtils {
 	 *            An integer color value in RGBA8888 format.
 	 */
 	public static void rgba8888ToColor(Color color, int value) {
-		color.r = ((value & 0xff000000) >>> 24) / 255f;
-		color.g = ((value & 0x00ff0000) >>> 16) / 255f;
-		color.b = ((value & 0x0000ff00) >>> 8) / 255f;
-		color.a = ((value & 0x000000ff)) / 255f;
+		Color.rgba8888ToColor(color, value);
 	}
 
 	public static Color hexRGBToColor(String hexColor) {
@@ -72,7 +62,6 @@ public class ColorUtils {
 
 	public static Color hexRGBToColor(Color color, String hexColor) {
 		int offset = hexColor.startsWith(hexNotationPrefix) ? 1 : 0;
-
 		try {
 			Integer red = Integer.valueOf(hexColor.substring(offset + 0, offset + 2), hexRadix);
 			Integer green = Integer.valueOf(hexColor.substring(offset + 2, offset + 4), hexRadix);
@@ -82,8 +71,6 @@ public class ColorUtils {
 		} catch (NumberFormatException nbf) {
 			throw new IllegalArgumentException("Invalid color hex string " + hexColor, nbf);
 		}
-
-		// throw new IllegalArgumentException("Invalid color hex string " + hexColor);
 	}
 
 }
