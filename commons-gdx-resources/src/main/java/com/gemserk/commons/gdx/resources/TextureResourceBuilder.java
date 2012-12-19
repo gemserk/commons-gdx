@@ -75,10 +75,11 @@ public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 
 		if (glError != 0) {
 			float textureMem = GpuMemUtils.getTextureGpuSize().gpuMemSize / 1000000f;
+			String duplicateTextureErrors = GpuMemUtils.checkDuplicateTextureErrors();
 			if (glError == GL10.GL_OUT_OF_MEMORY)
-				throw new OpenGLOutOfMemoryException("Error while loading texture " + fileHandle + " - TEXTUREMEM: " + textureMem);
+				throw new OpenGLOutOfMemoryException("Error while loading texture " + fileHandle + " - TEXTUREMEM: " + textureMem + " - " + duplicateTextureErrors);
 			else
-				throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + textureMem);
+				throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + textureMem + " - " + duplicateTextureErrors);
 		}
 
 		texture.setFilter(minFilter, magFilter);
