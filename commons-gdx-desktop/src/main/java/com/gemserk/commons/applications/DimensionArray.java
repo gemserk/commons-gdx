@@ -15,5 +15,15 @@ public class DimensionArray {
 			new DimensionWithDensity(1280, 752, DimensionWithDensity.ExtraHighDensity),//
 			new DimensionWithDensity(1024, 600, DimensionWithDensity.HighDensity),//
 			new DimensionWithDensity(1280, 720, DimensionWithDensity.ExtraHighDensity), //
+			new DimensionWithDensity(960, 640, DimensionWithDensity.HighDensity),//
+			new DimensionWithDensity(1136, 640, DimensionWithDensity.HighDensity),//
+//			new DimensionWithDensity(480, 320, DimensionWithDensity.MediumDensity),//
 	};
+	
+//	public static DimensionWithDensity[] iOSDimensions = { //
+//		new DimensionWithDensity(960, 640, DimensionWithDensity.HighDensity),//
+//		new DimensionWithDensity(1136, 640, DimensionWithDensity.HighDensity),//
+//		new DimensionWithDensity(480, 320, DimensionWithDensity.MediumDensity),//
+//	};
+	
 }

@@ -46,7 +46,7 @@ public class VirtualViewport {
 	public float getWidth(float screenWidth, float screenHeight) {
 		float virtualAspect = virtualWidth/virtualHeight;
 		float aspect = screenWidth / screenHeight;
-		if (aspect >= virtualAspect) {
+		if (aspect > virtualAspect || (Math.abs(aspect - virtualAspect) < 0.01f)) {
 			if (!shrink)
 				return virtualHeight * aspect;
 			return virtualWidth;
@@ -68,7 +68,7 @@ public class VirtualViewport {
 	public float getHeight(float screenWidth, float screenHeight) {
 		float virtualAspect = virtualWidth/virtualHeight;
 		float aspect = screenWidth / screenHeight;
-		if (aspect >= virtualAspect) {
+		if (aspect > virtualAspect || (Math.abs(aspect - virtualAspect) < 0.01f)) {
 			if (!shrink)
 				return virtualHeight;
 			return virtualWidth / aspect;
