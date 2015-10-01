@@ -1,6 +1,7 @@
 package com.gemserk.commons.gdx.scene2d;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -8,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.gemserk.animation4j.gdx.scenes.scene2d.Scene2dConverters;
 import com.gemserk.animation4j.interpolator.function.InterpolationFunctions;
 import com.gemserk.animation4j.timeline.Builders;
@@ -35,7 +36,7 @@ public class Actors {
 		window.setKeepWithinStage(false);
 		
 		window.setWidth(Gdx.graphics.getWidth() * 0.95f);
-		window.setHeight(toastLabel.getTextBounds().height + 20 + window.getStyle().titleFont.getLineHeight());
+		window.setHeight(toastLabel.getGlyphLayout().height + 20 + window.getStyle().titleFont.getLineHeight());
 
 		window.setX(Gdx.graphics.getWidth() * 0.5f - window.getWidth() * 0.5f);
 

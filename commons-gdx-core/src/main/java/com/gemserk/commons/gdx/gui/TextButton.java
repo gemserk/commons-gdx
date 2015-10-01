@@ -2,9 +2,9 @@ package com.gemserk.commons.gdx.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Align;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.commons.gdx.GlobalTime;
@@ -27,7 +27,7 @@ public class TextButton extends ControlImpl {
 	private Color overColor = new Color(1f, 1f, 1f, 1f);
 	private Color notOverColor = new Color(0.5f, 0.5f, 0.5f, 1f);
 	private boolean wasInside;
-	private HAlignment alignment = HAlignment.LEFT;
+	private int alignment = Align.left;
 	private ButtonHandler buttonHandler = new ButtonHandler();
 	private Transition<Color> colorTransition;
 
@@ -144,7 +144,7 @@ public class TextButton extends ControlImpl {
 		invalidate();
 	}
 
-	public TextButton setAlignment(HAlignment alignment) {
+	public TextButton setAlignment(int alignment) {
 		this.alignment = alignment;
 		return this;
 	}

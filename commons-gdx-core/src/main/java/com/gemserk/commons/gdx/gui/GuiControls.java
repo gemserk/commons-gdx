@@ -2,7 +2,6 @@ package com.gemserk.commons.gdx.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.gemserk.commons.gdx.gui.ToggleableImageButton.ToggleHandler;
 
@@ -76,7 +75,7 @@ public class GuiControls {
 			return this;
 		}
 
-		public TextButtonBuilder alignment(HAlignment alignment) {
+		public TextButtonBuilder alignment(int alignment) {
 			textButton.setAlignment(alignment);
 			return this;
 		}

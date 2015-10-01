@@ -3,7 +3,7 @@ package com.gemserk.commons.gdx.gui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
+import com.badlogic.gdx.utils.Align;
 import com.gemserk.commons.gdx.graphics.SpriteBatchUtils;
 
 public class Text extends ControlImpl {
@@ -99,7 +99,7 @@ public class Text extends ControlImpl {
 		float x = getX();
 		float y = getY();
 
-		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, HAlignment.LEFT, roundPosition);
+		SpriteBatchUtils.drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, Align.left, roundPosition);
 	}
 
 	@Override
@@ -109,8 +109,10 @@ public class Text extends ControlImpl {
 
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
-		if (font.getScaleX() != this.scale)
-			font.setScale(this.scale);
+		if (font.getScaleX() != this.scale) {
+			font.getData().setScale(this.scale);
+//			font.setScale(this.scale);
+		}
 		draw(spriteBatch, font);
 	}
 
