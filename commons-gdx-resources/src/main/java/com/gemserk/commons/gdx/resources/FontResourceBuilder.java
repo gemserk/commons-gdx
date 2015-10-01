@@ -169,7 +169,8 @@ public class FontResourceBuilder implements ResourceBuilder<BitmapFont> {
 			BitmapFontUtils.spacing(bitmapFont, charSequence, fontSpacing.spacing);
 		}
 
-		bitmapFont.setScale(scale);
+		bitmapFont.getData().setScale(scale);
+//		bitmapFont.setScale(scale);
 		// bitmapFont.setRealScale(scale);
 
 		return bitmapFont;

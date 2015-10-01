@@ -1,5 +1,6 @@
 package com.gemserk.commons.gdx.scene2d.ui;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -39,7 +40,7 @@ public class SpriteActor extends Actor {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(Batch batch, float parentAlpha) {
 		sprite.draw(batch, getColor().a * parentAlpha);
 	}
 	

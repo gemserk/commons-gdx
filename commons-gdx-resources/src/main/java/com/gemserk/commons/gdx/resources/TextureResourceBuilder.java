@@ -2,7 +2,7 @@ package com.gemserk.commons.gdx.resources;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -76,7 +76,7 @@ public class TextureResourceBuilder implements ResourceBuilder<Texture> {
 		if (glError != 0) {
 			float textureMem = GpuMemUtils.getTextureGpuSize().gpuMemSize / 1000000f;
 			String duplicateTextureErrors = GpuMemUtils.checkDuplicateTextureErrors();
-			if (glError == GL10.GL_OUT_OF_MEMORY)
+			if (glError == GL20.GL_OUT_OF_MEMORY)
 				throw new OpenGLOutOfMemoryException("Error while loading texture " + fileHandle + " - TEXTUREMEM: " + textureMem + " - " + duplicateTextureErrors);
 			else
 				throw new RuntimeException("OpenGL error code while loading texture: " + glError + " - " + fileHandle + " - TEXTUREMEM: " + textureMem + " - " + duplicateTextureErrors);

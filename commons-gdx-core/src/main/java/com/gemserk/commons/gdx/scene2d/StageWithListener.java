@@ -1,8 +1,11 @@
 package com.gemserk.commons.gdx.scene2d;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class StageWithListener extends Stage {
@@ -14,13 +17,15 @@ public class StageWithListener extends Stage {
 		this.inputProcessor = inputProcessor;
 	}
 
-	public StageWithListener(float width, float height, boolean stretch, SpriteBatch batch, InputProcessor inputProcessor) {
-		super(width, height, stretch, batch);
+	public StageWithListener(float width, float height, boolean stretch, Batch batch, InputProcessor inputProcessor) {
+//		super(width, height, stretch, batch);
+		super(!stretch ? new StretchViewport(width, height) : new ExtendViewport(width, height), batch);
 		this.inputProcessor = inputProcessor;
 	}
 
 	public StageWithListener(float width, float height, boolean stretch, InputProcessor inputProcessor) {
-		super(width, height, stretch);
+		//		super(width, height, stretch);
+		super(!stretch ? new StretchViewport(width, height) : new ExtendViewport(width, height));
 		this.inputProcessor = inputProcessor;
 	}
 
