@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.animation4j.transitions.TimeTransition;
 import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
@@ -73,10 +73,10 @@ public class GameStateTransitionImpl extends GameStateImpl {
 			current.render();
 			color.a = getAlpha();
 
-			Gdx.gl.glEnable(GL10.GL_BLEND);
+			Gdx.gl.glEnable(GL20.GL_BLEND);
 			ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			ImmediateModeRendererUtils.fillRectangle(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), color);
-			Gdx.gl.glDisable(GL10.GL_BLEND);
+			Gdx.gl.glDisable(GL20.GL_BLEND);
 		}
 
 	}
@@ -99,10 +99,10 @@ public class GameStateTransitionImpl extends GameStateImpl {
 			next.render();
 			color.a = 1f - getAlpha();
 
-			Gdx.gl.glEnable(GL10.GL_BLEND);
+			Gdx.gl.glEnable(GL20.GL_BLEND);
 			ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			ImmediateModeRendererUtils.fillRectangle(0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), color);
-			Gdx.gl.glDisable(GL10.GL_BLEND);
+			Gdx.gl.glDisable(GL20.GL_BLEND);
 		}
 
 	}

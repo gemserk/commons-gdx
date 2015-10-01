@@ -1,20 +1,22 @@
 package com.gemserk.commons.gdx.graphics;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Align;
 
 public class SpriteBatchUtils {
+
+	static GlyphLayout glyphLayout = new GlyphLayout();
 
 	/**
 	 * Draws a text centered in the specified coordinates
 	 */
 	public static void drawCentered(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y) {
-		TextBounds bounds = font.getBounds(text);
-		font.draw(spriteBatch, text, x - bounds.width * 0.5f, y + bounds.height * 0.5f);
+		glyphLayout.setText(font, text);
+		font.draw(spriteBatch, text, x - glyphLayout.width * 0.5f, y + glyphLayout.height * 0.5f);
 	}
 
 	/**
@@ -40,28 +42,33 @@ public class SpriteBatchUtils {
 	public static void drawMultilineText(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y, float cx, float cy) {
 		// TextBounds bounds = font.getMultiLineBounds(text);
 		// font.drawMultiLine(spriteBatch, text, x - bounds.width * cx, y + bounds.height * cy);
-		drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, HAlignment.LEFT);
+		drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, Align.left);
 	}
 
-	public static void drawMultilineTextWithAlignment(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y, float cx, float cy, HAlignment alignment) {
+	public static void drawMultilineTextWithAlignment(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y, float cx, float cy, int alignment) {
 		drawMultilineTextWithAlignment(spriteBatch, font, text, x, y, cx, cy, alignment, false);
 	}
 
-	public static void drawMultilineTextWithAlignment(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y, float cx, float cy, HAlignment alignment, boolean roundPosition) {
-		TextBounds bounds = font.getMultiLineBounds(text);
-		float centerx = getCenterForAlignment(cx, alignment, bounds);
-		if (roundPosition)
-			font.drawMultiLine(spriteBatch, text, Math.round(x + centerx), Math.round(y + bounds.height * cy), 0f, alignment);
-		else
-			font.drawMultiLine(spriteBatch, text, x + centerx, y + bounds.height * cy, 0f, alignment);
+	public static void drawMultilineTextWithAlignment(SpriteBatch spriteBatch, BitmapFont font, CharSequence text, float x, float y, float cx, float cy, int alignment, boolean roundPosition) {
+//		TextBounds bounds = font.getMultiLineBounds(text);
+		glyphLayout.setText(font, text);
+		float centerx = getCenterForAlignment(cx, alignment, glyphLayout);
+		if (roundPosition) {
+//			font.drawMultiLine(spriteBatch, text, Math.round(x + centerx), Math.round(y + glyphLayout.height * cy), 0f, alignment);
+			font.draw(spriteBatch, text, Math.round(x + centerx), Math.round(y + glyphLayout.height * cy));
+		}
+		else {
+//			font.drawMultiLine(spriteBatch, text, x + centerx, y + glyphLayout.height * cy, 0f, alignment);
+			font.draw(spriteBatch, text, x + centerx, y + glyphLayout.height * cy);
+		}
 	}
 
-	private static float getCenterForAlignment(float cx, HAlignment alignment, TextBounds bounds) {
-		if (alignment == HAlignment.RIGHT)
-			return bounds.width * (1f - cx);
-		if (alignment == HAlignment.CENTER)
-			return bounds.width * (0.5f - cx);
-		return -bounds.width * cx;
+	private static float getCenterForAlignment(float cx, int alignment, GlyphLayout glyphLayout) {
+		if (alignment == Align.right)
+			return glyphLayout.width * (1f - cx);
+		if (alignment == Align.center)
+			return glyphLayout.width * (0.5f - cx);
+		return -glyphLayout.width * cx;
 	}
 
 	public static Rectangle getBounds(BitmapFont font, CharSequence text, float x, float y) {
@@ -69,9 +76,10 @@ public class SpriteBatchUtils {
 	}
 
 	public static Rectangle getBounds(BitmapFont font, CharSequence text, float x, float y, float sx, float sy) {
-		TextBounds bounds = font.getMultiLineBounds(text);
-		float w = bounds.width;
-		float h = bounds.height;
+		glyphLayout.setText(font, text);
+//		TextBounds bounds = font.getMultiLineBounds(text);
+		float w = glyphLayout.width;
+		float h = glyphLayout.height;
 		return new Rectangle(x - sx - w * 0.5f, y - sy - h * 0.5f, w + 2 * sx, h + 2 * sy);
 	}
 

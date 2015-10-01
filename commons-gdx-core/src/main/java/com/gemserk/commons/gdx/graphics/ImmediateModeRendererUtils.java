@@ -4,7 +4,7 @@ import java.nio.FloatBuffer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
@@ -77,7 +77,7 @@ public class ImmediateModeRendererUtils {
 
 	public static void drawSolidCircle(float x, float y, float radius, Color color) {
 		ImmediateModeRenderer renderer = getRenderer();
-		renderer.begin(getProjectionMatrix(), GL10.GL_LINE_LOOP);
+		renderer.begin(getProjectionMatrix(), GL20.GL_LINE_LOOP);
 		{
 			float angle = 0;
 			float angleInc = 2 * (float) Math.PI / 20;
@@ -96,7 +96,7 @@ public class ImmediateModeRendererUtils {
 
 	public static void drawLine(float x0, float y0, float x1, float y1, Color color) {
 		ImmediateModeRenderer renderer = getRenderer();
-		renderer.begin(getProjectionMatrix(), GL10.GL_LINES);
+		renderer.begin(getProjectionMatrix(), GL20.GL_LINES);
 		{
 			renderer.color(color.r, color.g, color.b, color.a);
 			renderer.vertex(x0, y0, 0);
@@ -134,7 +134,7 @@ public class ImmediateModeRendererUtils {
 
 	public static void drawRectangle(float x0, float y0, float x1, float y1, Color color) {
 		ImmediateModeRenderer renderer = getRenderer();
-		renderer.begin(getProjectionMatrix(), GL10.GL_LINE_LOOP);
+		renderer.begin(getProjectionMatrix(), GL20.GL_LINE_LOOP);
 		{
 			renderer.color(color.r, color.g, color.b, color.a);
 			renderer.vertex(x0, y0, 0f);
@@ -153,7 +153,7 @@ public class ImmediateModeRendererUtils {
 
 	public static void fillRectangle(float x0, float y0, float x1, float y1, Color color) {
 		ImmediateModeRenderer renderer = getRenderer();
-		renderer.begin(getProjectionMatrix(), GL10.GL_TRIANGLES);
+		renderer.begin(getProjectionMatrix(), GL20.GL_TRIANGLES);
 		{
 			// first triangle
 			renderer.color(color.r, color.g, color.b, color.a);
@@ -178,46 +178,50 @@ public class ImmediateModeRendererUtils {
 		renderer.end();
 	}
 
+	@Deprecated
 	public static void drawPolygon(Vector2[] vertices, float x, float y, float angle, Color color) {
-		GL10 gl = Gdx.graphics.getGL10();
-		gl.glPushMatrix();
-
-		gl.glTranslatef(x, y, 0f);
-		gl.glRotatef(angle, 0f, 0f, 1f);
-
-		ImmediateModeRenderer renderer = getRenderer();
-
-		renderer.begin(getProjectionMatrix(), GL10.GL_LINE_LOOP);
-		for (int i = 0; i < vertices.length; i++) {
-			Vector2 v = vertices[i];
-			renderer.color(color.r, color.g, color.b, color.a);
-			renderer.vertex(v.x, v.y, 0);
-		}
-		renderer.end();
-
-		gl.glPopMatrix();
+		throw new UnsupportedOperationException("GL10 is not supported anymore");
+//		GL20 gl = Gdx.graphics.getGL20();
+//		gl.glPushMatrix();
+//
+//		gl.glTranslatef(x, y, 0f);
+//		gl.glRotatef(angle, 0f, 0f, 1f);
+//
+//		ImmediateModeRenderer renderer = getRenderer();
+//
+//		renderer.begin(getProjectionMatrix(), GL20.GL_LINE_LOOP);
+//		for (int i = 0; i < vertices.length; i++) {
+//			Vector2 v = vertices[i];
+//			renderer.color(color.r, color.g, color.b, color.a);
+//			renderer.vertex(v.x, v.y, 0);
+//		}
+//		renderer.end();
+//
+//		gl.glPopMatrix();
 	}
 
+	@Deprecated
 	public static void draw(Triangulator triangulator, float x, float y, float angle, Color color) {
-		GL10 gl = Gdx.graphics.getGL10();
-
-		gl.glPushMatrix();
-		gl.glTranslatef(x, y, 0f);
-		gl.glRotatef(angle, 0f, 0f, 1f);
-
-		ImmediateModeRenderer renderer = getRenderer();
-
-		renderer.begin(getProjectionMatrix(), GL10.GL_TRIANGLES);
-		for (int i = 0; i < triangulator.getTriangleCount(); i++) {
-			for (int p = 0; p < 3; p++) {
-				float[] pt = triangulator.getTrianglePoint(i, p);
-				renderer.color(color.r, color.g, color.b, color.a);
-				renderer.vertex(pt[0], pt[1], 0f);
-			}
-		}
-		renderer.end();
-
-		gl.glPopMatrix();
+		throw new UnsupportedOperationException("GL10 is not supported anymore");
+//		GL20 gl = Gdx.graphics.getGL20();
+//
+//		gl.glPushMatrix();
+//		gl.glTranslatef(x, y, 0f);
+//		gl.glRotatef(angle, 0f, 0f, 1f);
+//
+//		ImmediateModeRenderer renderer = getRenderer();
+//
+//		renderer.begin(getProjectionMatrix(), GL20.GL_TRIANGLES);
+//		for (int i = 0; i < triangulator.getTriangleCount(); i++) {
+//			for (int p = 0; p < 3; p++) {
+//				float[] pt = triangulator.getTrianglePoint(i, p);
+//				renderer.color(color.r, color.g, color.b, color.a);
+//				renderer.vertex(pt[0], pt[1], 0f);
+//			}
+//		}
+//		renderer.end();
+//
+//		gl.glPopMatrix();
 	}
 
 	public static void draw(int primitiveType, int count, FloatBuffer verticesBuffer) {

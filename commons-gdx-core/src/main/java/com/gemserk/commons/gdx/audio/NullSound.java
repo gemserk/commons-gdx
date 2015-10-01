@@ -30,6 +30,16 @@ public class NullSound implements Sound {
 	}
 
 	@Override
+	public void pause() {
+		
+	}
+
+	@Override
+	public void resume() {
+
+	}
+
+	@Override
 	public void dispose() {
 		
 	}
@@ -37,6 +47,16 @@ public class NullSound implements Sound {
 	@Override
 	public void stop(long soundId) {
 		
+	}
+
+	@Override
+	public void pause(long l) {
+
+	}
+
+	@Override
+	public void resume(long l) {
+
 	}
 
 	@Override

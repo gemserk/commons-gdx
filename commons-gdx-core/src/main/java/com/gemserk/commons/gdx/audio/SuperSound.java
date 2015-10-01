@@ -42,12 +42,32 @@ public class SuperSound implements Sound {
 		sound.stop();
 	}
 
+	@Override
+	public void pause() {
+		sound.pause();
+	}
+
+	@Override
+	public void resume() {
+		sound.resume();
+	}
+
 	public void dispose() {
 		sound.dispose();
 	}
 
 	public void stop(long soundId) {
 		sound.stop(soundId);
+	}
+
+	@Override
+	public void pause(long soundId) {
+		sound.pause(soundId);
+	}
+
+	@Override
+	public void resume(long soundId) {
+		sound.resume(soundId);
 	}
 
 	public void setLooping(long soundId, boolean looping) {

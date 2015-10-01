@@ -27,3 +27,6 @@ commons-gdx-resources/target
 commons-gdx-resources/.classpath
 commons-gdx-resources/.project
 commons-gdx-resources/.settings
+
+*.iml
+.idea
