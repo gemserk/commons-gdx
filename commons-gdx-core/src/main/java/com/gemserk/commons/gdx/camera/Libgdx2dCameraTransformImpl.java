@@ -1,7 +1,6 @@
 package com.gemserk.commons.gdx.camera;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
@@ -96,29 +95,32 @@ public class Libgdx2dCameraTransformImpl implements Libgdx2dCamera {
 	}
 
 	public void apply() {
-		GL10 gl = Gdx.gl10;
-
-		gl.glMatrixMode(GL10.GL_PROJECTION);
-		gl.glLoadMatrixf(projectionMatrix.val, 0);
-
-		calculateTransform(transform);
-
-		gl.glMatrixMode(GL10.GL_MODELVIEW);
-		gl.glLoadMatrixf(transform.val, 0);
+		throw new UnsupportedOperationException("Deprecated GL10");
+//		GL10 gl = Gdx.gl10;
+//
+//		gl.glMatrixMode(GL10.GL_PROJECTION);
+//		gl.glLoadMatrixf(projectionMatrix.val, 0);
+//
+//		calculateTransform(transform);
+//
+//		gl.glMatrixMode(GL10.GL_MODELVIEW);
+//		gl.glLoadMatrixf(transform.val, 0);
 	}
 
 	public void push() {
-		GL10 gl = Gdx.gl10;
-		gl.glMatrixMode(GL10.GL_MODELVIEW);
-		gl.glPushMatrix();
-		calculateTransform(transform);
-		gl.glLoadIdentity();
-		gl.glMultMatrixf(transform.val, 0);
+		throw new UnsupportedOperationException("Deprecated GL10");
+//		GL10 gl = Gdx.gl10;
+//		gl.glMatrixMode(GL10.GL_MODELVIEW);
+//		gl.glPushMatrix();
+//		calculateTransform(transform);
+//		gl.glLoadIdentity();
+//		gl.glMultMatrixf(transform.val, 0);
 	}
 
 	public void pop() {
-		GL10 gl = Gdx.gl10;
-		gl.glPopMatrix();
+		throw new UnsupportedOperationException("Deprecated GL10");
+//		GL10 gl = Gdx.gl10;
+//		gl.glPopMatrix();
 	}
 
 	private void calculateTransform(Matrix4 m) {
