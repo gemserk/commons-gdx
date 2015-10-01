@@ -29,7 +29,8 @@ public class SpatialPhysicsImpl implements Spatial {
 
 	@Override
 	public void setPosition(float x, float y) {
-		body.setTransform(x, y, body.getAngle() * MathUtils.degreesToRadians, false);
+//		body.setTransform(x, y, body.getAngle() * MathUtils.degreesToRadians, false);
+		body.setTransform(x, y, body.getAngle() * MathUtils.degreesToRadians);
 	}
 
 	@Override
@@ -42,7 +43,8 @@ public class SpatialPhysicsImpl implements Spatial {
 	public void setAngle(float angle) {
 		// TODO: fix this to update the position if it wasn't correctly set yet.
 		Vector2 position = body.getPosition();
-		body.setTransform(position.x, position.y, angle * MathUtils.degreesToRadians, false);
+//		body.setTransform(position.x, position.y, angle * MathUtils.degreesToRadians, false);
+		body.setTransform(position.x, position.y, angle * MathUtils.degreesToRadians);
 	}
 
 	@Override

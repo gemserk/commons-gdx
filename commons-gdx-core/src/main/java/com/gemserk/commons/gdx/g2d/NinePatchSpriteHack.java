@@ -1,5 +1,6 @@
 package com.gemserk.commons.gdx.g2d;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,18 +29,32 @@ public class NinePatchSpriteHack extends NinePatch {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, float x, float y, float width, float height) {
+	public void draw(Batch batch, float x, float y, float width, float height) {
 		float scaledWidth = scaleFactor * width;
 		float scaledHeight = scaleFactor * height;
 		float newX = x + (width - scaledWidth) / 2f;
 		float newY = y + (height - scaledHeight) / 2f;
 
-		if (sprite.getX() != newX || sprite.getY() != newY || sprite.getWidth() != scaledWidth || sprite.getHeight() != scaledHeight) 
+		if (sprite.getX() != newX || sprite.getY() != newY || sprite.getWidth() != scaledWidth || sprite.getHeight() != scaledHeight)
 			sprite.setBounds(newX, newY, scaledWidth, scaledHeight);
 
 		sprite.setColor(batch.getColor());
 		sprite.draw(batch);
 	}
+
+//	@Override
+//	public void draw(SpriteBatch batch, float x, float y, float width, float height) {
+//		float scaledWidth = scaleFactor * width;
+//		float scaledHeight = scaleFactor * height;
+//		float newX = x + (width - scaledWidth) / 2f;
+//		float newY = y + (height - scaledHeight) / 2f;
+//
+//		if (sprite.getX() != newX || sprite.getY() != newY || sprite.getWidth() != scaledWidth || sprite.getHeight() != scaledHeight)
+//			sprite.setBounds(newX, newY, scaledWidth, scaledHeight);
+//
+//		sprite.setColor(batch.getColor());
+//		sprite.draw(batch);
+//	}
 
 	public float getTotalHeight() {
 		return originalWidth;
