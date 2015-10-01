@@ -81,7 +81,7 @@ public class Contacts {
 		} else {
 			myFixture = contact.getFixtureB();
 			otherFixture = contact.getFixtureA();
-			normal.mul(-1);// if the body in contact is the first one declared by the contact, then we have to invert the normal.
+			normal.scl(-1);// if the body in contact is the first one declared by the contact, then we have to invert the normal.
 		}
 
 		addContact(myFixture, otherFixture, normal);
