@@ -75,7 +75,7 @@ public class MovementSystem extends EntitySystem {
 
 			Vector2 velocity = movementComponent.getVelocity();
 
-			tmpVelocity.set(velocity).mul(delta);
+			tmpVelocity.set(velocity).scl(delta);
 			tmpPosition.set(spatial.getX(), spatial.getY()).add(tmpVelocity);
 
 			float newAngle = spatial.getAngle() + delta * movementComponent.getAngularVelocity();

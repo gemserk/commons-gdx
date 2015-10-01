@@ -24,8 +24,8 @@ public class AntiGravitySystem extends EntityProcessingSystem {
 		
 		Vector2 gravity = body.getWorld().getGravity();
 
-		tmp.set(gravity).mul(-body.getMass());
-		body.applyForceToCenter(tmp);
+		tmp.set(gravity).scl(-body.getMass());
+		body.applyForceToCenter(tmp, true);
 	}
 
 

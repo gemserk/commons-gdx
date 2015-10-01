@@ -31,7 +31,7 @@ public class LimitLinearVelocitySystem extends EntityProcessingSystem {
 
 		if (speed > maxSpeed) {
 			float factor = maxSpeed / speed;
-			linearVelocity.mul(factor);
+			linearVelocity.scl(factor);
 			body.setLinearVelocity(linearVelocity);
 		}
 

@@ -189,7 +189,8 @@ public class RenderLayerSpriteBatchImpl implements RenderLayer {
 				BitmapFont font = textComponent.font;
 
 				if (font.getScaleX() != textComponent.scale) {
-					font.setScale(textComponent.scale);
+					font.getData().setScale(textComponent.scale);
+//					font.setScale(textComponent.scale);
 				}
 
 				font.setColor(textComponent.color);

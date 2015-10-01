@@ -63,12 +63,12 @@ public class AdSimulatorApplicationDelegate implements ApplicationListener {
 	@Override
 	public void create() {
 		applicationListener.create();
-		Texture.setEnforcePotImages(false);
+//		Texture.setEnforcePotImages(false);
 		Texture texture = new Texture(Gdx.files.internal("test/house-ad.png"));
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		houseAdSprite = new Sprite(texture);
 		spriteBatch = new SpriteBatch();
-		Texture.setEnforcePotImages(true);
+//		Texture.setEnforcePotImages(true);
 
 		adsParameters = new AdsParameters().delay(0).horizontalAlign(0).verticalAlign(0);
 
