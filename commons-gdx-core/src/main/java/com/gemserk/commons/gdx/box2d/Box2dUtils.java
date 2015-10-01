@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.Shape.Type;
 import com.gemserk.commons.gdx.graphics.ShapeUtils;
 import com.gemserk.commons.gdx.graphics.Triangulator;
+import com.badlogic.gdx.utils.Array;
 
 public class Box2dUtils {
 
@@ -48,7 +49,7 @@ public class Box2dUtils {
 	/**
 	 * Internally translates all the Body's fixtures the specified translation, without moving the Body's center. For now, it generates garbage so should be used only once.
 	 * 
-	 * @param body
+	 * @param fixtures
 	 *            The body to work on.
 	 * @param tx
 	 *            The translation in x coordinate.
@@ -79,8 +80,9 @@ public class Box2dUtils {
 	 *            The Filter data to set to the body fixtures.
 	 */
 	public static void setFilter(Body body, Filter filter) {
-		ArrayList<Fixture> fixtureList = body.getFixtureList();
-		for (int i = 0; i < fixtureList.size(); i++) {
+		body.getFixtureList();
+		Array<Fixture> fixtureList = body.getFixtureList();
+		for (int i = 0; i < fixtureList.size; i++) {
 			Fixture fixture = fixtureList.get(i);
 			fixture.setFilterData(filter);
 		}
@@ -130,8 +132,8 @@ public class Box2dUtils {
 	 *            The Fixture userData to identify the Fixture.
 	 */
 	public static Fixture getFixture(Body body, Object fixtureUserData) {
-		ArrayList<Fixture> fixtureList = body.getFixtureList();
-		for (int i = 0; i < fixtureList.size(); i++) {
+		Array<Fixture> fixtureList = body.getFixtureList();
+		for (int i = 0; i < fixtureList.size; i++) {
 			Fixture fixture = fixtureList.get(i);
 			Object userData = fixture.getUserData();
 			if (userData == fixtureUserData || fixtureUserData.equals(userData))
