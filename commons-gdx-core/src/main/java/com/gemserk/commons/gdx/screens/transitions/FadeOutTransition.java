@@ -2,7 +2,7 @@ package com.gemserk.commons.gdx.screens.transitions;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.gemserk.animation4j.transitions.Transition;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.commons.gdx.GameTransitions;
@@ -45,10 +45,10 @@ public class FadeOutTransition extends GameTransitions.LeaveTransition {
 
 	@Override
 	public void postRender(float delta) {
-		Gdx.gl.glEnable(GL10.GL_BLEND);
+		Gdx.gl.glEnable(GL20.GL_BLEND);
 		ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		ImmediateModeRendererUtils.draw(GL10.GL_TRIANGLES, fadeRectangle);
-		Gdx.gl.glDisable(GL10.GL_BLEND);
+		ImmediateModeRendererUtils.draw(GL20.GL_TRIANGLES, fadeRectangle);
+		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 
 	@Override

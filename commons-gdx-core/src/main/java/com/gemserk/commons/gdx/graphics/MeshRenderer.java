@@ -2,8 +2,6 @@ package com.gemserk.commons.gdx.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -15,8 +13,8 @@ public class MeshRenderer implements Disposable {
 
 	private ShaderProgram shader = null;
 	private boolean blendingEnabled;
-	private int blendSrcFunc = GL11.GL_SRC_ALPHA;
-	private int blendDstFunc = GL11.GL_ONE_MINUS_SRC_ALPHA;
+	private int blendSrcFunc = GL20.GL_SRC_ALPHA;
+	private int blendDstFunc = GL20.GL_ONE_MINUS_SRC_ALPHA;
 
 	public void setBlendingEnabled(boolean blending) {
 		this.blendingEnabled = blending;
@@ -43,9 +41,7 @@ public class MeshRenderer implements Disposable {
 	}
 
 	public MeshRenderer() {
-		if (Gdx.graphics.isGL20Available()) {
-			shader = createDefaultShader();
-		}
+		shader = createDefaultShader();
 	}
 
 	public MeshRenderer(ShaderProgram shader) {
@@ -85,7 +81,7 @@ public class MeshRenderer implements Disposable {
 	}
 
 	public void render(Camera camera, Mesh mesh) {
-		render(camera,mesh,GL10.GL_TRIANGLES,0, mesh.getMaxIndices() > 0 ? mesh.getNumIndices() : mesh.getNumVertices());
+		render(camera,mesh, GL20.GL_TRIANGLES,0, mesh.getMaxIndices() > 0 ? mesh.getNumIndices() : mesh.getNumVertices());
 	}
 	
 	
@@ -98,17 +94,19 @@ public class MeshRenderer implements Disposable {
 			Gdx.gl.glBlendFunc(blendSrcFunc, blendDstFunc);
 		}
 
-		if (shader == null) {
-			camera.apply(Gdx.gl10);
-			mesh.render(primitive, offset, cantElements);
-			totalRenderCalls++;
-		} else {
-			shader.begin();
-			shader.setUniformMatrix("u_projectionViewMatrix", camera.combined);
-			mesh.render(shader, primitive, offset, cantElements);
-			shader.end();
-			totalRenderCalls++;
-		}
+		shader.begin();
+		shader.setUniformMatrix("u_projectionViewMatrix", camera.combined);
+		mesh.render(shader, primitive, offset, cantElements);
+		shader.end();
+		totalRenderCalls++;
+
+//		if (shader == null) {
+//			camera.apply(Gdx.gl10);
+//			mesh.render(primitive, offset, cantElements);
+//			totalRenderCalls++;
+//		} else {
+//
+//		}
 	}
 
 	@Override

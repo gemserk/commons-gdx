@@ -81,7 +81,7 @@ public class MeshTransform {
 		mesh.getVertices(transformedVertices);
 		int idx = 0;
 		for (int i = 0; i < vertices.length; i += 2) {
-			tmp.set(vertices[i], vertices[i + 1]).mul(sx, sy).rotate(angle).add(x, y);
+			tmp.set(vertices[i], vertices[i + 1]).scl(sx, sy).rotate(angle).add(x, y);
 			transformedVertices[idx] = tmp.x;
 			transformedVertices[idx + 1] = tmp.y;
 			transformedVertices[idx + 2] = 0f;

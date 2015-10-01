@@ -1,7 +1,7 @@
 package com.gemserk.util.perf;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Mesh.VertexDataType;
 import com.badlogic.gdx.graphics.VertexAttribute;
@@ -149,7 +149,7 @@ public class PerfGraphRendererMesh implements Disposable {
 			return;
 
 		mesh.setVertices(vertices, 0, vertexIndex);
-		meshRenderer.render(camera, mesh, GL10.GL_LINES, 0, cantVertices);
+		meshRenderer.render(camera, mesh, GL20.GL_LINES, 0, cantVertices);
 
 		// IntSlidingWindowArray events = perfLogger.getEvents();
 		// shapeRenderer.begin(ShapeType.Line);
