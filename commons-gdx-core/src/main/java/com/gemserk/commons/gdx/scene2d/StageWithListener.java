@@ -12,6 +12,18 @@ public class StageWithListener extends Stage {
 
 	private final InputProcessor inputProcessor;
 
+	public StageWithListener(Viewport viewport, InputProcessor inputProcessor)
+	{
+		super(viewport);
+		this.inputProcessor = inputProcessor;
+	}
+
+	public StageWithListener(Viewport viewport, Batch batch, InputProcessor inputProcessor)
+	{
+		super(viewport, batch);
+		this.inputProcessor = inputProcessor;
+	}
+
 	public StageWithListener(InputProcessor inputProcessor) {
 		super();
 		this.inputProcessor = inputProcessor;
@@ -19,14 +31,12 @@ public class StageWithListener extends Stage {
 
 	public StageWithListener(float width, float height, boolean stretch, Batch batch, InputProcessor inputProcessor) {
 //		super(width, height, stretch, batch);
-		super(!stretch ? new StretchViewport(width, height) : new ExtendViewport(width, height), batch);
-		this.inputProcessor = inputProcessor;
+		this(!stretch ? new StretchViewport(width, height) : new ExtendViewport(width, height), batch, inputProcessor);
 	}
 
 	public StageWithListener(float width, float height, boolean stretch, InputProcessor inputProcessor) {
 		//		super(width, height, stretch);
-		super(!stretch ? new StretchViewport(width, height) : new ExtendViewport(width, height));
-		this.inputProcessor = inputProcessor;
+		this(!stretch ? new StretchViewport(width, height) : new ExtendViewport(width, height), inputProcessor);
 	}
 
 	public boolean keyDown (int keycode) {
